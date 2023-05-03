@@ -95,3 +95,8 @@ django-ipware==4.0.2
 # Pinning this version for now so this could be fixed in a separate PR later on
 # Issue for unpinning: https://github.com/openedx/edx-platform/issues/32093
 pytz<2023
+
+# Our legacy SCSS code currently requires a very old version of libsass
+# in order to compile.
+# https://github.com/openedx/edx-platform/issues/31616
+libsass==0.10.1

@@ -902,8 +902,9 @@ levenshtein==0.21.0
     # via
     #   -r requirements/edx/testing.txt
     #   python-levenshtein
-libsass==0.10.0
+libsass==0.10.1
     # via
+    #   -c requirements/edx/../constraints.txt
     #   -r requirements/edx/testing.txt
     #   ora2
 loremipsum==1.0.5
