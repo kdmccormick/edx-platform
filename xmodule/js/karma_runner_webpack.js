@@ -1,17 +1,17 @@
 import '../../common/static/js/src/ajax_prefix.js';
-import '../../common/static/common/js/vendor/underscore.js';
-import '../../common/static/common/js/vendor/backbone.js';
+import '../../common/static/node_copies/js/underscore.js';
+import '../../common/static/node_copies/js/backbone.js';
 import '../../common/static/js/vendor/CodeMirror/codemirror.js';
 import '../../common/static/js/vendor/draggabilly.js';
-import '../../common/static/common/js/vendor/jquery.js';
-import '../../common/static/common/js/vendor/jquery-migrate.js';
+import '../../common/static/node_copies/js/jquery.js';
+import '../../common/static/node_copies/js/jquery-migrate.js';
 import '../../common/static/js/vendor/jquery.cookie.js';
 import '../../common/static/js/vendor/jquery.leanModal.js';
 import '../../common/static/js/vendor/jquery.timeago.js';
 import '../../common/static/js/vendor/jquery-ui.min.js';
 import '../../common/static/js/vendor/jquery.ui.draggable.js';
 import '../../common/static/js/vendor/json2.js';
-// import '../../common/static/common/js/vendor/moment-with-locales.js';
+// import '../../common/static/node_copies/js/moment-with-locales.js';
 import '../../common/static/js/vendor/tinymce/js/tinymce/jquery.tinymce.min.js';
 import '../../common/static/js/vendor/tinymce/js/tinymce/tinymce.full.min.js';
 import '../../common/static/js/src/accessibility_tools.js';
@@ -19,13 +19,13 @@ import '../../common/static/js/src/logger.js';
 import '../../common/static/js/src/utility.js';
 import '../../common/static/js/test/add_ajax_prefix.js';
 import '../../common/static/js/test/i18n.js';
-import '../../common/static/common/js/vendor/hls.js';
+import '../../common/static/node_copies/js/hls.js';
 import '../assets/vertical/public/js/vertical_student_view.js';
 
 import '../../common/static/js/vendor/jasmine-imagediff.js';
 import '../../common/static/common/js/spec_helpers/jasmine-waituntil.js';
 import '../../common/static/common/js/spec_helpers/jasmine-extensions.js';
-import '../../common/static/common/js/vendor/sinon.js';
+import '../../common/static/node_copies/js/sinon.js';
 
 // These libraries are used by the tests (and the code under test)
 // but not explicitly imported

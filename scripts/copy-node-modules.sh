@@ -18,8 +18,8 @@ COL_OFF="\e[0m"   # Normal color
 # https://github.com/openedx/wg-developer-experience/issues/150
 # https://github.com/openedx/wg-developer-experience/issues/151
 node_modules="node_modules"
-vendor_js="common/static/common/js/vendor"
-vendor_css="common/static/common/css/vendor"
+vendor_js="common/static/node_copies/js"
+vendor_css="common/static/node_copies/css"
 
 # Stylized logging.
 log ( ) {

@@ -1347,13 +1347,13 @@ PIPELINE['STYLESHEETS'] = {
 base_vendor_js = [
     'js/src/utility.js',
     'js/src/logger.js',
-    'common/js/vendor/jquery.js',
-    'common/js/vendor/jquery-migrate.js',
+    'node_copies/js/jquery.js',
+    'node_copies/js/jquery-migrate.js',
     'js/vendor/jquery.cookie.js',
     'js/vendor/url.min.js',
-    'common/js/vendor/underscore.js',
-    'common/js/vendor/underscore.string.js',
-    'common/js/vendor/backbone.js',
+    'node_copies/js/underscore.js',
+    'node_copies/js/underscore.string.js',
+    'node_copies/js/backbone.js',
     'js/vendor/URI.min.js',
 
     # Make some edX UI Toolkit utilities available in the global "edx" namespace
@@ -1362,11 +1362,11 @@ base_vendor_js = [
     'edx-ui-toolkit/js/utils/html-utils.js',
 
     # Load Bootstrap and supporting libraries
-    'common/js/vendor/popper.js',
-    'common/js/vendor/bootstrap.js',
+    'node_copies/js/popper.js',
+    'node_copies/js/bootstrap.js',
 
     # Finally load RequireJS
-    'common/js/vendor/require.js'
+    'node_copies/js/require.js'
 ]
 
 # test_order: Determines the position of this chunk of javascript on

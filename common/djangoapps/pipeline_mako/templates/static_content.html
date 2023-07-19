@@ -133,9 +133,9 @@ if not source:
     % if settings.STUDIO_FRONTEND_CONTAINER_URL:
         <script type="text/javascript" src="${settings.STUDIO_FRONTEND_CONTAINER_URL}/${entry}.js"></script>
     % else:
-        <script type="text/javascript" src="${url('common/js/vendor/runtime.min.js')}"></script>
-        <script type="text/javascript" src="${url('common/js/vendor/common.min.js')}"></script>
-        <script type="text/javascript" src="${url('common/js/vendor/{}.min.js'.format(entry))}"></script>
+        <script type="text/javascript" src="${url('node_copies/js/runtime.min.js')}"></script>
+        <script type="text/javascript" src="${url('node_copies/js/common.min.js')}"></script>
+        <script type="text/javascript" src="${url('node_copies/js/{}.min.js'.format(entry))}"></script>
     % endif
 </%def>
 

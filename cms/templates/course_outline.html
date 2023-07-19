@@ -37,8 +37,8 @@ from django.urls import reverse
 <%static:optional_include_mako file="course_outline_header_extras_post.html" />
 
 % if not settings.STUDIO_FRONTEND_CONTAINER_URL:
-<link rel="stylesheet" type="text/css" href="${static.url('common/css/vendor/common.min.css')}" />
-<link rel="stylesheet" type="text/css" href="${static.url('common/css/vendor/courseOutlineHealthCheck.min.css')}" />
+<link rel="stylesheet" type="text/css" href="${static.url('node_copies/css/common.min.css')}" />
+<link rel="stylesheet" type="text/css" href="${static.url('node_copies/css/courseOutlineHealthCheck.min.css')}" />
 % endif
 </%block>
 

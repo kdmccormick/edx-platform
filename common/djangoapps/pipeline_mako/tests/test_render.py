@@ -14,9 +14,9 @@ class RequireJSPathOverridesTest(TestCase):
     """Test RequireJS path overrides. """
 
     OVERRIDES = {
-        'jquery': 'common/js/vendor/jquery.js',
+        'jquery': 'node_copies/js/jquery.js',
         'text': 'js/vendor/text.js',
-        'backbone': 'common/js/vendor/backbone.js'
+        'backbone': 'node_copies/js/backbone.js'
     }
 
     OVERRIDES_JS = [
@@ -24,9 +24,9 @@ class RequireJSPathOverridesTest(TestCase):
         "(function (require) {",
         "require.config({",
         "paths: {",
-        "'jquery': 'common/js/vendor/jquery',",
+        "'jquery': 'node_copies/js/jquery',",
         "'text': 'js/vendor/text',",
-        "'backbone': 'common/js/vendor/backbone'",
+        "'backbone': 'node_copies/js/backbone'",
         "}",
         "});",
         "}).call(this, require || RequireJS.require);",

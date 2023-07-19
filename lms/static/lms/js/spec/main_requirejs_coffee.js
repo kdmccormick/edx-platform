@@ -34,10 +34,10 @@
     requirejs.config({
         baseUrl: '/base/',
         paths: {
-            moment: 'xmodule_js/common_static/common/js/vendor/moment-with-locales',
+            moment: 'xmodule_js/common_static/node_copies/js/moment-with-locales',
             draggabilly: 'xmodule_js/common_static/js/vendor/draggabilly',
             'edx-ui-toolkit': 'edx-ui-toolkit',
-            hls: 'common/js/vendor/hls'
+            hls: 'node_copies/js/hls'
         },
         shim: {
             moment: {

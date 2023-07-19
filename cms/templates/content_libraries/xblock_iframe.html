@@ -18,7 +18,7 @@
   <!-- The Video XBlock requires "Slider" from jQuery-UI: -->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <!-- The video XBlock depends on Underscore.JS -->
-  <script type="text/javascript" src="{{ lms_root_url }}/static/common/js/vendor/underscore.js"></script>
+  <script type="text/javascript" src="{{ lms_root_url }}/static/node_copies/js/underscore.js"></script>
   <!-- The video XBlock depends on jquery-cookie -->
   <script type="text/javascript" src="{{ lms_root_url }}/static/js/vendor/jquery.cookie.js"></script>
   <!--The Video XBlock has an undeclared dependency on 'Logger' -->
@@ -26,7 +26,7 @@
     window.Logger = { log: function() { } };
   </script>
   <!-- Builtin XBlock types depend on RequireJS -->
-  <script type="text/javascript" src="{{ lms_root_url }}/static/common/js/vendor/require.js"></script>
+  <script type="text/javascript" src="{{ lms_root_url }}/static/node_copies/js/require.js"></script>
   <script type="text/javascript" src="{{ lms_root_url }}/static/js/RequireJS-namespace-undefine.js"></script>
   <script>
     // The minimal RequireJS configuration required for common LMS building XBlock types to work:
@@ -36,8 +36,8 @@
             paths: {
                 accessibility: 'js/src/accessibility_tools',
                 draggabilly: 'js/vendor/draggabilly',
-                hls: 'common/js/vendor/hls',
-                moment: 'common/js/vendor/moment-with-locales',
+                hls: 'node_copies/js/hls',
+                moment: 'node_copies/js/moment-with-locales',
                 HtmlUtils: 'edx-ui-toolkit/js/utils/html-utils',
             },
         });

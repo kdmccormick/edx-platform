@@ -63,7 +63,7 @@ var commonsChunkPluginIndex = webpackConfig[0].plugins.findIndex(function(plugin
 // Files which are needed by all lms/cms suites.
 var commonFiles = {
     libraryFiles: [
-        {pattern: 'common/js/vendor/**/*.js'},
+        {pattern: 'node_copies/js/**/*.js'},
         {pattern: 'edx-ui-toolkit/js/**/*.js'},
         {pattern: 'xmodule_js/common_static/common/js/**/!(*spec).js'},
         {pattern: 'xmodule_js/common_static/js/**/!(*spec).js'},
@@ -235,7 +235,7 @@ function setDefaults(files) {
 function getBaseConfig(config, useRequireJs) {
     var getFrameworkFiles = function() {
         var files = [
-            'common/static/common/js/vendor/jquery.js',
+            'common/static/node_copies/js/jquery.js',
             'node_modules/jasmine-core/lib/jasmine-core/jasmine.js',
             'common/static/common/js/jasmine_stack_trace.js',
             'node_modules/karma-jasmine/lib/boot.js',

@@ -21,8 +21,8 @@ var options = {
     libraryFilesToInclude: [
         {pattern: 'js/src/ajax_prefix.js', included: true},
         {pattern: 'js/vendor/draggabilly.js', included: true},
-        {pattern: 'common/js/vendor/jquery.js', included: true},
-        {pattern: 'common/js/vendor/jquery-migrate.js', included: true},
+        {pattern: 'node_copies/js/jquery.js', included: true},
+        {pattern: 'node_copies/js/jquery-migrate.js', included: true},
         {pattern: 'js/src/jquery.immediateDescendents.js', included: true},
         {pattern: 'js/vendor/jquery.leanModal.js', included: true},
         {pattern: 'js/vendor/jquery.timeago.js', included: true},
@@ -31,9 +31,9 @@ var options = {
         {pattern: 'js/test/add_ajax_prefix.js', included: true},
         {pattern: 'js/test/i18n.js', included: true},
 
-        {pattern: 'common/js/vendor/underscore.js', included: true},
-        {pattern: 'common/js/vendor/underscore.string.js', included: true},
-        {pattern: 'common/js/vendor/backbone.js', included: true},
+        {pattern: 'node_copies/js/underscore.js', included: true},
+        {pattern: 'node_copies/js/underscore.string.js', included: true},
+        {pattern: 'node_copies/js/backbone.js', included: true},
 
         {pattern: 'edx-ui-toolkit/js/utils/global-loader.js', included: true},
         {pattern: 'edx-ui-toolkit/js/utils/string-utils.js', included: true},

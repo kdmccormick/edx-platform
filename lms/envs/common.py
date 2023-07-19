@@ -2323,13 +2323,13 @@ courseware_js = [
 # In the future, we will likely refactor this to use
 # RequireJS and an optimizer.
 base_vendor_js = [
-    'common/js/vendor/jquery.js',
-    'common/js/vendor/jquery-migrate.js',
+    'node_copies/js/jquery.js',
+    'node_copies/js/jquery-migrate.js',
     'js/vendor/jquery.cookie.js',
     'js/vendor/url.min.js',
-    'common/js/vendor/underscore.js',
-    'common/js/vendor/underscore.string.js',
-    'common/js/vendor/picturefill.js',
+    'node_copies/js/underscore.js',
+    'node_copies/js/underscore.string.js',
+    'node_copies/js/picturefill.js',
 
     # Make some edX UI Toolkit utilities available in the global "edx" namespace
     'edx-ui-toolkit/js/utils/global-loader.js',
@@ -2337,10 +2337,10 @@ base_vendor_js = [
     'edx-ui-toolkit/js/utils/html-utils.js',
 
     # Finally load RequireJS and dependent vendor libraries
-    'common/js/vendor/require.js',
+    'node_copies/js/require.js',
     'js/RequireJS-namespace-undefine.js',
     'js/vendor/URI.min.js',
-    'common/js/vendor/backbone.js'
+    'node_copies/js/backbone.js'
 ]
 
 main_vendor_js = base_vendor_js + [
@@ -2431,16 +2431,16 @@ incourse_reverify_js = [
 ccx_js = sorted(rooted_glob(PROJECT_ROOT / 'static', 'js/ccx/**/*.js'))
 
 certificates_web_view_js = [
-    'common/js/vendor/jquery.js',
-    'common/js/vendor/jquery-migrate.js',
+    'node_copies/js/jquery.js',
+    'node_copies/js/jquery-migrate.js',
     'js/vendor/jquery.cookie.js',
     'js/src/logger.js',
     'js/utils/facebook.js',
 ]
 
 credit_web_view_js = [
-    'common/js/vendor/jquery.js',
-    'common/js/vendor/jquery-migrate.js',
+    'node_copies/js/jquery.js',
+    'node_copies/js/jquery-migrate.js',
     'js/vendor/jquery.cookie.js',
     'js/src/logger.js',
 ]
@@ -2594,8 +2594,8 @@ PIPELINE['JAVASCRIPT'] = {
             [
                 'js/sticky_filter.js',
                 'js/query-params.js',
-                'common/js/vendor/moment-with-locales.js',
-                'common/js/vendor/moment-timezone-with-data.js',
+                'node_copies/js/moment-with-locales.js',
+                'node_copies/js/moment-timezone-with-data.js',
             ]
         ),
         'output_filename': 'js/lms-application.js',
@@ -2693,7 +2693,7 @@ REQUIRE_BASE_URL = "./"
 REQUIRE_BUILD_PROFILE = "lms/js/build.js"
 
 # The name of the require.js script used by your project, relative to REQUIRE_BASE_URL.
-REQUIRE_JS = "common/js/vendor/require.js"
+REQUIRE_JS = "node_copies/js/require.js"
 
 # Whether to run django-require in debug mode.
 REQUIRE_DEBUG = False
@@ -2711,8 +2711,8 @@ REQUIRE_DEBUG = False
 REQUIRE_JS_PATH_OVERRIDES = {
     'course_bookmarks/js/views/bookmark_button': 'course_bookmarks/js/views/bookmark_button.js',
     'js/views/message_banner': 'js/views/message_banner.js',
-    'moment': 'common/js/vendor/moment-with-locales.js',
-    'moment-timezone': 'common/js/vendor/moment-timezone-with-data.js',
+    'moment': 'node_copies/js/moment-with-locales.js',
+    'moment-timezone': 'node_copies/js/moment-timezone-with-data.js',
     'js/courseware/course_info_events': 'js/courseware/course_info_events.js',
     'js/courseware/accordion_events': 'js/courseware/accordion_events.js',
     'js/dateutil_factory': 'js/dateutil_factory.js',
@@ -2724,7 +2724,7 @@ REQUIRE_JS_PATH_OVERRIDES = {
     'js/groups/discussions_management/discussions_dashboard_factory':
         'js/discussions_management/views/discussions_dashboard_factory.js',
     'draggabilly': 'js/vendor/draggabilly.js',
-    'hls': 'common/js/vendor/hls.js'
+    'hls': 'node_copies/js/hls.js'
 }
 
 ########################## DJANGO WEBPACK LOADER ##############################
