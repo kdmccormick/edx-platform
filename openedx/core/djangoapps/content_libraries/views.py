@@ -221,6 +221,144 @@ class LibraryRootView(APIView):
         return Response(ContentLibraryMetadataSerializer(result).data)
 
 
+from edx_django_utils import monitoring
+
+
+def _save_request_status(request, key, status):
+    """
+    Save import status for a course in request session
+
+    TODO copied from v1->v1 import
+    """
+    session_status = request.session.get('import_status')
+    if session_status is None:
+        session_status = request.session.setdefault("import_status", {})
+
+    session_status[key] = status
+    request.session.save()
+
+
+@view_auth_classes()
+class LibraryOlxView(APIView):
+    """
+    Views to work with a library imports/exports
+
+    TODO mostly copied from v1->v1 import
+    """
+    def put(self, request, lib_key_str):
+        """
+        Import a content library
+        """
+        # Upload .tar.gz to local filesystem for one-server installations not using S3 or Swift
+        data_root = path(settings.GITHUB_REPO_ROOT)
+        subdir = base64.urlsafe_b64encode(repr(courselike_key).encode('utf-8')).decode('utf-8')
+        course_dir = data_root / subdir
+        filename = request.FILES['course-data'].name
+        monitoring.set_custom_attributes_for_course_key(courselike_key)
+        current_step = 'Uploading'
+
+        def error_response(message, status, stage):
+            """Returns Json error response"""
+            return JsonResponse({'ErrMsg': message, 'Stage': stage}, status=status)
+
+        courselike_string = str(courselike_key) + filename
+        # Do everything in a try-except block to make sure everything is properly cleaned up.
+        try:
+            # Use sessions to keep info about import progress
+            _save_request_status(request, courselike_string, 0)
+
+            if not filename.endswith('.tar.gz'):
+                error_message = _('We only support uploading a .tar.gz file.')
+                _save_request_status(request, courselike_string, -1)
+                monitor_import_failure(courselike_key, current_step, message=error_message)
+                return error_response(error_message, 415, 0)
+
+            temp_filepath = course_dir / filename
+            if not course_dir.isdir():
+                os.mkdir(course_dir)
+
+            logging.info(f'Course import {courselike_key}: importing course to {temp_filepath}')
+
+            # Get upload chunks byte ranges
+            try:
+                matches = CONTENT_RE.search(request.META["HTTP_CONTENT_RANGE"])
+                content_range = matches.groupdict()
+            except KeyError:  # Single chunk
+                # no Content-Range header, so make one that will work
+                logging.info(f'Course import {courselike_key}: single chunk found')
+                content_range = {'start': 0, 'stop': 1, 'end': 2}
+
+            # stream out the uploaded files in chunks to disk
+            is_initial_import_request = int(content_range['start']) == 0
+            if is_initial_import_request:
+                mode = "wb+"
+                set_custom_attribute('course_import_init', True)
+            else:
+                mode = "ab+"
+                # Appending to fail would fail if the file doesn't exist.
+                if not temp_filepath.exists():
+                    error_message = _('Some chunks missed during file upload. Please try again')
+                    _save_request_status(request, courselike_string, -1)
+                    log.error(f'Course Import {courselike_key}: {error_message}')
+                    monitor_import_failure(courselike_key, current_step, message=error_message)
+                    return error_response(error_message, 409, 0)
+
+                size = os.path.getsize(temp_filepath)
+                # Check to make sure we haven't missed a chunk
+                # This shouldn't happen, even if different instances are handling
+                # the same session, but it's always better to catch errors earlier.
+                if size < int(content_range['start']):
+                    error_message = _('File upload failed. Please try again')
+                    _save_request_status(request, courselike_string, -1)
+                    log.error(f'Course import {courselike_key}: A chunk has been missed')
+                    monitor_import_failure(courselike_key, current_step, message=error_message)
+                    return error_response(error_message, 409, 0)
+
+                # The last request sometimes comes twice. This happens because
+                # nginx sends a 499 error code when the response takes too long.
+                elif size > int(content_range['stop']) and size == int(content_range['end']):
+                    return JsonResponse({'ImportStatus': 1})
+
+            with open(temp_filepath, mode) as temp_file:
+                for chunk in request.FILES['course-data'].chunks():
+                    temp_file.write(chunk)
+
+            size = os.path.getsize(temp_filepath)
+
+            if int(content_range['stop']) != int(content_range['end']) - 1:
+                # More chunks coming
+                return JsonResponse({
+                    "files": [{
+                        "name": filename,
+                        "size": size,
+                        "deleteUrl": "",
+                        "deleteType": "",
+                        "url": reverse_course_url('import_handler', courselike_key),
+                        "thumbnailUrl": ""
+                    }]
+                })
+
+            log.info(f'Course import {courselike_key}: Upload complete')
+            with open(temp_filepath, 'rb') as local_file:
+                django_file = File(local_file)
+                storage_path = course_import_export_storage.save('olx_import/' + filename, django_file)
+            import_olx.delay(
+                request.user.id, str(courselike_key), storage_path, filename, request.LANGUAGE_CODE)
+
+        # Send errors to client with stage at which error occurred.
+        except Exception as exception:  # pylint: disable=broad-except
+            _save_request_status(request, courselike_string, -1)
+            if course_dir.isdir():
+                shutil.rmtree(course_dir)
+                log.info("Course import %s: Temp data cleared", courselike_key)
+
+            monitor_import_failure(courselike_key, current_step, exception=exception)
+            log.exception(f'Course import {courselike_key}: error importing course.')
+            return error_response(str(exception), 400, -1)
+
+        return JsonResponse({'ImportStatus': 1})
+
+
 @view_auth_classes()
 class LibraryDetailsView(APIView):
     """

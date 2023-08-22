@@ -550,16 +550,34 @@ def import_olx(self, user_id, course_key_string, archive_path, archive_name, lan
     if not file_is_supported():
         return
 
-    is_library = isinstance(courselike_key, LibraryLocator)
-    is_course = not is_library
-    if is_library:
+    if isinstance(courselike_key, LibraryLocatorV2):
         root_name = LIBRARY_ROOT
-        courselike_block = modulestore().get_library(courselike_key)
-        import_func = import_library_from_xml
+        is_library = True
+        library_version = 2
+        course_block = None
+        import_func = todo()
+    elif isinstance(courselike_key, LibraryLocator):
+        root_name = LIBRARY_ROOT
+        is_library = True
+        library_version = 1
+        course_block = None
+        import_func = lambda *args, **kwargs: import_library_from_xml(
+            modulestore(),
+            *args,
+            static_content_store=contentstore(),
+            **kwargs,
+        )
     else:
+        is_library = False
         root_name = COURSE_ROOT
-        courselike_block = modulestore().get_course(courselike_key)
-        import_func = import_course_from_xml
+        course_block = modulestore().get_course(courselike_key)
+        import_func = lambda *args, **kwargs: import_course_from_xml(
+            modulestore(),
+            *args,
+            static_content_store=contentstore(),
+            **kwargs,
+        )
+    is_course = not is_library
 
     # Locate the uploaded OLX archive (and download it from S3 if necessary)
     # Do everything in a try-except block to make sure everything is properly cleaned up.
@@ -594,7 +612,7 @@ def import_olx(self, user_id, course_key_string, archive_path, archive_name, lan
         # If the course has an entrance exam then remove it and its corresponding milestone.
         # current course state before import.
         if is_course:
-            if courselike_block.entrance_exam_enabled:
+            if course_block.entrance_exam_enabled:
                 fake_request = RequestFactory().get('/')
                 fake_request.user = user
                 from .views.entrance_exam import remove_entrance_exam_milestone_reference
@@ -646,16 +664,17 @@ def import_olx(self, user_id, course_key_string, archive_path, archive_name, lan
         LOGGER.info(f'{log_prefix}: Extracted file verified. Updating course started')
 
         courselike_items = import_func(
-            modulestore(), user.id,
-            settings.GITHUB_REPO_ROOT, [dirpath],
+            modulestore(),
+            user.id,
+            settings.GITHUB_REPO_ROOT,
+            [dirpath],
             load_error_blocks=False,
-            static_content_store=contentstore(),
             target_id=courselike_key,
             verbose=True,
         )
 
-        new_location = courselike_items[0].location
-        LOGGER.debug('new course at %s', new_location)
+        new_usage_key = courselike_items[0].scope_ids.usage_id
+        LOGGER.debug('new course at %s', new_usage_key)
 
         LOGGER.info(f'{log_prefix}: Course import successful')
         set_custom_attribute('course_import_completed', True)
