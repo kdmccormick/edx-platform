@@ -1580,10 +1580,21 @@ class StudioPermissionsService:
     def __init__(self, user):
         self._user = user
 
-    def can_read(self, course_key):
+    def can_read(self, context_key: ContextKey):
         """ Does the user have read access to the given course/library? """
-        return has_studio_read_access(self._user, course_key)
+        if isinstance(ContextKey, CourseLocator):
+            return has_studio_read_access(self._user, course_key)
+        elif isinstance(LibrarKey):
+            return ...
+        else:
+            raise ValueError("Cannot compute read access for key '{context_key}'")
 
-    def can_write(self, course_key):
+    def can_write(self, context_key: ContextKey):
         """ Does the user have read access to the given course/library? """
-        return has_studio_write_access(self._user, course_key)
+        if isinstance(ContextKey, CourseLocator):
+            return has_studio_read_access(self._user, course_key)
+        elif isinstance(LibrarKey):
+            return ...
+        else:
+            raise ValueError("Cannot compute write access for key '{context_key}'")
+        todo()

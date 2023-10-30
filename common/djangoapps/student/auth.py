@@ -9,7 +9,9 @@ to decide whether to check course creator role, and other such functions.
 from ccx_keys.locator import CCXBlockUsageLocator, CCXLocator
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from opaque_keys.edx.locator import LibraryLocator
+from opaque_keys.edx.keys import LearningContextKey, OpaqueKey
+from opaque_keys.edx.locator import LibraryLocator, LibraryLocatorV2
+from typing import TypeAlias
 
 from common.djangoapps.student.roles import (
     CourseBetaTesterRole,
@@ -35,12 +37,17 @@ STUDIO_NO_PERMISSIONS = 0
 # In addition to the above, one is always allowed to "demote" oneself to a lower role within a course, or remove oneself
 
 
-def is_ccx_course(course_key):
+# A union of the locators for learning contexts upon which it makes sense to do Studio permission checks.
+# These locators all have the `org` field.
+PermissionContextLocator: TypeAlias = CourseLocator | LibraryLocator | LibraryLocatorV2
+
+
+def is_ccx_course(key: OpaqueKey) -> bool:
     """
-    Check whether the course locator maps to a CCX course; this is important
+    Check whether the key maps to a CCX course or a block usage within it; this is important
     because we don't allow access to CCX courses in Studio.
     """
-    return isinstance(course_key, CCXLocator) or isinstance(course_key, CCXBlockUsageLocator)  # lint-amnesty, pylint: disable=consider-merging-isinstance
+    return isinstance(key, (CCXLocator, CCXBlockUsageLocator))
 
 
 def user_has_role(user, role):
@@ -73,25 +80,33 @@ def user_has_role(user, role):
     return False
 
 
-def get_user_permissions(user, course_key, org=None):
+def get_user_permissions(user, context_key: PermissionContextLocator|None, org: str|None = None) -> bool:
     """
-    Get the bitmask of permissions that this user has in the given course context.
-    Can also set course_key=None and pass in an org to get the user's
-    permissions for that organization as a whole.
+    Get the bitmask of permissions that this user has in the given learning context (eg, course or library).
+    Can also set context_key=None and pass in an org to get the user's permissions for that organization as a whole.
     """
     if org is None:
-        org = course_key.org
-        course_key = course_key.for_branch(None)
+        if not isinstance(context_key, (CourseLocator, LibraryLocator, LibraryV2Locator)):
+            raise ValueError(
+                f"get_user_permissions expected a locator to a course or library; got {context_key} instead."
+            )
+        org = context_key.org
+        if isinstance(context_key, CourseKey):
+            context_key = context_key.for_branch(None)
     else:
-        assert course_key is None
+        assert context_key is None
     # No one has studio permissions for CCX courses
-    if is_ccx_course(course_key):
+    if is_ccx_course(context_key):
         return STUDIO_NO_PERMISSIONS
     all_perms = STUDIO_EDIT_ROLES | STUDIO_VIEW_USERS | STUDIO_EDIT_CONTENT | STUDIO_VIEW_CONTENT
     # global staff, org instructors, and course instructors have all permissions:
     if GlobalStaff().has_user(user) or OrgInstructorRole(org=org).has_user(user):
         return all_perms
-    if course_key and user_has_role(user, CourseInstructorRole(course_key)):
+    # V2 library permissions are computed solely from tables in the content_libraries app.
+    if isinstance(context_key, LibraryLocatorV2):
+        return todo()
+    # insturctor
+    if context_key and user_has_role(user, CourseInstructorRole(context_key)):
         return all_perms
     # HACK: Limited Staff should not have studio read access. However, since many LMS views depend on the
     #  `has_course_author_access` check and `course_author_access_required` decorator, we have to allow write access
@@ -101,39 +116,36 @@ def get_user_permissions(user, course_key, org=None):
     #  The permissions matrix from the RBAC project (https://github.com/openedx/platform-roadmap/issues/246) shows that
     #  the LMS and Studio permissions will be separated as a part of this project. Once this is done (and this code is
     #  not removed during its implementation), we can replace the Limited Staff permissions with more granular ones.
-    if course_key and user_has_role(user, CourseLimitedStaffRole(course_key)):
+    if context_key and user_has_role(user, CourseLimitedStaffRole(context_key)):
         return STUDIO_EDIT_CONTENT
     # Staff have all permissions except EDIT_ROLES:
-    if OrgStaffRole(org=org).has_user(user) or (course_key and user_has_role(user, CourseStaffRole(course_key))):
-        return STUDIO_VIEW_USERS | STUDIO_EDIT_CONTENT | STUDIO_VIEW_CONTENT
-    # Otherwise, for libraries, users can view only:
-    if course_key and isinstance(course_key, LibraryLocator):
-        if OrgLibraryUserRole(org=org).has_user(user) or user_has_role(user, LibraryUserRole(course_key)):
+    if OrgStaffRole(org=org).has_user(user) or (context_key and user_has_role(user, CourseStaffRole(context_key))):
+        return STUDIO_VIEW_USERS | STUDIO_EDIT_CONTENT | STUDIO_VIEW_CONTET
+    # Otherwise, for V1 libraries, users can view only:
+    if context_key and isinstance(context_key, LibraryLocator):
+        if OrgLibraryUserRole(org=org).has_user(user) or user_has_role(user, LibraryUserRole(context_key)):
             return STUDIO_VIEW_USERS | STUDIO_VIEW_CONTENT
     return STUDIO_NO_PERMISSIONS
 
 
-def has_studio_write_access(user, course_key):
+def has_studio_write_access(user, context_key: PermissionContextLocator|None):
     """
-    Return True if user has studio write access to the given course.
+    Return True if user has studio write access to the given learning context.
     Note that the CMS permissions model is with respect to courses.
     There is a super-admin permissions if user.is_staff is set.
     Also, since we're unifying the user database between LMS and CAS,
     I'm presuming that the course instructor (formally known as admin)
     will not be in both INSTRUCTOR and STAFF groups, so we have to cascade our
     queries here as INSTRUCTOR has all the rights that STAFF do.
-
-    :param user:
-    :param course_key: a CourseKey
     """
-    return bool(STUDIO_EDIT_CONTENT & get_user_permissions(user, course_key))
+    return bool(STUDIO_EDIT_CONTENT & get_user_permissions(user, context_key: PermissionContextLocator|None))
 
 
-def has_course_author_access(user, course_key):
+def has_course_author_access(user, context_key: PermissionContextLocator|None):
     """
     Old name for has_studio_write_access
     """
-    return has_studio_write_access(user, course_key)
+    return has_studio_write_access(user, context_key)
 
 
 def has_studio_advanced_settings_access(user):
@@ -150,15 +162,15 @@ def has_studio_advanced_settings_access(user):
     )
 
 
-def has_studio_read_access(user, course_key):
+def has_studio_read_access(user, context_key: PermissionContextLocator|None):
     """
-    Return True if user is allowed to view this course/library in studio.
+    Return True if user is allowed to view this context (course/library) in studio.
     Will also return True if user has write access in studio (has_course_author_access)
 
     There is currently no such thing as read-only course access in studio, but
     there is read-only access to content libraries.
     """
-    return bool(STUDIO_VIEW_CONTENT & get_user_permissions(user, course_key))
+    return bool(STUDIO_VIEW_CONTENT & get_user_permissions(user, context_key))
 
 
 def is_content_creator(user, org):

@@ -179,6 +179,7 @@ class LibraryToolsService:
         exact same definition ID used in the copy block.
 
         """
+        import time; time.sleep(10)
         if user_perms and not user_perms.can_write(dest_block.location.course_key):
             raise PermissionDenied()
 
@@ -213,14 +214,11 @@ class LibraryToolsService:
         name = update_children_task.__class__.generate_name(args)
         return UserTaskStatus.objects.filter(name=name).order_by('-created').first()
 
-    def list_available_libraries(self):
+    def list_visible_v2_libraries(self) -> [LibaryKey, str]:
         """
-        List all known libraries.
+        List all V2 (blockstore-backed) libraries visible to the current user.
 
-        Collects Only V2 Libaries if the FEATURES[ENABLE_LIBRARY_AUTHORING_MICROFRONTEND] setting is True.
-        Otherwise, return all v1 and v2 libraries.
-        Returns tuples of (library key, display_name).
-
+        Returns tuples of (library_key, display_name).
         """
         user = User.objects.get(id=self.user_id)
         v1_libs = [
@@ -231,9 +229,17 @@ class LibraryToolsService:
         v2_libs_with_meta = library_api.get_metadata_from_index(v2_query)
         v2_libs = [(lib.key, lib.title) for lib in v2_libs_with_meta]
 
-        if settings.FEATURES.get('ENABLE_LIBRARY_AUTHORING_MICROFRONTEND'):
-            return v2_libs
-        return v1_libs + v2_libs
+        todo()
+        return v2_libs
+
+    def list_available_v1_libraries(self) -> [CourseKey, str]:
+        """
+        List all V1 (modulestore-backed) libraries visible to the current user.
+
+        Returns tuples of (library_key, display_name).
+        """
+        todo()
+
 
     def import_from_blockstore(self, dest_block, blockstore_block_ids):
         """
