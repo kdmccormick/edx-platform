@@ -96,27 +96,16 @@ class LibraryBundle:
     Wrapper around a Content Library Blockstore bundle that contains OLX.
     """
 
-    def __init__(self, library_key, bundle_uuid, draft_name: str | None = None, bundle_version: int | None):
+    def __init__(self, library_key, bundle_uuid, draft_name: str | None = None, version: int | None):
         """
         Instantiate this wrapper for the bundle with the specified library_key,
         UUID, and optionally: the specified draft name OR version number.
         """
         self.library_key = library_key
         self.bundle_uuid = bundle_uuid
-        self._latest_version = get_bundle_version_number(self.bundle_uuid)
-
-        if draft_name and bundle_version:
-            raise ValueError(
-                "Only one of (draft_name, version) may be specified "
-                f"({library_key=}, {bundle_uuid=}, {draft_name=}, {bundle_version=})."
-            )
-        elif draft_name:
-            self.version_spec = {"draft_name": draft_name}
-        else:
-            self.version_spec = {"bundle_version": bundle_version or self._latest_version}
-
-        self.cache = BundleCache(bundle_uuid, **self.version_spec)
-
+        self.draft_name = draft_name
+        self.version = version
+        self.cache = BundleCache(bundle_uuid, draft_name)  # Will raise if both (draft_name, version) are set.
 
     def get_olx_files(self):
         """
@@ -132,7 +121,7 @@ class LibraryBundle:
             'unit/unit1/definition.xml',
         ]
         """
-        bundle_files = get_bundle_files_cached(self.bundle_uuid, **self.version_spec)
+        bundle_files = get_bundle_files_cached(self.bundle_uuid, draft_name=self.draft_name)
         return [f.path for f in bundle_files if f.path.endswith("/definition.xml")]
 
     def definition_for_usage(self, usage_key):
@@ -156,10 +145,14 @@ class LibraryBundle:
           block the usage ID refers to.
         """
         # Now that we know the library/bundle, find the block's definition
+        if self.draft_name:
+            version_arg = {"draft_name": self.draft_name}
+        else:
+            version_arg = {"bundle_version": get_bundle_version_number(self.bundle_uuid)}
         olx_path = f"{usage_key.block_type}/{usage_key.usage_id}/definition.xml"
         try:
-            get_bundle_file_metadata_with_cache(self.bundle_uuid, olx_path, **self.version_spec)
-            return BundleDefinitionLocator(self.bundle_uuid, usage_key.block_type, olx_path, **self.version_spec)
+            get_bundle_file_metadata_with_cache(self.bundle_uuid, olx_path, **version_arg)
+            return BundleDefinitionLocator(self.bundle_uuid, usage_key.block_type, olx_path, **version_arg)
         except blockstore_api.BundleFileNotFound:
             # This must be a usage of a block from a linked bundle. One of the
             # OLX files in this bundle contains an <xblock-include usage="..."/>
@@ -233,7 +226,11 @@ class LibraryBundle:
                 add_definitions_children(child_usage, child_def_key)
 
         # Find all the definitions in this bundle and recursively add all their descendants:
-        bundle_files = get_bundle_files_cached(bundle_uuid=self.bundle_uuid, **self.version_spec)
+        bundle_files = get_bundle_files_cached(self.bundle_uuid, draft_name=self.draft_name)
+        if self.draft_name:
+            version_arg = {"draft_name": self.draft_name}
+        else:
+            version_arg = {"bundle_version": get_bundle_version_number(self.bundle_uuid)}
         for bfile in bundle_files:
             if not bfile.path.endswith("/definition.xml") or bfile.path.count('/') != 2:
                 continue  # Not an OLX file.
@@ -242,7 +239,7 @@ class LibraryBundle:
                 bundle_uuid=self.bundle_uuid,
                 block_type=block_type,
                 olx_path=bfile.path,
-                **self.version_spec,
+                **version_arg
             )
             usage_key = LibraryUsageLocatorV2(self.library_key, block_type, usage_id)
             add_definitions_children(usage_key, def_key)
@@ -258,7 +255,7 @@ class LibraryBundle:
             problem/quiz1/
         directory.
         """
-        if 'draft_name' not in self.version_spec:
+        if self.draft_name is None:
             return False  # No active draft so can't be changes
         prefix = self.olx_prefix(definition_key)
         return prefix in self._get_changed_definitions()
@@ -273,7 +270,7 @@ class LibraryBundle:
         if cached_result is not None:
             return cached_result
         changed = []
-        bundle_files = get_bundle_files_cached(self.bundle_uuid, **self.version_spec)
+        bundle_files = get_bundle_files_cached(self.bundle_uuid, draft_name=self.draft_name)
         for file_ in bundle_files:
             if getattr(file_, 'modified', False) and file_.path.count('/') >= 2:
                 (type_part, id_part, _rest) = file_.path.split('/', 2)
@@ -296,12 +293,12 @@ class LibraryBundle:
         including deletes, and has_unpublished_deletes is only true if one or
         more blocks has been deleted since the last publish.
         """
-        if not (draft_name := self.version_spec.get("draft_name")):
+        if not self.draft_name:
             return (False, False)
         cached_result = self.cache.get(('has_changes', ))
         if cached_result is not None:
             return cached_result
-        draft_files = get_bundle_files_cached(self.bundle_uuid, draft_name=draft_name)
+        draft_files = get_bundle_files_cached(self.bundle_uuid, draft_name=self.draft_name)
 
         has_unpublished_changes = False
         has_unpublished_deletes = False
@@ -314,7 +311,7 @@ class LibraryBundle:
         if not has_unpublished_changes:
             # Check if any links have changed:
             old_links = set(get_bundle_direct_links_with_cache(self.bundle_uuid).items())
-            new_links = set(get_bundle_direct_links_with_cache(self.bundle_uuid, draft_name=draft_name).items())
+            new_links = set(get_bundle_direct_links_with_cache(self.bundle_uuid, draft_name=self.draft_name).items())
             has_unpublished_changes = new_links != old_links
 
         published_file_paths = {f.path for f in get_bundle_files_cached(self.bundle_uuid)}
@@ -361,7 +358,7 @@ class LibraryBundle:
                 url=f.url,
                 hash_digest=f.hash_digest,
             )
-            for f in get_bundle_files_cached(self.bundle_uuid, **self.version_spec)
+            for f in get_bundle_files_cached(self.bundle_uuid, draft_name=self.draft_name)
             if f.path.startswith(path_prefix)
         ]
 
@@ -374,11 +371,10 @@ class LibraryBundle:
         usages_found = self.cache.get(cache_key)
         if usages_found is not None:
             return usages_found
-        if self._latest_version == 0:
+        version = get_bundle_version_number(self.bundle_uuid)
+        if version == 0:
             return None
-        last_published_time = blockstore_api.get_bundle_version(
-            bundle_uuid=self.bundle_uuid, version_number=self._latest_version,
-        ).created_at
+        last_published_time = blockstore_api.get_bundle_version(self.bundle_uuid, version).created_at
         self.cache.set(cache_key, last_published_time)
         return last_published_time
 
