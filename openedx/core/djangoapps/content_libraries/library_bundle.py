@@ -96,15 +96,16 @@ class LibraryBundle:
     Wrapper around a Content Library Blockstore bundle that contains OLX.
     """
 
-    def __init__(self, library_key, bundle_uuid, draft_name=None):
+    def __init__(self, library_key, bundle_uuid, draft_name: str | None = None, version: int | None):
         """
         Instantiate this wrapper for the bundle with the specified library_key,
-        UUID, and optionally the specified draft name.
+        UUID, and optionally: the specified draft name OR version number.
         """
         self.library_key = library_key
         self.bundle_uuid = bundle_uuid
         self.draft_name = draft_name
-        self.cache = BundleCache(bundle_uuid, draft_name)
+        self.version = version
+        self.cache = BundleCache(bundle_uuid, draft_name)  # Will raise if both (draft_name, version) are set.
 
     def get_olx_files(self):
         """

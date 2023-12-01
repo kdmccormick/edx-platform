@@ -47,13 +47,19 @@ class BundleCache:
     particular bundle versoin/draft by calling .clear()
     """
 
-    def __init__(self, bundle_uuid, draft_name=None):
+    def __init__(self, bundle_uuid, draft_name: str | None = None, version: int | None):
         """
         Instantiate this wrapper for the bundle with the specified UUID, and
-        optionally the specified draft name.
+        optionally: the specified draft name OR a specific version name.
         """
         self.bundle_uuid = bundle_uuid
+        if draft_name and version:
+            raise ValueError(
+                "Only one of (draft_name, version) may be specified "
+                f"({bundle_uuid=}, {draft_name=}, {version=})."
+            )
         self.draft_name = draft_name
+        self.version = version
 
     def get(self, key_parts, default=None):
         """

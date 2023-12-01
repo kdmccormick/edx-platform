@@ -1,6 +1,7 @@
 """
 Definition of "Library" as a learning context.
 """
+from __future__ import annotations
 
 import logging
 
@@ -26,9 +27,15 @@ class LibraryContextImpl(LearningContext):
     libraries based on modulestore.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, use_draft: str | None = None, use_version: int | None = None, **kwargs):
         super().__init__(**kwargs)
-        self.use_draft = kwargs.get('use_draft', None)
+        if use_draft and use_version:
+            raise ValueError(
+                "Only one of (use_draft, use_version) may be specified "
+                f"({use_draft=}, {use_version=})."
+            )
+        self.use_draft = use_draft
+        self.use_version = use_version
 
     def can_edit_block(self, user, usage_key):
         """
@@ -74,7 +81,13 @@ class LibraryContextImpl(LearningContext):
             return False
         return True
 
-    def definition_for_usage(self, usage_key, **kwargs):
+    def definition_for_usage(
+        self,
+        usage_key,
+        force_draft: str | None = None,
+        force_version: int | None = None,
+        **kwargs,
+    ):
         """
         Given a usage key for an XBlock in this context, return the
         BundleDefinitionLocator which specifies the actual XBlock definition
@@ -88,11 +101,9 @@ class LibraryContextImpl(LearningContext):
             bundle_uuid = bundle_uuid_for_library_key(library_key)
         except ContentLibrary.DoesNotExist:
             return None
-        if 'force_draft' in kwargs:  # lint-amnesty, pylint: disable=consider-using-get
-            use_draft = kwargs['force_draft']
-        else:
-            use_draft = self.use_draft
-        bundle = LibraryBundle(library_key, bundle_uuid, use_draft)
+        use_draft = force_draft or self.use_draft
+        use_version = force_version or self.use_version  # We can use 'or' because 0 is not a valid version.
+        bundle = LibraryBundle(library_key, bundle_uuid, draft_name=use_draft, version=use_version)
         return bundle.definition_for_usage(usage_key)
 
     def usage_for_child_include(self, parent_usage, parent_definition, parsed_include):
