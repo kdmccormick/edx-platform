@@ -642,7 +642,12 @@ def delete_library(library_key):
         raise
 
 
-def get_library_blocks(library_key, text_search=None, block_types=None) -> list[LibraryXBlockMetadata]:
+def get_library_blocks(
+    library_key,
+    text_search: str | None = None,
+    block_types: set[str] | None = None,
+    version_query: LibraryVersionQuery = LastPublished(),
+) -> list[LibraryXBlockMetadata]:
     """
     Get the list of top-level XBlocks in the specified library.
 
