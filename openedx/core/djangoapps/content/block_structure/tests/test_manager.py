@@ -2,8 +2,8 @@
 Tests for manager.py
 """
 
-import pytest
 import ddt
+import pytest
 from django.test import TestCase
 from edx_toggles.toggles.testutils import override_waffle_switch
 
@@ -18,7 +18,7 @@ from .helpers import (
     MockModulestoreFactory,
     MockTransformer,
     UsageKeyFactoryMixin,
-    mock_registered_transformers
+    mock_registered_transformers,
 )
 
 

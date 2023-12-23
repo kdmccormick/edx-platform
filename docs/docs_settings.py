@@ -7,19 +7,18 @@ import all the Studio code.
 
 import os
 
-from openedx.core.lib.derived import derive_settings
-
-from lms.envs.common import *  # lint-amnesty, pylint: disable=wildcard-import
 from cms.envs.common import (  # lint-amnesty, pylint: disable=unused-import
     ADVANCED_PROBLEM_TYPES,
     COURSE_IMPORT_EXPORT_STORAGE,
+    FRONTEND_REGISTER_URL,
     GIT_EXPORT_DEFAULT_IDENT,
     LIBRARY_AUTHORING_MICROFRONTEND_URL,
     SCRAPE_YOUTUBE_THUMBNAILS_JOB_QUEUE,
-    VIDEO_TRANSCRIPT_MIGRATIONS_JOB_QUEUE,
     UPDATE_SEARCH_INDEX_JOB_QUEUE,
-    FRONTEND_REGISTER_URL,
+    VIDEO_TRANSCRIPT_MIGRATIONS_JOB_QUEUE,
 )
+from lms.envs.common import *  # lint-amnesty, pylint: disable=wildcard-import
+from openedx.core.lib.derived import derive_settings
 
 # Turn on all the boolean feature flags, so that conditionally included
 # API endpoints will be found.

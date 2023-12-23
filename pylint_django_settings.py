@@ -1,5 +1,5 @@
-from pylint.interfaces import IAstroidChecker
 from pylint.checkers import BaseChecker
+from pylint.interfaces import IAstroidChecker
 from pylint_django.checkers import ForeignKeyStringsChecker
 from pylint_plugin_utils import get_checker
 

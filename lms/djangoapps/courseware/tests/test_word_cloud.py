@@ -1,10 +1,10 @@
 """Word cloud integration tests using mongo modulestore."""
 
 
-import pytest
-
 import json
 from operator import itemgetter
+
+import pytest
 
 # noinspection PyUnresolvedReferences
 from xmodule.tests.helpers import override_descriptor_system  # pylint: disable=unused-import

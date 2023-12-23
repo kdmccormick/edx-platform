@@ -1,7 +1,7 @@
 """
 Unittests for populate_marketing_opt_in_user_attribute management command.
 """
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 from braze.exceptions import BrazeClientError
 from django.core.management import call_command

@@ -7,21 +7,18 @@ from unittest import mock
 
 import ddt
 from edx_toggles.toggles.testutils import override_waffle_flag, override_waffle_switch
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory
 
 from common.djangoapps.student.tests.factories import CourseEnrollmentFactory, UserFactory
 from lms.djangoapps.certificates.api import has_self_generated_certificates_enabled
 from lms.djangoapps.certificates.config import AUTO_CERTIFICATE_GENERATION
 from lms.djangoapps.certificates.data import CertificateStatuses
-from lms.djangoapps.certificates.models import (
-    CertificateGenerationConfiguration,
-    GeneratedCertificate
-)
+from lms.djangoapps.certificates.models import CertificateGenerationConfiguration, GeneratedCertificate
 from lms.djangoapps.certificates.tests.factories import CertificateAllowlistFactory, GeneratedCertificateFactory
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from lms.djangoapps.grades.tests.utils import mock_passing_grade
 from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
+from xmodule.modulestore.tests.factories import CourseFactory
 
 
 class SelfGeneratedCertsSignalTest(ModuleStoreTestCase):

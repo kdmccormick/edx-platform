@@ -1,7 +1,7 @@
 """
 Demographics API URLs.
 """
-from django.urls import path, include
+from django.urls import include, path
 
 from .v1 import urls as v1_urls
 

@@ -5,8 +5,8 @@ Instructor API endpoint urls.
 from django.urls import include, path, re_path
 
 from openedx.core.constants import COURSE_ID_PATTERN
-from .views import api_urls
 
+from .views import api_urls
 
 urlpatterns = [
     re_path(rf'^courses/{COURSE_ID_PATTERN}/instructor/api/', include(api_urls.urlpatterns)),

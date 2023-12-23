@@ -3,12 +3,17 @@ Tests of the instructor dashboard spoc gradebook
 """
 from django.urls import reverse
 
-from xmodule.capa.tests.response_xml_factory import StringResponseXMLFactory
 from common.djangoapps.student.tests.factories import AdminFactory, CourseEnrollmentFactory, UserFactory
 from lms.djangoapps.courseware.tests.factories import StudentModuleFactory
 from lms.djangoapps.grades.api import task_compute_all_grades_for_course
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.capa.tests.response_xml_factory import StringResponseXMLFactory
+from xmodule.modulestore.tests.django_utils import (
+    SharedModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    CourseFactory,
+)
 
 USER_COUNT = 11
 

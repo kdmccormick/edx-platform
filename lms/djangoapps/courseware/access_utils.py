@@ -22,7 +22,7 @@ from lms.djangoapps.courseware.access_response import (
     EnrollmentRequiredAccessError,
     IncorrectActiveEnterpriseAccessError,
     StartDateEnterpriseLearnerError,
-    StartDateError
+    StartDateError,
 )
 from lms.djangoapps.courseware.masquerade import get_course_masquerade, is_masquerading_as_student
 from openedx.features.course_experience import COURSE_ENABLE_UNENROLLED_ACCESS_FLAG, COURSE_PRE_START_ACCESS_FLAG

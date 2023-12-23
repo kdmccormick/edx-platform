@@ -25,7 +25,6 @@ from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imp
 from django.core.files.base import ContentFile
 from django.db import models, transaction
 from django.urls import reverse
-
 from django.utils.functional import cached_property
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy
@@ -39,7 +38,7 @@ from lms.djangoapps.verify_student.ssencrypt import (
     generate_signed_message,
     random_aes_key,
     rsa_decrypt,
-    rsa_encrypt
+    rsa_encrypt,
 )
 from openedx.core.djangoapps.signals.signals import LEARNER_NOW_VERIFIED
 from openedx.core.storage import get_storage

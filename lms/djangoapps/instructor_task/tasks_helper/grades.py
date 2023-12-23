@@ -9,7 +9,6 @@ from collections import OrderedDict, defaultdict
 from datetime import datetime
 from itertools import chain
 from tempfile import TemporaryFile
-
 from time import time
 
 from django.conf import settings
@@ -48,7 +47,7 @@ from xmodule.partitions.partitions_service import PartitionService  # lint-amnes
 from xmodule.split_test_block import get_split_user_partitions  # lint-amnesty, pylint: disable=wrong-import-order
 
 from .runner import TaskProgress
-from .utils import upload_csv_to_report_store, upload_csv_file_to_report_store
+from .utils import upload_csv_file_to_report_store, upload_csv_to_report_store
 
 TASK_LOG = logging.getLogger('edx.celery.task')
 

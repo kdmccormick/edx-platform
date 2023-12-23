@@ -7,10 +7,10 @@ from django.urls import reverse
 from openedx_filters import PipelineStep
 from openedx_filters.learning.filters import AccountSettingsRenderStarted
 from rest_framework import status
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
 
-from openedx.core.djangolib.testing.utils import skip_unless_lms
 from common.djangoapps.student.tests.factories import UserFactory
+from openedx.core.djangolib.testing.utils import skip_unless_lms
+from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
 
 
 class TestRenderInvalidAccountSettings(PipelineStep):

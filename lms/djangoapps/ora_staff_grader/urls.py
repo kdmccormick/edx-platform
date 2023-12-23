@@ -1,9 +1,7 @@
 """
 URLs for Enhanced Staff Grader (ESG) backend-for-frontend (BFF)
 """
-from django.urls import include
-from django.urls import path
-
+from django.urls import include, path
 
 from lms.djangoapps.ora_staff_grader.views import (
     InitializeView,
@@ -14,7 +12,6 @@ from lms.djangoapps.ora_staff_grader.views import (
     SubmissionStatusFetchView,
     UpdateGradeView,
 )
-
 
 urlpatterns = []
 app_name = "ora-staff-grader"

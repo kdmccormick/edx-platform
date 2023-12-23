@@ -1,9 +1,6 @@
 """
 Test Student api.py
 """
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory
-
 from common.djangoapps.student.api import is_user_enrolled_in_course, is_user_staff_or_instructor_in_course
 from common.djangoapps.student.tests.factories import (
     CourseEnrollmentFactory,
@@ -12,6 +9,8 @@ from common.djangoapps.student.tests.factories import (
     StaffFactory,
     UserFactory,
 )
+from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
+from xmodule.modulestore.tests.factories import CourseFactory
 
 
 class TestStudentApi(SharedModuleStoreTestCase):

@@ -26,12 +26,12 @@ from common.djangoapps.student.models import (  # lint-amnesty, pylint: disable=
     CourseEnrollment,
     CourseEnrollmentAllowed,
     anonymous_id_for_user,
-    is_email_retired
+    is_email_retired,
 )
 from common.djangoapps.track.event_transaction_utils import (
     create_new_event_transaction_id,
     get_event_transaction_id,
-    set_event_transaction_type
+    set_event_transaction_type,
 )
 from lms.djangoapps.courseware.models import StudentModule
 from lms.djangoapps.grades.api import constants as grades_constants
@@ -45,7 +45,7 @@ from lms.djangoapps.instructor.message_types import (
     AllowedUnenroll,
     EnrolledUnenroll,
     EnrollEnrolled,
-    RemoveBetaTester
+    RemoveBetaTester,
 )
 from openedx.core.djangoapps.lang_pref import LANGUAGE_KEY
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers

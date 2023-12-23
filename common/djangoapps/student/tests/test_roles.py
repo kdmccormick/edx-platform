@@ -9,19 +9,19 @@ from opaque_keys.edx.keys import CourseKey
 
 from common.djangoapps.student.roles import (
     CourseBetaTesterRole,
-    CourseInstructorRole,
-    CourseRole,
-    CourseLimitedStaffRole,
-    CourseStaffRole,
-    CourseFinanceAdminRole,
-    CourseSalesAdminRole,
-    LibraryUserRole,
     CourseDataResearcherRole,
+    CourseFinanceAdminRole,
+    CourseInstructorRole,
+    CourseLimitedStaffRole,
+    CourseRole,
+    CourseSalesAdminRole,
+    CourseStaffRole,
     GlobalStaff,
+    LibraryUserRole,
     OrgContentCreatorRole,
     OrgInstructorRole,
     OrgStaffRole,
-    RoleCache
+    RoleCache,
 )
 from common.djangoapps.student.tests.factories import AnonymousUserFactory, InstructorFactory, StaffFactory, UserFactory
 

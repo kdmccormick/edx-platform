@@ -7,11 +7,7 @@ from django.test import TestCase, override_settings
 
 from openedx.core.djangoapps.content_libraries.constants import PROBLEM
 
-from .base import (
-    ContentLibrariesRestApiTest,
-    URL_LIB_LTI_JWKS,
-    skip_unless_cms,
-)
+from .base import URL_LIB_LTI_JWKS, ContentLibrariesRestApiTest, skip_unless_cms
 
 
 def override_features(**kwargs):

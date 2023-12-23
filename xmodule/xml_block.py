@@ -10,6 +10,7 @@ from lxml.etree import ElementTree, XMLParser
 from xblock.core import XML_NAMESPACES
 from xblock.fields import Dict, Scope, ScopeIds
 from xblock.runtime import KvsFieldData
+
 from xmodule.modulestore import EdxJSONEncoder
 from xmodule.modulestore.inheritance import InheritanceKeyValueStore, own_metadata
 

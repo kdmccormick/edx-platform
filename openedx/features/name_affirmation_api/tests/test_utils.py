@@ -6,7 +6,7 @@ from unittest.mock import patch
 import ddt
 from edx_django_utils.plugins import PluginError
 
-from openedx.features.name_affirmation_api.utils import is_name_affirmation_installed, get_name_affirmation_service
+from openedx.features.name_affirmation_api.utils import get_name_affirmation_service, is_name_affirmation_installed
 
 
 @ddt.ddt

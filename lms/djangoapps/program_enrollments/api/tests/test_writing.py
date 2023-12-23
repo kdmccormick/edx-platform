@@ -26,7 +26,7 @@ from lms.djangoapps.program_enrollments.constants import ProgramEnrollmentStatus
 from lms.djangoapps.program_enrollments.models import (
     CourseAccessRoleAssignment,
     ProgramCourseEnrollment,
-    ProgramEnrollment
+    ProgramEnrollment,
 )
 from lms.djangoapps.program_enrollments.tests.factories import ProgramCourseEnrollmentFactory, ProgramEnrollmentFactory
 from openedx.core.djangoapps.catalog.cache import PROGRAM_CACHE_KEY_TPL

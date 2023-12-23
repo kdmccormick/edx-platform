@@ -2,11 +2,11 @@
 Tests courseware views.py
 """
 
-from contextlib import contextmanager
 import html
 import itertools
 import json
 import re
+from contextlib import contextmanager
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock, PropertyMock, create_autospec, patch
 from urllib.parse import quote, urlencode
@@ -25,22 +25,15 @@ from django.test.utils import override_settings
 from django.urls import reverse, reverse_lazy
 from edx_django_utils.cache.utils import RequestCache
 from edx_toggles.toggles.testutils import override_waffle_flag
+from enterprise.api.v1.serializers import EnterpriseCustomerSerializer
 from freezegun import freeze_time
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from pytz import UTC
-from openedx.core.djangoapps.waffle_utils.models import WaffleFlagCourseOverrideModel
 from rest_framework import status
 from rest_framework.test import APIClient
 from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Scope, String
-from xmodule.capa.tests.response_xml_factory import MultipleChoiceResponseXMLFactory
-from xmodule.data import CertificatesDisplayBehaviors
-from xmodule.graders import ShowCorrectness
-from xmodule.modulestore import ModuleStoreEnum
-from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.tests.django_utils import CourseUserType, ModuleStoreTestCase, SharedModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory, check_mongo_calls
 
 import lms.djangoapps.courseware.views.views as views
 from common.djangoapps.course_modes.models import CourseMode
@@ -53,7 +46,7 @@ from common.djangoapps.student.tests.factories import (
     CourseEnrollmentFactory,
     GlobalStaffFactory,
     RequestFactoryNoCsrf,
-    UserFactory
+    UserFactory,
 )
 from common.djangoapps.util.tests.test_date_utils import fake_pgettext, fake_ugettext
 from common.djangoapps.util.url import reload_django_url_config
@@ -62,18 +55,18 @@ from lms.djangoapps.certificates import api as certs_api
 from lms.djangoapps.certificates.models import (
     CertificateGenerationConfiguration,
     CertificateGenerationCourseSetting,
-    CertificateStatuses
+    CertificateStatuses,
 )
 from lms.djangoapps.certificates.tests.factories import (
     CertificateAllowlistFactory,
     CertificateInvalidationFactory,
-    GeneratedCertificateFactory
+    GeneratedCertificateFactory,
 )
 from lms.djangoapps.commerce.models import CommerceConfiguration
 from lms.djangoapps.commerce.utils import EcommerceService
 from lms.djangoapps.courseware.access_utils import check_course_open_for_learner
-from lms.djangoapps.courseware.model_data import FieldDataCache, set_score
 from lms.djangoapps.courseware.block_render import get_block, handle_xblock_callback
+from lms.djangoapps.courseware.model_data import FieldDataCache, set_score
 from lms.djangoapps.courseware.tests.factories import StudentModuleFactory
 from lms.djangoapps.courseware.tests.helpers import MasqueradeMixin, get_expiration_banner_text, set_preview_mode
 from lms.djangoapps.courseware.testutils import RenderXBlockTestMixin
@@ -84,8 +77,8 @@ from lms.djangoapps.courseware.toggles import (
 from lms.djangoapps.courseware.user_state_client import DjangoXBlockUserStateClient
 from lms.djangoapps.courseware.views.views import (
     BasePublicVideoXBlockView,
-    PublicVideoXBlockView,
     PublicVideoXBlockEmbedView,
+    PublicVideoXBlockView,
 )
 from lms.djangoapps.instructor.access import allow_access
 from lms.djangoapps.verify_student.services import IDVerificationService
@@ -95,29 +88,34 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
 from openedx.core.djangoapps.crawlers.models import CrawlersConfig
 from openedx.core.djangoapps.credit.api import set_credit_requirements
 from openedx.core.djangoapps.credit.models import CreditCourse, CreditProvider
+from openedx.core.djangoapps.video_config.toggles import PUBLIC_VIDEO_SHARE
+from openedx.core.djangoapps.waffle_utils.models import WaffleFlagCourseOverrideModel
 from openedx.core.djangoapps.waffle_utils.testutils import WAFFLE_TABLES
 from openedx.core.djangolib.testing.utils import get_mock_request
-from openedx.core.djangoapps.video_config.toggles import PUBLIC_VIDEO_SHARE
 from openedx.core.lib.url_utils import quote_slashes
 from openedx.features.content_type_gating.models import ContentTypeGatingConfig
 from openedx.features.course_duration_limits.models import CourseDurationLimitConfig
-from openedx.features.course_experience import (
-    DISABLE_COURSE_OUTLINE_PAGE_FLAG,
-)
+from openedx.features.course_experience import DISABLE_COURSE_OUTLINE_PAGE_FLAG
 from openedx.features.course_experience.tests.views.helpers import add_course_mode
 from openedx.features.course_experience.url_helpers import (
     get_courseware_url,
     get_learning_mfe_home_url,
-    make_learning_mfe_courseware_url
+    make_learning_mfe_courseware_url,
 )
+from openedx.features.enterprise_support.api import add_enterprise_customer_to_session
 from openedx.features.enterprise_support.tests.factories import (
     EnterpriseCourseEnrollmentFactory,
+    EnterpriseCustomerFactory,
     EnterpriseCustomerUserFactory,
-    EnterpriseCustomerFactory
 )
 from openedx.features.enterprise_support.tests.mixins.enterprise import EnterpriseTestConsentRequired
-from openedx.features.enterprise_support.api import add_enterprise_customer_to_session
-from enterprise.api.v1.serializers import EnterpriseCustomerSerializer
+from xmodule.capa.tests.response_xml_factory import MultipleChoiceResponseXMLFactory
+from xmodule.data import CertificatesDisplayBehaviors
+from xmodule.graders import ShowCorrectness
+from xmodule.modulestore import ModuleStoreEnum
+from xmodule.modulestore.django import modulestore
+from xmodule.modulestore.tests.django_utils import CourseUserType, ModuleStoreTestCase, SharedModuleStoreTestCase
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory, check_mongo_calls
 
 QUERY_COUNT_TABLE_IGNORELIST = WAFFLE_TABLES
 

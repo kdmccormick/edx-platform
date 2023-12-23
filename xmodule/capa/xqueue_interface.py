@@ -1,11 +1,10 @@
 """
 LMS Interface to external queueing system (xqueue)
 """
-from typing import Dict, Optional, TYPE_CHECKING
-
 import hashlib
 import json
 import logging
+from typing import TYPE_CHECKING, Dict, Optional
 
 import requests
 from django.conf import settings

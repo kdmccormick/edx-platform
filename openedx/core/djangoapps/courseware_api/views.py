@@ -19,32 +19,31 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.exceptions import ItemNotFoundError, NoPathToItem
-from xmodule.modulestore.search import path_to_location
-from xmodule.x_module import PUBLIC_VIEW, STUDENT_VIEW
-
 from common.djangoapps.course_modes.models import CourseMode
+from common.djangoapps.student.models import (
+    CourseEnrollment,
+    CourseEnrollmentCelebration,
+    LinkedInAddToProfileConfiguration,
+)
 from common.djangoapps.util.views import expose_header
-from lms.djangoapps.edxnotes.helpers import is_feature_enabled
 from lms.djangoapps.certificates.api import get_certificate_url
 from lms.djangoapps.certificates.models import GeneratedCertificate
 from lms.djangoapps.course_api.api import course_detail
-from lms.djangoapps.course_goals.models import UserActivity
 from lms.djangoapps.course_goals.api import get_course_goal
+from lms.djangoapps.course_goals.models import UserActivity
 from lms.djangoapps.courseware.access import has_access
-
+from lms.djangoapps.courseware.block_render import get_block_by_usage_id
 from lms.djangoapps.courseware.context_processor import user_timezone_locale_prefs
 from lms.djangoapps.courseware.entrance_exams import course_has_entrance_exam, user_has_passed_entrance_exam
 from lms.djangoapps.courseware.masquerade import (
+    is_masquerading_as_non_audit_enrollment,
     is_masquerading_as_specific_student,
     setup_masquerade,
-    is_masquerading_as_non_audit_enrollment,
 )
 from lms.djangoapps.courseware.models import LastSeenCoursewareTimezone
-from lms.djangoapps.courseware.block_render import get_block_by_usage_id
 from lms.djangoapps.courseware.toggles import course_exit_page_is_active, learning_assistant_is_active
 from lms.djangoapps.courseware.views.views import get_cert_data
+from lms.djangoapps.edxnotes.helpers import is_feature_enabled
 from lms.djangoapps.gating.api import get_entrance_exam_score, get_entrance_exam_usage_key
 from lms.djangoapps.grades.api import CourseGradeFactory
 from lms.djangoapps.verify_student.services import IDVerificationService
@@ -54,16 +53,14 @@ from openedx.core.djangoapps.programs.utils import ProgramProgressMeter
 from openedx.core.lib.api.authentication import BearerAuthenticationAllowInactiveUser
 from openedx.core.lib.api.view_utils import DeveloperErrorViewMixin
 from openedx.core.lib.courses import get_course_by_id
-from openedx.features.course_experience import DISPLAY_COURSE_SOCK_FLAG
-from openedx.features.course_experience import ENABLE_COURSE_GOALS
 from openedx.features.content_type_gating.models import ContentTypeGatingConfig
 from openedx.features.course_duration_limits.access import get_access_expiration_data
+from openedx.features.course_experience import DISPLAY_COURSE_SOCK_FLAG, ENABLE_COURSE_GOALS
 from openedx.features.discounts.utils import generate_offer_data
-from common.djangoapps.student.models import (
-    CourseEnrollment,
-    CourseEnrollmentCelebration,
-    LinkedInAddToProfileConfiguration
-)
+from xmodule.modulestore.django import modulestore
+from xmodule.modulestore.exceptions import ItemNotFoundError, NoPathToItem
+from xmodule.modulestore.search import path_to_location
+from xmodule.x_module import PUBLIC_VIEW, STUDENT_VIEW
 
 from .serializers import CourseInfoSerializer
 

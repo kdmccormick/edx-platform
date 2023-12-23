@@ -14,8 +14,8 @@ from openedx.core.djangoapps.credit.tasks import update_credit_course_requiremen
 from openedx.core.lib.api.view_utils import DeveloperErrorViewMixin, verify_course_exists, view_auth_classes
 from xmodule.modulestore.django import modulestore
 
-from ..serializers import CourseGradingModelSerializer, CourseGradingSerializer
 from ....utils import get_course_grading
+from ..serializers import CourseGradingModelSerializer, CourseGradingSerializer
 
 
 @view_auth_classes(is_authenticated=True)

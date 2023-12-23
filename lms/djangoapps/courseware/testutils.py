@@ -10,18 +10,23 @@ from urllib.parse import urlencode
 
 import ddt
 
-from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
-from lms.djangoapps.courseware.tests.helpers import set_preview_mode
-from lms.djangoapps.courseware.utils import is_mode_upsellable
-from openedx.features.course_experience.url_helpers import get_courseware_url
-from common.djangoapps.student.tests.factories import AdminFactory, CourseEnrollmentFactory, UserFactory
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.course_modes.tests.factories import CourseModeFactory
-
+from common.djangoapps.student.tests.factories import AdminFactory, CourseEnrollmentFactory, UserFactory
+from lms.djangoapps.courseware.tests.helpers import set_preview_mode
+from lms.djangoapps.courseware.utils import is_mode_upsellable
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+from openedx.features.course_experience.url_helpers import get_courseware_url
 from xmodule.modulestore import ModuleStoreEnum  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory, check_mongo_calls  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    SharedModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    CourseFactory,
+    check_mongo_calls,
+)
 
 from .field_overrides import OverrideModulestoreFieldData
 from .tests.helpers import MasqueradeMixin

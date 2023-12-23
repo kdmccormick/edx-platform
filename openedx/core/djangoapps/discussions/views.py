@@ -14,13 +14,11 @@ from rest_framework.views import APIView
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.lib.api.authentication import BearerAuthenticationAllowInactiveUser
 from openedx.core.lib.api.view_utils import validate_course_key
+
 from .config.waffle import ENABLE_NEW_STRUCTURE_DISCUSSIONS
 from .models import AVAILABLE_PROVIDER_MAP, DiscussionsConfiguration, Features, Provider
 from .permissions import IsStaffOrCourseTeam, check_course_permissions
-from .serializers import (
-    DiscussionsConfigurationSerializer,
-    DiscussionsProvidersSerializer,
-)
+from .serializers import DiscussionsConfigurationSerializer, DiscussionsProvidersSerializer
 
 
 class DiscussionsConfigurationSettingsView(APIView):

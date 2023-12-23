@@ -12,23 +12,24 @@ import zlib
 from contextlib import contextmanager
 from time import time
 
-from ccx_keys.locator import CCXLocator
-from django.core.cache import caches, InvalidCacheBackendError
-from django.db.transaction import TransactionManagementError
 import pymongo
 import pytz
-from mongodb_proxy import autoretry_read
-# Import this just to export it
-from pymongo.errors import DuplicateKeyError  # pylint: disable=unused-import
+from ccx_keys.locator import CCXLocator
+from django.core.cache import InvalidCacheBackendError, caches
+from django.db.transaction import TransactionManagementError
 from edx_django_utils import monitoring
 from edx_django_utils.cache import RequestCache
+from mongodb_proxy import autoretry_read
+
+# Import this just to export it
+from pymongo.errors import DuplicateKeyError  # pylint: disable=unused-import
 
 from common.djangoapps.split_modulestore_django.models import SplitModulestoreCourseIndex
+from openedx.core.lib.cache_utils import request_cached
 from xmodule.exceptions import HeartbeatFailure
 from xmodule.modulestore import BlockData
 from xmodule.modulestore.split_mongo import BlockKey
 from xmodule.mongo_utils import connect_to_mongodb, create_collection_index
-from openedx.core.lib.cache_utils import request_cached
 
 log = logging.getLogger(__name__)
 

@@ -6,14 +6,13 @@ neo4j, a graph database.
 
 import logging
 
+import py2neo  # pylint: disable=unused-import
 from celery import shared_task
 from django.conf import settings
 from django.utils import timezone
 from edx_django_utils.cache import RequestCache
 from edx_django_utils.monitoring import set_code_owner_attribute
 from opaque_keys.edx.keys import CourseKey
-
-import py2neo  # pylint: disable=unused-import
 from py2neo import Graph, Node, Relationship
 
 try:

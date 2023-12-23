@@ -8,7 +8,7 @@ from xmodule.html_block import HtmlBlock
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.exceptions import DuplicateCourseError
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory
 from xmodule.seq_block import SequenceBlock
 
 

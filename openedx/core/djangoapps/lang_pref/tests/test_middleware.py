@@ -14,6 +14,7 @@ from django.test.client import Client, RequestFactory
 from django.urls import reverse
 from django.utils.translation.trans_real import parse_accept_lang_header
 
+from common.djangoapps.student.tests.factories import AnonymousUserFactory, UserFactory
 from openedx.core.djangoapps.lang_pref import COOKIE_DURATION, LANGUAGE_KEY
 from openedx.core.djangoapps.lang_pref.middleware import LanguagePreferenceMiddleware
 from openedx.core.djangoapps.site_configuration.tests.test_util import (
@@ -23,10 +24,9 @@ from openedx.core.djangoapps.site_configuration.tests.test_util import (
 from openedx.core.djangoapps.user_api.preferences.api import (
     delete_user_preference,
     get_user_preference,
-    set_user_preference
+    set_user_preference,
 )
 from openedx.core.djangolib.testing.utils import CacheIsolationTestCase
-from common.djangoapps.student.tests.factories import AnonymousUserFactory, UserFactory
 
 
 @ddt.ddt

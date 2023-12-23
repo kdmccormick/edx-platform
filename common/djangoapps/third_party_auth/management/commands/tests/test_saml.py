@@ -6,15 +6,15 @@ existing data accordingly.
 
 import os
 from io import StringIO
-
 from unittest import mock
+
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from requests import exceptions
 from requests.models import Response
 
-from openedx.core.djangolib.testing.utils import CacheIsolationTestCase, skip_unless_lms
 from common.djangoapps.third_party_auth.tests.factories import SAMLConfigurationFactory, SAMLProviderConfigFactory
+from openedx.core.djangolib.testing.utils import CacheIsolationTestCase, skip_unless_lms
 
 
 def mock_get(status_code=200):

@@ -12,10 +12,10 @@ and won't find the now-invalid cached data.
 from datetime import datetime
 from uuid import UUID
 
-from django.conf import settings
-from django.core.cache import caches, InvalidCacheBackendError
-from pytz import UTC
 import requests
+from django.conf import settings
+from django.core.cache import InvalidCacheBackendError, caches
+from pytz import UTC
 
 from openedx.core.lib import blockstore_api
 

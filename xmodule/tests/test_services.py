@@ -4,18 +4,17 @@ Tests for SettingsService
 import unittest
 from unittest import mock
 
-import pytest
-from django.test import TestCase
 import ddt
-
+import pytest
 from config_models.models import ConfigurationModel
 from django.conf import settings
+from django.test import TestCase
 from django.test.utils import override_settings
+from opaque_keys.edx.locator import CourseLocator
 from xblock.runtime import Mixologist
 
-from opaque_keys.edx.locator import CourseLocator
-from xmodule.services import ConfigurationService, SettingsService, TeamsConfigurationService
 from openedx.core.lib.teams_config import TeamsConfig
+from xmodule.services import ConfigurationService, SettingsService, TeamsConfigurationService
 
 
 class _DummyBlock:

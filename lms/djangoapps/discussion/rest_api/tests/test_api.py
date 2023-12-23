@@ -12,33 +12,26 @@ from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 import ddt
 import httpretty
 import pytest
-from django.test import override_settings
-from edx_toggles.toggles.testutils import override_waffle_flag
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.test import override_settings
 from django.test.client import RequestFactory
+from edx_toggles.toggles.testutils import override_waffle_flag
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locator import CourseLocator
 from pytz import UTC
 from rest_framework.exceptions import PermissionDenied
-
-from xmodule.modulestore import ModuleStoreEnum
-from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase, SharedModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory
-from xmodule.partitions.partitions import Group, UserPartition
 
 from common.djangoapps.student.tests.factories import (
     AdminFactory,
     BetaTesterFactory,
     CourseEnrollmentFactory,
     StaffFactory,
-    UserFactory
+    UserFactory,
 )
 from common.djangoapps.util.testing import UrlResetMixin
 from common.test.utils import MockSignalHandlerMixin, disable_signal
 from lms.djangoapps.discussion.django_comment_client.tests.utils import ForumsEnableMixin
-from lms.djangoapps.discussion.toggles import ENABLE_LEARNERS_TAB_IN_DISCUSSIONS_MFE
 from lms.djangoapps.discussion.rest_api import api
 from lms.djangoapps.discussion.rest_api.api import (
     create_comment,
@@ -53,13 +46,13 @@ from lms.djangoapps.discussion.rest_api.api import (
     get_thread_list,
     get_user_comments,
     update_comment,
-    update_thread
+    update_thread,
 )
 from lms.djangoapps.discussion.rest_api.exceptions import (
     CommentNotFoundError,
     DiscussionBlackOutException,
     DiscussionDisabledError,
-    ThreadNotFoundError
+    ThreadNotFoundError,
 )
 from lms.djangoapps.discussion.rest_api.serializers import TopicOrdering
 from lms.djangoapps.discussion.rest_api.tests.utils import (
@@ -69,19 +62,29 @@ from lms.djangoapps.discussion.rest_api.tests.utils import (
     make_paginated_api_response,
     parsed_body,
 )
+from lms.djangoapps.discussion.toggles import ENABLE_LEARNERS_TAB_IN_DISCUSSIONS_MFE
 from openedx.core.djangoapps.course_groups.models import CourseUserGroupPartitionGroup
 from openedx.core.djangoapps.course_groups.tests.helpers import CohortFactory
-from openedx.core.djangoapps.discussions.models import DiscussionsConfiguration, DiscussionTopicLink, Provider, \
-    PostingRestriction
+from openedx.core.djangoapps.discussions.models import (
+    DiscussionsConfiguration,
+    DiscussionTopicLink,
+    PostingRestriction,
+    Provider,
+)
 from openedx.core.djangoapps.discussions.tasks import update_discussions_settings_from_course_task
 from openedx.core.djangoapps.django_comment_common.models import (
     FORUM_ROLE_ADMINISTRATOR,
     FORUM_ROLE_COMMUNITY_TA,
     FORUM_ROLE_MODERATOR,
     FORUM_ROLE_STUDENT,
-    Role
+    Role,
 )
 from openedx.core.lib.exceptions import CourseNotFoundError, PageNotFoundError
+from xmodule.modulestore import ModuleStoreEnum
+from xmodule.modulestore.django import modulestore
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase, SharedModuleStoreTestCase
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory
+from xmodule.partitions.partitions import Group, UserPartition
 
 User = get_user_model()
 

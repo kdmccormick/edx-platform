@@ -2,13 +2,14 @@
 Tests for the Course Home Course Metadata API in the Course Home API
 """
 
-import ddt
 import json
+from unittest.mock import patch
+
+import ddt
 import mock
 from django.db import transaction
 from django.urls import reverse
 from edx_toggles.toggles.testutils import override_waffle_flag
-from unittest.mock import patch
 
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.student.models import CourseEnrollment
@@ -18,12 +19,12 @@ from lms.djangoapps.course_home_api.tests.utils import BaseCourseHomeTests
 from lms.djangoapps.courseware.toggles import (
     COURSEWARE_MFE_MILESTONES_STREAK_DISCOUNT,
     COURSEWARE_MICROFRONTEND_PROGRESS_MILESTONES,
-    COURSEWARE_MICROFRONTEND_PROGRESS_MILESTONES_STREAK_CELEBRATION
+    COURSEWARE_MICROFRONTEND_PROGRESS_MILESTONES_STREAK_CELEBRATION,
 )
 from openedx.core.djangoapps.discussions.models import DiscussionsConfiguration
 from openedx.features.enterprise_support.tests.factories import (
     EnterpriseCourseEnrollmentFactory,
-    EnterpriseCustomerUserFactory
+    EnterpriseCustomerUserFactory,
 )
 
 

@@ -2,7 +2,6 @@
 Views that implement a RESTful API for interacting with XBlocks.
 """
 
-from common.djangoapps.util.json_request import JsonResponse
 from corsheaders.signals import check_request_enabled
 from django.contrib.auth import get_user_model
 from django.db.transaction import atomic
@@ -10,24 +9,23 @@ from django.http import Http404
 from django.utils.translation import gettext as _
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
+from opaque_keys import InvalidKeyError
+from opaque_keys.edx.keys import UsageKey
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes  # lint-amnesty, pylint: disable=unused-import
-from rest_framework.exceptions import PermissionDenied, AuthenticationFailed, NotFound
+from rest_framework.exceptions import AuthenticationFailed, NotFound, PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from xblock.django.request import DjangoWebobRequest, webob_to_django_response
 from xblock.fields import Scope
 
-from opaque_keys import InvalidKeyError
-from opaque_keys.edx.keys import UsageKey
+from common.djangoapps.util.json_request import JsonResponse
 from openedx.core.lib.api.view_utils import view_auth_classes
-from ..api import (
-    get_block_display_name,
-    get_block_metadata,
-    get_handler_url as _get_handler_url,
-    load_block,
-    render_block_view as _render_block_view,
-)
+
+from ..api import get_block_display_name, get_block_metadata
+from ..api import get_handler_url as _get_handler_url
+from ..api import load_block
+from ..api import render_block_view as _render_block_view
 from ..utils import validate_secure_token_for_xblock_handler
 
 User = get_user_model()

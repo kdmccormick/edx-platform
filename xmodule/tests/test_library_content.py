@@ -15,7 +15,9 @@ from search.search_engine_base import SearchEngine
 from web_fragments.fragment import Fragment
 from xblock.runtime import Runtime as VanillaRuntime
 
+from common.djangoapps.student.tests.factories import UserFactory
 from openedx.core.djangolib.testing.utils import skip_unless_cms
+from xmodule.capa_block import ProblemBlock
 from xmodule.library_content_block import ANY_CAPA_TYPE_VALUE, LibraryContentBlock
 from xmodule.library_tools import LibraryToolsService
 from xmodule.modulestore import ModuleStoreEnum
@@ -24,8 +26,6 @@ from xmodule.modulestore.tests.utils import MixedSplitTestCase
 from xmodule.tests import prepare_block_runtime
 from xmodule.validation import StudioValidationMessage
 from xmodule.x_module import AUTHOR_VIEW
-from xmodule.capa_block import ProblemBlock
-from common.djangoapps.student.tests.factories import UserFactory
 
 from .test_course_block import DummySystem as TestImportSystem
 

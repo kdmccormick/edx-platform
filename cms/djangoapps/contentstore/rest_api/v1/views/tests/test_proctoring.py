@@ -2,23 +2,21 @@
 Unit tests for Contentstore Proctored Exam Settings.
 """
 import ddt
-from mock import patch
 from django.conf import settings
 from django.test.utils import override_settings
 from django.urls import reverse
 from edx_toggles.toggles.testutils import override_waffle_flag
+from mock import patch
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 from cms.djangoapps.contentstore.tests.test_utils import AuthorizeStaffTestCase
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from openedx.core.djangoapps.course_apps.toggles import EXAMS_IDA
-from xmodule.modulestore.django import (
-    modulestore,
-)  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.django_utils import (
+from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (  # lint-amnesty, pylint: disable=wrong-import-order
     ModuleStoreTestCase,
-)  # lint-amnesty, pylint: disable=wrong-import-order
+)
 
 from ...mixins import PermissionAccessMixin
 

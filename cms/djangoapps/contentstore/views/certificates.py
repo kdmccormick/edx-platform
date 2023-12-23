@@ -47,11 +47,7 @@ from xmodule.modulestore import EdxJSONEncoder  # lint-amnesty, pylint: disable=
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
 
 from ..exceptions import AssetNotFoundException
-from ..utils import (
-    get_lms_link_for_certificate_web_view,
-    get_proctored_exam_settings_url,
-    reverse_course_url
-)
+from ..utils import get_lms_link_for_certificate_web_view, get_proctored_exam_settings_url, reverse_course_url
 from .assets import delete_asset
 
 CERTIFICATE_SCHEMA_VERSION = 1

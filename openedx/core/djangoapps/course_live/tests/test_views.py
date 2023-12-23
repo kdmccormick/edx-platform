@@ -2,6 +2,7 @@
 Test for course live app views
 """
 import json
+
 import ddt
 from django.test import RequestFactory
 from django.urls import reverse
@@ -9,11 +10,12 @@ from edx_toggles.toggles.testutils import override_waffle_flag
 from lti_consumer.models import CourseAllowPIISharingInLTIFlag, LtiConfiguration
 from markupsafe import Markup
 from rest_framework.test import APITestCase
+
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.tests.django_utils import CourseUserType, ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory
 
-from ..config.waffle import ENABLE_COURSE_LIVE, ENABLE_BIG_BLUE_BUTTON
+from ..config.waffle import ENABLE_BIG_BLUE_BUTTON, ENABLE_COURSE_LIVE
 from ..models import CourseLiveConfiguration
 from ..providers import ProviderManager
 

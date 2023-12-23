@@ -21,7 +21,6 @@ from openedx.core.djangolib.markup import HTML, Text
 from openedx.core.lib.xblock_utils import get_css_dependencies, get_js_dependencies
 from xmodule.xml_block import XmlMixin
 
-
 log = logging.getLogger(__name__)
 loader = ResourceLoader(__name__)  # pylint: disable=invalid-name
 

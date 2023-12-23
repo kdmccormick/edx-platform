@@ -5,17 +5,21 @@ from collections import defaultdict
 from copy import deepcopy
 
 from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imported-auth-user
+from edx_rest_framework_extensions.auth.jwt.authentication import JwtAuthentication
+from edx_rest_framework_extensions.auth.session.authentication import SessionAuthenticationAllowInactiveUser
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from edx_rest_framework_extensions.auth.jwt.authentication import JwtAuthentication
-from edx_rest_framework_extensions.auth.session.authentication import SessionAuthenticationAllowInactiveUser
 from openedx.core.lib.api.authentication import BearerAuthenticationAllowInactiveUser
 
 from .api import get_learner_skill_levels
-from .utils import get_top_skill_categories_for_job, get_job_holder_usernames, update_category_user_scores_map, \
-    update_edx_average_score
+from .utils import (
+    get_job_holder_usernames,
+    get_top_skill_categories_for_job,
+    update_category_user_scores_map,
+    update_edx_average_score,
+)
 
 
 class LearnerSkillLevelsView(APIView):

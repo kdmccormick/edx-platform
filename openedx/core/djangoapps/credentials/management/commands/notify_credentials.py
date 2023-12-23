@@ -9,20 +9,20 @@ for these signals, since these are busy signals.)
 """
 import logging
 import shlex
-
 from datetime import datetime, timedelta
+
 import dateutil.parser
 from django.core.management.base import BaseCommand, CommandError
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from pytz import UTC
 
+from openedx.core.djangoapps.catalog.api import (
+    get_course_run_key_for_program_from_cache,
+    get_programs_from_cache_by_uuid,
+)
 from openedx.core.djangoapps.credentials.models import NotifyCredentialsConfig
 from openedx.core.djangoapps.credentials.tasks.v1.tasks import handle_notify_credentials
-from openedx.core.djangoapps.catalog.api import (
-    get_programs_from_cache_by_uuid,
-    get_course_run_key_for_program_from_cache,
-)
 
 log = logging.getLogger(__name__)
 

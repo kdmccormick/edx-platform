@@ -9,21 +9,24 @@ import os
 from django.core.files.base import ContentFile
 from django.http import HttpResponse, HttpResponseNotFound
 from django.utils.translation import gettext as _
+from edxval.api import create_or_update_video_transcript
+from edxval.api import delete_video_transcript as delete_video_transcript_source_function
 from edxval.api import (
-    create_or_update_video_transcript,
-    delete_video_transcript as delete_video_transcript_source_function,
     get_3rd_party_transcription_plans,
     get_available_transcript_languages,
+    get_video_transcript,
     get_video_transcript_data,
     update_transcript_credentials_state_for_org,
-    get_video_transcript
 )
 from opaque_keys.edx.keys import CourseKey
 
 from common.djangoapps.util.json_request import JsonResponse
 from openedx.core.djangoapps.video_config.models import VideoTranscriptEnabledFlag
 from openedx.core.djangoapps.video_pipeline.api import update_3rd_party_transcription_service_credentials
-from xmodule.video_block.transcripts_utils import Transcript, TranscriptsGenerationException  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.video_block.transcripts_utils import (  # lint-amnesty, pylint: disable=wrong-import-order
+    Transcript,
+    TranscriptsGenerationException,
+)
 
 from .toggles import use_mock_video_uploads
 from .video_storage_handlers import TranscriptProvider

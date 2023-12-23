@@ -14,8 +14,8 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
 from django_countries import countries
-
 from openedx_filters.learning.filters import AccountSettingsRenderStarted
+
 from common.djangoapps import third_party_auth
 from common.djangoapps.edxmako.shortcuts import render_to_response
 from common.djangoapps.student.models import UserProfile
@@ -30,7 +30,7 @@ from openedx.core.djangoapps.programs.models import ProgramsApiConfig
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.user_api.accounts.toggles import (
     should_redirect_to_account_microfrontend,
-    should_redirect_to_order_history_microfrontend
+    should_redirect_to_order_history_microfrontend,
 )
 from openedx.core.djangoapps.user_api.preferences.api import get_user_preferences
 from openedx.core.lib.edx_api_utils import get_api_data

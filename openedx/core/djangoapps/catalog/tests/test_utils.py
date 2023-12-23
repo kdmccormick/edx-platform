@@ -16,6 +16,7 @@ from opaque_keys.edx.keys import CourseKey
 from common.djangoapps.course_modes.helpers import CourseMode
 from common.djangoapps.course_modes.tests.factories import CourseModeFactory
 from common.djangoapps.entitlements.tests.factories import CourseEntitlementFactory
+from common.djangoapps.student.tests.factories import CourseEnrollmentFactory, UserFactory
 from openedx.core.constants import COURSE_UNPUBLISHED
 from openedx.core.djangoapps.catalog.cache import (
     CATALOG_COURSE_PROGRAMS_CACHE_KEY_TPL,
@@ -25,7 +26,7 @@ from openedx.core.djangoapps.catalog.cache import (
     PROGRAMS_BY_TYPE_CACHE_KEY_TPL,
     PROGRAMS_BY_TYPE_SLUG_CACHE_KEY_TPL,
     SITE_PATHWAY_IDS_CACHE_KEY_TPL,
-    SITE_PROGRAM_UUIDS_CACHE_KEY_TPL
+    SITE_PROGRAM_UUIDS_CACHE_KEY_TPL,
 )
 from openedx.core.djangoapps.catalog.models import CatalogIntegration
 from openedx.core.djangoapps.catalog.tests.factories import (
@@ -33,14 +34,13 @@ from openedx.core.djangoapps.catalog.tests.factories import (
     CourseRunFactory,
     PathwayFactory,
     ProgramFactory,
+    ProgramTypeAttrsFactory,
     ProgramTypeFactory,
-    ProgramTypeAttrsFactory
 )
 from openedx.core.djangoapps.catalog.tests.mixins import CatalogIntegrationMixin
 from openedx.core.djangoapps.catalog.utils import (
     child_programs,
     course_run_keys_for_program,
-    is_course_run_in_program,
     get_course_run_details,
     get_course_runs,
     get_course_runs_for_course,
@@ -53,13 +53,13 @@ from openedx.core.djangoapps.catalog.utils import (
     get_programs_by_type,
     get_programs_by_type_slug,
     get_visible_sessions_for_entitlement,
+    is_course_run_in_program,
     normalize_program_type,
 )
 from openedx.core.djangoapps.content.course_overviews.tests.factories import CourseOverviewFactory
 from openedx.core.djangoapps.site_configuration.tests.factories import SiteFactory
-from openedx.core.djangolib.testing.utils import CacheIsolationTestCase, skip_unless_lms
-from common.djangoapps.student.tests.factories import CourseEnrollmentFactory, UserFactory
 from openedx.core.djangoapps.site_configuration.tests.test_util import with_site_configuration_context
+from openedx.core.djangolib.testing.utils import CacheIsolationTestCase, skip_unless_lms
 
 UTILS_MODULE = 'openedx.core.djangoapps.catalog.utils'
 User = get_user_model()  # pylint: disable=invalid-name

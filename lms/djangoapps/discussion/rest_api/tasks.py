@@ -5,11 +5,11 @@ from celery import shared_task
 from django.contrib.auth import get_user_model
 from edx_django_utils.monitoring import set_code_owner_attribute
 from opaque_keys.edx.locator import CourseKey
-from lms.djangoapps.courseware.courses import get_course_with_access
-from openedx.core.djangoapps.django_comment_common.comment_client.thread import Thread
-from openedx.core.djangoapps.notifications.config.waffle import ENABLE_NOTIFICATIONS, ENABLE_COURSEWIDE_NOTIFICATIONS
-from lms.djangoapps.discussion.rest_api.discussions_notifications import DiscussionNotificationSender
 
+from lms.djangoapps.courseware.courses import get_course_with_access
+from lms.djangoapps.discussion.rest_api.discussions_notifications import DiscussionNotificationSender
+from openedx.core.djangoapps.django_comment_common.comment_client.thread import Thread
+from openedx.core.djangoapps.notifications.config.waffle import ENABLE_COURSEWIDE_NOTIFICATIONS, ENABLE_NOTIFICATIONS
 
 User = get_user_model()
 

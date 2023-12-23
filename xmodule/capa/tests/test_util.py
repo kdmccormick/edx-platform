@@ -15,7 +15,7 @@ from xmodule.capa.util import (
     contextualize_text,
     get_inner_html_from_xpath,
     remove_markup,
-    sanitize_html
+    sanitize_html,
 )
 
 

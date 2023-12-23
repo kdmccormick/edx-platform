@@ -5,15 +5,15 @@ Helper methods related to safe exec.
 import json
 import logging
 from importlib import import_module
-import requests
 
+import requests
 from codejail.safe_exec import SafeExecException
 from django.conf import settings
+from django.utils.translation import gettext as _
 from edx_toggles.toggles import SettingToggle
-from requests.exceptions import RequestException, HTTPError
+from requests.exceptions import HTTPError, RequestException
 from simplejson import JSONDecodeError
 
-from django.utils.translation import gettext as _
 from .exceptions import CodejailServiceParseError, CodejailServiceStatusError, CodejailServiceUnavailable
 
 log = logging.getLogger(__name__)

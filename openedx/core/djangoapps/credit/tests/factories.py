@@ -6,19 +6,19 @@ import json
 import uuid
 
 import factory
-from factory.fuzzy import FuzzyText
 import pytz
 from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imported-auth-user
+from factory.fuzzy import FuzzyText
 
+from common.djangoapps.util.date_utils import to_timestamp
 from openedx.core.djangoapps.credit.models import (
     CreditCourse,
     CreditEligibility,
     CreditProvider,
     CreditRequest,
     CreditRequirement,
-    CreditRequirementStatus
+    CreditRequirementStatus,
 )
-from common.djangoapps.util.date_utils import to_timestamp
 
 
 class CreditCourseFactory(factory.django.DjangoModelFactory):

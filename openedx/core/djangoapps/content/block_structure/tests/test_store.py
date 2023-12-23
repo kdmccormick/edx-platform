@@ -2,8 +2,8 @@
 Tests for block_structure/cache.py
 """
 
-import pytest
 import ddt
+import pytest
 from edx_toggles.toggles.testutils import override_waffle_switch
 
 from openedx.core.djangolib.testing.utils import CacheIsolationTestCase

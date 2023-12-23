@@ -4,17 +4,14 @@ Tests for the dump_to_neo4j management command.
 
 
 from datetime import datetime
-
 from unittest import mock
+
 import ddt
 from django.core.management import call_command
 from django.test.utils import override_settings
 from edx_toggles.toggles.testutils import override_waffle_switch
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory
 
 import openedx.core.djangoapps.content.block_structure.config as block_structure_config
-from openedx.core.djangoapps.content.block_structure.signals import update_block_structure_on_course_publish
 from cms.djangoapps.coursegraph.management.commands.dump_to_neo4j import ModuleStoreSerializer
 from cms.djangoapps.coursegraph.management.commands.tests.utils import MockGraph, MockNodeMatcher
 from cms.djangoapps.coursegraph.tasks import (
@@ -22,9 +19,12 @@ from cms.djangoapps.coursegraph.tasks import (
     serialize_course,
     serialize_item,
     should_dump_course,
-    strip_branch_and_version
+    strip_branch_and_version,
 )
+from openedx.core.djangoapps.content.block_structure.signals import update_block_structure_on_course_publish
 from openedx.core.djangolib.testing.utils import skip_unless_lms
+from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory
 
 
 class TestDumpToNeo4jCommandBase(SharedModuleStoreTestCase):

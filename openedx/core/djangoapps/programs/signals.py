@@ -12,7 +12,7 @@ from openedx.core.djangoapps.signals.signals import (
     COURSE_CERT_AWARDED,
     COURSE_CERT_CHANGED,
     COURSE_CERT_DATE_CHANGE,
-    COURSE_CERT_REVOKED
+    COURSE_CERT_REVOKED,
 )
 
 LOGGER = logging.getLogger(__name__)
@@ -199,8 +199,11 @@ def handle_course_cert_date_change(sender, course_key, **kwargs):  # lint-amnest
 
     LOGGER.info(f"Handling COURSE_CERT_DATE_CHANGE for course {course_key}")
     # import here, because signal is registered at startup, but items in tasks are not yet loaded
-    from openedx.core.djangoapps.programs.tasks import update_certificate_visible_date_on_course_update
-    from openedx.core.djangoapps.programs.tasks import update_certificate_available_date_on_course_update
+    from openedx.core.djangoapps.programs.tasks import (
+        update_certificate_available_date_on_course_update,
+        update_certificate_visible_date_on_course_update,
+    )
+
     # update the awarded credentials `visible_date` attribute in the Credentials service after a date update
     update_certificate_visible_date_on_course_update.delay(str(course_key))
     # update the (course) certificate configuration in the Credentials service after a date update

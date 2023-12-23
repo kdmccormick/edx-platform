@@ -2,7 +2,6 @@
 This module contains tests for programs-related signals and signal handlers.
 """
 import datetime
-
 from unittest import mock
 
 from django.test import TestCase
@@ -13,13 +12,13 @@ from openedx.core.djangoapps.programs.signals import (
     handle_course_cert_awarded,
     handle_course_cert_changed,
     handle_course_cert_date_change,
-    handle_course_cert_revoked
+    handle_course_cert_revoked,
 )
 from openedx.core.djangoapps.signals.signals import (
     COURSE_CERT_AWARDED,
     COURSE_CERT_CHANGED,
     COURSE_CERT_DATE_CHANGE,
-    COURSE_CERT_REVOKED
+    COURSE_CERT_REVOKED,
 )
 from openedx.core.djangoapps.site_configuration.tests.factories import SiteConfigurationFactory
 from openedx.core.djangolib.testing.utils import skip_unless_lms

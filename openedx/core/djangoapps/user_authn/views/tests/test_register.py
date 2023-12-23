@@ -2,8 +2,7 @@
 
 import json
 from datetime import datetime
-from unittest import skipIf, skipUnless
-from unittest import mock
+from unittest import mock, skipIf, skipUnless
 
 import ddt
 import httpretty
@@ -15,11 +14,25 @@ from django.test import TransactionTestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
 from django.urls import reverse
+from openedx_events.tests.utils import OpenEdxEventsTestMixin
 from pytz import UTC
 from social_django.models import Partial, UserSocialAuth
 from testfixtures import LogCapture
-from openedx_events.tests.utils import OpenEdxEventsTestMixin
 
+from common.djangoapps.student.helpers import authenticate_new_user
+from common.djangoapps.student.tests.factories import AccountRecoveryFactory, UserFactory
+from common.djangoapps.third_party_auth.tests.testutil import ThirdPartyAuthTestMixin, simulate_running_pipeline
+from common.djangoapps.third_party_auth.tests.utils import (
+    ThirdPartyOAuthTestMixin,
+    ThirdPartyOAuthTestMixinFacebook,
+    ThirdPartyOAuthTestMixinGoogle,
+)
+from common.djangoapps.util.password_policy_validators import (
+    DEFAULT_MAX_PASSWORD_LENGTH,
+    create_validator_config,
+    password_validators_instruction_texts,
+    password_validators_restrictions,
+)
 from openedx.core.djangoapps.site_configuration.helpers import get_value
 from openedx.core.djangoapps.site_configuration.tests.test_util import with_site_configuration
 from openedx.core.djangoapps.user_api.accounts import (
@@ -36,34 +49,20 @@ from openedx.core.djangoapps.user_api.accounts import (
     USERNAME_INVALID_CHARS_ASCII,
     USERNAME_INVALID_CHARS_UNICODE,
     USERNAME_MAX_LENGTH,
-    USERNAME_MIN_LENGTH
+    USERNAME_MIN_LENGTH,
 )
 from openedx.core.djangoapps.user_api.accounts.api import get_account_settings
 from openedx.core.djangoapps.user_api.accounts.tests import testutils
 from openedx.core.djangoapps.user_api.accounts.tests.retirement_helpers import (  # pylint: disable=unused-import
     RetirementTestCase,
     fake_requested_retirement,
-    setup_retirement_states
+    setup_retirement_states,
 )
 from openedx.core.djangoapps.user_api.tests.test_constants import SORTED_COUNTRIES
 from openedx.core.djangoapps.user_api.tests.test_helpers import TestCaseForm
 from openedx.core.djangoapps.user_api.tests.test_views import UserAPITestCase
 from openedx.core.djangolib.testing.utils import CacheIsolationTestCase, skip_unless_lms
 from openedx.core.lib.api import test_utils
-from common.djangoapps.student.helpers import authenticate_new_user
-from common.djangoapps.student.tests.factories import AccountRecoveryFactory, UserFactory
-from common.djangoapps.third_party_auth.tests.testutil import ThirdPartyAuthTestMixin, simulate_running_pipeline
-from common.djangoapps.third_party_auth.tests.utils import (
-    ThirdPartyOAuthTestMixin,
-    ThirdPartyOAuthTestMixinFacebook,
-    ThirdPartyOAuthTestMixinGoogle
-)
-from common.djangoapps.util.password_policy_validators import (
-    DEFAULT_MAX_PASSWORD_LENGTH,
-    create_validator_config,
-    password_validators_instruction_texts,
-    password_validators_restrictions
-)
 
 
 @ddt.ddt

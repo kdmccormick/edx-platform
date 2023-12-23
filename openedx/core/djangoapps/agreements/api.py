@@ -8,12 +8,9 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from opaque_keys.edx.keys import CourseKey
 
-from openedx.core.djangoapps.agreements.models import IntegritySignature
-from openedx.core.djangoapps.agreements.models import LTIPIITool
-from openedx.core.djangoapps.agreements.models import LTIPIISignature
+from openedx.core.djangoapps.agreements.models import IntegritySignature, LTIPIISignature, LTIPIITool
 
-from .data import LTIToolsReceivingPIIData
-from .data import LTIPIISignatureData
+from .data import LTIPIISignatureData, LTIToolsReceivingPIIData
 
 log = logging.getLogger(__name__)
 User = get_user_model()

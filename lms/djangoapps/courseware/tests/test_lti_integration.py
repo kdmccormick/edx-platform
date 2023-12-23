@@ -2,10 +2,10 @@
 
 
 import json
-from collections import OrderedDict
-
-from unittest import mock
 import urllib
+from collections import OrderedDict
+from unittest import mock
+
 import oauthlib
 from django.conf import settings
 from django.urls import reverse
@@ -14,8 +14,13 @@ from common.djangoapps.xblock_django.constants import ATTR_KEY_ANONYMOUS_USER_ID
 from lms.djangoapps.courseware.tests.helpers import BaseTestXmodule
 from lms.djangoapps.courseware.views.views import get_course_lti_endpoints
 from openedx.core.lib.url_utils import quote_slashes
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    SharedModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    CourseFactory,
+)
 
 
 class TestLTI(BaseTestXmodule):

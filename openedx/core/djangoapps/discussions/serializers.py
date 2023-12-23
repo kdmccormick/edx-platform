@@ -5,15 +5,16 @@ from django.core.exceptions import ValidationError
 from lti_consumer.api import get_lti_pii_sharing_state_for_course
 from lti_consumer.models import LtiConfiguration
 from rest_framework import serializers
-from xmodule.modulestore.django import modulestore
 
 from lms.djangoapps.discussion.toggles import ENABLE_REPORTED_CONTENT_EMAIL_NOTIFICATIONS
 from openedx.core.djangoapps.discussions.tasks import update_discussions_settings_from_course_task
 from openedx.core.djangoapps.django_comment_common.models import CourseDiscussionSettings
 from openedx.core.lib.courses import get_course_by_id
+from xmodule.modulestore.django import modulestore
+
+from ..content.course_overviews.models import CourseOverviewTab
 from .models import DiscussionsConfiguration, Provider
 from .utils import available_division_schemes, get_divided_discussions
-from ..content.course_overviews.models import CourseOverviewTab
 
 
 class LtiSerializer(serializers.ModelSerializer):

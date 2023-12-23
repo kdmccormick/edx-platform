@@ -11,9 +11,9 @@ from django.conf import settings
 from oauth2_provider import models as dot_models
 from rest_framework import status
 
+from common.djangoapps.student.tests.factories import UserFactory
 from openedx.core.djangoapps.oauth_dispatch.adapters.dot import DOTAdapter
 from openedx.core.djangoapps.oauth_dispatch.jwt import _create_jwt
-from common.djangoapps.student.tests.factories import UserFactory
 
 
 class AuthType(Enum):

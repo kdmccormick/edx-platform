@@ -15,7 +15,7 @@ from lms.djangoapps.certificates.models import (
     CertificateHtmlViewConfiguration,
     CertificateInvalidation,
     CertificateStatuses,
-    GeneratedCertificate
+    GeneratedCertificate,
 )
 
 

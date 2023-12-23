@@ -13,13 +13,12 @@ from edx_django_utils.admin.mixins import ReadOnlyAdminMixin
 from cms.djangoapps.contentstore.models import (
     BackfillCourseTabsConfig,
     CleanStaleCertificateAvailabilityDatesConfig,
-    VideoUploadConfig
+    VideoUploadConfig,
 )
 from cms.djangoapps.contentstore.outlines_regenerate import CourseOutlineRegenerate
 from openedx.core.djangoapps.content.learning_sequences.api import key_supports_outlines
 
-from .tasks import update_outline_from_modulestore_task, update_all_outlines_from_modulestore_task
-
+from .tasks import update_all_outlines_from_modulestore_task, update_outline_from_modulestore_task
 
 log = logging.getLogger(__name__)
 

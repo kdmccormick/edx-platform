@@ -3,10 +3,13 @@ Django admin page for the Agreements app
 """
 
 from django.contrib import admin
-from openedx.core.djangoapps.agreements.models import IntegritySignature
-from openedx.core.djangoapps.agreements.models import LTIPIITool
-from openedx.core.djangoapps.agreements.models import LTIPIISignature
-from openedx.core.djangoapps.agreements.models import ProctoringPIISignature
+
+from openedx.core.djangoapps.agreements.models import (
+    IntegritySignature,
+    LTIPIISignature,
+    LTIPIITool,
+    ProctoringPIISignature,
+)
 
 
 class IntegritySignatureAdmin(admin.ModelAdmin):

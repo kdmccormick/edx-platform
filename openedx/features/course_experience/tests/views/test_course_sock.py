@@ -10,12 +10,14 @@ from django.urls import reverse
 from edx_toggles.toggles.testutils import override_waffle_flag
 
 from common.djangoapps.course_modes.models import CourseMode
+from common.djangoapps.student.tests.factories import CourseEnrollmentFactory, UserFactory
 from lms.djangoapps.commerce.models import CommerceConfiguration
 from lms.djangoapps.courseware.tests.helpers import set_preview_mode
 from openedx.core.djangolib.markup import HTML
 from openedx.features.course_experience import DISPLAY_COURSE_SOCK_FLAG
-from common.djangoapps.student.tests.factories import CourseEnrollmentFactory, UserFactory
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    SharedModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
 from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
 
 from .helpers import add_course_mode

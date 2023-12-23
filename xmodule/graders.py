@@ -11,11 +11,10 @@ import sys
 from collections import OrderedDict
 from datetime import datetime
 
-from pytz import UTC
 from django.utils.translation import gettext_lazy as _
+from pytz import UTC
 
 from xmodule.util.misc import get_short_labeler
-
 
 log = logging.getLogger("edx.courseware")
 

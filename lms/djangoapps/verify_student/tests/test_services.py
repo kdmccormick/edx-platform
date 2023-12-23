@@ -2,8 +2,8 @@
 Tests for the service classes in verify_student.
 """
 
-from datetime import datetime, timedelta, timezone
 import itertools
+from datetime import datetime, timedelta, timezone
 from random import randint
 from unittest.mock import patch
 
@@ -19,7 +19,9 @@ from common.djangoapps.student.tests.factories import UserFactory
 from lms.djangoapps.verify_student.models import ManualVerification, SoftwareSecurePhotoVerification, SSOVerification
 from lms.djangoapps.verify_student.services import IDVerificationService
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
 from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
 
 FAKE_SETTINGS = {

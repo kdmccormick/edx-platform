@@ -10,13 +10,13 @@ from .proctoring import (
     LimitedProctoredExamSettingsSerializer,
     ProctoredExamConfigurationSerializer,
     ProctoredExamSettingsSerializer,
-    ProctoringErrorsSerializer
+    ProctoringErrorsSerializer,
 )
 from .settings import CourseSettingsSerializer
 from .videos import (
     CourseVideosSerializer,
-    VideoUploadSerializer,
+    VideoDownloadSerializer,
     VideoImageSerializer,
+    VideoUploadSerializer,
     VideoUsageSerializer,
-    VideoDownloadSerializer
 )

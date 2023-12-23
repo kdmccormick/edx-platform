@@ -21,20 +21,21 @@ from xblock.core import XBlock
 from xblock.exceptions import NoSuchViewError
 
 from openedx.core.djangoapps.xblock.apps import get_xblock_app_config
-from openedx.core.djangoapps.xblock.learning_context.manager import get_learning_context_impl
-from openedx.core.djangoapps.xblock.runtime.blockstore_runtime import BlockstoreXBlockRuntime, xml_for_definition
-from openedx.core.djangoapps.xblock.runtime.runtime import XBlockRuntimeSystem as _XBlockRuntimeSystem
-from openedx.core.djangolib.blockstore_cache import BundleCache
-from .utils import get_secure_token_for_xblock_handler, get_xblock_id_for_anonymous_user
 
 # Made available as part of this package's public API:
 from openedx.core.djangoapps.xblock.learning_context import LearningContext
+from openedx.core.djangoapps.xblock.learning_context.manager import get_learning_context_impl
+from openedx.core.djangoapps.xblock.runtime.blockstore_runtime import BlockstoreXBlockRuntime, xml_for_definition
 from openedx.core.djangoapps.xblock.runtime.olx_parsing import (
     BundleFormatException,
+    XBlockInclude,
     definition_for_include,
     parse_xblock_include,
-    XBlockInclude,
 )
+from openedx.core.djangoapps.xblock.runtime.runtime import XBlockRuntimeSystem as _XBlockRuntimeSystem
+from openedx.core.djangolib.blockstore_cache import BundleCache
+
+from .utils import get_secure_token_for_xblock_handler, get_xblock_id_for_anonymous_user
 
 # Implementation:
 

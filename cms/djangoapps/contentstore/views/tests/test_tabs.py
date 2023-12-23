@@ -4,13 +4,17 @@
 import json
 import random
 
-
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from cms.djangoapps.contentstore.utils import reverse_course_url
 from cms.djangoapps.contentstore.views import tabs
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    CourseFactory,
+)
 from xmodule.tabs import CourseTabList  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.x_module import STUDENT_VIEW  # lint-amnesty, pylint: disable=wrong-import-order
 

@@ -16,7 +16,10 @@ from six.moves.urllib.parse import urlencode, urlparse
 
 from lms.djangoapps.courseware.toggles import courseware_mfe_is_active
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.search import navigation_index, path_to_location  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.search import (  # lint-amnesty, pylint: disable=wrong-import-order
+    navigation_index,
+    path_to_location,
+)
 
 User = get_user_model()
 

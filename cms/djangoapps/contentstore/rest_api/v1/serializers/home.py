@@ -4,9 +4,8 @@ API Serializers for course home
 
 from rest_framework import serializers
 
-from openedx.core.lib.api.serializers import CourseKeyField
-
 from cms.djangoapps.contentstore.rest_api.serializers.common import CourseCommonSerializer
+from openedx.core.lib.api.serializers import CourseKeyField
 
 
 class UnsucceededCourseSerializer(serializers.Serializer):

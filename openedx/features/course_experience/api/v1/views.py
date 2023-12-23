@@ -5,24 +5,21 @@ import logging
 
 from django.utils.html import format_html
 from django.utils.translation import gettext as _
-from eventtracking import tracker
-
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from rest_framework.exceptions import APIException, ParseError
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.generics import RetrieveAPIView
-
 from edx_rest_framework_extensions.auth.jwt.authentication import JwtAuthentication
 from edx_rest_framework_extensions.auth.session.authentication import SessionAuthenticationAllowInactiveUser
+from eventtracking import tracker
 from opaque_keys.edx.keys import CourseKey
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.exceptions import APIException, ParseError
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from lms.djangoapps.course_api.api import course_detail
 from lms.djangoapps.course_goals.models import UserActivity
 from lms.djangoapps.courseware.access import has_access
 from lms.djangoapps.courseware.courses import get_course_with_access
 from lms.djangoapps.courseware.masquerade import is_masquerading, setup_masquerade
-
 from openedx.core.djangoapps.schedules.utils import reset_self_paced_schedule
 from openedx.core.lib.api.authentication import BearerAuthenticationAllowInactiveUser
 from openedx.features.course_experience.api.v1.serializers import CourseDeadlinesMobileSerializer

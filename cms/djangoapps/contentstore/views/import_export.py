@@ -42,7 +42,7 @@ from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disa
 from ..storage import course_import_export_storage
 from ..tasks import CourseExportTask, CourseImportTask, export_olx, import_olx
 from ..toggles import use_new_export_page, use_new_import_page
-from ..utils import reverse_course_url, reverse_library_url, get_export_url, get_import_url
+from ..utils import get_export_url, get_import_url, reverse_course_url, reverse_library_url
 
 __all__ = [
     'import_handler', 'import_status_handler',

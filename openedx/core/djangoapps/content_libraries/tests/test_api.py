@@ -7,11 +7,7 @@ import hashlib
 from unittest import mock
 
 from django.test import TestCase
-
-from opaque_keys.edx.keys import (
-    CourseKey,
-    UsageKey,
-)
+from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locator import LibraryLocatorV2
 
 from .. import api

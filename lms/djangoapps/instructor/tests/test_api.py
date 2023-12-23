@@ -24,18 +24,12 @@ from django.test import RequestFactory, TestCase
 from django.test.client import MULTIPART_CONTENT
 from django.urls import reverse as django_reverse
 from django.utils.translation import gettext as _
-from edx_when.api import get_dates_for_course, get_overrides_for_user, set_date_for_block
 from edx_toggles.toggles.testutils import override_waffle_flag
+from edx_when.api import get_dates_for_course, get_overrides_for_user, set_date_for_block
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locator import UsageKey
 from pytz import UTC
 from testfixtures import LogCapture
-from xmodule.fields import Date
-from xmodule.modulestore import ModuleStoreEnum
-from xmodule.modulestore.tests.django_utils import (
-    TEST_DATA_SPLIT_MODULESTORE, ModuleStoreTestCase, SharedModuleStoreTestCase,
-)
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory
 
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.course_modes.tests.factories import CourseModeFactory
@@ -52,7 +46,7 @@ from common.djangoapps.student.models import (
     ManualEnrollmentAudit,
     NonExistentCourseError,
     get_retired_email_by_email,
-    get_retired_username_by_username
+    get_retired_username_by_username,
 )
 from common.djangoapps.student.roles import (
     CourseBetaTesterRole,
@@ -60,17 +54,17 @@ from common.djangoapps.student.roles import (
     CourseFinanceAdminRole,
     CourseInstructorRole,
 )
-from common.djangoapps.student.tests.factories import BetaTesterFactory
-from common.djangoapps.student.tests.factories import CourseEnrollmentFactory
-from common.djangoapps.student.tests.factories import GlobalStaffFactory
-from common.djangoapps.student.tests.factories import InstructorFactory
-from common.djangoapps.student.tests.factories import StaffFactory
-from common.djangoapps.student.tests.factories import UserFactory
+from common.djangoapps.student.tests.factories import (
+    BetaTesterFactory,
+    CourseEnrollmentFactory,
+    GlobalStaffFactory,
+    InstructorFactory,
+    StaffFactory,
+    UserFactory,
+)
 from lms.djangoapps.bulk_email.models import BulkEmailFlag, CourseEmail, CourseEmailTemplate
 from lms.djangoapps.certificates.data import CertificateStatuses
-from lms.djangoapps.certificates.tests.factories import (
-    GeneratedCertificateFactory
-)
+from lms.djangoapps.certificates.tests.factories import GeneratedCertificateFactory
 from lms.djangoapps.courseware.models import StudentModule
 from lms.djangoapps.courseware.tests.helpers import LoginEnrollmentTestCase
 from lms.djangoapps.instructor.tests.utils import FakeContentTask, FakeEmail, FakeEmailInfo
@@ -80,12 +74,12 @@ from lms.djangoapps.instructor.views.api import (
     _split_input_list,
     common_exceptions_400,
     generate_unique_password,
-    require_finance_admin
+    require_finance_admin,
 )
 from lms.djangoapps.instructor_task.api_helper import (
     AlreadyRunningError,
     QueueConnectionError,
-    generate_already_running_error_message
+    generate_already_running_error_message,
 )
 from lms.djangoapps.instructor_task.data import InstructorTaskTypes
 from lms.djangoapps.program_enrollments.tests.factories import ProgramEnrollmentFactory
@@ -99,6 +93,14 @@ from openedx.core.djangoapps.user_api.preferences.api import delete_user_prefere
 from openedx.core.lib.teams_config import TeamsConfig
 from openedx.core.lib.xblock_utils import grade_histogram
 from openedx.features.course_experience import RELATIVE_DATES_FLAG
+from xmodule.fields import Date
+from xmodule.modulestore import ModuleStoreEnum
+from xmodule.modulestore.tests.django_utils import (
+    TEST_DATA_SPLIT_MODULESTORE,
+    ModuleStoreTestCase,
+    SharedModuleStoreTestCase,
+)
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory
 
 from .test_tools import msk_from_problem_urlname
 

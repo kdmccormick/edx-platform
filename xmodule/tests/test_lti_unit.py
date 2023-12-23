@@ -7,7 +7,6 @@ from copy import copy
 from unittest.mock import Mock, PropertyMock, patch
 from urllib import parse
 
-
 import pytest
 from django.conf import settings
 from django.test import TestCase, override_settings
@@ -18,7 +17,6 @@ from pytz import UTC
 from webob.request import Request
 from xblock.field_data import DictFieldData
 from xblock.fields import ScopeIds
-
 
 from common.djangoapps.xblock_django.constants import ATTR_KEY_ANONYMOUS_USER_ID
 from xmodule.fields import Timedelta

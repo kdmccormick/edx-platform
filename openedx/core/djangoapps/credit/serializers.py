@@ -9,10 +9,10 @@ from django.conf import settings
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 
+from common.djangoapps.util.date_utils import from_timestamp
 from openedx.core.djangoapps.credit.models import CreditCourse, CreditEligibility, CreditProvider, CreditRequest
 from openedx.core.djangoapps.credit.signature import get_shared_secret_key, signature
 from openedx.core.lib.api.serializers import CourseKeyField
-from common.djangoapps.util.date_utils import from_timestamp
 
 log = logging.getLogger(__name__)
 

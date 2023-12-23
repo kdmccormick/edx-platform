@@ -7,11 +7,11 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from django.utils.timezone import now
 
+from common.djangoapps.student.tests.factories import UserFactory
 from openedx.core.djangoapps.oauth_dispatch import jwt as jwt_api
 from openedx.core.djangoapps.oauth_dispatch.adapters import DOTAdapter
 from openedx.core.djangoapps.oauth_dispatch.models import RestrictedApplication
 from openedx.core.djangoapps.oauth_dispatch.tests.mixins import AccessTokenMixin
-from common.djangoapps.student.tests.factories import UserFactory
 
 
 @ddt.ddt

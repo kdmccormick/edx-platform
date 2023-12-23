@@ -6,7 +6,7 @@ from __future__ import annotations
 from typing import Iterator
 
 import openedx_tagging.core.tagging.api as oel_tagging
-from django.db.models import Q, QuerySet, Exists, OuterRef
+from django.db.models import Exists, OuterRef, Q, QuerySet
 from openedx_tagging.core.tagging.models import Taxonomy
 from organizations.models import Organization
 

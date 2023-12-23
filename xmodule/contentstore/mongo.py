@@ -10,7 +10,7 @@ import gridfs
 import pymongo
 from bson.son import SON
 from fs.osfs import OSFS
-from gridfs.errors import NoFile, FileExists
+from gridfs.errors import FileExists, NoFile
 from mongodb_proxy import autoretry_read
 from opaque_keys.edx.keys import AssetKey
 

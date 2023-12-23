@@ -3,8 +3,8 @@ Tests for toggles, where there is logic beyond enable/disable.
 """
 
 from unittest.mock import patch
-import ddt
 
+import ddt
 from django.test import override_settings
 
 from common.djangoapps.student.tests.factories import UserFactory

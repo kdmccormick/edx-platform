@@ -3,8 +3,8 @@ Django module for Course Metadata class -- manages advanced settings and related
 """
 
 
-from datetime import datetime
 import logging
+from datetime import datetime
 
 import pytz
 from django.conf import settings

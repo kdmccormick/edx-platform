@@ -13,7 +13,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from edx_django_utils.monitoring import set_code_owner_attribute
 from opaque_keys.edx.keys import CourseKey
 from requests.exceptions import HTTPError
-from xmodule.data import CertificatesDisplayBehaviors
 
 from common.djangoapps.course_modes.models import CourseMode
 from lms.djangoapps.certificates.api import available_date_for_certificate
@@ -27,6 +26,7 @@ from openedx.core.djangoapps.credentials.utils import (
 )
 from openedx.core.djangoapps.programs.utils import ProgramProgressMeter
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from xmodule.data import CertificatesDisplayBehaviors
 
 User = get_user_model()
 

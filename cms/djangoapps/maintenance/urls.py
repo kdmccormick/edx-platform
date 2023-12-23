@@ -10,7 +10,7 @@ from .views import (
     AnnouncementEditView,
     AnnouncementIndexView,
     ForcePublishCourseView,
-    MaintenanceIndexView
+    MaintenanceIndexView,
 )
 
 app_name = 'cms.djangoapps.maintenance'

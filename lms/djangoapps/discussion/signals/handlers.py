@@ -9,13 +9,13 @@ from django.conf import settings
 from django.dispatch import receiver
 from django.utils.html import strip_tags
 from opaque_keys.edx.locator import LibraryLocator
-from xmodule.modulestore.django import SignalHandler
 
 from lms.djangoapps.discussion import tasks
 from lms.djangoapps.discussion.rest_api.tasks import send_response_notifications, send_thread_created_notification
 from openedx.core.djangoapps.django_comment_common import signals
 from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
 from openedx.core.djangoapps.theming.helpers import get_current_site
+from xmodule.modulestore.django import SignalHandler
 
 log = logging.getLogger(__name__)
 

@@ -36,7 +36,7 @@ from openedx.core.djangoapps.catalog.constants import PathwayType
 from openedx.core.djangoapps.catalog.utils import (
     get_fulfillable_course_runs_for_entitlement,
     get_pathways,
-    get_programs
+    get_programs,
 )
 from openedx.core.djangoapps.commerce.utils import get_ecommerce_api_base_url, get_ecommerce_api_client
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview

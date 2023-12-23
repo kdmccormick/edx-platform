@@ -20,7 +20,6 @@ from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
-from xmodule.modulestore.django import modulestore
 
 from common.djangoapps.util.file import store_uploaded_file
 from lms.djangoapps.course_api.blocks.api import get_blocks
@@ -38,6 +37,7 @@ from openedx.core.djangoapps.user_api.models import UserRetirementStatus
 from openedx.core.lib.api.authentication import BearerAuthentication, BearerAuthenticationAllowInactiveUser
 from openedx.core.lib.api.parsers import MergePatchParser
 from openedx.core.lib.api.view_utils import DeveloperErrorViewMixin, view_auth_classes
+from xmodule.modulestore.django import modulestore
 
 from ..rest_api.api import (
     create_comment,
@@ -49,10 +49,10 @@ from ..rest_api.api import (
     get_course_discussion_user_stats,
     get_course_topics,
     get_course_topics_v2,
+    get_learner_active_thread_list,
     get_response_comments,
     get_thread,
     get_thread_list,
-    get_learner_active_thread_list,
     get_user_comments,
     get_v2_course_topics_as_v1,
     update_comment,
@@ -77,11 +77,7 @@ from ..rest_api.serializers import (
     DiscussionTopicSerializerV2,
     TopicOrdering,
 )
-from .utils import (
-    create_blocks_params,
-    create_topics_v3_structure,
-)
-
+from .utils import create_blocks_params, create_topics_v3_structure
 
 log = logging.getLogger(__name__)
 

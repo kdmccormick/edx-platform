@@ -2,7 +2,7 @@
 Unit tests for SafeSessionMiddleware
 """
 
-from unittest.mock import call, patch, MagicMock
+from unittest.mock import MagicMock, call, patch
 
 import ddt
 from crum import set_current_request
@@ -13,15 +13,15 @@ from django.http import HttpResponse, HttpResponseRedirect, SimpleCookie
 from django.test import TestCase
 from django.test.utils import override_settings
 
-from openedx.core.djangolib.testing.utils import get_mock_request, CacheIsolationTestCase
 from common.djangoapps.student.tests.factories import UserFactory
+from openedx.core.djangolib.testing.utils import CacheIsolationTestCase, get_mock_request
 
 from ..middleware import (
     SafeCookieData,
     SafeSessionMiddleware,
     mark_user_change_as_expected,
     obscure_token,
-    track_request_user_changes
+    track_request_user_changes,
 )
 from .test_utils import TestSafeSessionsLogMixin
 

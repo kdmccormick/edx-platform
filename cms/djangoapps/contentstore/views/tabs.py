@@ -12,16 +12,17 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_http_methods
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from rest_framework.exceptions import ValidationError
+
+from common.djangoapps.edxmako.shortcuts import render_to_response
+from common.djangoapps.student.auth import has_course_author_access
+from common.djangoapps.util.json_request import JsonResponse, JsonResponseBadRequest, expect_json
 from xmodule.course_block import CourseBlock
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
 from xmodule.tabs import CourseTab, CourseTabList, InvalidTabsException, StaticTab
 
-from common.djangoapps.edxmako.shortcuts import render_to_response
-from common.djangoapps.student.auth import has_course_author_access
-from common.djangoapps.util.json_request import JsonResponse, JsonResponseBadRequest, expect_json
 from ..toggles import use_new_custom_pages
-from ..utils import get_lms_link_for_item, get_pages_and_resources_url, get_custom_pages_url
+from ..utils import get_custom_pages_url, get_lms_link_for_item, get_pages_and_resources_url
 
 __all__ = ["tabs_handler", "update_tabs_handler"]
 

@@ -6,7 +6,6 @@ Module for the Storage of BlockStructure objects.
 
 from logging import getLogger
 
-
 from openedx.core.lib.cache_utils import zpickle, zunpickle
 
 from . import config

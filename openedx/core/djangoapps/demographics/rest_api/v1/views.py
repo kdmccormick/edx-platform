@@ -5,9 +5,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from openedx.core.djangoapps.demographics.api.status import (
-    show_user_demographics, show_call_to_action_for_user,
-)
+from openedx.core.djangoapps.demographics.api.status import show_call_to_action_for_user, show_user_demographics
 from openedx.core.djangoapps.demographics.models import UserDemographics
 
 

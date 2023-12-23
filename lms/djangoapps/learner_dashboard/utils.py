@@ -9,7 +9,7 @@ from common.djangoapps.student.roles import GlobalStaff
 from lms.djangoapps.learner_dashboard.config.waffle import (
     ENABLE_B2C_SUBSCRIPTIONS,
     ENABLE_MASTERS_PROGRAM_TAB_VIEW,
-    ENABLE_PROGRAM_TAB_VIEW
+    ENABLE_PROGRAM_TAB_VIEW,
 )
 from lms.djangoapps.program_enrollments.api import get_program_enrollment
 

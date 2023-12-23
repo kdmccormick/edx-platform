@@ -1,18 +1,17 @@
 """ API for User Tours. """
 from django.conf import settings
-from django.db import transaction, IntegrityError
+from django.db import IntegrityError, transaction
 from django.shortcuts import get_object_or_404
 from edx_rest_framework_extensions.auth.jwt.authentication import JwtAuthentication
+from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
-
-from lms.djangoapps.user_tours.models import UserTour, UserDiscussionsTours
-from lms.djangoapps.user_tours.v1.serializers import UserTourSerializer, UserDiscussionsToursSerializer
-
 from rest_framework.views import APIView
+
+from lms.djangoapps.user_tours.models import UserDiscussionsTours, UserTour
+from lms.djangoapps.user_tours.v1.serializers import UserDiscussionsToursSerializer, UserTourSerializer
 
 
 class UserTourView(RetrieveUpdateAPIView):

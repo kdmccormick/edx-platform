@@ -19,7 +19,7 @@ from .models import (
     OAuth2ProviderConfig,
     SAMLConfiguration,
     SAMLProviderConfig,
-    SAMLProviderData
+    SAMLProviderData,
 )
 from .tasks import fetch_saml_metadata
 

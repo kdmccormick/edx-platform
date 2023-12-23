@@ -4,16 +4,13 @@ Unit tests for home page view.
 import ddt
 from django.conf import settings
 from django.urls import reverse
-from edx_toggles.toggles.testutils import (
-    override_waffle_switch,
-    override_waffle_flag,
-)
+from edx_toggles.toggles.testutils import override_waffle_flag, override_waffle_switch
 from rest_framework import status
 
-from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from cms.djangoapps.contentstore.tests.test_libraries import LibraryTestCase
-from cms.djangoapps.contentstore.views.course import ENABLE_GLOBAL_STAFF_OPTIMIZATION
+from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from cms.djangoapps.contentstore.toggles import ENABLE_TAGGING_TAXONOMY_LIST_PAGE
+from cms.djangoapps.contentstore.views.course import ENABLE_GLOBAL_STAFF_OPTIMIZATION
 from openedx.core.djangoapps.content.course_overviews.tests.factories import CourseOverviewFactory
 from xmodule.modulestore.tests.factories import CourseFactory
 

@@ -59,9 +59,9 @@ import datetime
 import hashlib
 import logging
 import textwrap
-from xml.sax.saxutils import escape
 from unittest import mock
 from urllib import parse
+from xml.sax.saxutils import escape
 
 import bleach
 import oauthlib.oauth1
@@ -69,30 +69,20 @@ from django.conf import settings
 from lxml import etree
 from oauthlib.oauth1.rfc5849 import signature
 from pytz import UTC
-from webob import Response
 from web_fragments.fragment import Fragment
+from webob import Response
 from xblock.core import List, Scope, String, XBlock
 from xblock.fields import Boolean, Float
-from xmodule.mako_block import MakoTemplateBlockBase
 
+from common.djangoapps.xblock_django.constants import ATTR_KEY_ANONYMOUS_USER_ID, ATTR_KEY_USER_ROLE
 from openedx.core.djangolib.markup import HTML, Text
 from xmodule.editing_block import EditingMixin
-
-from common.djangoapps.xblock_django.constants import (
-    ATTR_KEY_ANONYMOUS_USER_ID,
-    ATTR_KEY_USER_ROLE,
-)
 from xmodule.lti_2_util import LTI20BlockMixin, LTIError
+from xmodule.mako_block import MakoTemplateBlockBase
 from xmodule.raw_block import EmptyDataRawMixin
-from xmodule.util.builtin_assets import add_webpack_js_to_fragment, add_sass_to_fragment
+from xmodule.util.builtin_assets import add_sass_to_fragment, add_webpack_js_to_fragment
+from xmodule.x_module import ResourceTemplates, XModuleMixin, XModuleToXBlockMixin, shim_xmodule_js
 from xmodule.xml_block import XmlMixin
-from xmodule.x_module import (
-    ResourceTemplates,
-    shim_xmodule_js,
-    XModuleMixin,
-    XModuleToXBlockMixin,
-)
-
 
 log = logging.getLogger(__name__)
 

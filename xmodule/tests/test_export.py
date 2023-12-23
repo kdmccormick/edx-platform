@@ -10,9 +10,9 @@ from tempfile import mkdtemp
 from textwrap import dedent
 from unittest import mock
 
-import pytest
 import ddt
 import lxml.etree
+import pytest
 import pytz
 from django.utils.translation import gettext_lazy
 from fs.osfs import OSFS

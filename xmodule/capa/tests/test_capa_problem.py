@@ -4,15 +4,15 @@ Test capa problem.
 import textwrap
 import unittest
 
-import pytest
 import ddt
+import pytest
 from lxml import etree
 from markupsafe import Markup
 from mock import patch
 
+from openedx.core.djangolib.markup import HTML
 from xmodule.capa.responsetypes import LoncapaProblemError
 from xmodule.capa.tests.helpers import new_loncapa_problem
-from openedx.core.djangolib.markup import HTML
 
 
 @ddt.ddt

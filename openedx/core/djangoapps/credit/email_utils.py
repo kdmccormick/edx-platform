@@ -20,7 +20,6 @@ from django.core.mail import EmailMessage, SafeMIMEText
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from eventtracking import tracker
-from xmodule.modulestore.django import modulestore
 
 from common.djangoapps.edxmako.shortcuts import render_to_string
 from common.djangoapps.edxmako.template import Template
@@ -28,6 +27,7 @@ from openedx.core.djangoapps.commerce.utils import get_ecommerce_api_base_url, g
 from openedx.core.djangoapps.credit.models import CreditConfig, CreditProvider
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangolib.markup import HTML
+from xmodule.modulestore.django import modulestore
 
 log = logging.getLogger(__name__)
 

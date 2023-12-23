@@ -21,7 +21,7 @@ from openedx.core.djangoapps.content.course_overviews.tests.factories import Cou
 from openedx.core.djangoapps.notifications.config.waffle import (
     ENABLE_COURSEWIDE_NOTIFICATIONS,
     ENABLE_NOTIFICATIONS,
-    SHOW_NOTIFICATIONS_TRAY
+    SHOW_NOTIFICATIONS_TRAY,
 )
 from openedx.core.djangoapps.notifications.models import CourseNotificationPreference, Notification
 from openedx.core.djangoapps.notifications.serializers import NotificationCourseEnrollmentSerializer

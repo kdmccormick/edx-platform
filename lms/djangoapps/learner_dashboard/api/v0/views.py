@@ -17,7 +17,6 @@ from openedx.core.djangoapps.programs.utils import (
     get_program_urls,
 )
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -13,8 +13,13 @@ from cms.djangoapps.contentstore.management.commands.utils import get_course_ver
 from common.djangoapps.student.tests.factories import AdminFactory, UserFactory
 from openedx.features.announcements.models import Announcement
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    CourseFactory,
+)
 
 from .views import COURSE_KEY_ERROR_MESSAGES, MAINTENANCE_VIEWS
 

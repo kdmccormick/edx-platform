@@ -11,7 +11,6 @@ file and check it in at the same time as your model changes. To do that,
 3. Add the migration file created in edx-platform/common/djangoapps/student/migrations/
 """
 
-import crum
 import hashlib  # lint-amnesty, pylint: disable=wrong-import-order
 import json  # lint-amnesty, pylint: disable=wrong-import-order
 import logging  # lint-amnesty, pylint: disable=wrong-import-order
@@ -21,15 +20,7 @@ from functools import total_ordering  # lint-amnesty, pylint: disable=wrong-impo
 from importlib import import_module  # lint-amnesty, pylint: disable=wrong-import-order
 from urllib.parse import urlencode
 
-from .course_enrollment import (
-    ALLOWEDTOENROLL_TO_ENROLLED,
-    CourseEnrollment,
-    CourseEnrollmentAllowed,
-    CourseOverview,
-    ManualEnrollmentAudit,
-    segment
-)
-
+import crum
 from config_models.models import ConfigurationModel
 from django.apps import apps
 from django.conf import settings
@@ -63,6 +54,15 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from openedx.core.djangoapps.xmodule_django.models import NoneToEmptyManager
 from openedx.core.djangolib.model_mixins import DeletableByUserValue
 from openedx.core.toggles import ENTRANCE_EXAMS
+
+from .course_enrollment import (
+    ALLOWEDTOENROLL_TO_ENROLLED,
+    CourseEnrollment,
+    CourseEnrollmentAllowed,
+    CourseOverview,
+    ManualEnrollmentAudit,
+    segment,
+)
 
 log = logging.getLogger(__name__)
 AUDIT_LOG = logging.getLogger("audit")

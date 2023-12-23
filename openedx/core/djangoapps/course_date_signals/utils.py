@@ -8,7 +8,6 @@ from datetime import timedelta
 
 from openedx.core.djangoapps.catalog.utils import get_course_run_details
 
-
 MIN_DURATION = timedelta(weeks=4)
 MAX_DURATION = timedelta(weeks=18)
 

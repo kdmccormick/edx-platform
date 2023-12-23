@@ -1,7 +1,6 @@
 """Tests for the goal_reminder_email command"""
 
 from datetime import datetime
-from pytz import UTC
 from unittest import mock  # lint-amnesty, pylint: disable=wrong-import-order
 
 import ddt
@@ -9,16 +8,19 @@ from django.core.management import call_command
 from django.test import TestCase
 from edx_toggles.toggles.testutils import override_waffle_flag
 from freezegun import freeze_time
+from pytz import UTC
 from waffle import get_waffle_flag_model  # pylint: disable=invalid-django-waffle-import
 
 from common.djangoapps.student.models import CourseEnrollment
 from common.djangoapps.student.tests.factories import CourseEnrollmentFactory
-from lms.djangoapps.course_goals.models import CourseGoalReminderStatus
-from lms.djangoapps.course_goals.tests.factories import (
-    CourseGoalFactory, CourseGoalReminderStatusFactory, UserActivityFactory,
-)
 from lms.djangoapps.certificates.data import CertificateStatuses
 from lms.djangoapps.certificates.tests.factories import GeneratedCertificateFactory
+from lms.djangoapps.course_goals.models import CourseGoalReminderStatus
+from lms.djangoapps.course_goals.tests.factories import (
+    CourseGoalFactory,
+    CourseGoalReminderStatusFactory,
+    UserActivityFactory,
+)
 from openedx.core.djangolib.testing.utils import skip_unless_lms
 from openedx.features.course_experience import ENABLE_COURSE_GOALS
 

@@ -19,26 +19,24 @@ from functools import wraps
 from unittest.mock import Mock
 
 from django.test import TestCase
-
 from opaque_keys.edx.keys import CourseKey
 from path import Path as path
 from xblock.core import XBlock
 from xblock.field_data import DictFieldData
 from xblock.fields import Reference, ReferenceList, ReferenceValueDict, ScopeIds
 
-from xmodule.capa.xqueue_interface import XQueueService
+from openedx.core.lib.cache_utils import CacheService
 from xmodule.assetstore import AssetMetadata
+from xmodule.capa.xqueue_interface import XQueueService
 from xmodule.contentstore.django import contentstore
 from xmodule.mako_block import MakoDescriptorSystem
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.draft_and_published import ModuleStoreDraftAndPublished
 from xmodule.modulestore.inheritance import InheritanceMixin
 from xmodule.modulestore.xml import CourseLocationManager
-from xmodule.tests.helpers import StubReplaceURLService, mock_render_template, StubMakoService, StubUserService
+from xmodule.tests.helpers import StubMakoService, StubReplaceURLService, StubUserService, mock_render_template
 from xmodule.util.sandboxing import SandboxService
 from xmodule.x_module import DoNothingCache, XModuleMixin
-from openedx.core.lib.cache_utils import CacheService
-
 
 MODULE_DIR = path(__file__).dirname()
 # Location of common test DATA directory

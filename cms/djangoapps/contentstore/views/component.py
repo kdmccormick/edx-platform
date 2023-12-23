@@ -21,28 +21,26 @@ from xblock.exceptions import NoSuchHandlerError
 from xblock.plugin import PluginMissingError
 from xblock.runtime import Mixologist
 
-from common.djangoapps.edxmako.shortcuts import render_to_response
-from common.djangoapps.student.auth import has_course_author_access
-from common.djangoapps.xblock_django.api import authorable_xblocks, disabled_xblocks
-from common.djangoapps.xblock_django.models import XBlockStudioConfigurationFlag
-from cms.djangoapps.contentstore.toggles import (
-    use_new_problem_editor,
-    use_tagging_taxonomy_list_page,
-)
-from openedx.core.lib.xblock_utils import get_aside_from_xblock, is_xblock_aside
-from openedx.core.djangoapps.discussions.models import DiscussionsConfiguration
-from openedx.core.djangoapps.content_staging import api as content_staging_api
-from openedx.core.djangoapps.content_tagging.api import get_content_tags
-from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.exceptions import ItemNotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
-from ..toggles import use_new_unit_page
-from ..utils import get_lms_link_for_item, get_sibling_urls, reverse_course_url, get_unit_url
-from ..helpers import get_parent_xblock, is_unit, xblock_type_display_name
+from cms.djangoapps.contentstore.toggles import use_new_problem_editor, use_tagging_taxonomy_list_page
 from cms.djangoapps.contentstore.xblock_storage_handlers.view_handlers import (
     add_container_page_publishing_info,
     create_xblock_info,
     load_services_for_studio,
 )
+from common.djangoapps.edxmako.shortcuts import render_to_response
+from common.djangoapps.student.auth import has_course_author_access
+from common.djangoapps.xblock_django.api import authorable_xblocks, disabled_xblocks
+from common.djangoapps.xblock_django.models import XBlockStudioConfigurationFlag
+from openedx.core.djangoapps.content_staging import api as content_staging_api
+from openedx.core.djangoapps.content_tagging.api import get_content_tags
+from openedx.core.djangoapps.discussions.models import DiscussionsConfiguration
+from openedx.core.lib.xblock_utils import get_aside_from_xblock, is_xblock_aside
+from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.exceptions import ItemNotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
+
+from ..helpers import get_parent_xblock, is_unit, xblock_type_display_name
+from ..toggles import use_new_unit_page
+from ..utils import get_lms_link_for_item, get_sibling_urls, get_unit_url, reverse_course_url
 
 __all__ = [
     'container_handler',

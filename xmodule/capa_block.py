@@ -25,6 +25,12 @@ from xblock.core import XBlock
 from xblock.fields import Boolean, Dict, Float, Integer, Scope, String, XMLString
 from xblock.scorable import ScorableXBlockMixin, Score
 
+from common.djangoapps.xblock_django.constants import (
+    ATTR_KEY_DEPRECATED_ANONYMOUS_USER_ID,
+    ATTR_KEY_USER_ID,
+    ATTR_KEY_USER_IS_STAFF,
+)
+from openedx.core.djangolib.markup import HTML, Text
 from xmodule.capa import responsetypes
 from xmodule.capa.capa_problem import LoncapaProblem, LoncapaSystem
 from xmodule.capa.inputtypes import Status
@@ -35,23 +41,12 @@ from xmodule.editing_block import EditingMixin
 from xmodule.exceptions import NotFoundError, ProcessingError
 from xmodule.graders import ShowCorrectness
 from xmodule.raw_block import RawMixin
+from xmodule.util.builtin_assets import add_sass_to_fragment, add_webpack_js_to_fragment
 from xmodule.util.sandboxing import SandboxService
-from xmodule.util.builtin_assets import add_webpack_js_to_fragment, add_sass_to_fragment
-from xmodule.x_module import (
-    ResourceTemplates,
-    XModuleMixin,
-    XModuleToXBlockMixin,
-    shim_xmodule_js
-)
+from xmodule.x_module import ResourceTemplates, XModuleMixin, XModuleToXBlockMixin, shim_xmodule_js
 from xmodule.xml_block import XmlMixin
-from common.djangoapps.xblock_django.constants import (
-    ATTR_KEY_DEPRECATED_ANONYMOUS_USER_ID,
-    ATTR_KEY_USER_IS_STAFF,
-    ATTR_KEY_USER_ID,
-)
-from openedx.core.djangolib.markup import HTML, Text
-from .capa.xqueue_interface import XQueueService
 
+from .capa.xqueue_interface import XQueueService
 from .fields import Date, ScoreField, Timedelta
 from .progress import Progress
 

@@ -7,8 +7,9 @@ http://stackoverflow.com/questions/10060069/safely-extract-zip-or-tar-using-pyth
 """
 
 import logging
+from os.path import abspath, dirname
 from os.path import join as joinpath
-from os.path import abspath, dirname, realpath
+from os.path import realpath
 
 from django.conf import settings
 from django.core.exceptions import SuspiciousOperation

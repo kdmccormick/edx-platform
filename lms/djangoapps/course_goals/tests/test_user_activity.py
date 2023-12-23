@@ -13,8 +13,6 @@ from edx_django_utils.cache import TieredCache
 from edx_toggles.toggles.testutils import override_waffle_flag
 from freezegun import freeze_time
 from mock import patch
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory
 
 from common.djangoapps.edxmako.shortcuts import render_to_response
 from common.djangoapps.student.models import CourseEnrollment
@@ -23,6 +21,8 @@ from common.djangoapps.util.testing import UrlResetMixin
 from lms.djangoapps.course_goals.models import UserActivity
 from openedx.core.djangoapps.django_comment_common.models import ForumsConfig
 from openedx.features.course_experience import ENABLE_COURSE_GOALS
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory
 
 User = get_user_model()
 

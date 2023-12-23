@@ -2,6 +2,7 @@
 Mixin to support editing in Studio.
 """
 from xblock.core import XBlock, XBlockMixin
+
 from xmodule.x_module import AUTHOR_VIEW, STUDENT_VIEW
 
 

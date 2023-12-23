@@ -16,7 +16,7 @@ from ..serializers.course_runs import (
     CourseRunCreateSerializer,
     CourseRunImageSerializer,
     CourseRunRerunSerializer,
-    CourseRunSerializer
+    CourseRunSerializer,
 )
 
 

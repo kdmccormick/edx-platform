@@ -2,19 +2,16 @@
 Key-value store that holds XBlock field data read out of Blockstore
 """
 
+import logging
 from collections import namedtuple
 from weakref import WeakKeyDictionary
-import logging
 
 from xblock.exceptions import InvalidScopeError, NoSuchDefinition
-from xblock.fields import Field, BlockScope, Scope, UserScope, Sentinel
 from xblock.field_data import FieldData
+from xblock.fields import BlockScope, Field, Scope, Sentinel, UserScope
 
 from openedx.core.djangoapps.xblock.learning_context.manager import get_learning_context_impl
-from openedx.core.djangolib.blockstore_cache import (
-    get_bundle_version_files_cached,
-    get_bundle_draft_files_cached,
-)
+from openedx.core.djangolib.blockstore_cache import get_bundle_draft_files_cached, get_bundle_version_files_cached
 
 log = logging.getLogger(__name__)
 

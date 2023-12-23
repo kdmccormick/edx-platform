@@ -10,23 +10,23 @@ from django.utils.timezone import now
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.student.models import CourseEnrollment
 from common.djangoapps.student.roles import CourseInstructorRole, CourseStaffRole
-from common.djangoapps.student.tests.factories import UserFactory, CourseEnrollmentFactory
+from common.djangoapps.student.tests.factories import CourseEnrollmentFactory, UserFactory
 from lms.djangoapps.teams.tests.factories import CourseTeamFactory, CourseTeamMembershipFactory
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.course_groups.tests.helpers import CohortFactory
 from openedx.core.djangoapps.django_comment_common.models import (
     FORUM_ROLE_ADMINISTRATOR,
     FORUM_ROLE_COMMUNITY_TA,
-    FORUM_ROLE_STUDENT,
     FORUM_ROLE_GROUP_MODERATOR,
     FORUM_ROLE_MODERATOR,
+    FORUM_ROLE_STUDENT,
     Role,
 )
 from openedx.core.djangoapps.notifications.audience_filters import (
+    CohortAudienceFilter,
+    CourseRoleAudienceFilter,
     EnrollmentAudienceFilter,
     ForumRoleAudienceFilter,
-    CourseRoleAudienceFilter,
-    CohortAudienceFilter,
     TeamAudienceFilter,
 )
 from openedx.core.djangoapps.notifications.filters import NotificationFilter

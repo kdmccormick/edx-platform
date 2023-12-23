@@ -13,7 +13,6 @@ from subprocess import check_call
 
 import django
 import git
-
 from path import Path
 
 root = Path('..').abspath()

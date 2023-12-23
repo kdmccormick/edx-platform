@@ -5,6 +5,7 @@ Tests of extended hints
 
 
 import unittest
+
 import pytest
 from ddt import data, ddt, unpack
 

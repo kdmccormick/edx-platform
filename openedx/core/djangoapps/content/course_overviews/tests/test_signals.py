@@ -1,11 +1,11 @@
 # lint-amnesty, pylint: disable=missing-module-docstring
 
 import datetime
-from unittest.mock import patch
 from collections import namedtuple
+from unittest.mock import patch
 
-import pytest
 import ddt
+import pytest
 from pytz import UTC
 
 from xmodule.data import CertificatesDisplayBehaviors

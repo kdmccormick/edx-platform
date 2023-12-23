@@ -12,11 +12,10 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from freezegun import freeze_time
 
-from openedx.core.djangoapps.content.course_overviews.tests.factories import CourseOverviewFactory
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+from openedx.core.djangoapps.content.course_overviews.tests.factories import CourseOverviewFactory
 
 from .. import admin, tasks
-
 
 _coursegraph_connection = {
     "protocol": "bolt",

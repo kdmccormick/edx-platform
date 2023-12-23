@@ -6,7 +6,7 @@ URLs for course_info API
 from django.conf import settings
 from django.urls import path, re_path
 
-from .views import CourseHandoutsList, CourseUpdatesList, CourseGoalsRecordUserActivity, BlocksInfoInCourseView
+from .views import BlocksInfoInCourseView, CourseGoalsRecordUserActivity, CourseHandoutsList, CourseUpdatesList
 
 urlpatterns = [
     re_path(

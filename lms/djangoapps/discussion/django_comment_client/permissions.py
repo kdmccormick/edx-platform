@@ -12,7 +12,7 @@ from lms.djangoapps.teams.models import CourseTeam
 from openedx.core.djangoapps.django_comment_common.comment_client import Thread
 from openedx.core.djangoapps.django_comment_common.models import (
     CourseDiscussionSettings,
-    all_permissions_for_user_in_course
+    all_permissions_for_user_in_course,
 )
 from openedx.core.lib.cache_utils import request_cached
 

@@ -5,6 +5,7 @@ from django.apps import AppConfig, apps
 from django.conf import settings
 
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+
 from .data import StudentDataMode
 
 

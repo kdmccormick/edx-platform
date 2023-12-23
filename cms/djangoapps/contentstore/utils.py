@@ -2,6 +2,7 @@
 Common utility functions useful throughout the contentstore
 """
 from __future__ import annotations
+
 import configparser
 import logging
 from collections import defaultdict
@@ -16,57 +17,24 @@ from django.utils import translation
 from django.utils.translation import gettext as _
 from help_tokens.core import HelpUrlExpert
 from lti_consumer.models import CourseAllowPIISharingInLTIFlag
+from milestones import api as milestones_api
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locator import LibraryLocator
 from openedx_events.content_authoring.data import DuplicatedXBlockData
 from openedx_events.content_authoring.signals import XBLOCK_DUPLICATED
-from milestones import api as milestones_api
 from pytz import UTC
 from xblock.fields import Scope
 
-from cms.djangoapps.contentstore.toggles import exam_setting_view_enabled
-from common.djangoapps.course_action_state.models import CourseRerunUIStateManager
-from common.djangoapps.course_modes.models import CourseMode
-from common.djangoapps.edxmako.services import MakoService
-from common.djangoapps.student import auth
-from common.djangoapps.student.auth import has_studio_read_access, has_studio_write_access, STUDIO_EDIT_ROLES
-from common.djangoapps.student.models import CourseEnrollment
-from common.djangoapps.student.roles import (
-    CourseInstructorRole,
-    CourseStaffRole,
-    GlobalStaff,
-)
-from common.djangoapps.util.course import get_link_for_about_page
-from common.djangoapps.util.milestones_helpers import (
-    is_prerequisite_courses_enabled,
-    is_valid_course_key,
-    remove_prerequisite_course,
-    set_prerequisite_courses,
-    get_namespace_choices,
-    generate_milestone_namespace
-)
-from common.djangoapps.xblock_django.user_service import DjangoXBlockUserService
-from openedx.core import toggles as core_toggles
-from openedx.core.djangoapps.credit.api import get_credit_requirements, is_credit_course
-from openedx.core.djangoapps.discussions.config.waffle import ENABLE_PAGES_AND_RESOURCES_MICROFRONTEND
-from openedx.core.djangoapps.discussions.models import DiscussionsConfiguration
-from openedx.core.djangoapps.django_comment_common.models import assign_default_role
-from openedx.core.djangoapps.django_comment_common.utils import seed_permissions_roles
-from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
-from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
-from openedx.core.djangoapps.models.course_details import CourseDetails
-from openedx.core.lib.courses import course_image_url
-from openedx.features.content_type_gating.models import ContentTypeGatingConfig
-from openedx.features.content_type_gating.partitions import CONTENT_TYPE_GATING_SCHEME
-from openedx.features.course_experience.waffle import ENABLE_COURSE_ABOUT_SIDEBAR_HTML
-from cms.djangoapps.contentstore.toggles import (
+from cms.djangoapps.contentstore.toggles import (  # use_xpert_translations_component,
+    exam_setting_view_enabled,
     split_library_view_on_dashboard,
     use_new_advanced_settings_page,
     use_new_course_outline_page,
+    use_new_course_team_page,
+    use_new_custom_pages,
     use_new_export_page,
     use_new_files_uploads_page,
     use_new_grading_page,
-    use_new_course_team_page,
     use_new_home_page,
     use_new_import_page,
     use_new_schedule_details_page,
@@ -75,18 +43,47 @@ from cms.djangoapps.contentstore.toggles import (
     use_new_updates_page,
     use_new_video_editor,
     use_new_video_uploads_page,
-    use_new_custom_pages,
     use_tagging_taxonomy_list_page,
-    # use_xpert_translations_component,
 )
 from cms.djangoapps.models.settings.course_grading import CourseGradingModel
+from common.djangoapps.course_action_state.models import CourseRerunUIStateManager
+from common.djangoapps.course_modes.models import CourseMode
+from common.djangoapps.edxmako.services import MakoService
+from common.djangoapps.student import auth
+from common.djangoapps.student.auth import STUDIO_EDIT_ROLES, has_studio_read_access, has_studio_write_access
+from common.djangoapps.student.models import CourseEnrollment
+from common.djangoapps.student.roles import CourseInstructorRole, CourseStaffRole, GlobalStaff
+from common.djangoapps.util.course import get_link_for_about_page
+from common.djangoapps.util.milestones_helpers import (
+    generate_milestone_namespace,
+    get_namespace_choices,
+    is_prerequisite_courses_enabled,
+    is_valid_course_key,
+    remove_prerequisite_course,
+    set_prerequisite_courses,
+)
+from common.djangoapps.xblock_django.user_service import DjangoXBlockUserService
+from openedx.core import toggles as core_toggles
+from openedx.core.djangoapps.credit.api import get_credit_requirements, is_credit_course
+from openedx.core.djangoapps.discussions.config.waffle import ENABLE_PAGES_AND_RESOURCES_MICROFRONTEND
+from openedx.core.djangoapps.discussions.models import DiscussionsConfiguration
+from openedx.core.djangoapps.django_comment_common.models import assign_default_role
+from openedx.core.djangoapps.django_comment_common.utils import seed_permissions_roles
+from openedx.core.djangoapps.models.course_details import CourseDetails
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
+from openedx.core.lib.courses import course_image_url
+from openedx.features.content_type_gating.models import ContentTypeGatingConfig
+from openedx.features.content_type_gating.partitions import CONTENT_TYPE_GATING_SCHEME
+from openedx.features.course_experience.waffle import ENABLE_COURSE_ABOUT_SIDEBAR_HTML
 from xmodule.library_tools import LibraryToolsService
 from xmodule.modulestore import ModuleStoreEnum  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.exceptions import ItemNotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.partitions.partitions_service import get_all_partitions_for_course  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.services import SettingsService, ConfigurationService, TeamsConfigurationService
-
+from xmodule.partitions.partitions_service import (
+    get_all_partitions_for_course,  # lint-amnesty, pylint: disable=wrong-import-order
+)
+from xmodule.services import ConfigurationService, SettingsService, TeamsConfigurationService
 
 log = logging.getLogger(__name__)
 
@@ -1263,7 +1260,7 @@ def get_course_settings(request, course_key, course_block):
     It is used for both DRF and django views.
     """
 
-    from .views.course import get_courses_accessible_to_user, _process_courses_list
+    from .views.course import _process_courses_list, get_courses_accessible_to_user
 
     credit_eligibility_enabled = settings.FEATURES.get('ENABLE_CREDIT_ELIGIBILITY', False)
     upload_asset_url = reverse_course_url('assets_handler', course_key)
@@ -1432,16 +1429,14 @@ def get_library_context(request, request_is_json=False):
     It is used for both DRF and django views.
     """
     from cms.djangoapps.contentstore.views.course import (
+        _accessible_libraries_iter,
+        _format_library_for_view,
+        _get_course_creator_status,
         get_allowed_organizations,
         get_allowed_organizations_for_libraries,
         user_can_create_organizations,
-        _accessible_libraries_iter,
-        _get_course_creator_status,
-        _format_library_for_view,
     )
-    from cms.djangoapps.contentstore.views.library import (
-        LIBRARIES_ENABLED,
-    )
+    from cms.djangoapps.contentstore.views.library import LIBRARIES_ENABLED
 
     libraries = _accessible_libraries_iter(request.user) if LIBRARIES_ENABLED else []
     data = {
@@ -1479,9 +1474,9 @@ def get_course_context(request):
     """
 
     from cms.djangoapps.contentstore.views.course import (
-        get_courses_accessible_to_user,
-        _process_courses_list,
         ENABLE_GLOBAL_STAFF_OPTIMIZATION,
+        _process_courses_list,
+        get_courses_accessible_to_user,
     )
 
     def format_in_process_course_view(uca):
@@ -1522,17 +1517,17 @@ def get_home_context(request, no_course=False):
     """
 
     from cms.djangoapps.contentstore.views.course import (
+        ENABLE_GLOBAL_STAFF_OPTIMIZATION,
+        _accessible_libraries_iter,
+        _format_library_for_view,
+        _get_course_creator_status,
         get_allowed_organizations,
         get_allowed_organizations_for_libraries,
         user_can_create_organizations,
-        _accessible_libraries_iter,
-        _get_course_creator_status,
-        _format_library_for_view,
-        ENABLE_GLOBAL_STAFF_OPTIMIZATION,
     )
     from cms.djangoapps.contentstore.views.library import (
-        LIBRARY_AUTHORING_MICROFRONTEND_URL,
         LIBRARIES_ENABLED,
+        LIBRARY_AUTHORING_MICROFRONTEND_URL,
         should_redirect_to_library_authoring_mfe,
         user_can_create_library,
     )
@@ -1611,15 +1606,12 @@ def get_course_videos_context(course_block, pagination_conf, course_key=None):
         get_transcript_credentials_state_for_org,
         get_transcript_preferences,
     )
+
     from openedx.core.djangoapps.video_config.models import VideoTranscriptEnabledFlag
     from openedx.core.djangoapps.video_config.toggles import use_xpert_translations_component
     from xmodule.video_block.transcripts_utils import Transcript  # lint-amnesty, pylint: disable=wrong-import-order
 
-    from .video_storage_handlers import (
-        get_all_transcript_languages,
-        _get_index_videos,
-        _get_default_video_image_url
-    )
+    from .video_storage_handlers import _get_default_video_image_url, _get_index_videos, get_all_transcript_languages
 
     VIDEO_SUPPORTED_FILE_FORMATS = {
         '.mp4': 'video/mp4',

@@ -39,10 +39,11 @@ not guaranteed to stick around, and values may be deleted unexpectedly.
 """
 from django.db import models
 from model_utils.models import TimeStampedModel
-
 from opaque_keys.edx.django.models import (  # lint-amnesty, pylint: disable=unused-import
-    LearningContextKeyField, UsageKeyField
+    LearningContextKeyField,
+    UsageKeyField,
 )
+
 from .data import CourseVisibility
 
 

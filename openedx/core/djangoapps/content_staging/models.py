@@ -2,6 +2,7 @@
 Models for content staging (and clipboard)
 """
 from __future__ import annotations
+
 import logging
 
 from django.contrib.auth import get_user_model
@@ -10,7 +11,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from opaque_keys.edx.django.models import UsageKeyField
 from opaque_keys.edx.keys import LearningContextKey
-from openedx_learning.lib.fields import case_insensitive_char_field, MultiCollationTextField
+from openedx_learning.lib.fields import MultiCollationTextField, case_insensitive_char_field
 
 from openedx.core.djangoapps.content.course_overviews.api import get_course_overview_or_none
 

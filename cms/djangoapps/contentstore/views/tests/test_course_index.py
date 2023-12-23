@@ -24,8 +24,9 @@ from cms.djangoapps.contentstore.utils import (
     add_instructor,
     get_proctored_exam_settings_url,
     reverse_course_url,
-    reverse_usage_url
+    reverse_usage_url,
 )
+from cms.djangoapps.contentstore.xblock_storage_handlers.view_handlers import VisibilityState, create_xblock_info
 from common.djangoapps.course_action_state.managers import CourseRerunUIStateManager
 from common.djangoapps.course_action_state.models import CourseRerunState
 from common.djangoapps.student.auth import has_course_author_access
@@ -36,10 +37,14 @@ from openedx.core.djangoapps.waffle_utils.testutils import WAFFLE_TABLES
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.exceptions import ItemNotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.tests.django_utils import TEST_DATA_SPLIT_MODULESTORE
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory, LibraryFactory, check_mongo_calls  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    CourseFactory,
+    LibraryFactory,
+    check_mongo_calls,
+)
 
 from ..course import _deprecated_blocks_info, course_outline_initial_state, reindex_course_and_check_access
-from cms.djangoapps.contentstore.xblock_storage_handlers.view_handlers import VisibilityState, create_xblock_info
 
 
 class TestCourseIndex(CourseTestCase):

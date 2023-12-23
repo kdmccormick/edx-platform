@@ -2,30 +2,25 @@
 Public rest API endpoints for the CMS API video assets.
 """
 import logging
-from rest_framework.generics import (
-    CreateAPIView,
-    RetrieveAPIView,
-    DestroyAPIView
-)
-from django.views.decorators.csrf import csrf_exempt
+
 from django.http import Http404
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.generics import CreateAPIView, DestroyAPIView, RetrieveAPIView
+from rest_framework.parsers import FormParser, MultiPartParser
 
-from openedx.core.lib.api.view_utils import DeveloperErrorViewMixin, view_auth_classes
-from common.djangoapps.util.json_request import expect_json_in_class_view
-
+import cms.djangoapps.contentstore.toggles as contentstore_toggles
 from cms.djangoapps.contentstore.api import course_author_access_required
-
+from cms.djangoapps.contentstore.rest_api.v0.views.utils import validate_request_with_serializer
 from cms.djangoapps.contentstore.transcript_storage_handlers import (
-    upload_transcript,
     delete_video_transcript_or_404,
     handle_transcript_download,
+    upload_transcript,
 )
-import cms.djangoapps.contentstore.toggles as contentstore_toggles
-from ..serializers import TranscriptSerializer
-from rest_framework.parsers import (MultiPartParser, FormParser)
+from common.djangoapps.util.json_request import expect_json_in_class_view
 from openedx.core.lib.api.parsers import TypedFileUploadParser
+from openedx.core.lib.api.view_utils import DeveloperErrorViewMixin, view_auth_classes
 
-from cms.djangoapps.contentstore.rest_api.v0.views.utils import validate_request_with_serializer
+from ..serializers import TranscriptSerializer
 
 log = logging.getLogger(__name__)
 toggles = contentstore_toggles

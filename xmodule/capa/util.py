@@ -9,10 +9,10 @@ from cmath import isinf, isnan
 from decimal import Decimal
 
 import bleach
+from bleach.css_sanitizer import CSSSanitizer
 from calc import evaluator
 from lxml import etree
 
-from bleach.css_sanitizer import CSSSanitizer
 from openedx.core.djangolib.markup import HTML
 
 #-----------------------------------------------------------------------------

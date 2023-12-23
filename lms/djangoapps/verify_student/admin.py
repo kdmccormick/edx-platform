@@ -9,7 +9,7 @@ from lms.djangoapps.verify_student.models import (
     ManualVerification,
     SoftwareSecurePhotoVerification,
     SSOVerification,
-    SSPVerificationRetryConfig
+    SSPVerificationRetryConfig,
 )
 
 

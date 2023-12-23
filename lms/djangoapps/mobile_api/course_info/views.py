@@ -13,14 +13,15 @@ from rest_framework.views import APIView
 
 from common.djangoapps.static_replace import make_static_urls_absolute
 from lms.djangoapps.certificates.api import certificate_downloadable_status
-from lms.djangoapps.courseware.courses import get_course_info_section_block
-from lms.djangoapps.course_goals.models import UserActivity
 from lms.djangoapps.course_api.blocks.views import BlocksInCourseView
+from lms.djangoapps.course_goals.models import UserActivity
+from lms.djangoapps.courseware.courses import get_course_info_section_block
 from lms.djangoapps.mobile_api.course_info.serializers import CourseInfoOverviewSerializer
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.lib.api.view_utils import view_auth_classes
 from openedx.core.lib.xblock_utils import get_course_update_items
 from openedx.features.course_experience import ENABLE_COURSE_GOALS
+
 from ..decorators import mobile_course_access, mobile_view
 
 User = get_user_model()

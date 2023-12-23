@@ -20,7 +20,9 @@ from common.djangoapps.util.milestones_helpers import set_prerequisite_courses
 from lms.djangoapps.branding.views import index
 from lms.djangoapps.courseware.tests.helpers import LoginEnrollmentTestCase
 from openedx.core.djangoapps.site_configuration.tests.mixins import SiteMixin
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
 from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
 
 FEATURES_WITH_STARTDATE = settings.FEATURES.copy()

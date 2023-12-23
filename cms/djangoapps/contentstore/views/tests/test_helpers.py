@@ -6,7 +6,10 @@ Unit tests for helpers.py.
 from urllib.parse import quote
 
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
-from xmodule.modulestore.tests.factories import BlockFactory, LibraryFactory  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    LibraryFactory,
+)
 
 from ...helpers import xblock_studio_url, xblock_type_display_name
 

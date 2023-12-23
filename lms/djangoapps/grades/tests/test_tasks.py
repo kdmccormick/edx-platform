@@ -14,9 +14,6 @@ import pytz
 from django.db.utils import IntegrityError
 from django.utils import timezone
 from edx_toggles.toggles.testutils import override_waffle_flag
-from xmodule.modulestore import ModuleStoreEnum
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory, check_mongo_calls
 
 from common.djangoapps.student.models import CourseEnrollment, anonymous_id_for_user
 from common.djangoapps.student.tests.factories import UserFactory
@@ -33,9 +30,12 @@ from lms.djangoapps.grades.tasks import (
     compute_all_grades_for_course,
     compute_grades_for_course,
     compute_grades_for_course_v2,
-    recalculate_subsection_grade_v3
+    recalculate_subsection_grade_v3,
 )
 from openedx.core.djangoapps.content.block_structure.exceptions import BlockStructureNotFound
+from xmodule.modulestore import ModuleStoreEnum
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory, check_mongo_calls
 
 from .utils import mock_get_score
 

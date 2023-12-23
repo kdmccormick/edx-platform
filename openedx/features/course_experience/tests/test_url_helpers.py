@@ -9,7 +9,7 @@ from django.test.client import RequestFactory
 from django.test.utils import override_settings
 
 from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory
 
 from .. import url_helpers
 

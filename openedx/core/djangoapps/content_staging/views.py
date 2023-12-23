@@ -2,25 +2,26 @@
 REST API views for content staging
 """
 from __future__ import annotations
+
 import hashlib
 import logging
 
+import edx_api_doc_tools as apidocs
 from django.core.files.base import ContentFile
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
-import edx_api_doc_tools as apidocs
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import UsageKey
 from opaque_keys.edx.locator import CourseLocator
 from rest_framework.exceptions import NotFound, PermissionDenied, ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from common.djangoapps.student.auth import has_studio_read_access
 
+from common.djangoapps.student.auth import has_studio_read_access
 from openedx.core.lib.api.view_utils import view_auth_classes
-from openedx.core.lib.xblock_serializer.api import serialize_xblock_to_olx, StaticFile
+from openedx.core.lib.xblock_serializer.api import StaticFile, serialize_xblock_to_olx
 from xmodule import block_metadata_utils
 from xmodule.contentstore.content import StaticContent
 from xmodule.contentstore.django import contentstore
@@ -29,7 +30,7 @@ from xmodule.modulestore.exceptions import ItemNotFoundError
 
 from .data import CLIPBOARD_PURPOSE, StagedContentStatus
 from .models import StagedContent, StagedContentFile, UserClipboard
-from .serializers import UserClipboardSerializer, PostToClipboardSerializer
+from .serializers import PostToClipboardSerializer, UserClipboardSerializer
 from .tasks import delete_expired_clipboards
 
 log = logging.getLogger(__name__)

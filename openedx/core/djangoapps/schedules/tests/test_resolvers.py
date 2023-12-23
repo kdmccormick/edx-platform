@@ -14,8 +14,6 @@ from django.test.client import RequestFactory
 from django.test.utils import override_settings
 from edx_toggles.toggles.testutils import override_waffle_switch
 from testfixtures import LogCapture
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory
 
 from common.djangoapps.student.models import CourseEnrollment
 from common.djangoapps.student.tests.factories import CourseEnrollmentFactory, UserFactory
@@ -35,6 +33,8 @@ from openedx.core.djangoapps.schedules.resolvers import (
 from openedx.core.djangoapps.schedules.tests.factories import ScheduleConfigFactory
 from openedx.core.djangoapps.site_configuration.tests.factories import SiteConfigurationFactory, SiteFactory
 from openedx.core.djangolib.testing.utils import CacheIsolationMixin, skip_unless_lms
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory
 
 
 class SchedulesResolverTestMixin(CacheIsolationMixin):

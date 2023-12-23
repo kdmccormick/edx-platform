@@ -12,15 +12,14 @@ from django.http import Http404
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.urls import reverse
-from openedx.core.djangoapps.video_config.toggles import PUBLIC_VIDEO_SHARE
-from openedx_events.content_authoring.data import DuplicatedXBlockData
-from openedx_events.content_authoring.signals import XBLOCK_DUPLICATED
-from openedx_events.tests.utils import OpenEdxEventsTestMixin
 from edx_proctoring.exceptions import ProctoredExamNotFoundException
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.asides import AsideUsageKeyV2
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locator import BlockUsageLocator, CourseLocator
+from openedx_events.content_authoring.data import DuplicatedXBlockData
+from openedx_events.content_authoring.signals import XBLOCK_DUPLICATED
+from openedx_events.tests.utils import OpenEdxEventsTestMixin
 from pyquery import PyQuery
 from pytz import UTC
 from web_fragments.fragment import Fragment
@@ -31,38 +30,19 @@ from xblock.fields import Scope, ScopeIds, String
 from xblock.runtime import DictKeyValueStore, KvsFieldData
 from xblock.test.tools import TestRuntime
 from xblock.validation import ValidationMessage
-from xmodule.capa_block import ProblemBlock
-from xmodule.course_block import DEFAULT_START_DATE
-from xmodule.modulestore import ModuleStoreEnum
-from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.exceptions import ItemNotFoundError
-from xmodule.modulestore.tests.django_utils import (
-    TEST_DATA_SPLIT_MODULESTORE,
-    ModuleStoreTestCase,
-)
-from xmodule.modulestore.tests.factories import (
-    CourseFactory,
-    BlockFactory,
-    LibraryFactory,
-    check_mongo_calls,
-)
-from xmodule.partitions.partitions import (
-    ENROLLMENT_TRACK_PARTITION_ID,
-    MINIMUM_STATIC_PARTITION_ID,
-    Group,
-    UserPartition,
-)
-from xmodule.partitions.tests.test_partitions import MockPartitionService
-from xmodule.x_module import STUDENT_VIEW, STUDIO_VIEW
 
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
-from cms.djangoapps.contentstore.utils import (
-    reverse_course_url,
-    reverse_usage_url,
-    duplicate_block,
-    update_from_source,
-)
+from cms.djangoapps.contentstore.utils import duplicate_block, reverse_course_url, reverse_usage_url, update_from_source
 from cms.djangoapps.contentstore.xblock_storage_handlers import view_handlers as item_module
+from cms.djangoapps.contentstore.xblock_storage_handlers.view_handlers import (
+    ALWAYS,
+    VisibilityState,
+    _get_source_index,
+    _xblock_type_and_display_name,
+    add_container_page_publishing_info,
+    create_xblock_info,
+    get_block_info,
+)
 from common.djangoapps.student.tests.factories import StaffFactory, UserFactory
 from common.djangoapps.xblock_django.models import (
     XBlockConfiguration,
@@ -72,17 +52,24 @@ from common.djangoapps.xblock_django.models import (
 from common.djangoapps.xblock_django.user_service import DjangoXBlockUserService
 from lms.djangoapps.lms_xblock.mixin import NONSENSICAL_ACCESS_RESTRICTION
 from openedx.core.djangoapps.discussions.models import DiscussionsConfiguration
+from openedx.core.djangoapps.video_config.toggles import PUBLIC_VIDEO_SHARE
+from xmodule.capa_block import ProblemBlock
+from xmodule.course_block import DEFAULT_START_DATE
+from xmodule.modulestore import ModuleStoreEnum
+from xmodule.modulestore.django import modulestore
+from xmodule.modulestore.exceptions import ItemNotFoundError
+from xmodule.modulestore.tests.django_utils import TEST_DATA_SPLIT_MODULESTORE, ModuleStoreTestCase
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory, LibraryFactory, check_mongo_calls
+from xmodule.partitions.partitions import (
+    ENROLLMENT_TRACK_PARTITION_ID,
+    MINIMUM_STATIC_PARTITION_ID,
+    Group,
+    UserPartition,
+)
+from xmodule.partitions.tests.test_partitions import MockPartitionService
+from xmodule.x_module import STUDENT_VIEW, STUDIO_VIEW
 
 from ..component import component_handler, get_component_templates
-from cms.djangoapps.contentstore.xblock_storage_handlers.view_handlers import (
-    ALWAYS,
-    VisibilityState,
-    get_block_info,
-    _get_source_index,
-    _xblock_type_and_display_name,
-    add_container_page_publishing_info,
-    create_xblock_info,
-)
 
 
 class AsideTest(XBlockAside):

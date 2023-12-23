@@ -3,8 +3,8 @@ Helper code for working with Blockstore bundles that contain OLX
 """
 
 import logging  # lint-amnesty, pylint: disable=wrong-import-order
-
 from functools import lru_cache  # lint-amnesty, pylint: disable=wrong-import-order
+
 from opaque_keys.edx.locator import BundleDefinitionLocator, LibraryUsageLocatorV2
 from xblock.core import XBlock
 from xblock.plugin import PluginMissingError
@@ -19,8 +19,8 @@ from openedx.core.djangoapps.xblock.api import (
 from openedx.core.djangolib.blockstore_cache import (
     BundleCache,
     get_bundle_direct_links_with_cache,
-    get_bundle_files_cached,
     get_bundle_file_metadata_with_cache,
+    get_bundle_files_cached,
     get_bundle_version_number,
 )
 from openedx.core.lib import blockstore_api

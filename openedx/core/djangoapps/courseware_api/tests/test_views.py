@@ -3,29 +3,27 @@ Tests for courseware API
 """
 
 from datetime import datetime, timedelta
-from urllib.parse import urlencode
 from typing import Optional
 from unittest import mock
+from urllib.parse import urlencode
 
 import ddt
 from completion.test_utils import CompletionWaffleTestMixin, submit_completions_for_testing
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test.client import RequestFactory
-
 from edx_django_utils.cache import TieredCache
 from edx_toggles.toggles.testutils import override_waffle_flag
-from xmodule.data import CertificatesDisplayBehaviors
-from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
-from xmodule.modulestore.tests.factories import BlockFactory, ToyCourseFactory
-from xmodule.partitions.partitions import ENROLLMENT_TRACK_PARTITION_ID
 
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.course_modes.tests.factories import CourseModeFactory
+from common.djangoapps.student.models import CourseEnrollment, CourseEnrollmentCelebration
+from common.djangoapps.student.roles import CourseInstructorRole
+from common.djangoapps.student.tests.factories import CourseEnrollmentCelebrationFactory, UserFactory
 from lms.djangoapps.certificates.api import get_certificate_url
 from lms.djangoapps.certificates.tests.factories import (
-    GeneratedCertificateFactory, LinkedInAddToProfileConfigurationFactory
+    GeneratedCertificateFactory,
+    LinkedInAddToProfileConfigurationFactory,
 )
 from lms.djangoapps.courseware.access_utils import ACCESS_DENIED, ACCESS_GRANTED
 from lms.djangoapps.courseware.models import LastSeenCoursewareTimezone
@@ -33,19 +31,18 @@ from lms.djangoapps.courseware.tabs import ExternalLinkCourseTab
 from lms.djangoapps.courseware.tests.helpers import MasqueradeMixin
 from lms.djangoapps.courseware.toggles import (
     COURSEWARE_LEARNING_ASSISTANT,
+    COURSEWARE_MFE_MILESTONES_STREAK_DISCOUNT,
     COURSEWARE_MICROFRONTEND_PROGRESS_MILESTONES,
     COURSEWARE_MICROFRONTEND_PROGRESS_MILESTONES_STREAK_CELEBRATION,
 )
-from lms.djangoapps.courseware.toggles import COURSEWARE_MFE_MILESTONES_STREAK_DISCOUNT
 from lms.djangoapps.verify_student.services import IDVerificationService
-from common.djangoapps.student.models import (
-    CourseEnrollment, CourseEnrollmentCelebration
-)
-from common.djangoapps.student.roles import CourseInstructorRole
-from common.djangoapps.student.tests.factories import CourseEnrollmentCelebrationFactory, UserFactory
 from openedx.core.djangoapps.agreements.api import create_integrity_signature
 from openedx.core.djangolib.testing.utils import skip_unless_lms
-
+from xmodule.data import CertificatesDisplayBehaviors
+from xmodule.modulestore.django import modulestore
+from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
+from xmodule.modulestore.tests.factories import BlockFactory, ToyCourseFactory
+from xmodule.partitions.partitions import ENROLLMENT_TRACK_PARTITION_ID
 
 User = get_user_model()
 

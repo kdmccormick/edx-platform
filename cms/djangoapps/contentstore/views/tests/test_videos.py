@@ -14,8 +14,8 @@ from unittest.mock import Mock, patch
 import dateutil.parser
 import ddt
 import pytz
-from django.test import TestCase
 from django.conf import settings
+from django.test import TestCase
 from django.test.utils import override_settings
 from django.urls import reverse
 from edx_toggles.toggles.testutils import override_waffle_flag, override_waffle_switch
@@ -26,33 +26,27 @@ from edxval.api import (
     create_video,
     get_course_video_image_url,
     get_transcript_preferences,
-    get_video_info
+    get_video_info,
 )
+
 from cms.djangoapps.contentstore.models import VideoUploadConfig
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from cms.djangoapps.contentstore.utils import reverse_course_url
-from openedx.core.djangoapps.profile_images.tests.helpers import make_image_file
-from openedx.core.djangoapps.video_pipeline.config.waffle import (
-    DEPRECATE_YOUTUBE,
-    ENABLE_DEVSTACK_VIDEO_UPLOADS,
-)
-from openedx.core.djangoapps.waffle_utils.models import WaffleFlagCourseOverrideModel
-from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
-
-from ..videos import (
-    ENABLE_VIDEO_UPLOAD_PAGINATION,
-    KEY_EXPIRATION_IN_SECONDS,
-    VIDEO_IMAGE_UPLOAD_ENABLED,
-)
 from cms.djangoapps.contentstore.video_storage_handlers import (
-    _get_default_video_image_url,
-    TranscriptProvider,
+    PUBLIC_VIDEO_SHARE,
     StatusDisplayStrings,
+    TranscriptProvider,
+    _get_default_video_image_url,
     convert_video_status,
     storage_service_bucket,
     storage_service_key,
-    PUBLIC_VIDEO_SHARE
 )
+from openedx.core.djangoapps.profile_images.tests.helpers import make_image_file
+from openedx.core.djangoapps.video_pipeline.config.waffle import DEPRECATE_YOUTUBE, ENABLE_DEVSTACK_VIDEO_UPLOADS
+from openedx.core.djangoapps.waffle_utils.models import WaffleFlagCourseOverrideModel
+from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
+
+from ..videos import ENABLE_VIDEO_UPLOAD_PAGINATION, KEY_EXPIRATION_IN_SECONDS, VIDEO_IMAGE_UPLOAD_ENABLED
 
 
 class VideoUploadTestBase:

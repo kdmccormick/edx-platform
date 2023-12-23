@@ -8,8 +8,7 @@ import logging
 from rest_framework import serializers
 
 from common.djangoapps.course_modes.models import CourseMode
-from common.djangoapps.student.models import (CourseEnrollment,
-                                              CourseEnrollmentAllowed)
+from common.djangoapps.student.models import CourseEnrollment, CourseEnrollmentAllowed
 
 log = logging.getLogger(__name__)
 

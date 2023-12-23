@@ -11,6 +11,7 @@ from webob.multidict import MultiDict
 from xblock.field_data import DictFieldData
 
 from xmodule.word_cloud_block import WordCloudBlock
+
 from . import get_test_descriptor_system, get_test_system
 
 

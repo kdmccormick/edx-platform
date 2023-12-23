@@ -1,24 +1,24 @@
 """ Contenstore API v1 URLs. """
 
-from django.urls import re_path, path
+from django.urls import path, re_path
 
 from openedx.core.constants import COURSE_ID_PATTERN
 
 from .views import (
     CourseDetailsView,
-    CourseTeamView,
     CourseGradingView,
     CourseRerunView,
     CourseSettingsView,
+    CourseTeamView,
     CourseVideosView,
-    HomePageView,
+    HelpUrlsView,
     HomePageCoursesView,
     HomePageLibrariesView,
+    HomePageView,
     ProctoredExamSettingsView,
     ProctoringErrorsView,
-    HelpUrlsView,
+    VideoDownloadView,
     VideoUsageView,
-    VideoDownloadView
 )
 
 app_name = 'v1'

@@ -13,7 +13,9 @@ from django.urls import reverse
 from common.djangoapps.student.tests.factories import AdminFactory, CourseEnrollmentFactory, UserFactory
 from lms.djangoapps.bulk_email.models import BulkEmailFlag, Optout
 from lms.djangoapps.bulk_email.signals import force_optout_all
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
 from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
 
 

@@ -7,15 +7,13 @@ from urllib.parse import urlencode
 
 from django.test import LiveServerTestCase
 from organizations.models import Organization
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APIClient, APITestCase
 
 from common.djangoapps.student.tests.factories import UserFactory
-from openedx.core.djangoapps.content_libraries.constants import COMPLEX, ALL_RIGHTS_RESERVED
+from openedx.core.djangoapps.content_libraries.constants import ALL_RIGHTS_RESERVED, COMPLEX
 from openedx.core.djangolib.testing.utils import skip_unless_cms
 from openedx.core.lib import blockstore_api
-from openedx.core.lib.blockstore_api.tests.base import (
-    BlockstoreAppTestMixin,
-)
+from openedx.core.lib.blockstore_api.tests.base import BlockstoreAppTestMixin
 
 # Define the URLs here - don't use reverse() because we want to detect
 # backwards-incompatible changes like changed URLs.

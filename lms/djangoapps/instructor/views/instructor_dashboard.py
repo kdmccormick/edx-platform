@@ -17,9 +17,9 @@ from django.utils.translation import gettext_noop
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
+from edx_django_utils.plugins import get_plugins_view_context
 from edx_proctoring.api import does_backend_support_onboarding
 from edx_when.api import is_enabled_for_course
-from edx_django_utils.plugins import get_plugins_view_context
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from openedx_filters.learning.filters import InstructorDashboardRenderStarted
@@ -31,7 +31,7 @@ from common.djangoapps.student.roles import (
     CourseFinanceAdminRole,
     CourseInstructorRole,
     CourseSalesAdminRole,
-    CourseStaffRole
+    CourseStaffRole,
 )
 from common.djangoapps.util.json_request import JsonResponse
 from lms.djangoapps.bulk_email.api import is_bulk_email_feature_enabled
@@ -42,11 +42,11 @@ from lms.djangoapps.certificates.models import (
     CertificateGenerationConfiguration,
     CertificateGenerationHistory,
     CertificateInvalidation,
-    GeneratedCertificate
+    GeneratedCertificate,
 )
 from lms.djangoapps.courseware.access import has_access
-from lms.djangoapps.courseware.courses import get_studio_url
 from lms.djangoapps.courseware.block_render import get_block_by_usage_id
+from lms.djangoapps.courseware.courses import get_studio_url
 from lms.djangoapps.courseware.masquerade import get_masquerade_role
 from lms.djangoapps.discussion.django_comment_client.utils import has_forum_access
 from lms.djangoapps.grades.api import is_writable_gradebook_enabled

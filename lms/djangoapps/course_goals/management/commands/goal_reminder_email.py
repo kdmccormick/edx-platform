@@ -1,8 +1,8 @@
 """
 Command to trigger sending reminder emails for learners to achieve their Course Goals
 """
-from datetime import date, datetime, timedelta
 import logging
+from datetime import date, datetime, timedelta
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -14,8 +14,8 @@ from edx_ace.recipient import Recipient
 from common.djangoapps.student.models import CourseEnrollment
 from lms.djangoapps.certificates.api import get_certificate_for_user_id
 from lms.djangoapps.certificates.data import CertificateStatuses
-from lms.djangoapps.courseware.context_processor import get_user_timezone_or_last_seen_timezone_or_utc
 from lms.djangoapps.course_goals.models import CourseGoal, CourseGoalReminderStatus, UserActivity
+from lms.djangoapps.courseware.context_processor import get_user_timezone_or_last_seen_timezone_or_utc
 from openedx.core.djangoapps.ace_common.template_context import get_base_template_context
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.lang_pref import LANGUAGE_KEY

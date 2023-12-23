@@ -1,4 +1,5 @@
 import pytest
+
 # pylint: skip-file
 """Tests for django comment client views."""
 
@@ -16,7 +17,11 @@ from django.urls import reverse
 from eventtracking.processors.exceptions import EventEmissionExit
 from mock import ANY, Mock, patch
 from opaque_keys.edx.keys import CourseKey
-from openedx_events.learning.signals import FORUM_THREAD_CREATED, FORUM_THREAD_RESPONSE_CREATED, FORUM_RESPONSE_COMMENT_CREATED
+from openedx_events.learning.signals import (
+    FORUM_RESPONSE_COMMENT_CREATED,
+    FORUM_THREAD_CREATED,
+    FORUM_THREAD_RESPONSE_CREATED,
+)
 
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.course_modes.tests.factories import CourseModeFactory
@@ -31,7 +36,7 @@ from lms.djangoapps.discussion.django_comment_client.base import views
 from lms.djangoapps.discussion.django_comment_client.tests.group_id import (
     CohortedTopicGroupIdTestMixin,
     GroupIdAssertionMixin,
-    NonCohortedTopicGroupIdTestMixin
+    NonCohortedTopicGroupIdTestMixin,
 )
 from lms.djangoapps.discussion.django_comment_client.tests.unicode import UnicodeTestMixin
 from lms.djangoapps.discussion.django_comment_client.tests.utils import CohortedTestCase, ForumsEnableMixin
@@ -43,20 +48,19 @@ from openedx.core.djangoapps.django_comment_common.models import (
     FORUM_ROLE_STUDENT,
     CourseDiscussionSettings,
     Role,
-    assign_role
+    assign_role,
 )
-from openedx.core.djangoapps.django_comment_common.utils import (
-    ThreadContext,
-    seed_permissions_roles,
-)
+from openedx.core.djangoapps.django_comment_common.utils import ThreadContext, seed_permissions_roles
 from openedx.core.djangoapps.waffle_utils.testutils import WAFFLE_TABLES
 from openedx.core.lib.teams_config import TeamsConfig
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.tests.django_utils import (
-    TEST_DATA_SPLIT_MODULESTORE, ModuleStoreTestCase, SharedModuleStoreTestCase,
+    TEST_DATA_SPLIT_MODULESTORE,
+    ModuleStoreTestCase,
+    SharedModuleStoreTestCase,
 )
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory, check_mongo_calls
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory, check_mongo_calls
 
 from .event_transformers import ForumThreadViewedEventTransformer
 

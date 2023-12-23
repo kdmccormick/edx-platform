@@ -24,7 +24,7 @@ from openedx.core.djangoapps.plugin_api.views import EdxFragmentView
 from openedx.core.djangoapps.programs.models import (
     ProgramDiscussionsConfiguration,
     ProgramLiveConfiguration,
-    ProgramsApiConfig
+    ProgramsApiConfig,
 )
 from openedx.core.djangoapps.programs.utils import (
     ProgramProgressMeter,
@@ -34,7 +34,7 @@ from openedx.core.djangoapps.programs.utils import (
     get_program_marketing_url,
     get_program_subscriptions_marketing_url,
     get_program_urls,
-    get_programs_subscription_data
+    get_programs_subscription_data,
 )
 from openedx.core.djangoapps.user_api.preferences.api import get_user_preferences
 from openedx.core.djangolib.markup import HTML

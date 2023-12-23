@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 import pytest
 from path import Path as path
-from paver.easy import call_task, BuildFailure
+from paver.easy import BuildFailure, call_task
 
 import pavelib.quality
 from pavelib.utils.envs import Env

@@ -1,11 +1,10 @@
 """
 Configure URL endpoints for the djangoapp
 """
-from django.urls import re_path
 from django.conf import settings
+from django.urls import re_path
 
 from .views import CombinedDiscussionsConfigurationView, DiscussionsConfigurationSettingsView, DiscussionsProvidersView
-
 
 urlpatterns = [
     re_path(
