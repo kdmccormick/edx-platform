@@ -10,13 +10,13 @@ import csv
 import datetime
 import json
 import logging
-import string
 import random
 import re
+import string
 
 import dateutil
-import pytz
 import edx_api_doc_tools as apidocs
+import pytz
 from django.conf import settings
 from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imported-auth-user
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist, PermissionDenied, ValidationError
@@ -30,20 +30,19 @@ from django.utils.html import strip_tags
 from django.utils.translation import gettext as _
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.views.decorators.http import require_POST, require_http_methods
+from django.views.decorators.http import require_http_methods, require_POST
 from edx_rest_framework_extensions.auth.jwt.authentication import JwtAuthentication
 from edx_rest_framework_extensions.auth.session.authentication import SessionAuthenticationAllowInactiveUser
 from edx_when.api import get_date_for_block
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey, UsageKey
-from openedx.core.djangoapps.course_groups.cohorts import get_cohort_by_name
 from rest_framework import serializers, status  # lint-amnesty, pylint: disable=wrong-import-order
 from rest_framework.permissions import IsAdminUser, IsAuthenticated  # lint-amnesty, pylint: disable=wrong-import-order
 from rest_framework.response import Response  # lint-amnesty, pylint: disable=wrong-import-order
 from rest_framework.views import APIView  # lint-amnesty, pylint: disable=wrong-import-order
-from submissions import api as sub_api  # installed from the edx-submissions repository  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.exceptions import ItemNotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
+from submissions import (
+    api as sub_api,  # installed from the edx-submissions repository  # lint-amnesty, pylint: disable=wrong-import-order
+)
 
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.student import auth
@@ -51,17 +50,17 @@ from common.djangoapps.student.api import is_user_enrolled_in_course
 from common.djangoapps.student.models import (
     ALLOWEDTOENROLL_TO_ENROLLED,
     ALLOWEDTOENROLL_TO_UNENROLLED,
-    CourseEnrollment,
-    CourseEnrollmentAllowed,
     DEFAULT_TRANSITION_STATE,
     ENROLLED_TO_ENROLLED,
     ENROLLED_TO_UNENROLLED,
-    EntranceExamConfiguration,
-    ManualEnrollmentAudit,
-    Registration,
     UNENROLLED_TO_ALLOWEDTOENROLL,
     UNENROLLED_TO_ENROLLED,
     UNENROLLED_TO_UNENROLLED,
+    CourseEnrollment,
+    CourseEnrollmentAllowed,
+    EntranceExamConfiguration,
+    ManualEnrollmentAudit,
+    Registration,
     UserProfile,
     get_user_by_username_or_email,
     is_email_retired,
@@ -74,11 +73,9 @@ from common.djangoapps.util.file import (
 )
 from common.djangoapps.util.json_request import JsonResponse, JsonResponseBadRequest
 from common.djangoapps.util.views import require_global_staff
-from lms.djangoapps.bulk_email.api import is_bulk_email_feature_enabled, create_course_email
+from lms.djangoapps.bulk_email.api import create_course_email, is_bulk_email_feature_enabled
 from lms.djangoapps.certificates import api as certs_api
-from lms.djangoapps.certificates.models import (
-    CertificateStatuses
-)
+from lms.djangoapps.certificates.models import CertificateStatuses
 from lms.djangoapps.course_home_api.toggles import course_home_mfe_progress_tab_is_active
 from lms.djangoapps.courseware.access import has_access
 from lms.djangoapps.courseware.courses import get_course_with_access
@@ -100,20 +97,21 @@ from lms.djangoapps.instructor.enrollment import (
     unenroll_email,
 )
 from lms.djangoapps.instructor.views.instructor_task_helpers import extract_email_features, extract_task_features
-from lms.djangoapps.instructor_analytics import basic as instructor_analytics_basic, csvs as instructor_analytics_csvs
+from lms.djangoapps.instructor_analytics import basic as instructor_analytics_basic
+from lms.djangoapps.instructor_analytics import csvs as instructor_analytics_csvs
 from lms.djangoapps.instructor_task import api as task_api
 from lms.djangoapps.instructor_task.api_helper import AlreadyRunningError, QueueConnectionError
 from lms.djangoapps.instructor_task.data import InstructorTaskTypes
 from lms.djangoapps.instructor_task.models import ReportStore
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
-from openedx.core.djangoapps.course_groups.cohorts import add_user_to_cohort, is_course_cohorted
+from openedx.core.djangoapps.course_groups.cohorts import add_user_to_cohort, get_cohort_by_name, is_course_cohorted
 from openedx.core.djangoapps.course_groups.models import CourseUserGroup
 from openedx.core.djangoapps.django_comment_common.models import (
-    CourseDiscussionSettings,
     FORUM_ROLE_ADMINISTRATOR,
     FORUM_ROLE_COMMUNITY_TA,
     FORUM_ROLE_GROUP_MODERATOR,
     FORUM_ROLE_MODERATOR,
+    CourseDiscussionSettings,
     Role,
 )
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
@@ -123,6 +121,10 @@ from openedx.core.lib.api.authentication import BearerAuthenticationAllowInactiv
 from openedx.core.lib.api.view_utils import DeveloperErrorViewMixin, view_auth_classes
 from openedx.core.lib.courses import get_course_by_id
 from openedx.features.course_experience.url_helpers import get_learning_mfe_home_url
+from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.exceptions import ItemNotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
+
+from .. import permissions
 from .tools import (
     dump_block_extensions,
     dump_student_extensions,
@@ -135,7 +137,6 @@ from .tools import (
     set_due_date_extension,
     strip_if_string,
 )
-from .. import permissions
 
 log = logging.getLogger(__name__)
 

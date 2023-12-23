@@ -19,27 +19,22 @@ from __future__ import annotations
 import logging
 
 from celery import shared_task
-from celery_utils.logged_task import LoggedTask
 from celery.utils.log import get_task_logger
+from celery_utils.logged_task import LoggedTask
 from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imported-auth-user
 from django.core.exceptions import PermissionDenied
 from edx_django_utils.monitoring import set_code_owner_attribute, set_code_owner_attribute_from_module
-from opaque_keys.edx.keys import UsageKey
-from opaque_keys.edx.locator import (
-    BlockUsageLocator,
-    LibraryLocatorV2,
-    LibraryUsageLocatorV2,
-    LibraryLocator as LibraryLocatorV1
-)
-
+from opaque_keys.edx.keys import CourseKey, UsageKey
+from opaque_keys.edx.locator import BlockUsageLocator
+from opaque_keys.edx.locator import LibraryLocator as LibraryLocatorV1
+from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 from user_tasks.tasks import UserTask, UserTaskStatus
 from xblock.fields import Scope
 
 from common.djangoapps.student.auth import has_studio_write_access
-from opaque_keys.edx.keys import CourseKey
 from openedx.core.djangoapps.content_libraries import api as library_api
 from openedx.core.djangoapps.xblock.api import load_block
-from openedx.core.lib import ensure_cms, blockstore_api
+from openedx.core.lib import blockstore_api, ensure_cms
 from xmodule.capa_block import ProblemBlock
 from xmodule.library_content_block import ANY_CAPA_TYPE_VALUE, LibraryContentBlock
 from xmodule.library_root_xblock import LibraryRoot as LibraryRootV1

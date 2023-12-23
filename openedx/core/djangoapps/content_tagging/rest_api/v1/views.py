@@ -11,15 +11,15 @@ from rest_framework.response import Response
 
 from ...api import (
     create_taxonomy,
-    get_taxonomy,
     get_taxonomies,
     get_taxonomies_for_org,
+    get_taxonomy,
     get_unassigned_taxonomies,
     set_taxonomy_orgs,
 )
 from ...rules import get_admin_orgs
-from .serializers import TaxonomyOrgListQueryParamsSerializer, TaxonomyOrgSerializer, TaxonomyUpdateOrgBodySerializer
 from .filters import ObjectTagTaxonomyOrgFilterBackend, UserOrgFilterBackend
+from .serializers import TaxonomyOrgListQueryParamsSerializer, TaxonomyOrgSerializer, TaxonomyUpdateOrgBodySerializer
 
 
 class TaxonomyOrgView(TaxonomyView):

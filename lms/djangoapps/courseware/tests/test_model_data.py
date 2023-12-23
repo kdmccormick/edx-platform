@@ -4,9 +4,9 @@ Test for lms courseware app, module data (runtime data storage for XBlocks)
 import json
 from functools import partial
 from unittest.mock import Mock, patch
-import pytest
 
-from django.db import connections, DatabaseError
+import pytest
+from django.db import DatabaseError, connections
 from django.test import TestCase
 from xblock.core import XBlock
 from xblock.exceptions import KeyValueMultiSaveError
@@ -18,14 +18,11 @@ from lms.djangoapps.courseware.models import (
     StudentModule,
     XModuleStudentInfoField,
     XModuleStudentPrefsField,
-    XModuleUserStateSummaryField
+    XModuleUserStateSummaryField,
 )
-from lms.djangoapps.courseware.tests.factories import COURSE_KEY
-from lms.djangoapps.courseware.tests.factories import LOCATION
-from lms.djangoapps.courseware.tests.factories import StudentInfoFactory
+from lms.djangoapps.courseware.tests.factories import COURSE_KEY, LOCATION, StudentInfoFactory
 from lms.djangoapps.courseware.tests.factories import StudentModuleFactory as cmfStudentModuleFactory
-from lms.djangoapps.courseware.tests.factories import StudentPrefsFactory
-from lms.djangoapps.courseware.tests.factories import UserStateSummaryFactory
+from lms.djangoapps.courseware.tests.factories import StudentPrefsFactory, UserStateSummaryFactory
 
 
 def mock_field(scope, name):

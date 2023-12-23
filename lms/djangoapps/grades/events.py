@@ -14,7 +14,7 @@ from common.djangoapps.track.event_transaction_utils import (
     create_new_event_transaction_id,
     get_event_transaction_id,
     get_event_transaction_type,
-    set_event_transaction_type
+    set_event_transaction_type,
 )
 from lms.djangoapps.grades.signals.signals import SCHEDULE_FOLLOW_UP_SEGMENT_EVENT_FOR_COURSE_PASSED_FIRST_TIME
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview

@@ -4,18 +4,18 @@ allow users to paste XBlocks that were copied using the staged_content/clipboard
 APIs.
 """
 import ddt
+from blockstore.apps import api as blockstore_api
 from django.test import LiveServerTestCase
 from opaque_keys.edx.keys import UsageKey
-from rest_framework.test import APIClient
 from organizations.models import Organization
+from rest_framework.test import APIClient
+
+from cms.djangoapps.contentstore.utils import reverse_usage_url
+from openedx.core.djangoapps.content_libraries import api as library_api
+from openedx.core.lib.blockstore_api.tests.base import BlockstoreAppTestMixin
 from xmodule.modulestore.django import contentstore, modulestore
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase, upload_file_to_course
 from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory, ToyCourseFactory
-
-from cms.djangoapps.contentstore.utils import reverse_usage_url
-from openedx.core.lib.blockstore_api.tests.base import BlockstoreAppTestMixin
-from openedx.core.djangoapps.content_libraries import api as library_api
-from blockstore.apps import api as blockstore_api
 
 CLIPBOARD_ENDPOINT = "/api/content-staging/v1/clipboard/"
 XBLOCK_ENDPOINT = "/xblock/"

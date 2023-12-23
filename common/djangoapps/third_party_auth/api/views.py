@@ -18,16 +18,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from social_django.models import UserSocialAuth
 
-from openedx.core.lib.api.authentication import (
-    BearerAuthentication,
-    BearerAuthenticationAllowInactiveUser
-)
-from openedx.core.lib.api.permissions import ApiKeyHeaderPermission
 from common.djangoapps.third_party_auth import pipeline
 from common.djangoapps.third_party_auth.api import serializers
 from common.djangoapps.third_party_auth.api.permissions import TPA_PERMISSIONS
-from common.djangoapps.third_party_auth.provider import Registry
 from common.djangoapps.third_party_auth.api.utils import filter_user_social_auth_queryset_by_provider
+from common.djangoapps.third_party_auth.provider import Registry
+from openedx.core.lib.api.authentication import BearerAuthentication, BearerAuthenticationAllowInactiveUser
+from openedx.core.lib.api.permissions import ApiKeyHeaderPermission
 
 
 class ProviderBaseThrottle(throttling.UserRateThrottle):

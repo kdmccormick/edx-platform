@@ -1,13 +1,12 @@
 """ Unit tests for Learner Skill Levels utilities. """
 
-import ddt
 from collections import defaultdict
 from unittest import mock
 
+import ddt
 from rest_framework.test import APIClient
 
 from common.djangoapps.student.tests.factories import UserFactory
-
 from openedx.core.djangoapps.catalog.tests.mixins import CatalogIntegrationMixin
 from openedx.core.djangoapps.user_api.learner_skill_levels.utils import (
     calculate_user_skill_score,
@@ -24,9 +23,9 @@ from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
 from .testutils import (
     DUMMY_CATEGORIES_RESPONSE,
     DUMMY_CATEGORIES_WITH_SCORES,
-    DUMMY_USERNAMES_RESPONSE,
     DUMMY_COURSE_DATA_RESPONSE,
     DUMMY_USER_SCORES_MAP,
+    DUMMY_USERNAMES_RESPONSE,
 )
 
 

@@ -9,21 +9,19 @@ from functools import partial
 
 from config_models.models import ConfigurationModel
 from django.conf import settings
-from eventtracking import tracker
 from edx_when.field_data import DateLookupFieldData
+from eventtracking import tracker
 from xblock.reference.plugins import Service
 from xblock.runtime import KvsFieldData
 
 from common.djangoapps.track import contexts
-from lms.djangoapps.courseware.masquerade import is_masquerading_as_specific_student
-from xmodule.modulestore.django import modulestore
-
 from lms.djangoapps.courseware.field_overrides import OverrideFieldData
+from lms.djangoapps.courseware.masquerade import is_masquerading_as_specific_student
 from lms.djangoapps.courseware.model_data import DjangoKeyValueStore, FieldDataCache
+from lms.djangoapps.grades.api import signals as grades_signals
 from lms.djangoapps.lms_xblock.field_data import LmsFieldData
 from lms.djangoapps.lms_xblock.models import XBlockAsidesConfig
-
-from lms.djangoapps.grades.api import signals as grades_signals
+from xmodule.modulestore.django import modulestore
 
 log = logging.getLogger(__name__)
 

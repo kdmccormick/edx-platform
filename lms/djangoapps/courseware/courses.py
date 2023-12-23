@@ -7,8 +7,8 @@ import logging
 from collections import defaultdict, namedtuple
 from datetime import datetime
 
-import six
 import pytz
+import six
 from crum import get_current_request
 from dateutil.parser import parse as parse_date
 from django.conf import settings
@@ -31,10 +31,16 @@ from lms.djangoapps.courseware.access_response import (
     EnrollmentRequiredAccessError,
     MilestoneAccessError,
     OldMongoAccessError,
-    StartDateError
+    StartDateError,
 )
-from lms.djangoapps.courseware.access_utils import check_authentication, check_data_sharing_consent, check_enrollment, \
-    check_correct_active_enterprise_customer, is_priority_access_error
+from lms.djangoapps.courseware.access_utils import (
+    check_authentication,
+    check_correct_active_enterprise_customer,
+    check_data_sharing_consent,
+    check_enrollment,
+    is_priority_access_error,
+)
+from lms.djangoapps.courseware.block_render import get_block
 from lms.djangoapps.courseware.courseware_access_exception import CoursewareAccessException
 from lms.djangoapps.courseware.date_summary import (
     CertificateAvailableDate,
@@ -44,12 +50,11 @@ from lms.djangoapps.courseware.date_summary import (
     CourseStartDate,
     TodaysDate,
     VerificationDeadlineDate,
-    VerifiedUpgradeDeadlineDate
+    VerifiedUpgradeDeadlineDate,
 )
 from lms.djangoapps.courseware.exceptions import CourseAccessRedirect, CourseRunNotFound
 from lms.djangoapps.courseware.masquerade import check_content_start_date_for_masquerade_user
 from lms.djangoapps.courseware.model_data import FieldDataCache
-from lms.djangoapps.courseware.block_render import get_block
 from lms.djangoapps.survey.utils import SurveyRequiredAccessError, check_survey_required_and_unanswered
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.enrollments.api import get_course_enrollment_details

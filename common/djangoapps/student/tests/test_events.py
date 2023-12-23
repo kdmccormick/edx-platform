@@ -4,16 +4,11 @@ Test that various events are fired for models in the student app.
 
 
 from unittest import mock
-import pytest
 
+import pytest
 from django.db.utils import IntegrityError
 from django.test import TestCase
 from django_countries.fields import Country
-
-from common.djangoapps.student.models import CourseEnrollmentAllowed, CourseEnrollment
-from common.djangoapps.student.tests.factories import CourseEnrollmentAllowedFactory, UserFactory, UserProfileFactory
-from common.djangoapps.student.tests.tests import UserSettingsEventTestMixin
-
 from openedx_events.learning.data import (  # lint-amnesty, pylint: disable=wrong-import-order
     CourseData,
     CourseEnrollmentData,
@@ -26,10 +21,15 @@ from openedx_events.learning.signals import (  # lint-amnesty, pylint: disable=w
     COURSE_UNENROLLMENT_COMPLETED,
 )
 from openedx_events.tests.utils import OpenEdxEventsTestMixin  # lint-amnesty, pylint: disable=wrong-import-order
+
+from common.djangoapps.student.models import CourseEnrollment, CourseEnrollmentAllowed
+from common.djangoapps.student.tests.factories import CourseEnrollmentAllowedFactory, UserFactory, UserProfileFactory
+from common.djangoapps.student.tests.tests import UserSettingsEventTestMixin
 from openedx.core.djangoapps.content.course_overviews.tests.factories import CourseOverviewFactory
 from openedx.core.djangolib.testing.utils import skip_unless_lms
-
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    SharedModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
 from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
 
 

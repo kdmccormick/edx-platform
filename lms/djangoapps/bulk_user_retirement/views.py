@@ -3,12 +3,13 @@ An API for retiring user accounts.
 """
 import logging
 
-from edx_rest_framework_extensions.auth.jwt.authentication import JwtAuthentication
 from django.contrib.auth import get_user_model
 from django.db import transaction
+from edx_rest_framework_extensions.auth.jwt.authentication import JwtAuthentication
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from openedx.core.djangoapps.user_api.accounts.permissions import CanRetireUser
 from openedx.core.djangoapps.user_api.accounts.utils import create_retirement_request_and_deactivate_account
 

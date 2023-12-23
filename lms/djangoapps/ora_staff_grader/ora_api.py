@@ -12,11 +12,8 @@ Other handlers return status OK even for an error, but contain error info in the
 These are checked (usually by checking for a {"success":false} response) and raise errors, possibly with extra context.
 """
 import json
-from lms.djangoapps.ora_staff_grader.errors import (
-    LockContestedError,
-    XBlockInternalError,
-)
 
+from lms.djangoapps.ora_staff_grader.errors import LockContestedError, XBlockInternalError
 from lms.djangoapps.ora_staff_grader.utils import call_xblock_json_handler, is_json
 
 

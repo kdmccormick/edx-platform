@@ -4,8 +4,8 @@
 
 import unittest
 from unittest.mock import Mock
-import dateutil.parser
 
+import dateutil.parser
 from opaque_keys.edx.locator import BlockUsageLocator, CourseLocator
 from xblock.field_data import DictFieldData
 from xblock.fields import Any, Boolean, Dict, Float, Integer, List, Scope, String

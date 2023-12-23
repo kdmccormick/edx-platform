@@ -11,7 +11,6 @@ from xmodule.util.sandboxing import DEFAULT_PYTHON_LIB_FILENAME
 
 from . import api
 
-
 # The expected OLX string for the 'Toy_Videos' sequential in the toy course
 EXPECTED_SEQUENTIAL_OLX = """
 <sequential display_name="Toy Videos" format="Lecture Sequence" url_name="Toy_Videos">

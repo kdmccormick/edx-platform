@@ -22,14 +22,8 @@ from django.urls import reverse
 from django.utils.timezone import now
 from submissions import api as submissions_api
 
-from xmodule.capa.tests.response_xml_factory import (
-    CodeResponseXMLFactory,
-    CustomResponseXMLFactory,
-    OptionResponseXMLFactory,
-    SchematicResponseXMLFactory
-)
-from xmodule.capa.xqueue_interface import XQueueInterface
 from common.djangoapps.course_modes.models import CourseMode
+from common.djangoapps.student.models import CourseEnrollment, anonymous_id_for_user
 from lms.djangoapps.courseware.models import BaseStudentModuleHistory, StudentModule
 from lms.djangoapps.courseware.tests.helpers import LoginEnrollmentTestCase
 from lms.djangoapps.grades.api import CourseGradeFactory, task_compute_all_grades_for_course
@@ -37,9 +31,20 @@ from openedx.core.djangoapps.credit.api import get_credit_requirement_status, se
 from openedx.core.djangoapps.credit.models import CreditCourse, CreditProvider
 from openedx.core.djangoapps.user_api.tests.factories import UserCourseTagFactory
 from openedx.core.lib.url_utils import quote_slashes
-from common.djangoapps.student.models import CourseEnrollment, anonymous_id_for_user
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.capa.tests.response_xml_factory import (
+    CodeResponseXMLFactory,
+    CustomResponseXMLFactory,
+    OptionResponseXMLFactory,
+    SchematicResponseXMLFactory,
+)
+from xmodule.capa.xqueue_interface import XQueueInterface
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    CourseFactory,
+)
 from xmodule.partitions.partitions import Group, UserPartition  # lint-amnesty, pylint: disable=wrong-import-order
 
 

@@ -20,9 +20,13 @@ from lms.djangoapps.courseware.model_data import get_score, set_score
 from lms.djangoapps.grades.tasks import (
     RECALCULATE_GRADE_DELAY_SECONDS,
     recalculate_course_and_subsection_grades_for_user,
-    recalculate_subsection_grade_v3
+    recalculate_subsection_grade_v3,
 )
 from openedx.core.djangoapps.course_groups.signals.signals import COHORT_MEMBERSHIP_UPDATED
+from openedx.core.djangoapps.signals.signals import (  # lint-amnesty, pylint: disable=wrong-import-order
+    COURSE_GRADE_NOW_FAILED,
+    COURSE_GRADE_NOW_PASSED,
+)
 from openedx.core.lib.grade_utils import is_score_higher_or_equal
 
 from .. import events
@@ -30,16 +34,12 @@ from ..constants import GradeOverrideFeatureEnum, ScoreDatabaseTableEnum
 from ..course_grade_factory import CourseGradeFactory
 from ..scores import weighted_score
 from .signals import (
+    COURSE_GRADE_PASSED_FIRST_TIME,
     PROBLEM_RAW_SCORE_CHANGED,
     PROBLEM_WEIGHTED_SCORE_CHANGED,
     SCORE_PUBLISHED,
     SUBSECTION_OVERRIDE_CHANGED,
     SUBSECTION_SCORE_CHANGED,
-    COURSE_GRADE_PASSED_FIRST_TIME
-)
-from openedx.core.djangoapps.signals.signals import (  # lint-amnesty, pylint: disable=wrong-import-order
-    COURSE_GRADE_NOW_FAILED,
-    COURSE_GRADE_NOW_PASSED
 )
 
 log = getLogger(__name__)

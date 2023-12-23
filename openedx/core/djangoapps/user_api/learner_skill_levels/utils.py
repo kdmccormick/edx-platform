@@ -6,12 +6,12 @@ from urllib.parse import urlparse
 
 from lms.djangoapps.grades.models import PersistentCourseGrade  # lint-amnesty, pylint: disable=unused-import
 from openedx.core.djangoapps.catalog.utils import (
-    get_catalog_api_client,
     check_catalog_integration_and_get_user,
     get_catalog_api_base_url,
-
+    get_catalog_api_client,
+    get_course_data,
+    get_course_run_data,
 )
-from openedx.core.djangoapps.catalog.utils import get_course_data, get_course_run_data
 from openedx.core.lib.edx_api_utils import get_api_data
 
 from .constants import LEVEL_TYPE_SCORE_MAPPING

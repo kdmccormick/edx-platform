@@ -39,8 +39,8 @@ from xmodule.video_block.transcripts_utils import (  # lint-amnesty, pylint: dis
     get_transcript,
     get_transcript_for_video,
     get_transcript_from_val,
+    get_transcript_link_from_youtube,
     get_transcripts_from_youtube,
-    get_transcript_link_from_youtube
 )
 
 __all__ = [

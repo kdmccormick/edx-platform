@@ -32,9 +32,8 @@ from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disa
 from xmodule.modulestore.exceptions import ItemNotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
 
 from .exceptions import AssetNotFoundException, AssetSizeTooLargeException
-from .utils import reverse_course_url, get_files_uploads_url, get_response_format, request_response_format_is_json
 from .toggles import use_new_files_uploads_page
-
+from .utils import get_files_uploads_url, get_response_format, request_response_format_is_json, reverse_course_url
 
 REQUEST_DEFAULTS = {
     'page': 0,

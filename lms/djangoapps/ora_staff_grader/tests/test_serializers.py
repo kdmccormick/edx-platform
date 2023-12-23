@@ -1,11 +1,10 @@
 """
 Tests for ESG Serializers
 """
-from unittest.mock import Mock, MagicMock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 import ddt
 from django.test import TestCase
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
 
 from lms.djangoapps.ora_staff_grader.errors import ERR_UNKNOWN, ErrorSerializer
 from lms.djangoapps.ora_staff_grader.serializers import (
@@ -14,8 +13,8 @@ from lms.djangoapps.ora_staff_grader.serializers import (
     FileListSerializer,
     GradeDataSerializer,
     InitializeSerializer,
-    LockStatusSerializer,
     LockStatusField,
+    LockStatusSerializer,
     OpenResponseMetadataSerializer,
     ResponseSerializer,
     RubricConfigSerializer,
@@ -23,14 +22,13 @@ from lms.djangoapps.ora_staff_grader.serializers import (
     ScoreSerializer,
     StaffAssessSerializer,
     SubmissionFetchSerializer,
-    SubmissionStatusFetchSerializer,
     SubmissionMetadataSerializer,
+    SubmissionStatusFetchSerializer,
     UploadedFileSerializer,
 )
 from lms.djangoapps.ora_staff_grader.tests import test_data
-from openedx.core.djangoapps.content.course_overviews.tests.factories import (
-    CourseOverviewFactory,
-)
+from openedx.core.djangoapps.content.course_overviews.tests.factories import CourseOverviewFactory
+from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
 
 
 class TestErrorSerializer(TestCase):

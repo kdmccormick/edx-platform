@@ -3,8 +3,8 @@ Objects and utilities used to construct registration forms.
 """
 
 import copy
-from importlib import import_module
 import re
+from importlib import import_module
 
 from django import forms
 from django.conf import settings
@@ -18,22 +18,19 @@ from django_countries import countries
 
 from common.djangoapps import third_party_auth
 from common.djangoapps.edxmako.shortcuts import marketing_link
-from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
-from openedx.core.djangoapps.user_api import accounts
-from openedx.core.djangoapps.user_api.helpers import FormDescription
-from openedx.core.djangoapps.user_authn.utils import check_pwned_password, is_registration_api_v1 as is_api_v1
-from openedx.core.djangolib.markup import HTML, Text
-from openedx.features.enterprise_support.api import enterprise_customer_for_request
-from common.djangoapps.student.models import (
-    CourseEnrollmentAllowed,
-    UserProfile,
-    email_exists_or_retired,
-)
+from common.djangoapps.student.models import CourseEnrollmentAllowed, UserProfile, email_exists_or_retired
 from common.djangoapps.util.password_policy_validators import (
     password_validators_instruction_texts,
     password_validators_restrictions,
     validate_password,
 )
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from openedx.core.djangoapps.user_api import accounts
+from openedx.core.djangoapps.user_api.helpers import FormDescription
+from openedx.core.djangoapps.user_authn.utils import check_pwned_password
+from openedx.core.djangoapps.user_authn.utils import is_registration_api_v1 as is_api_v1
+from openedx.core.djangolib.markup import HTML, Text
+from openedx.features.enterprise_support.api import enterprise_customer_for_request
 
 
 class TrueCheckbox(widgets.CheckboxInput):

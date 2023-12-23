@@ -3,14 +3,14 @@ XBlock runtime services for LibraryContentBlock
 """
 from __future__ import annotations
 
-from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imported-auth-user
 from django.conf import settings
+from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imported-auth-user
 from django.core.exceptions import ObjectDoesNotExist
 from user_tasks.models import UserTaskStatus
 
-from openedx.core.lib import ensure_cms
 from openedx.core.djangoapps.content_libraries import api as library_api
 from openedx.core.djangoapps.content_libraries import tasks as library_tasks
+from openedx.core.lib import ensure_cms
 from xmodule.library_content_block import LibraryContentBlock
 from xmodule.library_root_xblock import LibraryRoot as LibraryRootV1
 from xmodule.modulestore.exceptions import ItemNotFoundError

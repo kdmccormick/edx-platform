@@ -4,22 +4,22 @@ Instructor Task Django app REST API views.
 import datetime
 import json
 import logging
-import pytz
 
 import dateutil
+import pytz
 from celery.states import REVOKED
 from django.db import transaction
 from edx_rest_framework_extensions.auth.jwt.authentication import JwtAuthentication
+from rest_framework import generics, status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
-from rest_framework import generics, status
 
 from lms.djangoapps.bulk_email.api import update_course_email
 from lms.djangoapps.instructor_task.data import InstructorTaskTypes
-from lms.djangoapps.instructor_task.models import InstructorTask, InstructorTaskSchedule, SCHEDULED
+from lms.djangoapps.instructor_task.models import SCHEDULED, InstructorTask, InstructorTaskSchedule
 from lms.djangoapps.instructor_task.rest_api.v1.exceptions import TaskUpdateException
-from lms.djangoapps.instructor_task.rest_api.v1.serializers import ScheduledBulkEmailSerializer
 from lms.djangoapps.instructor_task.rest_api.v1.permissions import CanViewOrModifyScheduledBulkCourseEmailTasks
+from lms.djangoapps.instructor_task.rest_api.v1.serializers import ScheduledBulkEmailSerializer
 
 log = logging.getLogger(__name__)
 

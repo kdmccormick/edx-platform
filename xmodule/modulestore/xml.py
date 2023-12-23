@@ -7,8 +7,8 @@ import json
 import logging
 import os
 import re
-import warnings
 import sys
+import warnings
 from collections import defaultdict
 from contextlib import contextmanager
 from importlib import import_module
@@ -33,7 +33,7 @@ from xmodule.x_module import (  # lint-amnesty, pylint: disable=unused-import
     AsideKeyGenerator,
     OpaqueKeyReader,
     XMLParsingSystem,
-    policy_key
+    policy_key,
 )
 
 from .exceptions import ItemNotFoundError

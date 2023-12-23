@@ -23,7 +23,6 @@ from datetime import datetime
 from xml.sax.saxutils import unescape
 
 from django.conf import settings
-
 from lxml import etree
 from pytz import UTC
 
@@ -31,11 +30,11 @@ import xmodule.capa.customrender as customrender
 import xmodule.capa.inputtypes as inputtypes
 import xmodule.capa.responsetypes as responsetypes
 import xmodule.capa.xqueue_interface as xqueue_interface
+from openedx.core.djangolib.markup import HTML, Text
+from openedx.core.lib.safe_lxml.xmlparser import XML
 from xmodule.capa.correctmap import CorrectMap
 from xmodule.capa.safe_exec import safe_exec
 from xmodule.capa.util import contextualize_text, convert_files_to_filenames, get_course_id_from_capa_block
-from openedx.core.djangolib.markup import HTML, Text
-from openedx.core.lib.safe_lxml.xmlparser import XML
 from xmodule.stringify import stringify_children
 
 # extra things displayed after "show answers" is pressed

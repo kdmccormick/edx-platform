@@ -1,13 +1,12 @@
 """
 Tests for Blocks Views
 """
-import ddt
-
 from datetime import datetime
 from unittest import mock
 from unittest.mock import Mock
 from urllib.parse import urlencode, urlunparse
 
+import ddt
 from completion.test_utils import CompletionWaffleTestMixin, submit_completions_for_testing
 from django.conf import settings
 from django.urls import reverse
@@ -16,12 +15,14 @@ from opaque_keys.edx.locator import BlockUsageLocator, CourseLocator
 from common.djangoapps.student.models import CourseEnrollment
 from common.djangoapps.student.roles import CourseDataResearcherRole
 from common.djangoapps.student.tests.factories import AdminFactory, CourseEnrollmentFactory, UserFactory
-from openedx.core.djangoapps.discussions.models import (
-    DiscussionsConfiguration,
-    Provider,
+from openedx.core.djangoapps.discussions.models import DiscussionsConfiguration, Provider
+from xmodule.modulestore.tests.django_utils import (
+    SharedModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
 )
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.factories import BlockFactory, ToyCourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    ToyCourseFactory,
+)
 
 from .helpers import deserialize_usage_key
 

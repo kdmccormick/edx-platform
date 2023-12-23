@@ -16,13 +16,13 @@ from edx_django_utils.plugins import get_plugin_url_patterns
 from common.djangoapps.student import views as student_views
 from common.djangoapps.util import views as util_views
 from lms.djangoapps.branding import views as branding_views
-from lms.djangoapps.courseware.masquerade import MasqueradeView
 from lms.djangoapps.courseware.block_render import (
     handle_xblock_callback,
     handle_xblock_callback_noauth,
     xblock_view,
-    xqueue_callback
+    xqueue_callback,
 )
+from lms.djangoapps.courseware.masquerade import MasqueradeView
 from lms.djangoapps.courseware.views import views as courseware_views
 from lms.djangoapps.courseware.views.index import CoursewareIndex
 from lms.djangoapps.courseware.views.views import CourseTabView, EnrollStaffView, StaticCourseTabView

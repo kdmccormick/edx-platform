@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 from unittest import mock
 from unittest.mock import patch
 
-import pytest
 import ddt
+import pytest
 import requests.exceptions
 import simplejson as json
 from django.conf import settings
@@ -20,10 +20,12 @@ from lms.djangoapps.verify_student.models import (
     PhotoVerification,
     SoftwareSecurePhotoVerification,
     SSOVerification,
-    VerificationException
+    VerificationException,
 )
 from lms.djangoapps.verify_student.tests import TestVerificationBase
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
 
 FAKE_SETTINGS = {
     "SOFTWARE_SECURE": {

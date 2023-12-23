@@ -9,8 +9,8 @@ from ipware.ip import get_client_ip
 from common.djangoapps import third_party_auth
 from common.djangoapps.third_party_auth import pipeline
 from common.djangoapps.third_party_auth.models import clean_username
-from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.geoinfo.api import country_code_from_ip
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 API_V1 = 'v1'
 UUID4_REGEX = '[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}'

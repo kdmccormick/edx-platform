@@ -5,13 +5,10 @@ Fragment for rendering the course's sock and associated toggle button.
 from django.template.loader import render_to_string
 from web_fragments.fragment import Fragment
 
-from lms.djangoapps.courseware.utils import (
-    can_show_verified_upgrade,
-    verified_upgrade_deadline_link
-)
+from common.djangoapps.student.models import CourseEnrollment
+from lms.djangoapps.courseware.utils import can_show_verified_upgrade, verified_upgrade_deadline_link
 from openedx.core.djangoapps.plugin_api.views import EdxFragmentView
 from openedx.features.discounts.utils import format_strikeout_price
-from common.djangoapps.student.models import CourseEnrollment
 
 
 class CourseSockFragmentView(EdxFragmentView):

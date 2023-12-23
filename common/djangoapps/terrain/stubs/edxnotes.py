@@ -8,9 +8,8 @@ import re
 from copy import deepcopy
 from datetime import datetime
 from math import ceil
-from uuid import uuid4
-
 from urllib.parse import urlencode
+from uuid import uuid4
 
 from .http import StubHttpRequestHandler, StubHttpService
 

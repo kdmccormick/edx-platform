@@ -2,8 +2,8 @@
 Test credentials tasks
 """
 
-from unittest import mock
 from datetime import datetime, timezone
+from unittest import mock
 
 import ddt
 import pytest
@@ -18,17 +18,15 @@ from common.djangoapps.student.tests.factories import UserFactory
 from lms.djangoapps.certificates.api import get_recently_modified_certificates
 from lms.djangoapps.certificates.data import CertificateStatuses
 from lms.djangoapps.certificates.models import GeneratedCertificate
+from lms.djangoapps.certificates.tests.factories import CertificateDateOverrideFactory, GeneratedCertificateFactory
 from lms.djangoapps.grades.models import PersistentCourseGrade
 from lms.djangoapps.grades.models_api import get_recently_modified_grades
 from lms.djangoapps.grades.tests.utils import mock_passing_grade
-from lms.djangoapps.certificates.tests.factories import CertificateDateOverrideFactory, GeneratedCertificateFactory
 from openedx.core.djangoapps.catalog.tests.factories import CourseFactory, CourseRunFactory, ProgramFactory
 from openedx.core.djangoapps.credentials.helpers import is_learner_records_enabled
+from openedx.core.djangoapps.credentials.tasks.v1 import tasks
 from openedx.core.djangoapps.site_configuration.tests.factories import SiteConfigurationFactory, SiteFactory
 from openedx.core.djangolib.testing.utils import skip_unless_lms
-
-from openedx.core.djangoapps.credentials.tasks.v1 import tasks
-
 
 User = get_user_model()
 TASKS_MODULE = 'openedx.core.djangoapps.credentials.tasks.v1.tasks'

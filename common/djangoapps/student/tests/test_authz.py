@@ -17,14 +17,14 @@ from common.djangoapps.student.auth import (
     has_studio_write_access,
     remove_users,
     update_org_role,
-    user_has_role
+    user_has_role,
 )
 from common.djangoapps.student.roles import (
     CourseCreatorRole,
     CourseInstructorRole,
     CourseLimitedStaffRole,
     CourseStaffRole,
-    OrgContentCreatorRole
+    OrgContentCreatorRole,
 )
 from common.djangoapps.student.tests.factories import AdminFactory, UserFactory
 

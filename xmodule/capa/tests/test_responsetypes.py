@@ -10,10 +10,10 @@ import unittest
 import zipfile
 from datetime import datetime
 
-import pytest
 import calc
 import mock
 import pyparsing
+import pytest
 import random2 as random
 import requests
 from pytz import UTC
@@ -35,7 +35,7 @@ from xmodule.capa.tests.response_xml_factory import (
     SchematicResponseXMLFactory,
     StringResponseXMLFactory,
     SymbolicResponseXMLFactory,
-    TrueFalseResponseXMLFactory
+    TrueFalseResponseXMLFactory,
 )
 from xmodule.capa.util import convert_files_to_filenames
 from xmodule.capa.xqueue_interface import dateformat

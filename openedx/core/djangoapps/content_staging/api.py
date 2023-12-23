@@ -8,7 +8,8 @@ from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import AssetKey, UsageKey
 
 from .data import StagedContentData, StagedContentFileData, StagedContentStatus, UserClipboardData
-from .models import UserClipboard as _UserClipboard, StagedContent as _StagedContent
+from .models import StagedContent as _StagedContent
+from .models import UserClipboard as _UserClipboard
 from .serializers import UserClipboardSerializer as _UserClipboardSerializer
 
 

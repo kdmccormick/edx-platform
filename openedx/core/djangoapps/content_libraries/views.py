@@ -8,40 +8,30 @@ LTI 1.3 views.
 """
 
 
-from functools import wraps
 import itertools
 import json
 import logging
+from functools import wraps
 
+import edx_api_doc_tools as apidocs
 from django.conf import settings
-from django.contrib.auth import authenticate
-from django.contrib.auth import get_user_model
-from django.contrib.auth import login
+from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.models import Group
 from django.db.transaction import atomic
-from django.http import Http404
-from django.http import HttpResponseBadRequest
-from django.http import JsonResponse
+from django.http import Http404, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic.base import TemplateResponseMixin
-from django.views.generic.base import View
-from pylti1p3.contrib.django import DjangoCacheDataStorage
-from pylti1p3.contrib.django import DjangoDbToolConf
-from pylti1p3.contrib.django import DjangoMessageLaunch
-from pylti1p3.contrib.django import DjangoOIDCLogin
-from pylti1p3.exception import LtiException
-from pylti1p3.exception import OIDCException
-
-import edx_api_doc_tools as apidocs
+from django.views.generic.base import TemplateResponseMixin, View
 from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 from organizations.api import ensure_organization
 from organizations.exceptions import InvalidOrganizationException
 from organizations.models import Organization
+from pylti1p3.contrib.django import DjangoCacheDataStorage, DjangoDbToolConf, DjangoMessageLaunch, DjangoOIDCLogin
+from pylti1p3.exception import LtiException, OIDCException
 from rest_framework import status
 from rest_framework.exceptions import NotFound, PermissionDenied, ValidationError
 from rest_framework.pagination import PageNumberPagination
@@ -50,8 +40,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 
+import openedx.core.djangoapps.site_configuration.helpers as configuration_helpers
 from openedx.core.djangoapps.content_libraries import api, permissions
 from openedx.core.djangoapps.content_libraries.serializers import (
+    ContentLibraryAddPermissionByEmailSerializer,
     ContentLibraryBlockImportTaskCreateSerializer,
     ContentLibraryBlockImportTaskSerializer,
     ContentLibraryFilterSerializer,
@@ -59,25 +51,20 @@ from openedx.core.djangoapps.content_libraries.serializers import (
     ContentLibraryPermissionLevelSerializer,
     ContentLibraryPermissionSerializer,
     ContentLibraryUpdateSerializer,
-    LibraryXBlockCreationSerializer,
-    LibraryXBlockMetadataSerializer,
-    LibraryXBlockTypeSerializer,
     LibraryBundleLinkSerializer,
     LibraryBundleLinkUpdateSerializer,
+    LibraryXBlockCreationSerializer,
+    LibraryXBlockMetadataSerializer,
     LibraryXBlockOlxSerializer,
     LibraryXBlockStaticFileSerializer,
     LibraryXBlockStaticFilesSerializer,
-    ContentLibraryAddPermissionByEmailSerializer,
+    LibraryXBlockTypeSerializer,
 )
-import openedx.core.djangoapps.site_configuration.helpers as configuration_helpers
-from openedx.core.lib.api.view_utils import view_auth_classes
 from openedx.core.djangoapps.safe_sessions.middleware import mark_user_change_as_expected
 from openedx.core.djangoapps.xblock import api as xblock_api
+from openedx.core.lib.api.view_utils import view_auth_classes
 
-from .models import ContentLibrary
-from .models import LtiGradedResource
-from .models import LtiProfile
-
+from .models import ContentLibrary, LtiGradedResource, LtiProfile
 
 User = get_user_model()
 log = logging.getLogger(__name__)

@@ -4,6 +4,7 @@ Tests for BundleCache
 from unittest.mock import patch
 
 from django.test import TestCase
+
 from openedx.core.djangolib.blockstore_cache import BundleCache
 from openedx.core.lib import blockstore_api as api
 

@@ -13,7 +13,7 @@ from openedx.core.djangoapps.credentials.tests.mixins import CredentialsApiConfi
 from openedx.core.djangoapps.credentials.utils import (
     get_courses_completion_status,
     get_credentials,
-    get_credentials_records_url
+    get_credentials_records_url,
 )
 from openedx.core.djangoapps.oauth_dispatch.tests.factories import ApplicationFactory
 from openedx.core.djangolib.testing.utils import CacheIsolationTestCase, skip_unless_lms

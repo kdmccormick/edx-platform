@@ -8,12 +8,7 @@ from django.dispatch import receiver
 from openedx_events.content_authoring.data import CourseData, XBlockData
 from openedx_events.content_authoring.signals import COURSE_CREATED, XBLOCK_CREATED, XBLOCK_DELETED, XBLOCK_UPDATED
 
-from .tasks import delete_course_tags
-from .tasks import (
-    delete_xblock_tags,
-    update_course_tags,
-    update_xblock_tags
-)
+from .tasks import delete_course_tags, delete_xblock_tags, update_course_tags, update_xblock_tags
 from .toggles import CONTENT_TAGGING_AUTO
 
 log = logging.getLogger(__name__)

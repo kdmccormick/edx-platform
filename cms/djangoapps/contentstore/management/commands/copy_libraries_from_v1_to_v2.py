@@ -1,20 +1,16 @@
 """A Command to  Copy or uncopy V1 Content Libraries entires to be stored as v2 content libraries."""
 
-import logging
 import csv
+import logging
 from textwrap import dedent
 
+from celery import group
 from django.core.management import BaseCommand, CommandError
-
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locator import LibraryLocator
 
-from xmodule.modulestore.django import modulestore
-
-
-from celery import group
-
 from cms.djangoapps.contentstore.tasks import create_v2_library_from_v1_library, delete_v2_library_from_v1_library
+from xmodule.modulestore.django import modulestore
 
 from .prompt import query_yes_no
 

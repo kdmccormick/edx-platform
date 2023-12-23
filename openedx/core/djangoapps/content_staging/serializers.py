@@ -7,6 +7,7 @@ from cms.djangoapps.contentstore.helpers import xblock_studio_url, xblock_type_d
 from common.djangoapps.student.auth import has_studio_read_access
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import ItemNotFoundError
+
 from .models import StagedContent
 
 

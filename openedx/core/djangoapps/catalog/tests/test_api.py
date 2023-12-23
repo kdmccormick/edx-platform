@@ -1,9 +1,8 @@
 """
 Tests for the Catalog apps `api.py` functions.
 """
-from mock import patch
-
 from django.test import TestCase
+from mock import patch
 
 from openedx.core.djangoapps.catalog.api import get_course_run_details
 from openedx.core.djangoapps.catalog.tests.factories import CourseRunFactory

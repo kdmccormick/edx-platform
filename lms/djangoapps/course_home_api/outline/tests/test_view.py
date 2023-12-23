@@ -3,12 +3,11 @@ Tests for Outline Tab API in the Course Home API
 """
 
 import itertools
+import json  # lint-amnesty, pylint: disable=wrong-import-order
 from datetime import datetime, timedelta, timezone
-from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from unittest.mock import Mock, patch  # lint-amnesty, pylint: disable=wrong-import-order
 
 import ddt  # lint-amnesty, pylint: disable=wrong-import-order
-import json  # lint-amnesty, pylint: disable=wrong-import-order
 from django.conf import settings  # lint-amnesty, pylint: disable=wrong-import-order
 from django.urls import reverse  # lint-amnesty, pylint: disable=wrong-import-order
 from edx_toggles.toggles.testutils import override_waffle_flag  # lint-amnesty, pylint: disable=wrong-import-order
@@ -20,6 +19,7 @@ from common.djangoapps.student.models import CourseEnrollment
 from common.djangoapps.student.roles import CourseInstructorRole
 from common.djangoapps.student.tests.factories import UserFactory
 from lms.djangoapps.course_home_api.tests.utils import BaseCourseHomeTests
+from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.content.learning_sequences.api import replace_course_outline
 from openedx.core.djangoapps.content.learning_sequences.data import CourseOutlineData, CourseVisibility
@@ -30,11 +30,17 @@ from openedx.features.course_duration_limits.models import CourseDurationLimitCo
 from openedx.features.course_experience import (
     COURSE_ENABLE_UNENROLLED_ACCESS_FLAG,
     DISPLAY_COURSE_SOCK_FLAG,
-    ENABLE_COURSE_GOALS
+    ENABLE_COURSE_GOALS,
 )
 from openedx.features.discounts.applicability import DISCOUNT_APPLICABILITY_FLAG
-from xmodule.course_block import COURSE_VISIBILITY_PUBLIC, COURSE_VISIBILITY_PUBLIC_OUTLINE  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.course_block import (  # lint-amnesty, pylint: disable=wrong-import-order
+    COURSE_VISIBILITY_PUBLIC,
+    COURSE_VISIBILITY_PUBLIC_OUTLINE,
+)
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    CourseFactory,
+)
 
 
 @ddt.ddt

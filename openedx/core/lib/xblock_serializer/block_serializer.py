@@ -2,13 +2,14 @@
 Code for serializing a modulestore XBlock to OLX.
 """
 from __future__ import annotations
+
 import logging
 import os
 
 from lxml import etree
 
-from .data import StaticFile
 from . import utils
+from .data import StaticFile
 
 log = logging.getLogger(__name__)
 

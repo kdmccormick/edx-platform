@@ -12,6 +12,7 @@ from django.views.decorators.http import require_http_methods
 from django_countries import countries
 
 from common.djangoapps.edxmako.shortcuts import marketing_link
+from common.djangoapps.student.models import User
 from openedx.core.djangoapps.credentials.utils import get_credentials_records_url
 from openedx.core.djangoapps.programs.models import ProgramsApiConfig
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
@@ -20,7 +21,6 @@ from openedx.core.djangoapps.user_api.errors import UserNotAuthorized, UserNotFo
 from openedx.core.djangoapps.user_api.preferences.api import get_user_preferences
 from openedx.features.learner_profile.toggles import should_redirect_to_profile_microfrontend
 from openedx.features.learner_profile.views.learner_achievements import LearnerAchievementsFragmentView
-from common.djangoapps.student.models import User
 
 
 @login_required

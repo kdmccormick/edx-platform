@@ -17,8 +17,7 @@ from openedx.core.djangolib.testing.utils import skip_unless_lms
 if settings.ROOT_URLCONF == 'lms.urls':
     from oauth2_provider import models as dot_models
 
-    from .. import adapters
-    from .. import models
+    from .. import adapters, models
     from ..dot_overrides.validators import EdxOAuth2Validator
     from .constants import DUMMY_REDIRECT_URL
 

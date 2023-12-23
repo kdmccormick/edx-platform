@@ -2,6 +2,7 @@
 Helper functions for XBlock serialization
 """
 from __future__ import annotations
+
 import logging
 import re
 from contextlib import contextmanager

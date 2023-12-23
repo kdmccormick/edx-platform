@@ -11,27 +11,28 @@ from collections import namedtuple
 from contextlib import contextmanager
 from shutil import rmtree
 from tempfile import mkdtemp
-from uuid import uuid4
 from unittest.mock import Mock, call, patch
+from uuid import uuid4
 
 import ddt
-from openedx_events.content_authoring.data import CourseData, XBlockData
-from openedx_events.content_authoring.signals import (
-    COURSE_CREATED,
-    XBLOCK_CREATED,
-    XBLOCK_DELETED,
-    XBLOCK_PUBLISHED,
-    XBLOCK_UPDATED
-)
-from openedx_events.tests.utils import OpenEdxEventsTestMixin
 import pymongo
 import pytest
+
 # Mixed modulestore depends on django, so we'll manually configure some django settings
 # before importing the module
 # TODO remove this import and the configuration -- xmodule should not depend on django!
 from django.conf import settings
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locator import BlockUsageLocator, CourseLocator, LibraryLocator  # pylint: disable=unused-import
+from openedx_events.content_authoring.data import CourseData, XBlockData
+from openedx_events.content_authoring.signals import (
+    COURSE_CREATED,
+    XBLOCK_CREATED,
+    XBLOCK_DELETED,
+    XBLOCK_PUBLISHED,
+    XBLOCK_UPDATED,
+)
+from openedx_events.tests.utils import OpenEdxEventsTestMixin
 from pytz import UTC
 from web_fragments.fragment import Fragment
 from xblock.core import XBlockAside
@@ -45,11 +46,7 @@ from xmodule.exceptions import InvalidVersionError
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.draft_and_published import DIRECT_ONLY_CATEGORIES, UnsupportedRevisionError
 from xmodule.modulestore.edit_info import EditInfoMixin
-from xmodule.modulestore.exceptions import (
-    DuplicateCourseError,
-    ItemNotFoundError,
-    NoPathToItem,
-)
+from xmodule.modulestore.exceptions import DuplicateCourseError, ItemNotFoundError, NoPathToItem
 from xmodule.modulestore.inheritance import InheritanceMixin
 from xmodule.modulestore.mixed import MixedModuleStore
 from xmodule.modulestore.search import navigation_index, path_to_location

@@ -2,7 +2,6 @@
 Configuration for features of Learner Home
 """
 from django.conf import settings
-
 from edx_toggles.toggles import WaffleFlag
 
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers

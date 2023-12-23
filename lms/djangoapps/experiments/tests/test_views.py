@@ -2,11 +2,11 @@
 Tests for experimentation views
 """
 
+from datetime import timedelta
 from unittest.mock import patch
 
-import six.moves.urllib.parse
-from datetime import timedelta
 import django
+import six.moves.urllib.parse
 from django.conf import settings
 from django.core.handlers.wsgi import WSGIRequest
 from django.test.utils import override_settings

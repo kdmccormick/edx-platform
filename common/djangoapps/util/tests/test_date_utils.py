@@ -9,13 +9,16 @@ from unittest.mock import patch
 import crum
 import ddt
 import pytest
+from django.test.client import RequestFactory
 from markupsafe import Markup
 from pytz import utc
 
-from django.test.client import RequestFactory
-
 from common.djangoapps.util.date_utils import (
-    almost_same_datetime, get_default_time_display, get_time_display, strftime_localized, strftime_localized_html
+    almost_same_datetime,
+    get_default_time_display,
+    get_time_display,
+    strftime_localized,
+    strftime_localized_html,
 )
 
 

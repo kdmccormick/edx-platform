@@ -6,10 +6,10 @@ Tests for ProctoredExamTransformer.
 from unittest.mock import Mock, patch
 
 import ddt
+from edx_toggles.toggles.testutils import override_waffle_flag
 from milestones.tests.utils import MilestonesTestCaseMixin
 
 from common.djangoapps.student.tests.factories import CourseEnrollmentFactory
-from edx_toggles.toggles.testutils import override_waffle_flag
 from lms.djangoapps.course_blocks.api import get_course_blocks
 from lms.djangoapps.course_blocks.transformers.tests.helpers import CourseStructureTestCase
 from lms.djangoapps.gating import api as lms_gating_api

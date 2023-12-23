@@ -19,7 +19,6 @@ from django.test import TestCase, override_settings
 from edx_rest_api_client.auth import SuppliedJwtAuth
 from requests.exceptions import HTTPError
 from testfixtures import LogCapture
-from xmodule.data import CertificatesDisplayBehaviors
 
 from common.djangoapps.course_modes.tests.factories import CourseModeFactory
 from common.djangoapps.student.tests.factories import UserFactory
@@ -31,6 +30,7 @@ from openedx.core.djangoapps.oauth_dispatch.tests.factories import ApplicationFa
 from openedx.core.djangoapps.programs import tasks
 from openedx.core.djangoapps.site_configuration.tests.factories import SiteConfigurationFactory, SiteFactory
 from openedx.core.djangolib.testing.utils import skip_unless_lms
+from xmodule.data import CertificatesDisplayBehaviors
 
 log = logging.getLogger(__name__)
 

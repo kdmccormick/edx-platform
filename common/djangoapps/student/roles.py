@@ -12,8 +12,8 @@ from contextlib import contextmanager
 from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imported-auth-user
 from opaque_keys.edx.django.models import CourseKeyField
 
-from openedx.core.lib.cache_utils import get_cache
 from common.djangoapps.student.models import CourseAccessRole
+from openedx.core.lib.cache_utils import get_cache
 
 log = logging.getLogger(__name__)
 
@@ -216,7 +216,9 @@ class RoleBase(AccessRole):
         """
         # silently ignores anonymous and inactive users so that any that are
         # legit get updated.
-        from common.djangoapps.student.models import CourseAccessRole  # lint-amnesty, pylint: disable=redefined-outer-name, reimported
+        from common.djangoapps.student.models import (
+            CourseAccessRole,  # lint-amnesty, pylint: disable=redefined-outer-name, reimported
+        )
         for user in users:
             if user.is_authenticated and user.is_active:
                 CourseAccessRole.objects.get_or_create(

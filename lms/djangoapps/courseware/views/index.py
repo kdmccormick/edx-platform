@@ -24,9 +24,6 @@ from edx_django_utils.monitoring import set_custom_attributes_for_course_key
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from web_fragments.fragment import Fragment
-from xmodule.course_block import COURSE_VISIBILITY_PUBLIC
-from xmodule.modulestore.django import modulestore
-from xmodule.x_module import PUBLIC_VIEW, STUDENT_VIEW
 
 from common.djangoapps.edxmako.shortcuts import render_to_response, render_to_string
 from common.djangoapps.student.models import CourseEnrollment
@@ -44,24 +41,27 @@ from openedx.core.djangolib.markup import HTML, Text
 from openedx.features.course_experience import (
     COURSE_ENABLE_UNENROLLED_ACCESS_FLAG,
     DISABLE_COURSE_OUTLINE_PAGE_FLAG,
-    default_course_url
+    default_course_url,
 )
 from openedx.features.course_experience.url_helpers import make_learning_mfe_courseware_url
 from openedx.features.course_experience.views.course_sock import CourseSockFragmentView
 from openedx.features.enterprise_support.api import data_sharing_consent_required
+from xmodule.course_block import COURSE_VISIBILITY_PUBLIC
+from xmodule.modulestore.django import modulestore
+from xmodule.x_module import PUBLIC_VIEW, STUDENT_VIEW
 
 from ..access import has_access
 from ..access_utils import check_public_access
+from ..block_render import get_block_for_descriptor, toc_for_course
 from ..courses import get_course_with_access, get_current_child, get_studio_url
 from ..entrance_exams import (
     course_has_entrance_exam,
     get_entrance_exam_content,
     user_can_skip_entrance_exam,
-    user_has_passed_entrance_exam
+    user_has_passed_entrance_exam,
 )
 from ..masquerade import check_content_start_date_for_masquerade_user, setup_masquerade
 from ..model_data import FieldDataCache
-from ..block_render import get_block_for_descriptor, toc_for_course
 from ..permissions import MASQUERADE_AS_STUDENT
 from ..toggles import ENABLE_OPTIMIZELY_IN_COURSEWARE, courseware_mfe_is_active
 from .views import CourseTabView

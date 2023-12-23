@@ -15,7 +15,8 @@ from ccx_keys.locator import CCXLocator
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied, ValidationError as DjangoValidationError
+from django.core.exceptions import PermissionDenied
+from django.core.exceptions import ValidationError as DjangoValidationError
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -29,11 +30,12 @@ from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locator import BlockUsageLocator
 from organizations.api import add_organization_course, ensure_organization
 from organizations.exceptions import InvalidOrganizationException
+from organizations.models import Organization
 from rest_framework.exceptions import ValidationError
 
 from cms.djangoapps.contentstore.xblock_storage_handlers.view_handlers import create_xblock_info
-from cms.djangoapps.course_creators.views import add_user_with_status_unrequested, get_course_creator_status
 from cms.djangoapps.course_creators.models import CourseCreator
+from cms.djangoapps.course_creators.views import add_user_with_status_unrequested, get_course_creator_status
 from cms.djangoapps.models.settings.course_grading import CourseGradingModel
 from cms.djangoapps.models.settings.course_metadata import CourseMetadata
 from cms.djangoapps.models.settings.encoder import CourseSettingsEncoder
@@ -42,17 +44,17 @@ from common.djangoapps.course_action_state.models import CourseRerunState, Cours
 from common.djangoapps.edxmako.shortcuts import render_to_response
 from common.djangoapps.student.auth import (
     has_course_author_access,
+    has_studio_advanced_settings_access,
     has_studio_read_access,
     has_studio_write_access,
-    has_studio_advanced_settings_access,
     is_content_creator,
 )
 from common.djangoapps.student.roles import (
     CourseInstructorRole,
     CourseStaffRole,
     GlobalStaff,
+    OrgStaffRole,
     UserBasedRole,
-    OrgStaffRole
 )
 from common.djangoapps.util.date_utils import get_default_time_display
 from common.djangoapps.util.json_request import JsonResponse, JsonResponseBadRequest, expect_json
@@ -67,51 +69,61 @@ from openedx.core.djangolib.js_utils import dump_js_escaped_json
 from openedx.core.lib.course_tabs import CourseTabPluginManager
 from openedx.features.content_type_gating.models import ContentTypeGatingConfig
 from openedx.features.content_type_gating.partitions import CONTENT_TYPE_GATING_SCHEME
-from organizations.models import Organization
 from xmodule.contentstore.content import StaticContent  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.course_block import CourseBlock, DEFAULT_START_DATE, CourseFields  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.course_block import (  # lint-amnesty, pylint: disable=wrong-import-order
+    DEFAULT_START_DATE,
+    CourseBlock,
+    CourseFields,
+)
 from xmodule.error_block import ErrorBlock  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore import EdxJSONEncoder  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.exceptions import DuplicateCourseError, ItemNotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.exceptions import (  # lint-amnesty, pylint: disable=wrong-import-order
+    DuplicateCourseError,
+    ItemNotFoundError,
+)
 from xmodule.partitions.partitions import UserPartition  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.tabs import CourseTab, CourseTabList, InvalidTabsException  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.tabs import (  # lint-amnesty, pylint: disable=wrong-import-order
+    CourseTab,
+    CourseTabList,
+    InvalidTabsException,
+)
 
 from ..course_group_config import (
     COHORT_SCHEME,
     ENROLLMENT_SCHEME,
     RANDOM_SCHEME,
     GroupConfiguration,
-    GroupConfigurationsValidationError
+    GroupConfigurationsValidationError,
 )
 from ..course_info_model import delete_course_update, get_course_updates, update_course_updates
 from ..courseware_index import CoursewareSearchIndexer, SearchIndexingError
 from ..tasks import rerun_course as rerun_course_task
 from ..toggles import (
     default_enable_flexible_peer_openassessments,
-    use_new_course_outline_page,
-    use_new_home_page,
-    use_new_updates_page,
     use_new_advanced_settings_page,
+    use_new_course_outline_page,
     use_new_grading_page,
-    use_new_schedule_details_page
+    use_new_home_page,
+    use_new_schedule_details_page,
+    use_new_updates_page,
 )
 from ..utils import (
     add_instructor,
-    get_course_settings,
+    get_advanced_settings_url,
     get_course_grading,
+    get_course_outline_url,
+    get_course_rerun_context,
+    get_course_settings,
+    get_grading_url,
     get_home_context,
     get_library_context,
     get_lms_link_for_item,
     get_proctored_exam_settings_url,
-    get_course_outline_url,
-    get_taxonomy_tags_widget_url,
-    get_studio_home_url,
-    get_updates_url,
-    get_advanced_settings_url,
-    get_grading_url,
     get_schedule_details_url,
-    get_course_rerun_context,
+    get_studio_home_url,
+    get_taxonomy_tags_widget_url,
+    get_updates_url,
     initialize_permissions,
     remove_all_instructors,
     reverse_course_url,

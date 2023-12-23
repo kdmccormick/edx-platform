@@ -5,10 +5,7 @@ Test that various events are fired for models in the grades app.
 from unittest import mock
 
 from django.utils.timezone import now
-from openedx_events.learning.data import (
-    CourseData,
-    PersistentCourseGradeData
-)
+from openedx_events.learning.data import CourseData, PersistentCourseGradeData
 from openedx_events.learning.signals import PERSISTENT_GRADE_SUMMARY_CHANGED
 from openedx_events.tests.utils import OpenEdxEventsTestMixin
 

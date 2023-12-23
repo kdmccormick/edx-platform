@@ -10,6 +10,7 @@ from xblock.fields import ScopeIds
 
 from openedx.core.lib.safe_lxml import etree
 from xmodule.poll_block import PollBlock
+
 from . import get_test_system
 from .test_import import DummySystem
 

@@ -9,14 +9,14 @@ from django.utils.translation import get_language
 from django.utils.translation import gettext as _
 
 from common.djangoapps.course_modes.models import format_course_price, get_course_prices
-from lms.djangoapps.experiments.models import ExperimentData
 from lms.djangoapps.courseware.utils import verified_upgrade_deadline_link
+from lms.djangoapps.experiments.models import ExperimentData
 from openedx.core.djangolib.markup import HTML
 from openedx.features.discounts.applicability import (
     REV1008_EXPERIMENT_ID,
     can_receive_discount,
     discount_percentage,
-    get_discount_expiration_date
+    get_discount_expiration_date,
 )
 
 

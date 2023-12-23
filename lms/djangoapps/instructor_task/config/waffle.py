@@ -7,7 +7,6 @@ from edx_toggles.toggles import WaffleSwitch
 
 from openedx.core.djangoapps.waffle_utils import CourseWaffleFlag
 
-
 WAFFLE_NAMESPACE = 'instructor_task'
 
 # Waffle switches

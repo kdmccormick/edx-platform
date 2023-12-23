@@ -10,25 +10,25 @@ from django.dispatch import receiver
 from common.djangoapps.course_modes import api as modes_api
 from common.djangoapps.student.models import CourseEnrollment
 from common.djangoapps.student.signals import ENROLLMENT_TRACK_UPDATED
+from lms.djangoapps.certificates.api import auto_certificate_generation_enabled
 from lms.djangoapps.certificates.generation_handler import (
     CertificateGenerationNotAllowed,
     generate_allowlist_certificate_task,
     generate_certificate_task,
-    is_on_certificate_allowlist
+    is_on_certificate_allowlist,
 )
 from lms.djangoapps.certificates.models import (
     CertificateAllowlist,
     CertificateGenerationCourseSetting,
     CertificateStatuses,
-    GeneratedCertificate
+    GeneratedCertificate,
 )
-from lms.djangoapps.certificates.api import auto_certificate_generation_enabled
 from lms.djangoapps.verify_student.services import IDVerificationService
 from openedx.core.djangoapps.content.course_overviews.signals import COURSE_PACING_CHANGED
 from openedx.core.djangoapps.signals.signals import (
     COURSE_GRADE_NOW_FAILED,
     COURSE_GRADE_NOW_PASSED,
-    LEARNER_NOW_VERIFIED
+    LEARNER_NOW_VERIFIED,
 )
 
 log = logging.getLogger(__name__)

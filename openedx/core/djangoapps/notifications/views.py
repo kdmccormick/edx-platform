@@ -17,7 +17,7 @@ from rest_framework.views import APIView
 from common.djangoapps.student.models import CourseEnrollment
 from openedx.core.djangoapps.notifications.models import (
     CourseNotificationPreference,
-    get_course_notification_preference_config_version
+    get_course_notification_preference_config_version,
 )
 from openedx.core.djangoapps.notifications.permissions import allow_any_authenticated_user
 
@@ -27,14 +27,15 @@ from .events import (
     notification_preference_update_event,
     notification_preferences_viewed_event,
     notification_read_event,
-    notifications_app_all_read_event, notification_tray_opened_event,
+    notification_tray_opened_event,
+    notifications_app_all_read_event,
 )
 from .models import Notification
 from .serializers import (
     NotificationCourseEnrollmentSerializer,
     NotificationSerializer,
     UserCourseNotificationPreferenceSerializer,
-    UserNotificationPreferenceUpdateSerializer
+    UserNotificationPreferenceUpdateSerializer,
 )
 from .utils import filter_course_wide_preferences, get_show_notifications_tray
 

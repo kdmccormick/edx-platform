@@ -16,18 +16,6 @@ from django.urls import reverse
 from django.utils import translation
 from edx_django_utils.cache import RequestCache
 from edx_toggles.toggles.testutils import override_waffle_flag
-from xmodule.modulestore import ModuleStoreEnum
-from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.tests.django_utils import (
-    TEST_DATA_SPLIT_MODULESTORE,
-    ModuleStoreTestCase,
-    SharedModuleStoreTestCase
-)
-from xmodule.modulestore.tests.factories import (
-    CourseFactory,
-    BlockFactory,
-    check_mongo_calls
-)
 
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.course_modes.tests.factories import CourseModeFactory
@@ -41,14 +29,14 @@ from lms.djangoapps.discussion.django_comment_client.permissions import get_team
 from lms.djangoapps.discussion.django_comment_client.tests.group_id import (
     CohortedTopicGroupIdTestMixin,
     GroupIdAssertionMixin,
-    NonCohortedTopicGroupIdTestMixin
+    NonCohortedTopicGroupIdTestMixin,
 )
 from lms.djangoapps.discussion.django_comment_client.tests.unicode import UnicodeTestMixin
 from lms.djangoapps.discussion.django_comment_client.tests.utils import (
     CohortedTestCase,
     ForumsEnableMixin,
     config_course_discussions,
-    topic_name_to_id
+    topic_name_to_id,
 )
 from lms.djangoapps.discussion.django_comment_client.utils import strip_none
 from lms.djangoapps.discussion.toggles import ENABLE_DISCUSSIONS_MFE
@@ -61,7 +49,7 @@ from openedx.core.djangoapps.django_comment_common.comment_client.utils import C
 from openedx.core.djangoapps.django_comment_common.models import (
     FORUM_ROLE_STUDENT,
     CourseDiscussionSettings,
-    ForumsConfig
+    ForumsConfig,
 )
 from openedx.core.djangoapps.django_comment_common.utils import ThreadContext, seed_permissions_roles
 from openedx.core.djangoapps.util.testing import ContentGroupTestCase
@@ -69,6 +57,14 @@ from openedx.core.djangoapps.waffle_utils.testutils import WAFFLE_TABLES
 from openedx.core.lib.teams_config import TeamsConfig
 from openedx.features.content_type_gating.models import ContentTypeGatingConfig
 from openedx.features.enterprise_support.tests.mixins.enterprise import EnterpriseTestConsentRequired
+from xmodule.modulestore import ModuleStoreEnum
+from xmodule.modulestore.django import modulestore
+from xmodule.modulestore.tests.django_utils import (
+    TEST_DATA_SPLIT_MODULESTORE,
+    ModuleStoreTestCase,
+    SharedModuleStoreTestCase,
+)
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory, check_mongo_calls
 
 log = logging.getLogger(__name__)
 

@@ -17,6 +17,7 @@ from lxml import etree
 from path import Path as path
 from pytz import utc
 from xblock.fields import Boolean, Dict, Float, Integer, List, Scope, String
+
 from openedx.core.djangoapps.video_pipeline.models import VideoUploadsEnabledByDefault
 from openedx.core.lib.license import LicenseMixin
 from openedx.core.lib.teams_config import TeamsConfig  # lint-amnesty, pylint: disable=unused-import

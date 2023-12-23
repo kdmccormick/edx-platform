@@ -29,6 +29,7 @@ from openedx.core.djangoapps.discussions.tasks import update_discussions_setting
 from openedx.core.lib.gating import api as gating_api
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import SignalHandler, modulestore
+
 from .signals import GRADING_POLICY_CHANGED
 
 log = logging.getLogger(__name__)
@@ -121,11 +122,9 @@ def listen_for_course_publish(sender, course_key, **kwargs):  # pylint: disable=
     from cms.djangoapps.contentstore.tasks import (
         update_outline_from_modulestore_task,
         update_search_index,
-        update_special_exams_and_publish
+        update_special_exams_and_publish,
     )
-    from cms.djangoapps.coursegraph.tasks import (
-        dump_course_to_neo4j
-    )
+    from cms.djangoapps.coursegraph.tasks import dump_course_to_neo4j
 
     # register special exams asynchronously after the data is ready
     course_key_str = str(course_key)

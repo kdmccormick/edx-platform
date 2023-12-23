@@ -10,8 +10,8 @@ from unittest.mock import patch
 from django.test import TestCase
 from pytz import UTC
 
-from openedx.core.djangolib.testing.utils import skip_unless_lms
 from common.djangoapps.student.tests.factories import UserFactory
+from openedx.core.djangolib.testing.utils import skip_unless_lms
 
 from ..image_helpers import get_profile_image_urls_for_user
 

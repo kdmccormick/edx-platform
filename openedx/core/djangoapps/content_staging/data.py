@@ -2,12 +2,13 @@
 Public python data types for content staging
 """
 from __future__ import annotations
-from attrs import field, frozen, validators
+
 from datetime import datetime
 
+from attrs import field, frozen, validators
 from django.db.models import TextChoices
 from django.utils.translation import gettext_lazy as _
-from opaque_keys.edx.keys import UsageKey, AssetKey
+from opaque_keys.edx.keys import AssetKey, UsageKey
 
 
 class StagedContentStatus(TextChoices):

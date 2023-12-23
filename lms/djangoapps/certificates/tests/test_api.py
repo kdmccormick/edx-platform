@@ -20,17 +20,10 @@ from freezegun import freeze_time
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locator import CourseLocator
 from testfixtures import LogCapture
-from xmodule.data import CertificatesDisplayBehaviors
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase, SharedModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory
 
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.course_modes.tests.factories import CourseModeFactory
-from common.djangoapps.student.tests.factories import (
-    CourseEnrollmentFactory,
-    GlobalStaffFactory,
-    UserFactory
-)
+from common.djangoapps.student.tests.factories import CourseEnrollmentFactory, GlobalStaffFactory, UserFactory
 from common.djangoapps.util.testing import EventTestMixin
 from lms.djangoapps.certificates.api import (
     auto_certificate_generation_enabled,
@@ -38,8 +31,8 @@ from lms.djangoapps.certificates.api import (
     can_be_added_to_allowlist,
     can_show_certificate_available_date_field,
     can_show_certificate_message,
-    certificate_status_for_student,
     certificate_downloadable_status,
+    certificate_status_for_student,
     create_certificate_invalidation_entry,
     create_or_update_certificate_allowlist_entry,
     display_date_for_certificate,
@@ -68,12 +61,15 @@ from lms.djangoapps.certificates.models import (
 )
 from lms.djangoapps.certificates.tests.factories import (
     CertificateAllowlistFactory,
+    CertificateInvalidationFactory,
     GeneratedCertificateFactory,
-    CertificateInvalidationFactory
 )
 from lms.djangoapps.certificates.tests.test_generation_handler import ID_VERIFIED_METHOD, PASSING_GRADE_METHOD
 from openedx.core.djangoapps.content.course_overviews.tests.factories import CourseOverviewFactory
 from openedx.core.djangoapps.site_configuration.tests.test_util import with_site_configuration
+from xmodule.data import CertificatesDisplayBehaviors
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase, SharedModuleStoreTestCase
+from xmodule.modulestore.tests.factories import CourseFactory
 
 CAN_GENERATE_METHOD = 'lms.djangoapps.certificates.generation_handler._can_generate_regular_certificate'
 FEATURES_WITH_CERTS_ENABLED = settings.FEATURES.copy()

@@ -8,7 +8,7 @@ import ddt
 import httpretty
 from django.conf import settings
 from edx_toggles.toggles.testutils import override_waffle_flag
-from openedx_events.learning.signals import USER_NOTIFICATION_REQUESTED, COURSE_NOTIFICATION_REQUESTED
+from openedx_events.learning.signals import COURSE_NOTIFICATION_REQUESTED, USER_NOTIFICATION_REQUESTED
 
 from common.djangoapps.student.models import CourseEnrollment
 from common.djangoapps.student.tests.factories import StaffFactory, UserFactory
@@ -23,7 +23,7 @@ from openedx.core.djangoapps.django_comment_common.models import (
     FORUM_ROLE_GROUP_MODERATOR,
     FORUM_ROLE_MODERATOR,
     FORUM_ROLE_STUDENT,
-    CourseDiscussionSettings
+    CourseDiscussionSettings,
 )
 from openedx.core.djangoapps.notifications.config.waffle import ENABLE_COURSEWIDE_NOTIFICATIONS, ENABLE_NOTIFICATIONS
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase

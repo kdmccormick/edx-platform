@@ -6,11 +6,9 @@ import logging
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import MultipleObjectsReturned
-from rest_framework.exceptions import PermissionDenied, NotFound
+from rest_framework.exceptions import NotFound, PermissionDenied
 
-from common.djangoapps.student.models import (
-    get_user_by_username_or_email,
-)
+from common.djangoapps.student.models import get_user_by_username_or_email
 
 log = logging.getLogger(__name__)
 User = get_user_model()

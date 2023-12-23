@@ -5,6 +5,7 @@
     certificate_available_date
 """
 from django.core.management.base import BaseCommand
+
 from openedx.core.djangoapps.credentials.tasks.v1.tasks import clean_certificate_available_date
 
 

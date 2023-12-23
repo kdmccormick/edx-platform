@@ -5,9 +5,10 @@ from django.conf import settings
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from openedx.core.lib.api.view_utils import view_auth_classes
 
-from ....utils import get_home_context, get_course_context, get_library_context
+from ....utils import get_course_context, get_home_context, get_library_context
 from ..serializers import CourseHomeSerializer, CourseTabSerializer, LibraryTabSerializer
 
 

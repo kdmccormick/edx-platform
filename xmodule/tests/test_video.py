@@ -18,11 +18,11 @@ import json
 import shutil
 import unittest
 from tempfile import mkdtemp
-from uuid import uuid4
 from unittest.mock import ANY, MagicMock, Mock, patch
+from uuid import uuid4
 
-import pytest
 import ddt
+import pytest
 from django.conf import settings
 from django.test import TestCase
 from django.test.utils import override_settings

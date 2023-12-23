@@ -2,25 +2,27 @@
 Tests for agreements views
 """
 
+import json
 from datetime import datetime, timedelta
 from unittest.mock import patch
 
 from django.conf import settings
 from django.urls import reverse
-from rest_framework.test import APITestCase
-from rest_framework import status
 from freezegun import freeze_time
-import json
+from rest_framework import status
+from rest_framework.test import APITestCase
 
-from common.djangoapps.student.tests.factories import UserFactory, AdminFactory
 from common.djangoapps.student.roles import CourseStaffRole
+from common.djangoapps.student.tests.factories import AdminFactory, UserFactory
 from openedx.core.djangoapps.agreements.api import (
     create_integrity_signature,
     get_integrity_signatures_for_course,
-    get_lti_pii_signature
+    get_lti_pii_signature,
 )
 from openedx.core.djangolib.testing.utils import skip_unless_lms
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
 from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
 
 

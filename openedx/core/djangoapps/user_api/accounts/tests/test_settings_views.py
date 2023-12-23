@@ -2,6 +2,7 @@
 
 
 from unittest import mock
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.middleware import MessageMiddleware
@@ -10,8 +11,10 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from django.urls import reverse
 from edx_rest_api_client import exceptions
-
 from edx_toggles.toggles.testutils import override_waffle_flag
+
+from common.djangoapps.student.tests.factories import UserFactory
+from common.djangoapps.third_party_auth.tests.testutil import ThirdPartyAuthTestMixin
 from lms.djangoapps.commerce.models import CommerceConfiguration
 from lms.djangoapps.commerce.tests import factories
 from lms.djangoapps.commerce.tests.mocks import mock_get_orders
@@ -25,8 +28,6 @@ from openedx.core.djangoapps.user_api.accounts.toggles import REDIRECT_TO_ACCOUN
 from openedx.core.djangoapps.user_api.tests.factories import UserPreferenceFactory
 from openedx.core.djangolib.testing.utils import skip_unless_lms
 from openedx.features.enterprise_support.utils import get_enterprise_readonly_account_fields
-from common.djangoapps.student.tests.factories import UserFactory
-from common.djangoapps.third_party_auth.tests.testutil import ThirdPartyAuthTestMixin
 
 
 @skip_unless_lms

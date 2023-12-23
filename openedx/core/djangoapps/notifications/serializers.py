@@ -9,8 +9,9 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
 from openedx.core.djangoapps.notifications.models import (
     CourseNotificationPreference,
     Notification,
-    get_notification_channels
+    get_notification_channels,
 )
+
 from .base_notification import COURSE_NOTIFICATION_APPS, COURSE_NOTIFICATION_TYPES
 
 

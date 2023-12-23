@@ -15,6 +15,7 @@ from edx_django_utils.monitoring import function_trace, set_custom_attribute
 from opaque_keys import OpaqueKey
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locator import LibraryLocator
+
 from openedx.core import types
 
 from ..data import (
@@ -26,7 +27,7 @@ from ..data import (
     ExamData,
     UserCourseOutlineData,
     UserCourseOutlineDetailsData,
-    VisibilityData
+    VisibilityData,
 )
 from ..models import (
     ContentError,
@@ -37,7 +38,7 @@ from ..models import (
     LearningContext,
     LearningSequence,
     PublishReport,
-    UserPartitionGroup
+    UserPartitionGroup,
 )
 from .permissions import can_see_all_content
 from .processors.cohort_partition_groups import CohortPartitionGroupsOutlineProcessor

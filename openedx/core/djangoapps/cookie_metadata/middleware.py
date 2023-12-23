@@ -1,6 +1,5 @@
 """Middleware to change name of an incoming cookie"""
 from django.conf import settings
-
 from edx_django_utils.monitoring import set_custom_attribute
 
 

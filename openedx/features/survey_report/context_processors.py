@@ -7,10 +7,12 @@ across all admin pages in case a survey report has not been generated
 """
 
 from datetime import datetime
+
 from dateutil.relativedelta import relativedelta  # for months test
-from .models import SurveyReport
-from django.urls import reverse
 from django.conf import settings
+from django.urls import reverse
+
+from .models import SurveyReport
 
 
 def admin_extra_context(request):

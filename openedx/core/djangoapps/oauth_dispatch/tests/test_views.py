@@ -32,10 +32,8 @@ from . import mixins
 OAUTH_PROVIDER_ENABLED = settings.FEATURES.get('ENABLE_OAUTH2_PROVIDER')
 
 if OAUTH_PROVIDER_ENABLED:
+    from .. import adapters, models, views
     from .constants import DUMMY_REDIRECT_URL
-    from .. import adapters
-    from .. import models
-    from .. import views
 
 
 class AccessTokenLoginMixin:

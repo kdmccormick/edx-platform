@@ -24,10 +24,10 @@ import numpy
 import random2 as random
 import requests
 import six
+
 # specific library imports
 from calc import UndefinedVariable, UnmatchedParenthesis, evaluator
 from django.utils import html
-
 from lxml import etree
 from lxml.html.soupparser import fromstring as fromstring_bs  # uses Beautiful Soup!!! FIXME?
 from pyparsing import ParseException
@@ -50,7 +50,7 @@ from .util import (
     find_with_default,
     get_course_id_from_capa_block,
     get_inner_html_from_xpath,
-    is_list_of_files
+    is_list_of_files,
 )
 
 log = logging.getLogger(__name__)

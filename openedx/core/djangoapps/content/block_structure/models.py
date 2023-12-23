@@ -12,7 +12,6 @@ from django.conf import settings
 from django.core.exceptions import SuspiciousOperation
 from django.core.files.base import ContentFile
 from django.db import models, transaction
-
 from model_utils.models import TimeStampedModel
 
 from openedx.core.djangoapps.xmodule_django.models import UsageKeyWithRunField

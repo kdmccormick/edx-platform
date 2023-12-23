@@ -20,7 +20,7 @@ from openedx.core.djangoapps.notifications.filters import NotificationFilter
 from openedx.core.djangoapps.notifications.models import (
     CourseNotificationPreference,
     Notification,
-    get_course_notification_preference_config_version
+    get_course_notification_preference_config_version,
 )
 from openedx.core.djangoapps.notifications.utils import get_list_in_batches
 

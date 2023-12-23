@@ -1,27 +1,24 @@
 """
 Test status utilities
 """
-from unittest import TestCase
-from unittest import mock
+from unittest import TestCase, mock
 
 from django.conf import settings
 from opaque_keys.edx.keys import CourseKey
 from pytest import mark
-from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory
 
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.course_modes.tests.factories import CourseModeFactory
 from common.djangoapps.student.tests.factories import UserFactory
-from openedx.core.djangoapps.catalog.tests.factories import (
-    ProgramFactory,
-)
+from openedx.core.djangoapps.catalog.tests.factories import ProgramFactory
 from openedx.core.djangolib.testing.utils import skip_unless_lms
 from openedx.features.enterprise_support.tests.factories import EnterpriseCustomerUserFactory
+from xmodule.modulestore.django import modulestore
+from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
+from xmodule.modulestore.tests.factories import CourseFactory
 
 if settings.ROOT_URLCONF == 'lms.urls':
-    from openedx.core.djangoapps.demographics.api.status import show_user_demographics, show_call_to_action_for_user
+    from openedx.core.djangoapps.demographics.api.status import show_call_to_action_for_user, show_user_demographics
     from openedx.core.djangoapps.demographics.tests.factories import UserDemographicsFactory
 
 MICROBACHELORS = 'microbachelors'

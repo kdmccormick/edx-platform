@@ -8,8 +8,9 @@ import datetime
 import itertools
 import unicodedata
 from unittest.mock import Mock, patch
-import pytest
+
 import ddt
+import pytest
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imported-auth-user
@@ -19,34 +20,34 @@ from django.test.client import RequestFactory
 from django.urls import reverse
 from pytz import UTC
 from social_django.models import UserSocialAuth
+
 from common.djangoapps.student.models import (
     AccountRecovery,
     PendingEmailChange,
     PendingSecondaryEmailChange,
-    UserProfile
+    UserProfile,
 )
 from common.djangoapps.student.tests.factories import UserFactory
 from common.djangoapps.student.tests.tests import UserSettingsEventTestMixin
 from common.djangoapps.student.views.management import activate_secondary_email
-
 from lms.djangoapps.certificates.data import CertificateStatuses
 from openedx.core.djangoapps.ace_common.tests.mixins import EmailTemplateTagMixin
 from openedx.core.djangoapps.user_api.accounts import PRIVATE_VISIBILITY
 from openedx.core.djangoapps.user_api.accounts.api import (
     get_account_settings,
+    get_name_validation_error,
     update_account_settings,
-    get_name_validation_error
 )
 from openedx.core.djangoapps.user_api.accounts.tests.retirement_helpers import (  # pylint: disable=unused-import
     RetirementTestCase,
     fake_requested_retirement,
-    setup_retirement_states
+    setup_retirement_states,
 )
 from openedx.core.djangoapps.user_api.errors import (
     AccountUpdateError,
     AccountValidationError,
     UserNotAuthorized,
-    UserNotFound
+    UserNotFound,
 )
 from openedx.core.djangolib.testing.utils import skip_unless_lms
 from openedx.features.enterprise_support.tests.factories import EnterpriseCustomerUserFactory

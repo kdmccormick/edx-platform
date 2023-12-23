@@ -6,10 +6,10 @@ from typing import Union
 
 import django.contrib.auth.models
 import openedx_tagging.core.tagging.rules as oel_tagging
-from organizations.models import Organization
 import rules
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey, UsageKey
+from organizations.models import Organization
 
 from common.djangoapps.student.auth import has_studio_read_access, has_studio_write_access
 from common.djangoapps.student.models import CourseAccessRole
@@ -19,7 +19,7 @@ from common.djangoapps.student.roles import (
     OrgContentCreatorRole,
     OrgInstructorRole,
     OrgLibraryUserRole,
-    OrgStaffRole
+    OrgStaffRole,
 )
 from openedx.core.djangoapps.content_libraries.api import get_libraries_for_user
 

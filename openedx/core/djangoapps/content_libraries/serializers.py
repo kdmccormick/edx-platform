@@ -6,17 +6,14 @@ from django.core.validators import validate_unicode_slug
 from rest_framework import serializers
 
 from openedx.core.djangoapps.content_libraries.constants import (
-    LIBRARY_TYPES,
-    COMPLEX,
     ALL_RIGHTS_RESERVED,
+    COMPLEX,
+    LIBRARY_TYPES,
     LICENSE_OPTIONS,
 )
-from openedx.core.djangoapps.content_libraries.models import (
-    ContentLibraryPermission, ContentLibraryBlockImportTask
-)
+from openedx.core.djangoapps.content_libraries.models import ContentLibraryBlockImportTask, ContentLibraryPermission
 from openedx.core.lib import blockstore_api
 from openedx.core.lib.api.serializers import CourseKeyField
-
 
 DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 

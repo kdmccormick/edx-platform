@@ -2,15 +2,13 @@
 tests for the sharing sites
 """
 
-import ddt
 from unittest import TestCase
 from unittest.mock import patch
 from urllib.parse import parse_qsl
-from xmodule.video_block.sharing_sites import (
-    sharing_url,
-    sharing_sites_info_for_video,
-    SharingSiteConfig,
-)
+
+import ddt
+
+from xmodule.video_block.sharing_sites import SharingSiteConfig, sharing_sites_info_for_video, sharing_url
 
 TEST_SHARING_SITE_NAME = "test_site_name"
 TEST_SHARING_SITE_ICON = "test-icon-name"

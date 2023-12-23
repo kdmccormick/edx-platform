@@ -5,9 +5,9 @@ Unit tests for stub LTI implementation.
 
 import unittest
 from unittest.mock import Mock, patch
+from urllib.request import urlopen  # pylint: disable=wrong-import-order
 
 import requests
-from urllib.request import urlopen  # pylint: disable=wrong-import-order
 
 from common.djangoapps.terrain.stubs.lti import StubLtiService
 

@@ -3,24 +3,25 @@ Tests for the Agreements API
 """
 import logging
 
+from opaque_keys.edx.keys import CourseKey
 from testfixtures import LogCapture
 
 from common.djangoapps.student.tests.factories import UserFactory
 from openedx.core.djangoapps.agreements.api import (
     create_integrity_signature,
+    create_lti_pii_signature,
     get_integrity_signature,
     get_integrity_signatures_for_course,
+    get_lti_pii_signature,
     get_pii_receiving_lti_tools,
-    create_lti_pii_signature,
-    get_lti_pii_signature
 )
 from openedx.core.djangolib.testing.utils import skip_unless_lms
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
-from ..models import (
-    LTIPIITool,
+from xmodule.modulestore.tests.django_utils import (
+    SharedModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
 )
-from opaque_keys.edx.keys import CourseKey
+from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
+
+from ..models import LTIPIITool
 
 LOGGER_NAME = "openedx.core.djangoapps.agreements.api"
 

@@ -7,12 +7,13 @@ from collections import namedtuple
 from datetime import datetime, timedelta
 from unittest import TestCase
 
-from pytz import utc
 import pytest
+from pytz import utc
+
 from xmodule.block_metadata_utils import (
     display_name_with_default,
     display_name_with_default_escaped,
-    url_name_for_block
+    url_name_for_block,
 )
 from xmodule.course_metadata_utils import (
     DEFAULT_START_DATE,
@@ -21,12 +22,12 @@ from xmodule.course_metadata_utils import (
     has_course_ended,
     has_course_started,
     is_enrollment_open,
-    number_for_course_location
+    number_for_course_location,
 )
 from xmodule.modulestore.tests.utils import (
     MixedModulestoreBuilder,
     MongoModulestoreBuilder,
-    VersioningModulestoreBuilder
+    VersioningModulestoreBuilder,
 )
 
 _TODAY = datetime.now(utc)

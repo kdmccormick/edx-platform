@@ -24,7 +24,7 @@ from cms.djangoapps.contentstore.utils import reverse_course_url, reverse_usage_
 from cms.djangoapps.models.settings.course_grading import (
     GRADING_POLICY_CHANGED_EVENT_TYPE,
     CourseGradingModel,
-    hash_grading_policy
+    hash_grading_policy,
 )
 from cms.djangoapps.models.settings.course_metadata import CourseMetadata
 from cms.djangoapps.models.settings.encoder import CourseSettingsEncoder
@@ -36,7 +36,7 @@ from common.djangoapps.util import milestones_helpers
 from common.djangoapps.xblock_django.models import XBlockStudioConfigurationFlag
 from openedx.core.djangoapps.discussions.config.waffle import (
     ENABLE_PAGES_AND_RESOURCES_MICROFRONTEND,
-    OVERRIDE_DISCUSSION_LEGACY_SETTINGS_FLAG
+    OVERRIDE_DISCUSSION_LEGACY_SETTINGS_FLAG,
 )
 from openedx.core.djangoapps.models.course_details import CourseDetails
 from xmodule.fields import Date  # lint-amnesty, pylint: disable=wrong-import-order

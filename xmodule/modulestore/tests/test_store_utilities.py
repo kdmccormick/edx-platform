@@ -8,11 +8,10 @@ from unittest import TestCase
 from unittest.mock import Mock
 
 import ddt
-
 from opaque_keys.edx.keys import CourseKey
 
 from xmodule.modulestore.split_mongo import BlockKey
-from xmodule.modulestore.store_utilities import draft_node_constructor, get_draft_subtree_roots, derived_key
+from xmodule.modulestore.store_utilities import derived_key, draft_node_constructor, get_draft_subtree_roots
 
 
 @ddt.ddt

@@ -32,11 +32,11 @@ from mock import ANY, patch
 from pyparsing import ParseException
 from six.moves import zip
 
+from openedx.core.djangolib.markup import HTML
 from xmodule.capa import inputtypes
 from xmodule.capa.checker import DemoSystem
 from xmodule.capa.tests.helpers import test_capa_system
 from xmodule.capa.xqueue_interface import XQUEUE_TIMEOUT
-from openedx.core.djangolib.markup import HTML
 
 # just a handy shortcut
 lookup_tag = inputtypes.registry.get_class_for_tag

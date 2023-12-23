@@ -1,7 +1,7 @@
 """
 APIs for learner skill levels.
 """
-from .utils import get_skills_score, calculate_user_skill_score, generate_skill_score_mapping
+from .utils import calculate_user_skill_score, generate_skill_score_mapping, get_skills_score
 
 
 def get_learner_skill_levels(user, top_categories):

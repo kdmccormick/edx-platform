@@ -8,12 +8,12 @@ from urllib import parse
 import pytest
 import pytz
 from opaque_keys.edx.keys import CourseKey
+
+from common.djangoapps.student.tests.factories import AdminFactory
+from openedx.core.djangoapps.ccxcon import api as ccxconapi
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory
-
-from openedx.core.djangoapps.ccxcon import api as ccxconapi
-from common.djangoapps.student.tests.factories import AdminFactory
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory
 
 from .factories import CcxConFactory
 

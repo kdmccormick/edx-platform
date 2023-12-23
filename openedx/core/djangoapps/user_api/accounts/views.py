@@ -21,7 +21,6 @@ from django.utils.translation import gettext as _
 from edx_ace import ace
 from edx_ace.recipient import Recipient
 from edx_rest_framework_extensions.auth.jwt.authentication import JwtAuthentication
-from openedx.core.lib.api.authentication import BearerAuthentication
 from edx_rest_framework_extensions.auth.session.authentication import SessionAuthenticationAllowInactiveUser
 from enterprise.models import EnterpriseCourseEnrollment, EnterpriseCustomerUser, PendingEnterpriseCustomerUser
 from integrated_channels.degreed.models import DegreedLearnerDataTransmissionAudit
@@ -50,7 +49,7 @@ from common.djangoapps.student.models import (  # lint-amnesty, pylint: disable=
     get_retired_email_by_email,
     get_retired_username_by_username,
     is_email_retired,
-    is_username_retired
+    is_username_retired,
 )
 from common.djangoapps.student.models_api import confirm_name_change, do_name_change_request, get_pending_name_change
 from openedx.core.djangoapps.ace_common.template_context import get_base_template_context
@@ -64,7 +63,7 @@ from openedx.core.djangoapps.user_api import accounts
 from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_names, set_has_profile_image
 from openedx.core.djangoapps.user_api.accounts.utils import handle_retirement_cancellation
 from openedx.core.djangoapps.user_authn.exceptions import AuthFailedError
-from openedx.core.lib.api.authentication import BearerAuthenticationAllowInactiveUser
+from openedx.core.lib.api.authentication import BearerAuthentication, BearerAuthenticationAllowInactiveUser
 from openedx.core.lib.api.parsers import MergePatchParser
 
 from ..errors import AccountUpdateError, AccountValidationError, UserNotAuthorized, UserNotFound
@@ -74,7 +73,7 @@ from ..models import (
     RetirementStateError,
     UserOrgTag,
     UserRetirementPartnerReportingStatus,
-    UserRetirementStatus
+    UserRetirementStatus,
 )
 from .api import get_account_settings, update_account_settings
 from .permissions import (
@@ -82,13 +81,13 @@ from .permissions import (
     CanDeactivateUser,
     CanGetAccountInfo,
     CanReplaceUsername,
-    CanRetireUser
+    CanRetireUser,
 )
 from .serializers import (
     PendingNameChangeSerializer,
     UserRetirementPartnerReportSerializer,
     UserRetirementStatusSerializer,
-    UserSearchEmailSerializer
+    UserSearchEmailSerializer,
 )
 from .signals import USER_RETIRE_LMS_CRITICAL, USER_RETIRE_LMS_MISC, USER_RETIRE_MAILINGS
 from .utils import create_retirement_request_and_deactivate_account, username_suffix_generator

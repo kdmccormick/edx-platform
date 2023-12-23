@@ -5,7 +5,6 @@ from unittest.mock import Mock
 
 from django.test import TestCase
 
-
 from ..middleware import CookieNameChange
 
 

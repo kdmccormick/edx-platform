@@ -6,7 +6,6 @@ from django.urls import re_path
 
 from cms.djangoapps.contentstore.api.views import course_import, course_quality, course_validation
 
-
 app_name = 'contentstore'
 
 urlpatterns = [

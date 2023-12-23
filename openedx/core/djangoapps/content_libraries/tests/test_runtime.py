@@ -12,22 +12,22 @@ from organizations.models import Organization
 from rest_framework.test import APIClient
 from xblock.core import XBlock
 
+from common.djangoapps.student.tests.factories import UserFactory
 from lms.djangoapps.courseware.model_data import get_score
 from openedx.core.djangoapps.content_libraries import api as library_api
+from openedx.core.djangoapps.content_libraries.constants import ALL_RIGHTS_RESERVED, CC_4_BY, COMPLEX
 from openedx.core.djangoapps.content_libraries.tests.base import (
-    BlockstoreAppTestMixin,
-    URL_BLOCK_RENDER_VIEW,
+    URL_BLOCK_FIELDS_URL,
     URL_BLOCK_GET_HANDLER_URL,
     URL_BLOCK_METADATA_URL,
-    URL_BLOCK_FIELDS_URL,
+    URL_BLOCK_RENDER_VIEW,
+    BlockstoreAppTestMixin,
 )
 from openedx.core.djangoapps.content_libraries.tests.user_state_block import UserStateTestBlock
-from openedx.core.djangoapps.content_libraries.constants import COMPLEX, ALL_RIGHTS_RESERVED, CC_4_BY
 from openedx.core.djangoapps.dark_lang.models import DarkLangConfig
 from openedx.core.djangoapps.xblock import api as xblock_api
-from openedx.core.djangolib.testing.utils import skip_unless_lms, skip_unless_cms
+from openedx.core.djangolib.testing.utils import skip_unless_cms, skip_unless_lms
 from openedx.core.lib import blockstore_api
-from common.djangoapps.student.tests.factories import UserFactory
 from xmodule.unit_block import UnitBlock  # lint-amnesty, pylint: disable=wrong-import-order
 
 

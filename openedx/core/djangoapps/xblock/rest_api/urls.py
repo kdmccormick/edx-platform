@@ -2,6 +2,7 @@
 URL configuration for the new XBlock API
 """
 from django.urls import include, path, re_path
+
 from . import views
 
 # Note that the exact same API URLs are used in Studio and the LMS, but the API

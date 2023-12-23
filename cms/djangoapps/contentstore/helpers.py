@@ -2,27 +2,28 @@
 Helper methods for Studio views.
 """
 from __future__ import annotations
+
 import logging
 import urllib
-from lxml import etree
 from mimetypes import guess_type
 
-from attrs import frozen, Factory
+from attrs import Factory, frozen
 from django.utils.translation import gettext as _
+from lxml import etree
 from opaque_keys.edx.keys import AssetKey, CourseKey, UsageKey
 from opaque_keys.edx.locator import DefinitionLocator, LocalId
 from xblock.core import XBlock
 from xblock.fields import ScopeIds
 from xblock.runtime import IdGenerator
+
+import openedx.core.djangoapps.content_staging.api as content_staging_api
+from cms.djangoapps.models.settings.course_grading import CourseGradingModel
 from xmodule.contentstore.content import StaticContent
 from xmodule.contentstore.django import contentstore
 from xmodule.exceptions import NotFoundError
 from xmodule.library_content_block import LibraryContentBlock
 from xmodule.modulestore.django import modulestore
 from xmodule.xml_block import XmlMixin
-
-from cms.djangoapps.models.settings.course_grading import CourseGradingModel
-import openedx.core.djangoapps.content_staging.api as content_staging_api
 
 from .utils import reverse_course_url, reverse_library_url, reverse_usage_url
 

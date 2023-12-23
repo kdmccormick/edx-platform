@@ -8,12 +8,11 @@ from collections import namedtuple
 from functools import partial
 
 import yaml
-
 from django.conf import settings
 from lxml import etree
 from opaque_keys.edx.asides import AsideDefinitionKeyV2, AsideUsageKeyV2
 from opaque_keys.edx.keys import UsageKey
-from pkg_resources import resource_isdir, resource_filename
+from pkg_resources import resource_filename, resource_isdir
 from web_fragments.fragment import Fragment
 from webob import Response
 from webob.multidict import MultiDict
@@ -29,15 +28,9 @@ from xblock.fields import (
     Scope,
     ScopeIds,
     String,
-    UserScope
+    UserScope,
 )
 from xblock.runtime import IdGenerator, IdReader, Runtime
-
-from xmodule import block_metadata_utils
-from xmodule.fields import RelativeTime
-from xmodule.modulestore.exceptions import ItemNotFoundError
-from xmodule.util.builtin_assets import add_webpack_js_to_fragment
-from openedx.core.djangolib.markup import HTML
 
 from common.djangoapps.xblock_django.constants import (
     ATTR_KEY_ANONYMOUS_USER_ID,
@@ -48,7 +41,11 @@ from common.djangoapps.xblock_django.constants import (
     ATTR_KEY_USER_IS_STAFF,
     ATTR_KEY_USER_ROLE,
 )
-
+from openedx.core.djangolib.markup import HTML
+from xmodule import block_metadata_utils
+from xmodule.fields import RelativeTime
+from xmodule.modulestore.exceptions import ItemNotFoundError
+from xmodule.util.builtin_assets import add_webpack_js_to_fragment
 
 log = logging.getLogger(__name__)
 

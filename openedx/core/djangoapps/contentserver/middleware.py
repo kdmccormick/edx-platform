@@ -12,16 +12,19 @@ from django.http import (
     HttpResponseForbidden,
     HttpResponseNotFound,
     HttpResponseNotModified,
-    HttpResponsePermanentRedirect
+    HttpResponsePermanentRedirect,
 )
 from django.utils.deprecation import MiddlewareMixin
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.locator import AssetLocator
 
-from openedx.core.djangoapps.header_control import force_header_for_response
 from common.djangoapps.student.models import CourseEnrollment
+from openedx.core.djangoapps.header_control import force_header_for_response
 from xmodule.assetstore.assetmgr import AssetManager  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.contentstore.content import XASSET_LOCATION_TAG, StaticContent  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.contentstore.content import (  # lint-amnesty, pylint: disable=wrong-import-order
+    XASSET_LOCATION_TAG,
+    StaticContent,
+)
 from xmodule.exceptions import NotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore import InvalidLocationError  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.exceptions import ItemNotFoundError  # lint-amnesty, pylint: disable=wrong-import-order

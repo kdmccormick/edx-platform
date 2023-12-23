@@ -4,19 +4,19 @@ This test file will run through some LMS test scenarios regarding access and nav
 
 
 import time
-
 from unittest.mock import patch
+
 from django.conf import settings
 from django.test.utils import override_settings
 from django.urls import reverse
 from edx_toggles.toggles.testutils import override_waffle_flag
-from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory
 
 from common.djangoapps.student.tests.factories import GlobalStaffFactory
 from lms.djangoapps.courseware.tests.helpers import LoginEnrollmentTestCase, set_preview_mode
 from openedx.features.course_experience import DISABLE_COURSE_OUTLINE_PAGE_FLAG
+from xmodule.modulestore.django import modulestore
+from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory
 
 
 @set_preview_mode(True)

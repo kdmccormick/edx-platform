@@ -1,15 +1,12 @@
 """
 Tests for Blockstore-based Content Libraries
 """
-from uuid import UUID
 from unittest.mock import Mock, patch
+from uuid import UUID
 
 import ddt
 from django.contrib.auth.models import Group
 from django.test.client import Client
-from organizations.models import Organization
-from rest_framework.test import APITestCase
-
 from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 from openedx_events.content_authoring.data import ContentLibraryData, LibraryBlockData
 from openedx_events.content_authoring.signals import (
@@ -20,17 +17,20 @@ from openedx_events.content_authoring.signals import (
     LIBRARY_BLOCK_DELETED,
     LIBRARY_BLOCK_UPDATED,
 )
+from organizations.models import Organization
+from rest_framework.test import APITestCase
+
+from common.djangoapps.student.tests.factories import UserFactory
+from openedx.core.djangoapps.content_libraries.constants import ALL_RIGHTS_RESERVED, CC_4_BY, COMPLEX, PROBLEM, VIDEO
 from openedx.core.djangoapps.content_libraries.tests.base import (
-    ContentLibrariesRestApiTest,
+    URL_BLOCK_GET_HANDLER_URL,
     URL_BLOCK_METADATA_URL,
     URL_BLOCK_RENDER_VIEW,
-    URL_BLOCK_GET_HANDLER_URL,
     URL_BLOCK_XBLOCK_HANDLER,
+    ContentLibrariesRestApiTest,
 )
-from openedx.core.djangoapps.content_libraries.constants import VIDEO, COMPLEX, PROBLEM, CC_4_BY, ALL_RIGHTS_RESERVED
 from openedx.core.djangolib.blockstore_cache import cache
 from openedx.core.lib import blockstore_api
-from common.djangoapps.student.tests.factories import UserFactory
 
 
 @ddt.ddt

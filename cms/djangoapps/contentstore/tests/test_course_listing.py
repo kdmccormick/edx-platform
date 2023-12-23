@@ -20,7 +20,7 @@ from cms.djangoapps.contentstore.views.course import (
     _accessible_courses_iter_for_tests,
     _accessible_courses_list_from_groups,
     _accessible_courses_summary_iter,
-    get_courses_accessible_to_user
+    get_courses_accessible_to_user,
 )
 from common.djangoapps.course_action_state.models import CourseRerunState
 from common.djangoapps.student.roles import (
@@ -29,7 +29,7 @@ from common.djangoapps.student.roles import (
     GlobalStaff,
     OrgInstructorRole,
     OrgStaffRole,
-    UserBasedRole
+    UserBasedRole,
 )
 from common.djangoapps.student.tests.factories import UserFactory
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
@@ -37,8 +37,13 @@ from openedx.core.djangoapps.content.course_overviews.tests.factories import Cou
 from openedx.core.djangoapps.waffle_utils.testutils import WAFFLE_TABLES
 from xmodule.course_block import CourseSummary  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore import ModuleStoreEnum  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.factories import CourseFactory, check_mongo_calls  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    CourseFactory,
+    check_mongo_calls,
+)
 
 TOTAL_COURSES_COUNT = 10
 USER_COURSES_COUNT = 1

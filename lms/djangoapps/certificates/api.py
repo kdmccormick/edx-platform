@@ -10,7 +10,6 @@ certificates models or any other certificates modules.
 
 import logging
 from datetime import datetime
-from pytz import UTC
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -18,18 +17,18 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from eventtracking import tracker
 from opaque_keys.edx.django.models import CourseKeyField
+from opaque_keys.edx.keys import CourseKey
 from organizations.api import get_course_organization_id
+from pytz import UTC
 
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.student.api import is_user_enrolled_in_course
 from common.djangoapps.student.models import CourseEnrollment
 from lms.djangoapps.branding import api as branding_api
-from lms.djangoapps.certificates.generation_handler import (
-    generate_certificate_task as _generate_certificate_task,
-    is_on_certificate_allowlist as _is_on_certificate_allowlist
-)
 from lms.djangoapps.certificates.config import AUTO_CERTIFICATE_GENERATION as _AUTO_CERTIFICATE_GENERATION
 from lms.djangoapps.certificates.data import CertificateStatuses
+from lms.djangoapps.certificates.generation_handler import generate_certificate_task as _generate_certificate_task
+from lms.djangoapps.certificates.generation_handler import is_on_certificate_allowlist as _is_on_certificate_allowlist
 from lms.djangoapps.certificates.models import (
     CertificateAllowlist,
     CertificateDateOverride,
@@ -41,16 +40,13 @@ from lms.djangoapps.certificates.models import (
     ExampleCertificateSet,
     GeneratedCertificate,
 )
-from lms.djangoapps.certificates.utils import (
-    get_certificate_url as _get_certificate_url,
-    has_html_certificates_enabled as _has_html_certificates_enabled,
-    should_certificate_be_visible as _should_certificate_be_visible,
-    certificate_status as _certificate_status,
-    certificate_status_for_student as _certificate_status_for_student,
-)
+from lms.djangoapps.certificates.utils import certificate_status as _certificate_status
+from lms.djangoapps.certificates.utils import certificate_status_for_student as _certificate_status_for_student
+from lms.djangoapps.certificates.utils import get_certificate_url as _get_certificate_url
+from lms.djangoapps.certificates.utils import has_html_certificates_enabled as _has_html_certificates_enabled
+from lms.djangoapps.certificates.utils import should_certificate_be_visible as _should_certificate_be_visible
 from lms.djangoapps.instructor import access
 from lms.djangoapps.utils import _get_key
-from opaque_keys.edx.keys import CourseKey
 from openedx.core.djangoapps.content.course_overviews.api import get_course_overview_or_none
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from xmodule.data import CertificatesDisplayBehaviors  # lint-amnesty, pylint: disable=wrong-import-order

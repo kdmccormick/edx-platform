@@ -8,7 +8,6 @@ from collections import OrderedDict, namedtuple
 from contextlib import contextmanager
 from datetime import datetime
 from unittest.mock import MagicMock, patch
-from common.djangoapps.student.models.course_enrollment import CourseEnrollment
 
 import ddt
 import pytest
@@ -19,20 +18,22 @@ from opaque_keys.edx.locator import BlockUsageLocator
 from pytz import UTC
 from rest_framework import status
 from rest_framework.test import APITestCase
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory
 
 from common.djangoapps.course_modes.models import CourseMode
+from common.djangoapps.student.models.course_enrollment import CourseEnrollment
 from common.djangoapps.student.roles import (
     CourseBetaTesterRole,
     CourseCcxCoachRole,
     CourseDataResearcherRole,
     CourseInstructorRole,
-    CourseStaffRole
+    CourseStaffRole,
 )
-from common.djangoapps.student.tests.factories import CourseEnrollmentFactory, UserFactory
-from common.djangoapps.student.tests.factories import InstructorFactory
-from common.djangoapps.student.tests.factories import StaffFactory
+from common.djangoapps.student.tests.factories import (
+    CourseEnrollmentFactory,
+    InstructorFactory,
+    StaffFactory,
+    UserFactory,
+)
 from lms.djangoapps.certificates.data import CertificateStatuses
 from lms.djangoapps.certificates.models import GeneratedCertificate
 from lms.djangoapps.grades.config.waffle import BULK_MANAGEMENT, WRITABLE_GRADEBOOK
@@ -44,13 +45,15 @@ from lms.djangoapps.grades.models import (
     BlockRecordList,
     PersistentCourseGrade,
     PersistentSubsectionGrade,
-    PersistentSubsectionGradeOverride
+    PersistentSubsectionGradeOverride,
 )
 from lms.djangoapps.grades.rest_api.v1.tests.mixins import GradeViewTestMixin
 from lms.djangoapps.grades.rest_api.v1.views import CourseEnrollmentPagination
 from lms.djangoapps.grades.subsection_grade import ReadSubsectionGrade
 from openedx.core.djangoapps.content.course_overviews.tests.factories import CourseOverviewFactory
 from openedx.core.djangoapps.course_groups.tests.helpers import CohortFactory
+from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
+from xmodule.modulestore.tests.factories import BlockFactory, CourseFactory
 
 
 # pylint: disable=unused-variable

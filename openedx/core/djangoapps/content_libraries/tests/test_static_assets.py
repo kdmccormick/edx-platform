@@ -2,9 +2,7 @@
 Tests for static asset files in Blockstore-based Content Libraries
 """
 
-from openedx.core.djangoapps.content_libraries.tests.base import (
-    ContentLibrariesRestApiTest,
-)
+from openedx.core.djangoapps.content_libraries.tests.base import ContentLibrariesRestApiTest
 
 # Binary data representing an SVG image file
 SVG_DATA = """<svg xmlns="http://www.w3.org/2000/svg" height="30" width="100">

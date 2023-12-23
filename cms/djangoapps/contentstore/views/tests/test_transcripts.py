@@ -27,7 +27,7 @@ from xmodule.video_block.transcripts_utils import (  # lint-amnesty, pylint: dis
     GetTranscriptsFromYouTubeException,
     Transcript,
     get_video_transcript_content,
-    remove_subs_from_store
+    remove_subs_from_store,
 )
 
 TEST_DATA_CONTENTSTORE = copy.deepcopy(settings.CONTENTSTORE)

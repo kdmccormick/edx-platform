@@ -33,7 +33,7 @@ from .transcripts_utils import (
     get_transcript_from_contentstore,
     remove_subs_from_store,
     subs_filename,
-    youtube_speed_dict
+    youtube_speed_dict,
 )
 
 log = logging.getLogger(__name__)

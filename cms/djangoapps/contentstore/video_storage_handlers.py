@@ -9,16 +9,18 @@ import io
 import json
 import logging
 import os
-import requests
-import shutil
 import pathlib
+import shutil
 import zipfile
-
 from contextlib import closing
 from datetime import datetime, timedelta
+from tempfile import NamedTemporaryFile, mkdtemp
 from uuid import uuid4
-from boto.s3.connection import S3Connection
+from wsgiref.util import FileWrapper
+
+import requests
 from boto import s3
+from boto.s3.connection import S3Connection
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.http import FileResponse, HttpResponseNotFound, StreamingHttpResponse
@@ -33,13 +35,13 @@ from edxval.api import (
     create_video,
     get_3rd_party_transcription_plans,
     get_available_transcript_languages,
-    get_video_transcript_url,
     get_transcript_preferences,
+    get_video_transcript_url,
     get_videos_for_course,
     remove_transcript_preferences,
     remove_video_for_course,
     update_video_image,
-    update_video_status
+    update_video_status,
 )
 from fs.osfs import OSFS
 from opaque_keys.edx.keys import CourseKey
@@ -47,23 +49,18 @@ from path import Path as path
 from pytz import UTC
 from rest_framework import status as rest_status
 from rest_framework.response import Response
-from tempfile import NamedTemporaryFile, mkdtemp
-from wsgiref.util import FileWrapper
 
 from common.djangoapps.edxmako.shortcuts import render_to_response
 from common.djangoapps.util.json_request import JsonResponse
 from openedx.core.djangoapps.video_config.models import VideoTranscriptEnabledFlag
 from openedx.core.djangoapps.video_config.toggles import PUBLIC_VIDEO_SHARE
-from openedx.core.djangoapps.video_pipeline.config.waffle import (
-    DEPRECATE_YOUTUBE,
-    ENABLE_DEVSTACK_VIDEO_UPLOADS,
-)
+from openedx.core.djangoapps.video_pipeline.config.waffle import DEPRECATE_YOUTUBE, ENABLE_DEVSTACK_VIDEO_UPLOADS
 from openedx.core.djangoapps.waffle_utils import CourseWaffleFlag
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
 
 from .models import VideoUploadConfig
-from .toggles import use_new_video_uploads_page, use_mock_video_uploads
-from .utils import get_video_uploads_url, get_course_videos_context
+from .toggles import use_mock_video_uploads, use_new_video_uploads_page
+from .utils import get_course_videos_context, get_video_uploads_url
 from .video_utils import validate_video_image
 from .views.course import get_course_and_check_access
 

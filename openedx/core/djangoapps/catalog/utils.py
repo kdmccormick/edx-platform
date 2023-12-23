@@ -11,6 +11,7 @@ import requests
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
 from edx_rest_api_client.auth import SuppliedJwtAuth
+from edx_rest_api_client.client import USER_AGENT
 from opaque_keys.edx.keys import CourseKey
 from pytz import UTC
 
@@ -25,13 +26,11 @@ from openedx.core.djangoapps.catalog.cache import (
     PROGRAMS_BY_TYPE_CACHE_KEY_TPL,
     PROGRAMS_BY_TYPE_SLUG_CACHE_KEY_TPL,
     SITE_PATHWAY_IDS_CACHE_KEY_TPL,
-    SITE_PROGRAM_UUIDS_CACHE_KEY_TPL
+    SITE_PROGRAM_UUIDS_CACHE_KEY_TPL,
 )
 from openedx.core.djangoapps.catalog.models import CatalogIntegration
 from openedx.core.djangoapps.oauth_dispatch.jwt import create_jwt_for_user
 from openedx.core.lib.edx_api_utils import get_api_data
-
-from edx_rest_api_client.client import USER_AGENT
 
 logger = logging.getLogger(__name__)
 

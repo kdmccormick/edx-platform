@@ -9,8 +9,8 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils import timezone
 from opaque_keys.edx.keys import CourseKey
-from rest_framework import serializers
 from openedx_filters.learning.filters import CourseEnrollmentAPIRenderStarted, CourseRunAPIRenderStarted
+from rest_framework import serializers
 
 from common.djangoapps.course_modes.models import CourseMode
 from openedx.features.course_experience import course_home_url

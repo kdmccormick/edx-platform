@@ -3,22 +3,17 @@ Template block
 """
 
 from string import Template
-from xblock.core import XBlock
 
 from lxml import etree
 from web_fragments.fragment import Fragment
-from xmodule.editing_block import EditingMixin
-from xmodule.raw_block import RawMixin
-from xmodule.util.builtin_assets import add_webpack_js_to_fragment, add_sass_to_fragment
-from xmodule.x_module import (
-    ResourceTemplates,
-    shim_xmodule_js,
-    XModuleMixin,
-    XModuleToXBlockMixin,
-)
-from xmodule.xml_block import XmlMixin
+from xblock.core import XBlock
 
 from openedx.core.djangolib.markup import Text
+from xmodule.editing_block import EditingMixin
+from xmodule.raw_block import RawMixin
+from xmodule.util.builtin_assets import add_sass_to_fragment, add_webpack_js_to_fragment
+from xmodule.x_module import ResourceTemplates, XModuleMixin, XModuleToXBlockMixin, shim_xmodule_js
+from xmodule.xml_block import XmlMixin
 
 
 class CustomTagTemplateBlock(  # pylint: disable=abstract-method

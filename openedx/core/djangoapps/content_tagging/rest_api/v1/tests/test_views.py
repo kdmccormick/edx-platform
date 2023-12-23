@@ -4,10 +4,10 @@ Tests tagging rest api views
 
 from __future__ import annotations
 
-from urllib.parse import parse_qs, urlparse
-import json
-
 import abc
+import json
+from urllib.parse import parse_qs, urlparse
+
 import ddt
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -28,11 +28,7 @@ from common.djangoapps.student.roles import (
     OrgLibraryUserRole,
     OrgStaffRole,
 )
-from openedx.core.djangoapps.content_libraries.api import (
-    AccessLevel,
-    create_library,
-    set_library_user_permissions,
-)
+from openedx.core.djangoapps.content_libraries.api import AccessLevel, create_library, set_library_user_permissions
 from openedx.core.djangoapps.content_tagging.models import TaxonomyOrg
 from openedx.core.djangolib.testing.utils import skip_unless_cms
 from openedx.core.lib import blockstore_api

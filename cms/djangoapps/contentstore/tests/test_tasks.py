@@ -17,7 +17,7 @@ from organizations.models import OrganizationCourse
 from organizations.tests.factories import OrganizationFactory
 from user_tasks.models import UserTaskArtifact, UserTaskStatus
 
-from cms.djangoapps.contentstore.tasks import export_olx, update_special_exams_and_publish, rerun_course
+from cms.djangoapps.contentstore.tasks import export_olx, rerun_course, update_special_exams_and_publish
 from cms.djangoapps.contentstore.tests.test_libraries import LibraryTestCase
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from common.djangoapps.course_action_state.models import CourseRerunState

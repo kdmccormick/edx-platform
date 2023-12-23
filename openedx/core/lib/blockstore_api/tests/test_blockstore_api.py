@@ -8,9 +8,7 @@ import pytest
 from django.test import TestCase
 
 from openedx.core.lib import blockstore_api as api
-from openedx.core.lib.blockstore_api.tests.base import (
-    BlockstoreAppTestMixin,
-)
+from openedx.core.lib.blockstore_api.tests.base import BlockstoreAppTestMixin
 
 # A fake UUID that won't represent any real bundle/draft/collection:
 BAD_UUID = UUID('12345678-0000-0000-0000-000000000000')

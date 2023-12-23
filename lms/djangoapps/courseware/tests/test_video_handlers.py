@@ -7,9 +7,10 @@ import tempfile
 import textwrap
 from datetime import timedelta
 from unittest.mock import MagicMock, Mock, patch
-import pytest
+
 import ddt
 import freezegun
+import pytest
 from django.core.files.base import ContentFile
 from django.utils.timezone import now
 from edxval import api
@@ -22,6 +23,7 @@ from xmodule.contentstore.django import contentstore  # lint-amnesty, pylint: di
 from xmodule.exceptions import NotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore import ModuleStoreEnum  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
+
 # noinspection PyUnresolvedReferences
 from xmodule.tests.helpers import override_descriptor_system  # pylint: disable=unused-import
 from xmodule.video_block import VideoBlock  # lint-amnesty, pylint: disable=wrong-import-order

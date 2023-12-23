@@ -1,9 +1,10 @@
 # pylint: disable=missing-docstring
 
 
-from datetime import date
 import json
+from datetime import date
 from unittest.mock import MagicMock, patch
+
 from django.conf import settings
 from django.http import HttpResponse
 from django.test import RequestFactory, TestCase
@@ -11,14 +12,14 @@ from django.urls import reverse
 from edx_rest_framework_extensions.auth.jwt.decoder import jwt_decode_handler
 from edx_rest_framework_extensions.auth.jwt.middleware import JwtAuthCookieMiddleware
 
+from common.djangoapps.student.tests.factories import AnonymousUserFactory, UserFactory, UserProfileFactory
+from openedx.core.djangoapps.profile_images.images import create_profile_images
+from openedx.core.djangoapps.profile_images.tests.helpers import make_image_file
+from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_names
 from openedx.core.djangoapps.user_api.accounts.utils import retrieve_last_sitewide_block_completed
 from openedx.core.djangoapps.user_authn import cookies as cookies_api
 from openedx.core.djangoapps.user_authn.tests.utils import setup_login_oauth_client
 from openedx.core.djangolib.testing.utils import skip_unless_lms
-from common.djangoapps.student.tests.factories import AnonymousUserFactory, UserFactory, UserProfileFactory
-from openedx.core.djangoapps.profile_images.tests.helpers import make_image_file
-from openedx.core.djangoapps.profile_images.images import create_profile_images
-from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_names
 
 
 class CookieTests(TestCase):

@@ -65,13 +65,7 @@ from bson.objectid import ObjectId
 from ccx_keys.locator import CCXBlockUsageLocator, CCXLocator
 from mongodb_proxy import autoretry_read
 from opaque_keys.edx.keys import CourseKey
-from opaque_keys.edx.locator import (
-    BlockUsageLocator,
-    CourseLocator,
-    DefinitionLocator,
-    LibraryLocator,
-    LocalId,
-)
+from opaque_keys.edx.locator import BlockUsageLocator, CourseLocator, DefinitionLocator, LibraryLocator, LocalId
 from path import Path as path
 from pytz import UTC
 from xblock.core import XBlock
@@ -89,7 +83,7 @@ from xmodule.modulestore import (
     ModuleStoreEnum,
     ModuleStoreWriteBase,
     SortedAssetList,
-    inheritance
+    inheritance,
 )
 from xmodule.modulestore.exceptions import (
     DuplicateCourseError,
@@ -97,10 +91,10 @@ from xmodule.modulestore.exceptions import (
     InsufficientSpecificationError,
     MultipleCourseBlocksFound,
     MultipleLibraryBlocksFound,
-    VersionConflictError
+    VersionConflictError,
 )
 from xmodule.modulestore.split_mongo import BlockKey, CourseEnvelope
-from xmodule.modulestore.split_mongo.mongo_connection import DuplicateKeyError, DjangoFlexPersistenceBackend
+from xmodule.modulestore.split_mongo.mongo_connection import DjangoFlexPersistenceBackend, DuplicateKeyError
 from xmodule.modulestore.store_utilities import DETACHED_XBLOCK_TYPES, derived_key
 from xmodule.partitions.partitions_service import PartitionService
 from xmodule.util.misc import get_library_or_course_attribute

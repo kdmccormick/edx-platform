@@ -4,6 +4,7 @@ unit tests for course_info views and models.
 
 
 import json
+
 from opaque_keys.edx.keys import UsageKey
 
 from cms.djangoapps.contentstore.tests.test_course_settings import CourseTestCase

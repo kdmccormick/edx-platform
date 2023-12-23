@@ -10,8 +10,9 @@ import unittest
 import ddt
 import mock
 from lxml import etree
-from xmodule.capa.tests.helpers import new_loncapa_problem, test_capa_system
+
 from openedx.core.djangolib.markup import HTML
+from xmodule.capa.tests.helpers import new_loncapa_problem, test_capa_system
 
 from .response_xml_factory import CustomResponseXMLFactory, StringResponseXMLFactory
 

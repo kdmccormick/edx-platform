@@ -2,8 +2,7 @@
 Learner Home URL routing configuration
 """
 
-from django.urls import path
-from django.urls import include, re_path
+from django.urls import include, path, re_path
 
 from lms.djangoapps.learner_home import views
 

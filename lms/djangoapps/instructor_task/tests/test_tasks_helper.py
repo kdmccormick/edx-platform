@@ -25,7 +25,6 @@ from freezegun import freeze_time
 from pytz import UTC
 
 import openedx.core.djangoapps.user_api.course_tag.api as course_tag_api
-from xmodule.capa.tests.response_xml_factory import MultipleChoiceResponseXMLFactory  # lint-amnesty, pylint: disable=wrong-import-order
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.student.models import CourseEnrollment, CourseEnrollmentAllowed
 from common.djangoapps.student.tests.factories import CourseEnrollmentFactory, UserFactory
@@ -52,12 +51,12 @@ from lms.djangoapps.instructor_task.tasks_helper.misc import (
     upload_course_survey_report,
     upload_ora2_data,
     upload_ora2_submission_files,
-    upload_ora2_summary
+    upload_ora2_summary,
 )
 from lms.djangoapps.instructor_task.tests.test_base import (
     InstructorTaskCourseTestCase,
     InstructorTaskModuleTestCase,
-    TestReportMixin
+    TestReportMixin,
 )
 from lms.djangoapps.survey.models import SurveyAnswer, SurveyForm
 from lms.djangoapps.teams.tests.factories import CourseTeamFactory, CourseTeamMembershipFactory
@@ -68,9 +67,19 @@ from openedx.core.djangoapps.credit.tests.factories import CreditCourseFactory
 from openedx.core.djangoapps.user_api.partition_schemes import RandomUserPartitionScheme
 from openedx.core.djangoapps.util.testing import ContentGroupTestCase, TestConditionalContent
 from openedx.core.lib.teams_config import TeamsConfig
-from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory, check_mongo_calls  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.capa.tests.response_xml_factory import (
+    MultipleChoiceResponseXMLFactory,  # lint-amnesty, pylint: disable=wrong-import-order
+)
+from xmodule.modulestore.tests.django_utils import (
+    SharedModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    CourseFactory,
+    check_mongo_calls,
+)
 from xmodule.partitions.partitions import Group, UserPartition  # lint-amnesty, pylint: disable=wrong-import-order
+
 # noinspection PyUnresolvedReferences
 from xmodule.tests.helpers import override_descriptor_system  # pylint: disable=unused-import
 

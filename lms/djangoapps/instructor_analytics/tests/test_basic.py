@@ -3,13 +3,16 @@ Tests for instructor.basic
 """
 
 
+import json  # lint-amnesty, pylint: disable=wrong-import-order
 from unittest.mock import MagicMock, Mock, patch
 
 import ddt
-import json  # lint-amnesty, pylint: disable=wrong-import-order
 from edx_proctoring.api import create_exam
 from edx_proctoring.models import ProctoredExamStudentAttempt
 from opaque_keys.edx.locator import UsageKey
+
+from common.djangoapps.student.models import CourseEnrollment, CourseEnrollmentAllowed
+from common.djangoapps.student.tests.factories import InstructorFactory, UserFactory
 from lms.djangoapps.instructor_analytics.basic import (  # lint-amnesty, pylint: disable=unused-import
     AVAILABLE_FEATURES,
     PROFILE_FEATURES,
@@ -20,14 +23,13 @@ from lms.djangoapps.instructor_analytics.basic import (  # lint-amnesty, pylint:
     get_proctored_exam_results,
     get_response_state,
     list_may_enroll,
-    list_problem_responses
+    list_problem_responses,
 )
 from lms.djangoapps.program_enrollments.tests.factories import ProgramEnrollmentFactory
 from openedx.core.djangoapps.course_groups.tests.helpers import CohortFactory
-from common.djangoapps.student.models import CourseEnrollment, CourseEnrollmentAllowed
-from common.djangoapps.student.tests.factories import InstructorFactory
-from common.djangoapps.student.tests.factories import UserFactory
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
 from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
 
 

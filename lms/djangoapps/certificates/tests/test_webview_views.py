@@ -27,19 +27,19 @@ from lms.djangoapps.certificates.models import (
     CertificateStatuses,
     CertificateTemplate,
     CertificateTemplateAsset,
-    GeneratedCertificate
+    GeneratedCertificate,
 )
 from lms.djangoapps.certificates.tests.factories import (
     CertificateDateOverrideFactory,
     CertificateHtmlViewConfigurationFactory,
     GeneratedCertificateFactory,
-    LinkedInAddToProfileConfigurationFactory
+    LinkedInAddToProfileConfigurationFactory,
 )
 from lms.djangoapps.certificates.utils import get_certificate_url
 from openedx.core.djangoapps.dark_lang.models import DarkLangConfig
 from openedx.core.djangoapps.site_configuration.tests.test_util import (
     with_site_configuration,
-    with_site_configuration_context
+    with_site_configuration_context,
 )
 from openedx.core.djangolib.js_utils import js_escaped_string
 from openedx.core.djangolib.testing.utils import CacheIsolationTestCase
@@ -47,7 +47,9 @@ from openedx.core.lib.courses import course_image_url
 from openedx.core.lib.tests.assertions.events import assert_event_matches
 from openedx.features.name_affirmation_api.utils import get_name_affirmation_service
 from xmodule.data import CertificatesDisplayBehaviors  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
 from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
 
 FEATURES_WITH_CERTS_ENABLED = settings.FEATURES.copy()

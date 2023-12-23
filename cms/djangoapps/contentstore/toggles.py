@@ -2,6 +2,7 @@
 CMS feature toggles.
 """
 from edx_toggles.toggles import SettingDictToggle, WaffleFlag
+
 from openedx.core.djangoapps.waffle_utils import CourseWaffleFlag
 
 # .. toggle_name: FEATURES['ENABLE_EXPORT_GIT']

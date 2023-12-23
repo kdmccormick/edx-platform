@@ -10,8 +10,8 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import get_storage_class
 
-from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from common.djangoapps.student.models import UserProfile
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 from ..errors import UserNotFound
 

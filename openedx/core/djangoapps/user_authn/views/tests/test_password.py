@@ -7,8 +7,8 @@ import re
 from datetime import datetime, timedelta
 from unittest.mock import Mock, patch
 
-import pytest
 import ddt
+import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core import mail
@@ -22,13 +22,13 @@ from oauth2_provider.models import RefreshToken as dot_refresh_token
 from pytz import UTC
 from testfixtures import LogCapture
 
+from common.djangoapps.student.tests.factories import UserFactory
 from openedx.core.djangoapps.oauth_dispatch.tests import factories as dot_factories
 from openedx.core.djangoapps.site_configuration.tests.factories import SiteFactory
 from openedx.core.djangoapps.user_api.accounts.tests.test_api import CreateAccountMixin
 from openedx.core.djangoapps.user_api.errors import UserAPIInternalError, UserNotFound
 from openedx.core.djangoapps.user_authn.views.password_reset import request_password_change
 from openedx.core.djangolib.testing.utils import CacheIsolationTestCase, skip_unless_lms
-from common.djangoapps.student.tests.factories import UserFactory
 
 LOGGER_NAME = 'audit'
 User = get_user_model()  # pylint:disable=invalid-name

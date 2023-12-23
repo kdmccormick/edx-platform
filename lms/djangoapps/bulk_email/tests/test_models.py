@@ -3,11 +3,11 @@ Unit tests for bulk-email-related models.
 """
 
 import datetime
-from dateutil.relativedelta import relativedelta
 from unittest.mock import Mock, patch  # lint-amnesty, pylint: disable=wrong-import-order
 
-import pytest
 import ddt
+import pytest
+from dateutil.relativedelta import relativedelta
 from django.core.management import call_command
 from django.test import TestCase
 from django.test.utils import override_settings
@@ -26,12 +26,14 @@ from lms.djangoapps.bulk_email.models import (
     CourseEmail,
     CourseEmailTemplate,
     DisabledCourse,
-    Optout
+    Optout,
 )
 from lms.djangoapps.bulk_email.models_api import is_bulk_email_disabled_for_course
 from lms.djangoapps.bulk_email.tests.factories import TargetFactory
 from openedx.core.djangoapps.course_groups.models import CourseCohort
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.django_utils import (
+    ModuleStoreTestCase,  # lint-amnesty, pylint: disable=wrong-import-order
+)
 from xmodule.modulestore.tests.factories import CourseFactory  # lint-amnesty, pylint: disable=wrong-import-order
 
 

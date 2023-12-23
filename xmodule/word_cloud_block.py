@@ -13,16 +13,13 @@ import logging
 from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Boolean, Dict, Integer, List, Scope, String
+
 from xmodule.editing_block import EditingMixin
 from xmodule.raw_block import EmptyDataRawMixin
-from xmodule.util.builtin_assets import add_webpack_js_to_fragment, add_sass_to_fragment
+from xmodule.util.builtin_assets import add_sass_to_fragment, add_webpack_js_to_fragment
+from xmodule.x_module import ResourceTemplates, XModuleMixin, XModuleToXBlockMixin, shim_xmodule_js
 from xmodule.xml_block import XmlMixin
-from xmodule.x_module import (
-    ResourceTemplates,
-    shim_xmodule_js,
-    XModuleMixin,
-    XModuleToXBlockMixin,
-)
+
 log = logging.getLogger(__name__)
 
 # Make '_' a no-op so we can scrape strings. Using lambda instead of

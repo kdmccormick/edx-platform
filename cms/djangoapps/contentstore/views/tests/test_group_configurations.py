@@ -12,7 +12,7 @@ import ddt
 from cms.djangoapps.contentstore.course_group_config import (
     CONTENT_GROUP_CONFIGURATION_NAME,
     ENROLLMENT_SCHEME,
-    GroupConfiguration
+    GroupConfiguration,
 )
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from cms.djangoapps.contentstore.utils import reverse_course_url, reverse_usage_url
@@ -20,9 +20,19 @@ from openedx.features.content_type_gating.helpers import CONTENT_GATING_PARTITIO
 from openedx.features.content_type_gating.partitions import CONTENT_TYPE_GATING_SCHEME
 from xmodule.modulestore import ModuleStoreEnum  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.tests.django_utils import TEST_DATA_SPLIT_MODULESTORE
-from xmodule.modulestore.tests.factories import CourseFactory, BlockFactory  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.partitions.partitions import ENROLLMENT_TRACK_PARTITION_ID, Group, UserPartition  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.validation import StudioValidation, StudioValidationMessage  # lint-amnesty, pylint: disable=wrong-import-order
+from xmodule.modulestore.tests.factories import (  # lint-amnesty, pylint: disable=wrong-import-order
+    BlockFactory,
+    CourseFactory,
+)
+from xmodule.partitions.partitions import (  # lint-amnesty, pylint: disable=wrong-import-order
+    ENROLLMENT_TRACK_PARTITION_ID,
+    Group,
+    UserPartition,
+)
+from xmodule.validation import (  # lint-amnesty, pylint: disable=wrong-import-order
+    StudioValidation,
+    StudioValidationMessage,
+)
 
 GROUP_CONFIGURATION_JSON = {
     'name': 'Test name',

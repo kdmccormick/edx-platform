@@ -7,7 +7,7 @@ import json
 import logging
 import random
 from copy import copy
-from gettext import ngettext, gettext
+from gettext import gettext, ngettext
 
 import bleach
 from django.conf import settings
@@ -29,14 +29,8 @@ from xmodule.mako_block import MakoTemplateBlockBase
 from xmodule.studio_editable import StudioEditableBlock
 from xmodule.util.builtin_assets import add_webpack_js_to_fragment
 from xmodule.validation import StudioValidation, StudioValidationMessage
+from xmodule.x_module import STUDENT_VIEW, ResourceTemplates, XModuleMixin, XModuleToXBlockMixin, shim_xmodule_js
 from xmodule.xml_block import XmlMixin
-from xmodule.x_module import (
-    STUDENT_VIEW,
-    ResourceTemplates,
-    XModuleMixin,
-    XModuleToXBlockMixin,
-    shim_xmodule_js,
-)
 
 # Make '_' a no-op so we can scrape strings. Using lambda instead of
 #  `django.utils.translation.ugettext_noop` because Django cannot be imported in this file

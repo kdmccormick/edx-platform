@@ -11,7 +11,7 @@ from .views import (
     NotificationCountView,
     NotificationListAPIView,
     NotificationReadAPIView,
-    UserNotificationPreferenceView
+    UserNotificationPreferenceView,
 )
 
 router = routers.DefaultRouter()

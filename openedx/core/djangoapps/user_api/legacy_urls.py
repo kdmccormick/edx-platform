@@ -1,7 +1,7 @@
 """
 Defines the URL routes for this app.
 """
-from django.urls import path, re_path, include
+from django.urls import include, path, re_path
 from rest_framework import routers
 
 from . import views as user_api_views

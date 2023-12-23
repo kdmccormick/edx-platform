@@ -4,8 +4,9 @@ Django Admin page for SurveyReport.
 
 
 from django.contrib import admin
-from .models import SurveyReport
+
 from .api import send_report_to_external_api
+from .models import SurveyReport
 
 
 class SurveyReportAdmin(admin.ModelAdmin):

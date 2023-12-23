@@ -13,22 +13,20 @@ import textwrap
 from collections import namedtuple
 from unittest.mock import patch
 
-import pytest
 import ddt
+import pytest
 from celery.states import FAILURE, SUCCESS
 from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imported-auth-user
 from django.test.utils import override_settings
 from django.urls import reverse
 
-from xmodule.capa.responsetypes import StudentInputError
-from xmodule.capa.tests.response_xml_factory import CodeResponseXMLFactory, CustomResponseXMLFactory
 from lms.djangoapps.courseware.model_data import StudentModule
 from lms.djangoapps.grades.api import CourseGradeFactory
 from lms.djangoapps.instructor_task.api import (
     submit_delete_problem_state_for_all_students,
     submit_rescore_problem_for_all_students,
     submit_rescore_problem_for_student,
-    submit_reset_problem_attempts_for_all_students
+    submit_reset_problem_attempts_for_all_students,
 )
 from lms.djangoapps.instructor_task.data import InstructorTaskTypes
 from lms.djangoapps.instructor_task.models import InstructorTask
@@ -37,10 +35,12 @@ from lms.djangoapps.instructor_task.tests.test_base import (
     OPTION_1,
     OPTION_2,
     InstructorTaskModuleTestCase,
-    TestReportMixin
+    TestReportMixin,
 )
 from openedx.core.djangoapps.util.testing import TestConditionalContent
 from openedx.core.lib.url_utils import quote_slashes
+from xmodule.capa.responsetypes import StudentInputError
+from xmodule.capa.tests.response_xml_factory import CodeResponseXMLFactory, CustomResponseXMLFactory
 from xmodule.modulestore import ModuleStoreEnum  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.tests.factories import BlockFactory  # lint-amnesty, pylint: disable=wrong-import-order
 
