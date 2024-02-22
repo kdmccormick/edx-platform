@@ -73,6 +73,8 @@
 #
 #   * Organize the URL into one of the two categories below:
 
+# TEMPORARY! Remove before merge.
+-e git+https://github.com/kdmccormick/XBlock.git@kdmccormick/mixins#egg=XBlock[django]==3.0.0
 
 ##############################################################################
 # Release candidates being tested.
