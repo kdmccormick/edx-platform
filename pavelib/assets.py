@@ -3,13 +3,17 @@ Asset compilation and collection.
 """
 
 import argparse
+import glob
 import itertools
 import json
 import os
 import shlex
+from functools import wraps
+from threading import Timer
 
 from paver import tasks
 from paver.easy import call_task, cmdopts, consume_args, needs, no_help, path, sh, task
+from watchdog.events import PatternMatchingEventHandler
 
 from .utils.cmd import cmd, django_cmd
 from .utils.envs import Env
@@ -34,6 +38,62 @@ COLLECTSTATIC_LOG_DIR_ARG = 'collect_log_dir'
 
 # Webpack command
 WEBPACK_COMMAND = 'STATIC_ROOT_LMS={static_root_lms} STATIC_ROOT_CMS={static_root_cms} $(npm bin)/webpack {options}'
+
+
+def debounce(seconds=1):
+    """
+    Prevents the decorated function from being called more than every `seconds`
+    seconds. Waits until calls stop coming in before calling the decorated
+    function.
+    """
+    def decorator(func):
+        func.timer = None
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            def call():
+                func(*args, **kwargs)
+                func.timer = None
+            if func.timer:
+                func.timer.cancel()
+            func.timer = Timer(seconds, call)
+            func.timer.start()
+
+        return wrapper
+    return decorator
+
+
+class SassWatcher(PatternMatchingEventHandler):
+    """
+    Watches for sass file changes
+    """
+    ignore_directories = True
+    patterns = ['*.scss']
+
+    def register(self, observer, directories):
+        """
+        register files with observer
+        Arguments:
+            observer (watchdog.observers.Observer): sass file observer
+            directories (list): list of directories to be register for sass watcher.
+        """
+        for dirname in directories:
+            paths = []
+            if '*' in dirname:
+                paths.extend(glob.glob(dirname))
+            else:
+                paths.append(dirname)
+
+            for obs_dirname in paths:
+                observer.schedule(self, obs_dirname, recursive=True)
+
+    @debounce()
+    def on_any_event(self, event):
+        print('\tCHANGED:', event.src_path)
+        try:
+            compile_sass()      # pylint: disable=no-value-for-parameter
+        except Exception:       # pylint: disable=broad-except
+            traceback.print_exc()
 
 
 @task
@@ -306,7 +366,7 @@ def watch_assets(options):
     themes = get_parsed_option(options, 'themes')
     theme_dirs = get_parsed_option(options, 'theme_dirs', [])
     wait = get_parsed_option(options, 'wait', None)
-    background = getattr(options, 'background', False):
+    background = getattr(options, 'background', False)
     # @@TODO
 
 
