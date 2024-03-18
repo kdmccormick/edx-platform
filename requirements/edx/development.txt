@@ -8,6 +8,24 @@
     # via
     #   -r requirements/edx/doc.txt
     #   -r requirements/edx/testing.txt
+-e git+https://github.com/kdmccormick/XBlock.git@kdmccormick/mixins#egg=XBlock[django]==3.0.0
+    # via
+    #   -r requirements/edx/doc.txt
+    #   -r requirements/edx/testing.txt
+    #   acid-xblock
+    #   crowdsourcehinter-xblock
+    #   done-xblock
+    #   edx-completion
+    #   edx-sga
+    #   edx-when
+    #   lti-consumer-xblock
+    #   ora2
+    #   staff-graded-xblock
+    #   xblock
+    #   xblock-drag-and-drop-v2
+    #   xblock-google-drive
+    #   xblock-poll
+    #   xblock-utils
 accessible-pygments==0.0.4
     # via
     #   -r requirements/edx/doc.txt
@@ -2171,23 +2189,6 @@ wrapt==1.16.0
     #   -r requirements/edx/doc.txt
     #   -r requirements/edx/testing.txt
     #   astroid
-xblock[django]==1.10.0
-    # via
-    #   -r requirements/edx/doc.txt
-    #   -r requirements/edx/testing.txt
-    #   acid-xblock
-    #   crowdsourcehinter-xblock
-    #   done-xblock
-    #   edx-completion
-    #   edx-sga
-    #   edx-when
-    #   lti-consumer-xblock
-    #   ora2
-    #   staff-graded-xblock
-    #   xblock-drag-and-drop-v2
-    #   xblock-google-drive
-    #   xblock-poll
-    #   xblock-utils
 xblock-drag-and-drop-v2==3.4.0
     # via
     #   -r requirements/edx/doc.txt
