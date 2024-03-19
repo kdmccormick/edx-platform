@@ -6,6 +6,23 @@
 #
 -e git+https://github.com/anupdhabarde/edx-proctoring-proctortrack.git@31c6c9923a51c903ae83760ecbbac191363aa2a2#egg=edx_proctoring_proctortrack
     # via -r requirements/edx/base.txt
+-e git+https://github.com/kdmccormick/XBlock.git@kdmccormick/mixins#egg=XBlock[django]==3.0.0
+    # via
+    #   -r requirements/edx/base.txt
+    #   acid-xblock
+    #   crowdsourcehinter-xblock
+    #   done-xblock
+    #   edx-completion
+    #   edx-sga
+    #   edx-when
+    #   lti-consumer-xblock
+    #   ora2
+    #   staff-graded-xblock
+    #   xblock
+    #   xblock-drag-and-drop-v2
+    #   xblock-google-drive
+    #   xblock-poll
+    #   xblock-utils
 acid-xblock==0.2.1
     # via -r requirements/edx/base.txt
 aiohttp==3.9.3
@@ -1590,22 +1607,6 @@ wrapt==1.16.0
     # via
     #   -r requirements/edx/base.txt
     #   astroid
-xblock[django]==1.10.0
-    # via
-    #   -r requirements/edx/base.txt
-    #   acid-xblock
-    #   crowdsourcehinter-xblock
-    #   done-xblock
-    #   edx-completion
-    #   edx-sga
-    #   edx-when
-    #   lti-consumer-xblock
-    #   ora2
-    #   staff-graded-xblock
-    #   xblock-drag-and-drop-v2
-    #   xblock-google-drive
-    #   xblock-poll
-    #   xblock-utils
 xblock-drag-and-drop-v2==3.4.0
     # via -r requirements/edx/base.txt
 xblock-google-drive==0.6.1
