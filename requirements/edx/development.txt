@@ -344,6 +344,7 @@ distlib==0.3.8
     #   virtualenv
 django==4.2.9
     # via
+    #   -c requirements/edx/../common_constraints.txt
     #   -c requirements/edx/../constraints.txt
     #   -r requirements/edx/doc.txt
     #   -r requirements/edx/testing.txt
@@ -999,8 +1000,9 @@ imagesize==1.4.1
     #   sphinx
 import-linter==2.0
     # via -r requirements/edx/testing.txt
-importlib-metadata==7.0.1
+importlib-metadata==6.11.0
     # via
+    #   -c requirements/edx/../common_constraints.txt
     #   -r requirements/edx/../pip-tools.txt
     #   -r requirements/edx/doc.txt
     #   -r requirements/edx/testing.txt
@@ -2179,7 +2181,7 @@ wrapt==1.16.0
     #   -r requirements/edx/testing.txt
     #   astroid
     #   deprecated
-xblock[django]==1.10.0
+xblock[django]==3.0.0
     # via
     #   -r requirements/edx/doc.txt
     #   -r requirements/edx/testing.txt

@@ -176,6 +176,7 @@ deprecated==1.2.14
     # via jwcrypto
 django==4.2.9
     # via
+    #   -c requirements/edx/../common_constraints.txt
     #   -c requirements/edx/../constraints.txt
     #   -r requirements/edx/kernel.in
     #   django-appconf
@@ -604,8 +605,10 @@ idna==3.6
     #   requests
     #   snowflake-connector-python
     #   yarl
-importlib-metadata==7.0.1
-    # via markdown
+importlib-metadata==6.11.0
+    # via
+    #   -c requirements/edx/../common_constraints.txt
+    #   markdown
 importlib-resources==5.13.0
     # via
     #   jsonschema
@@ -1203,7 +1206,7 @@ wrapt==1.16.0
     # via
     #   -r requirements/edx/paver.txt
     #   deprecated
-xblock[django]==1.10.0
+xblock[django]==3.0.0
     # via
     #   -r requirements/edx/kernel.in
     #   acid-xblock
