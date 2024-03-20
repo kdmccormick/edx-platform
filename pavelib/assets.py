@@ -13,6 +13,7 @@ from threading import Timer
 from paver import tasks
 from paver.easy import call_task, cmdopts, consume_args, needs, no_help, sh, task
 from watchdog.events import PatternMatchingEventHandler
+from watchdog.observers import Observer
 
 from .utils.cmd import cmd, django_cmd
 from .utils.envs import Env
