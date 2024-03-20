@@ -4,15 +4,14 @@ Asset compilation and collection.
 
 import argparse
 import glob
-import itertools
 import json
-import os
 import shlex
+import traceback
 from functools import wraps
 from threading import Timer
 
 from paver import tasks
-from paver.easy import call_task, cmdopts, consume_args, needs, no_help, path, sh, task
+from paver.easy import call_task, cmdopts, consume_args, needs, no_help, sh, task
 from watchdog.events import PatternMatchingEventHandler
 
 from .utils.cmd import cmd, django_cmd
@@ -108,6 +107,8 @@ class SassWatcher(PatternMatchingEventHandler):
 @timed
 def compile_sass(options):
     """
+    DEPRECATED COMPATIBILITY WRAPPER. Use `npm run compile-sass` instead.
+
     Compile Sass to CSS. If command is called without any arguments, it will
     only compile lms, cms sass for the open source theme. And none of the comprehensive theme's sass would be compiled.
 
@@ -142,12 +143,7 @@ def compile_sass(options):
         '/edx/app/edxapp/edx-platform/themes' and '/edx/app/edxapp/edx-platform/common/test/'.
 
     """
-    debug = options.get('debug')
-    force = options.get('force')
-    systems = get_parsed_option(options, 'system', ALL_SYSTEMS)
-    themes = get_parsed_option(options, 'themes', [])
-    theme_dirs = get_parsed_option(options, 'theme_dirs', [])
-
+    systems = set(get_parsed_option(options, 'system', ALL_SYSTEMS))
     command = shlex.join(
         [
             "npm",
@@ -155,26 +151,74 @@ def compile_sass(options):
             "compile-sass",
             "--",
             *(["--dry"] if tasks.environment.dry_run else []),
-            *(["--skip-lms"] if "lms" not in systems else []),
-            *(["--skip-cms"] if not set(systems) & {"cms", "studio"} else []),
-            *itertools.chain(["--theme-dir", theme_dir] for theme_dir in theme_dirs),
-            *itertools.chain(["--theme", theme] for theme in themes),
+            *(["--skip-lms"] if not systems & {"lms"} else []),
+            *(["--skip-cms"] if not systems & {"cms", "studio"} else []),
+            *(
+                arg
+                for theme_dir in get_parsed_option(options, 'theme_dirs', [])
+                for arg in ["--theme-dir", str(theme_dir)]
+            ),
+            *(
+                arg
+                for theme in get_parsed_option(options, "theme", [])
+                for arg in ["--theme", theme]
+            ),
         ]
     )
+    depr_warning = (
+        "\n" +
+        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
+        "\n" +
+        "WARNING: 'paver compile_sass' is DEPRECATED! It will be removed before Sumac.\n" +
+        ("\WARNING: ignoring deprecated flag '--debug'\n" if options.get("debug") else "") +
+        ("\WARNING: ignoring deprecated flag '--force'\n" if options.get("force") else "") +
+        "The command you ran is now just a temporary wrapper around a new, supported command,\n" +
+        "which you should use instead:\n" +
+        "\n" +
+        f"\t{command}\n" +
+        "\n" +
+        "Details: https://github.com/openedx/edx-platform/issues/31895\n" +
+        "\n" +
+        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
+        "\n"
+    )
+    # Print deprecation warning twice so that it's more likely to be seen in the logs.
+    print(depr_warning)
+    sh(command)
+    print(depr_warning)
 
-    debug_warning = "\t\tWARNING: ignoring deprecated flag '--debug'\n" if debug else ""
-    force_warning = "\t\tWARNING: ignoring deprecated flag '--force'\n" if force else ""
-    depr_warning = f"""{debug_warning}{force_warning}\
-            \t\tWARNING: 'paver compile_sass' IS DEPRECATED! It will be removed before Sumac.
-\t\tThis script is now just a wrapper around the new, supported command, which you should use instead:
 
-    \t\t\t{command}
-
-\t\tDetails: https://github.com/openedx/edx-platform/issues/31895
-"""
-
-    # Warn about deprecation both before and after running the inner command so that the warning is
-    # more likely to be noticed in log output.
+def _compile_sass(system, theme, _debug, _force, _timing_info):
+    """
+    DEPRECATED COMPATIBILITY WRAPPER, to ease the transition for Tutor, which directly imported and used this function.
+    """
+    command = shlex.join(
+        [
+            "npm",
+            "run",
+            "compile-sass",
+            "--",
+            *(["--dry"] if tasks.environment.dry_run else []),
+            *(["--skip-default", "--theme-dir", str(theme.parent), "--theme", str(theme.name)] if theme else []),
+            ("--skip-cms" if system == "lms" else "--skip-lms"),
+        ]
+    )
+    depr_warning = (
+        "\n" +
+        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
+        "\n" +
+        "WARNING: 'pavelib/assets.py' is DEPRECATED! It will be removed before Sumac.\n" +
+        "The function you called is just a temporary wrapper around a new, supported command,\n" +
+        "which you should use instead:\n" +
+        "\n" +
+        f"\t{command}\n" +
+        "\n" +
+        "Details: https://github.com/openedx/edx-platform/issues/31895\n" +
+        "\n" +
+        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
+        "\n"
+    )
+    # Print deprecation warning twice so that it's more likely to be seen in the logs.
     print(depr_warning)
     sh(command)
     print(depr_warning)

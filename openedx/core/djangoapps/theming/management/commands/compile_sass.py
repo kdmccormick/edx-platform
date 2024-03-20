@@ -133,23 +133,8 @@ class Command(BaseCommand):
                     "Skipping theme asset compilation: enable theming to process themed assets"
                 ),
             )
-        if debug:
-            self.stdout.write(self.style.WARNING("ignoring deprecated flag '--debug'"))
-        if force:
-            self.stdout.write(self.style.WARNING("ignoring deprecated flag '--force'"))
 
-        command_parts = [
-            "npm",
-            "run",
-            "compile-sass",
-            "--",
-            *(["--dry"] if tasks.environment.dry_run else []),
-            *(["--skip-lms"] if "lms" not in systems else []),
-            *(["--skip-cms"] if not set(systems) & {"cms", "studio"} else []),
-            *itertools.chain(["--theme-dir", theme_dir] for theme_dir in theme_dirs),
-            *itertools.chain(["--theme", theme] for theme in themes),
-        ]
-
-        print("Running:")
-        print(f"\t{shlex.join(command_parts)}")
-        sh(command_parts)
+        call_task(
+            'pavelib.assets.compile_sass',
+            options={'system': system, 'theme_dirs': theme_dirs, 'themes': themes, 'force': force, 'debug': debug},
+        )
