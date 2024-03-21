@@ -72,8 +72,6 @@ clean_up() {
     log "Watchers stopped."
 }
 
-warning "'npm run watch-sass' in edx-platform is experimental. Use at your own risk."
-
 if [[ ! -d common/static/sass ]] ; then
     error 'This command must be run from the root of edx-platform!'
     exit 1

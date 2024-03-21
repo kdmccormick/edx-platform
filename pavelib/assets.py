@@ -13,7 +13,7 @@ from threading import Timer
 from paver import tasks
 from paver.easy import call_task, cmdopts, consume_args, needs, no_help, sh, task
 from watchdog.events import PatternMatchingEventHandler
-from watchdog.observers import Observer
+from watchdog.observers import Observer  # pylint disable=unused-import  # Used by Tutor. Remove after Sumac cut.
 
 from .utils.cmd import cmd, django_cmd
 from .utils.envs import Env
@@ -168,19 +168,19 @@ def compile_sass(options):
     )
     depr_warning = (
         "\n" +
-        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
+        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
         "\n" +
         "WARNING: 'paver compile_sass' is DEPRECATED! It will be removed before Sumac.\n" +
-        ("\WARNING: ignoring deprecated flag '--debug'\n" if options.get("debug") else "") +
-        ("\WARNING: ignoring deprecated flag '--force'\n" if options.get("force") else "") +
-        "The command you ran is now just a temporary wrapper around a new, supported command,\n" +
-        "which you should use instead:\n" +
+        ("WARNING: ignoring deprecated flag '--debug'\n" if options.get("debug") else "") +
+        ("WARNING: ignoring deprecated flag '--force'\n" if options.get("force") else "") +
+        "The command you ran is now just a temporary wrapper around a new,\n" +
+        "supported command, which you should use instead:\n" +
         "\n" +
         f"\t{command}\n" +
         "\n" +
         "Details: https://github.com/openedx/edx-platform/issues/31895\n" +
         "\n" +
-        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
+        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
         "\n"
     )
     # Print deprecation warning twice so that it's more likely to be seen in the logs.
@@ -206,7 +206,7 @@ def _compile_sass(system, theme, _debug, _force, _timing_info):
     )
     depr_warning = (
         "\n" +
-        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
+        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
         "\n" +
         "WARNING: 'pavelib/assets.py' is DEPRECATED! It will be removed before Sumac.\n" +
         "The function you called is just a temporary wrapper around a new, supported command,\n" +
@@ -216,7 +216,7 @@ def _compile_sass(system, theme, _debug, _force, _timing_info):
         "\n" +
         "Details: https://github.com/openedx/edx-platform/issues/31895\n" +
         "\n" +
-        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
+        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
         "\n"
     )
     # Print deprecation warning twice so that it's more likely to be seen in the logs.
@@ -401,18 +401,53 @@ def listfy(data):
 @timed
 def watch_assets(options):
     """
+    DEPRECATED COMPATIBILITY WRAPPER. Use `npm run watch` instead.
+
     Watch for changes to asset files, and regenerate js/css
     """
     # Don't watch assets when performing a dry run
     if tasks.environment.dry_run:
         return
 
+    # TODO: Warn on these
     settings = getattr(options, 'settings', Env.DEVSTACK_SETTINGS)
     themes = get_parsed_option(options, 'themes')
-    theme_dirs = get_parsed_option(options, 'theme_dirs', [])
     wait = get_parsed_option(options, 'wait', None)
+
+    # TODO: do something with this
     background = getattr(options, 'background', False)
-    # @@TODO
+
+    theme_dirs = ':'.join(get_parsed_option(options, 'theme_dirs', []))
+    command = shlex.join(
+        [
+            *(
+                ["env", f"EDX_PLATFORM_THEME_DIRS={theme_dirs}'"] if theme_dirs else []
+            ),
+            "npm",
+            "run",
+            "watch",
+        ]
+    )
+    depr_warning = (
+        "\n" +
+        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
+        "\n" +
+        "WARNING: 'paver watch_assets' is DEPRECATED! It will be removed before Sumac.\n" +
+        #TODO ("\WARNING: ignoring deprecated flag '--debug'\n" if options.get("debug") else "") +
+        "The command you ran is now just a temporary wrapper around a new,\n" +
+        "supported command, which you should use instead:\n" +
+        "\n" +
+        f"\t{command}\n" +
+        "\n" +
+        "Details: https://github.com/openedx/edx-platform/issues/31895\n" +
+        "\n" +
+        "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
+        "\n"
+    )
+    # Print deprecation warning twice so that it's more likely to be seen in the logs.
+    print(depr_warning)
+    sh(command)
+    print(depr_warning)
 
 
 @task
