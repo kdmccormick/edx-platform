@@ -10,7 +10,7 @@
     "webpack-dev": "NODE_ENV=development \"$(npm bin)/webpack\" --config=webpack.dev.config.js",
     "compile-sass": "scripts/compile_sass.py --env=${NODE_ENV:-production}",
     "compile-sass-dev": "scripts/compile_sass.py --env=development",
-    "watch": "echo 'WARNING: `npm run watch` in edx-platform is experimental. Use at your own risk.' && { npm run watch-webpack& npm run watch-sass& } && sleep infinity",
+    "watch": "{ npm run watch-webpack& npm run watch-sass& } && sleep infinity",
     "watch-webpack": "npm run webpack-dev -- --watch",
     "watch-sass": "scripts/watch_sass.sh"
   },
