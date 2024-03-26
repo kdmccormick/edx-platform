@@ -46,18 +46,19 @@ echo_quoted_cmd() {
 
 start_sass_watch() {
     # Start a watch for .scss files in a particular dir. Run in the background.
-    #   start_sass_watch NAME_FOR_LOGGING WATCH_ROOT_PATH HANDLER_COMMAND
+    #   start_sass_watch NAME_FOR_LOGGING HANDLER_COMMAND WATCH_ROOT_PATHS...
     local name="$1"
-    local path="$2"
-    local handler="$3"
-    log "Starting watcher for $name:"
+    local handler="$2"
+    shift 2
+    local paths=("$@")
+    section "Starting Sass watchers for $name:"
     # Note: --drop means that we should ignore any change events that happen during recompilation.
     #       This is good because it means that if you edit 3 files, we won't fire off three simultaneous compiles.
     #       It's not perfect, though, because if you change 3 files, only the first one will trigger a recompile,
     #       so depending on the timing, your latest changes may or may not be picked up. We accept this as a reasonable
     #       tradeoff. Some watcher libraries are smarter than watchdog, in that they wait until the filesystem "settles"
     #       before firing off a the recompilation. This sounds nice but did not seem worth the effort for legacy assets.
-    local watch_cmd=(watchmedo shell-command -v --patterns '*.scss' --recursive --drop --command "$handler" "$path")
+    local watch_cmd=(watchmedo shell-command -v --patterns '*.scss' --recursive --drop --command "$handler" ${paths[@]})
     echo_quoted_cmd "${watch_cmd[@]}"
     "${watch_cmd[@]}" &
 }
@@ -65,11 +66,10 @@ start_sass_watch() {
 clean_up() {
     # Kill all background processes we started.
     # Since they're all 'watchmedo' instances, we can just use killall.
-    log "Stopping all watchers:"
-    local stop_cmd=(killall watchmedo)
-    echo_quoted_cmd "${stop_cmd[@]}"
-    "${stop_cmd[@]}" || true
-    log "Watchers stopped."
+    log "Killing all watchers:"
+    # 'tee /dev/fd2' means print to STDOUT in addition to piping
+    pgrep watchmedo | tee /dev/fd2 | xargs kill
+    log "Watchers killed."
 }
 
 if [[ ! -d common/static/sass ]] ; then
@@ -85,76 +85,37 @@ fi
 
 trap clean_up EXIT
 
-# Start by compiling all watched Sass right away, mirroring the behavior of webpack --watch.
-section "COMPILING SASS:"
-npm run compile-sass
-echo
-echo
-
-section "STARTING DEFAULT SASS WATCHERS:"
-
-# Changes to LMS Sass require a full recompilation, since LMS Sass can be used in CMS and in themes.
-start_sass_watch "default LMS Sass" \
+start_sass_watch "default theme" \
+    'npm run compile-sass-dev' \
     lms/static/sass \
-    'npm run compile-sass-dev'
-
-# Changes to default cert Sass only require recompilation of default cert Sass, since cert Sass
-# cannot be included into LMS, CMS, or themes.
-start_sass_watch "default certificate Sass" \
     lms/static/certificates/sass \
-    'npm run compile-sass-dev -- --skip-cms --skip-themes'
-
-# Changes to CMS Sass require recompilation of default & themed CMS Sass, but not LMS Sass.
-start_sass_watch "default CMS Sass" \
     cms/static/sass \
-    'npm run compile-sass-dev -- --skip-lms'
-
-# Sass changes in common, node_modules, and xmodule all require full recompilations.
-start_sass_watch "default common Sass" \
     common/static \
-    'npm run compile-sass-dev'
-start_sass_watch "node_modules Sass" \
     node_modules \
-    'npm run compile-sass-dev'
-start_sass_watch "builtin XBlock Sass" \
-    xmodule/assets \
-    'npm run compile-sass-dev'
+    xmodule/assets
 
 export IFS=";"
 for theme_dir in ${EDX_PLATFORM_THEME_DIRS:-} ; do
     for theme_path in "$theme_dir"/* ; do
-
         theme_name="${theme_path#"$theme_dir/"}"
         lms_sass="$theme_path/lms/static/sass"
         cert_sass="$theme_path/lms/static/certificates/sass"
         cms_sass="$theme_path/cms/static/sass"
-
-        if [[ -d "$lms_sass" ]] || [[ -d "$cert_sass" ]] || [[ -d "$cms_sass" ]] ; then
-            section "STARTING WATCHERS FOR THEME '$theme_name':"
-        fi
-
-        # Changes to a theme's LMS Sass require that the full theme is recompiled, since LMS
-        # Sass is used in certs and CMS.
+        theme_watch_dirs=()
         if [[ -d "$lms_sass" ]] ; then
-            start_sass_watch "$theme_name LMS Sass" \
-                "$lms_sass" \
-                "npm run compile-sass-dev -- -T $theme_dir -t $theme_name --skip-default"
+            theme_watch_dirs+=("$lms_sass")
         fi
-
-        # Changes to a theme's certs Sass only requires that its certs Sass be recompiled.
         if [[ -d "$cert_sass" ]] ; then
-            start_sass_watch "$theme_name certificate Sass" \
-                "$cert_sass" \
-                "npm run compile-sass-dev -- -T $theme_dir -t $theme_name --skip-default --skip-cms"
+            theme_watch_dirs+=("$cert_sass")
         fi
-
-        # Changes to a theme's CMS Sass only requires that its CMS Sass be recompiled.
         if [[ -d "$cms_sass" ]] ; then
-            start_sass_watch "$theme_name CMS Sass" \
-                "$cms_sass" \
-                "npm run compile-sass-dev -- -T $theme_dir -t $theme_name --skip-default --skip-lms"
+            theme_watch_dirs+=("$cms_sass")
         fi
-
+        if [[ -n "${theme_watch_dirs[*]}" ]] ; then
+            start_sass_watch "theme '$theme_name'" \
+                "npm run compile-sass-dev -- -T $theme_dir -t $theme_name --skip-default" \
+                ${theme_watch_dirs[@]}
+        fi
     done
 done
 
