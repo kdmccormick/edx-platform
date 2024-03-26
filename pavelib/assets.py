@@ -102,14 +102,12 @@ class SassWatcher(PatternMatchingEventHandler):
     ('system=', 's', 'The system to compile sass for (defaults to all)'),
     ('theme-dirs=', '-td', 'Theme dirs containing all themes (defaults to None)'),
     ('themes=', '-t', 'The theme to compile sass for (defaults to None)'),
-    ('debug', 'd', 'Debug mode'),
-    ('force', '', 'Force full compilation'),
+    ('debug', 'd', 'DEPRECATED. Debug mode is now determined by NODE_ENV.'),
+    ('force', '', 'DEPRECATED. Full recompilation is now always forced.'),
 ])
 @timed
 def compile_sass(options):
     """
-    DEPRECATED COMPATIBILITY WRAPPER. Use `npm run compile-sass` instead.
-
     Compile Sass to CSS. If command is called without any arguments, it will
     only compile lms, cms sass for the open source theme. And none of the comprehensive theme's sass would be compiled.
 
@@ -143,6 +141,7 @@ def compile_sass(options):
         compile sass files for cms only for 'red-theme', 'stanford-style' and 'test-theme' present in
         '/edx/app/edxapp/edx-platform/themes' and '/edx/app/edxapp/edx-platform/common/test/'.
 
+    This is a DEPRECATED COMPATIBILITY WRAPPER. Use `npm run compile-sass` instead.
     """
     systems = set(get_parsed_option(options, 'system', ALL_SYSTEMS))
     command = shlex.join(
@@ -171,8 +170,6 @@ def compile_sass(options):
         "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
         "\n" +
         "WARNING: 'paver compile_sass' is DEPRECATED! It will be removed before Sumac.\n" +
-        ("WARNING: ignoring deprecated flag '--debug'\n" if options.get("debug") else "") +
-        ("WARNING: ignoring deprecated flag '--force'\n" if options.get("force") else "") +
         "The command you ran is now just a temporary wrapper around a new,\n" +
         "supported command, which you should use instead:\n" +
         "\n" +
@@ -180,6 +177,8 @@ def compile_sass(options):
         "\n" +
         "Details: https://github.com/openedx/edx-platform/issues/31895\n" +
         "\n" +
+        ("WARNING: ignoring deprecated flag '--debug'\n" if options.get("debug") else "") +
+        ("WARNING: ignoring deprecated flag '--force'\n" if options.get("force") else "") +
         "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
         "\n"
     )
@@ -191,7 +190,9 @@ def compile_sass(options):
 
 def _compile_sass(system, theme, _debug, _force, _timing_info):
     """
-    DEPRECATED COMPATIBILITY WRAPPER, to ease the transition for Tutor, which directly imported and used this function.
+    This is a DEPRECATED COMPATIBILITY WRAPPER
+
+    It exists to ease the transition for Tutor in Redwood, which directly imported and used this function.
     """
     command = shlex.join(
         [
@@ -392,36 +393,28 @@ def listfy(data):
 
 @task
 @cmdopts([
-    ('background', 'b', 'Background mode'),
-    ('settings=', 's', "Django settings (defaults to devstack)"),
+    ('background', 'b', 'DEPRECATED. Use shell tools like & to run in background if needed.'),
+    ('settings=', 's', "DEPRECATED. Django is not longer invoked to compile JS/Sass."),
     ('theme-dirs=', '-td', 'The themes dir containing all themes (defaults to None)'),
-    ('themes=', '-t', 'The themes to add sass watchers for (defaults to None)'),
-    ('wait=', '-w', 'How long to pause between filesystem scans.')
+    ('themes=', '-t', 'DEPRECATED. All themes in --theme-dirs are now watched.'),
+    ('wait=', '-w', 'DEPRECATED. Watchdog\'s default wait time is now used.'),
 ])
 @timed
 def watch_assets(options):
     """
-    DEPRECATED COMPATIBILITY WRAPPER. Use `npm run watch` instead.
-
     Watch for changes to asset files, and regenerate js/css
+
+    This is a DEPRECATED COMPATIBILITY WRAPPER. Use `npm run watch` instead.
     """
     # Don't watch assets when performing a dry run
     if tasks.environment.dry_run:
         return
 
-    # TODO: Warn on these
-    settings = getattr(options, 'settings', Env.DEVSTACK_SETTINGS)
-    themes = get_parsed_option(options, 'themes')
-    wait = get_parsed_option(options, 'wait', None)
-
-    # TODO: do something with this
-    background = getattr(options, 'background', False)
-
     theme_dirs = ':'.join(get_parsed_option(options, 'theme_dirs', []))
     command = shlex.join(
         [
             *(
-                ["env", f"EDX_PLATFORM_THEME_DIRS={theme_dirs}'"] if theme_dirs else []
+                ["env", f"EDX_PLATFORM_THEME_DIRS={theme_dirs}"] if theme_dirs else []
             ),
             "npm",
             "run",
@@ -433,7 +426,6 @@ def watch_assets(options):
         "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
         "\n" +
         "WARNING: 'paver watch_assets' is DEPRECATED! It will be removed before Sumac.\n" +
-        #TODO ("\WARNING: ignoring deprecated flag '--debug'\n" if options.get("debug") else "") +
         "The command you ran is now just a temporary wrapper around a new,\n" +
         "supported command, which you should use instead:\n" +
         "\n" +
@@ -441,6 +433,10 @@ def watch_assets(options):
         "\n" +
         "Details: https://github.com/openedx/edx-platform/issues/31895\n" +
         "\n" +
+        ("WARNING: ignoring deprecated flag '--debug'\n" if options.get("debug") else "") +
+        ("WARNING: ignoring deprecated flag '--themes'\n" if options.get("themes") else "") +
+        ("WARNING: ignoring deprecated flag '--settings'\n" if options.get("settings") else "") +
+        ("WARNING: ignoring deprecated flag '--background'\n" if options.get("background") else "") +
         "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \n" +
         "\n"
     )
