@@ -57,7 +57,7 @@ start_sass_watch() {
     #       so depending on the timing, your latest changes may or may not be picked up. We accept this as a reasonable
     #       tradeoff. Some watcher libraries are smarter than watchdog, in that they wait until the filesystem "settles"
     #       before firing off a the recompilation. This sounds nice but did not seem worth the effort for legacy assets.
-    local watch_cmd=(watchmedo shell-command -v --patterns '*.scss' --recursive --drop --command "$handler" ${paths[@]})
+    local watch_cmd=(watchmedo shell-command -v --patterns '*.scss' --recursive --drop --command "$handler" "${paths[@]}")
     echo_quoted_cmd "${watch_cmd[@]}"
     "${watch_cmd[@]}" &
 }
@@ -113,7 +113,7 @@ for theme_dir in ${EDX_PLATFORM_THEME_DIRS:-} ; do
         if [[ -n "${theme_watch_dirs[*]}" ]] ; then
             start_sass_watch "theme '$theme_name'" \
                 "npm run compile-sass-dev -- -T $theme_dir -t $theme_name --skip-default" \
-                ${theme_watch_dirs[@]}
+                "${theme_watch_dirs[@]}"
         fi
     done
 done
