@@ -2,7 +2,6 @@
 
 # Wait for changes to Sass, and recompile.
 # Invoke from repo root as `npm run watch-sass`.
-# This script tries to recompile the minimal set of Sass for any given change.
 
 # By default, only watches default Sass.
 # To watch themes too, provide colon-separated paths in the EDX_PLATFORM_THEME_DIRS environment variable.
@@ -46,7 +45,7 @@ echo_quoted_cmd() {
 
 start_sass_watch() {
     # Start a watch for .scss files in a particular dir. Run in the background.
-    #   start_sass_watch NAME_FOR_LOGGING HANDLER_COMMAND WATCH_ROOT_PATHS...
+    # Usage: start_sass_watch NAME_FOR_LOGGING HANDLER_COMMAND WATCH_ROOT_PATHS...
     local name="$1"
     local handler="$2"
     shift 2
@@ -63,15 +62,7 @@ start_sass_watch() {
     "${watch_cmd[@]}" &
 }
 
-clean_up() {
-    # Kill all background processes we started.
-    # Since they're all 'watchmedo' instances, we can just use killall.
-    log "Killing all watchers:"
-    # 'tee /dev/fd2' means print to STDOUT in addition to piping
-    pgrep watchmedo | tee /dev/fd2 | xargs kill
-    log "Watchers killed."
-}
-
+# Verify execution environment.
 if [[ ! -d common/static/sass ]] ; then
     error 'This command must be run from the root of edx-platform!'
     exit 1
@@ -83,8 +74,13 @@ if ! type watchmedo 1>/dev/null 2>&1 ; then
     exit 1
 fi
 
-trap clean_up EXIT
+# Reliably kill all child processes when script is interrupted (Ctrl+C) or otherwise terminated.
+trap "exit" INT TERM
+trap "kill 0" EXIT
 
+# Watch default Sass.
+# If it changes, then recompile the default theme *and* all custom themes,
+# as custom themes' Sass is based on the default Sass.
 start_sass_watch "default theme" \
     'npm run compile-sass-dev' \
     lms/static/sass \
@@ -94,7 +90,9 @@ start_sass_watch "default theme" \
     node_modules \
     xmodule/assets
 
-export IFS=";"
+# Watch each theme's Sass.
+# If it changes, only recompile that theme.
+export IFS=":"
 for theme_dir in ${EDX_PLATFORM_THEME_DIRS:-} ; do
     for theme_path in "$theme_dir"/* ; do
         theme_name="${theme_path#"$theme_dir/"}"
@@ -111,6 +109,7 @@ for theme_dir in ${EDX_PLATFORM_THEME_DIRS:-} ; do
         if [[ -d "$cms_sass" ]] ; then
             theme_watch_dirs+=("$cms_sass")
         fi
+        # A directory is a theme if it as LMS Sass *and/or* CMS Sass *and/or* certificate Sass.
         if [[ -n "${theme_watch_dirs[*]}" ]] ; then
             start_sass_watch "theme '$theme_name'" \
                 "npm run compile-sass-dev -- -T $theme_dir -t $theme_name --skip-default" \
@@ -119,6 +118,7 @@ for theme_dir in ${EDX_PLATFORM_THEME_DIRS:-} ; do
     done
 done
 
+# Wait until interrupted/terminated.
 sleep infinity &
 echo
 echo "Watching Open edX LMS & CMS Sass for changes."
