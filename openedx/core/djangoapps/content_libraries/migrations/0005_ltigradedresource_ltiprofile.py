@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
             name='LtiGradedResource',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('usage_key', models.CharField(help_text='The usage key string of the blockstore resource serving the content of this launch.', max_length=255)),
+                ('usage_key', models.CharField(help_text='The usage key string of the resource serving the content of this launch.', max_length=255)),
                 ('resource_id', models.CharField(help_text='The platform unique identifier of this resource in the platform, also known as "resource link id".', max_length=255)),
                 ('resource_title', models.CharField(help_text='The platform descriptive title for this resource placed in the platform.', max_length=255, null=True)),
                 ('ags_lineitem', models.CharField(help_text='If AGS was enabled during launch, this should hold the lineitem ID.', max_length=255)),
