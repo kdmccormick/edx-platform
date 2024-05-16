@@ -7,8 +7,6 @@ import os
 import re
 import sys
 
-from paver.easy import cmdopts, needs, task
-
 from pavelib.utils.envs import Env
 from pavelib.utils.test.suites import JestSnapshotTestSuite, JsTestSuite
 from pavelib.utils.timer import timed
