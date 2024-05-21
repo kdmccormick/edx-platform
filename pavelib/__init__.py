@@ -3,4 +3,4 @@ paver commands
 """
 
 
-from . import js_test, quality
+from . import assets, js_test, prereqs, quality
