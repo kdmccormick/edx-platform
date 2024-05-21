@@ -8,7 +8,7 @@ import re
 from datetime import datetime
 from xml.sax.saxutils import quoteattr
 
-from paver.easy import BuildFailure, cmdopts, sh, task
+from paver.easy import BuildFailure, cmdopts, needs, sh, task
 
 from .utils.envs import Env
 from .utils.timer import timed
