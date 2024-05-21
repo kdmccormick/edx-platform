@@ -20,6 +20,9 @@ cms/envs/private.py
 
 ### Python artifacts
 **/*.pyc
+**/__pycache__
+/venv*
+/.venv*
 
 ### Editor and IDE artifacts
 **/*~
