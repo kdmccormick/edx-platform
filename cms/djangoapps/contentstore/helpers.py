@@ -11,9 +11,9 @@ from attrs import frozen, Factory
 from django.conf import settings
 from django.utils.translation import gettext as _
 from opaque_keys.edx.keys import AssetKey, CourseKey, UsageKey
-from opaque_keys.edx.locator import DefinitionLocator, LocalId
+from opaque_keys.edx.locator import DefinitionLocator, LocalId, LibraryUsageLocatorV2
 from xblock.core import XBlock
-from xblock.fields import ScopeIds
+from xblock.fields import Scope, ScopeIds
 from xblock.runtime import IdGenerator
 from xmodule.contentstore.content import StaticContent
 from xmodule.contentstore.django import contentstore
@@ -23,6 +23,7 @@ from xmodule.xml_block import XmlMixin
 
 from cms.djangoapps.models.settings.course_grading import CourseGradingModel
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from openedx.core.djangoapps.content_libraries.api import get_library_block
 import openedx.core.djangoapps.content_staging.api as content_staging_api
 import openedx.core.djangoapps.content_tagging.api as content_tagging_api
 
@@ -293,7 +294,6 @@ def import_staged_content_from_user_clipboard(parent_key: UsageKey, request) -> 
         staged_content_id=user_clipboard.content.id,
         static_files=static_files,
     )
-
     return new_xblock, notices
 
 
@@ -375,6 +375,20 @@ def _import_xml_node_to_parent(
     if copied_from_block:
         # Store a reference to where this block was copied from, in the 'copied_from_block' field (AuthoringMixin)
         temp_xblock.copied_from_block = copied_from_block
+        # If it was copied from a library, set the 'upstream_*' fields (AuthoringMixin)
+        copied_from_key = UsageKey.from_string(copied_from_block)  # @@TODO: param should be UsageKey, not str
+        if isinstance(copied_from_key, LibraryUsageLocatorV2):
+            temp_xblock.upstream_block = copied_from_block
+            temp_xblock.upstream_block_version = get_library_block(copied_from_key).version_num  # @@TODO: handle miss?
+            from openedx.core.djangoapps.xblock.api import load_block
+            from django.contrib.auth import get_user_model
+            upstream_xblock = load_block(copied_from_key, get_user_model().objects.get(id=user_id))
+            print(temp_xblock.upstream_block_settings)
+            temp_xblock.upstream_block_settings = {
+                field.name: getattr(upstream_xblock, field.name)
+                for field in upstream_xblock.fields
+                if field.scope == Scope.settings
+            }
     # Save the XBlock into modulestore. We need to save the block and its parent for this to work:
     new_xblock = store.update_item(temp_xblock, user_id, allow_not_found=True)
     parent_xblock.children.append(new_xblock.location)

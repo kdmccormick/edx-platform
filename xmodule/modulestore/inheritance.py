@@ -397,6 +397,11 @@ class InheritingFieldData(KvsFieldData):
                     return field.read_json(ancestor)
                 else:
                     ancestor = ancestor.get_parent()
+        # @@TODO de-kludgify, move to core or mixin?
+        try:
+            return block.fields["upstream_block_settings"][name]
+        except KeyError:
+            pass
         return super().default(block, name)
 
 
@@ -448,4 +453,9 @@ class InheritanceKeyValueStore(KeyValueStore):
         inheriting, this will raise KeyError which will cause the caller to use
         the field's global default.
         """
-        return self.inherited_settings[key.field_name]
+        try:
+            return self.inherited_settings[key.field_name]
+        except KeyError:
+            pass
+        # @@TODO de-kludgify, move to its own mixin, or core?
+        return self._fields.get("upstream_block_settings", {})[key.field_name]
