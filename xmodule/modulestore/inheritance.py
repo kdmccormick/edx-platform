@@ -376,6 +376,8 @@ class InheritingFieldData(KvsFieldData):
         """
         The default for an inheritable name is found on a parent.
         """
+        if name == "upstream_block_settings":
+            return {}
         if name in self.inheritable_names:
             # Walk up the content tree to find the first ancestor
             # that this field is set on. Use the field from the current
@@ -399,9 +401,14 @@ class InheritingFieldData(KvsFieldData):
                     ancestor = ancestor.get_parent()
         # @@TODO de-kludgify, move to core or mixin?
         try:
-            return block.fields["upstream_block_settings"][name]
-        except KeyError:
+            upstream_settings = block.upstream_block_settings
+            TODO("display_name is not reading from upstream_settings?")
+            # @@TODO serialize Dict fields nicely in OLX?
+        except AttributeError:
             pass
+        else:
+            if name in upstream_settings:
+                return upstream_settings[name]
         return super().default(block, name)
 
 

@@ -376,6 +376,7 @@ def _import_xml_node_to_parent(
         # Store a reference to where this block was copied from, in the 'copied_from_block' field (AuthoringMixin)
         temp_xblock.copied_from_block = copied_from_block
         # If it was copied from a library, set the 'upstream_*' fields (AuthoringMixin)
+        # @@TODO is this the right place?
         copied_from_key = UsageKey.from_string(copied_from_block)  # @@TODO: param should be UsageKey, not str
         if isinstance(copied_from_key, LibraryUsageLocatorV2):
             temp_xblock.upstream_block = copied_from_block
@@ -383,10 +384,9 @@ def _import_xml_node_to_parent(
             from openedx.core.djangoapps.xblock.api import load_block
             from django.contrib.auth import get_user_model
             upstream_xblock = load_block(copied_from_key, get_user_model().objects.get(id=user_id))
-            print(temp_xblock.upstream_block_settings)
             temp_xblock.upstream_block_settings = {
-                field.name: getattr(upstream_xblock, field.name)
-                for field in upstream_xblock.fields
+                field_name: getattr(upstream_xblock, field.name)
+                for field_name, field in upstream_xblock.fields.items()
                 if field.scope == Scope.settings
             }
     # Save the XBlock into modulestore. We need to save the block and its parent for this to work:
