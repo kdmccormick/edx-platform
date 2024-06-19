@@ -51,3 +51,46 @@ class AuthoringMixin(XBlockMixin):
         scope=Scope.settings,
         enforce_type=True,
     )
+
+    # Note: upstream_* fields are only used by CMS. Not needed in the LMS.
+    upstream = String(
+        scope=Scope.settings,
+        help=(
+            "The usage key of a block (generally within a Content Library) which serves as a source of upstream "
+            "updates for this block, or None if there is no such upstream. Please note: It is valid for upstream_block "
+            "to hold a usage key for a block that does not exist (or does not *yet* exist) on this instance, "
+            "particularly if this block was imported from a different instance."
+        ),
+        hidden=True,
+        default=None,
+        enforce_type=True,
+    )
+    upstream_version = Integer(
+        scope=Scope.settings,
+        help=(
+            "The upstream_block's version number, at the time this block was created from it. "
+            "If this version is older than the upstream_block's latest version, then CMS will "
+            "allow this block to fetch updated content from upstream_block."
+        ),
+        hidden=True,
+        default=None,
+        enforce_type=True,
+    )
+    upstream_overridden = List(
+        scope=Scope.settings,
+        help=(
+            "@@TODO"
+        ),
+        hidden=True,
+        default=[],
+        enforce_type=True,
+    )
+    upstream_settings = Dict(
+        scope=Scope.settings,
+        help=(
+            "@@TODO"
+        ),
+        hidden=True,
+        default={},
+        enforce_type=True,
+    )
