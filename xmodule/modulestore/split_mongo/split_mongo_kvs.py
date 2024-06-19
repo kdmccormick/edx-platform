@@ -163,7 +163,7 @@ class SplitMongoKVS(InheritanceKeyValueStore):
         """
         Is the given field has default value in this kvs
         """
-        return field_name in self._defaults or super().has_default_value(field_name)
+        return field_name in self._defaults
 
     def default(self, key):
         """
