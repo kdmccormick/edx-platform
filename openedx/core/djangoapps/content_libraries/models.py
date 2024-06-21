@@ -236,23 +236,6 @@ class ContentLibraryPermission(models.Model):
         return f"ContentLibraryPermission ({self.access_level} for {who})"
 
 
-class ContentLibraryBlockUpdateDeclined(models.Model):
-    """
-    @@TODO
-    """
-    library = models.ForeignKey(
-        ContentLibrary,
-        on_delete=models.CASCADE,
-    )
-    upstream_block = UsageKeyField("@@TODO")
-    upstream_version = IntegerField("@@TODO")
-    downstream_block = UsageKeyField("@@TODO")
-    library = models.ForeignKey(
-        User,
-        on_delete=models.NULL,
-    )
-
-
 class ContentLibraryBlockImportTask(models.Model):
     """
     Model of a task to import blocks from an external source (e.g. modulestore).
