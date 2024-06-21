@@ -52,7 +52,11 @@ class AuthoringMixin(XBlockMixin):
         enforce_type=True,
     )
 
-    # Note: upstream_* fields are only used by CMS. Not needed in the LMS.
+    ##########################
+    # BEGIN CONTENT SYNC STUFF
+    # @@TODO move?
+    ##########################
+
     upstream = String(
         scope=Scope.settings,
         help=(
@@ -94,3 +98,67 @@ class AuthoringMixin(XBlockMixin):
         default={},
         enforce_type=True,
     )
+
+    def set_upstream(self, upstream_key: UsageKey, user_id: int):
+        """
+        @@TODO
+        """
+        assert is_block_valid_upstream(upstream_key)
+        self.upstream = str(upstream_key)
+        self._sync_with_upstream(user_id=user_id, apply_updates=False))
+
+    def _sync_with_upstream(self, *, user_id: int, apply_updates: bool)
+        """
+        @@TODO
+        """
+        from openedx.core.djangoapps.content_libraries.api import get_library_block
+        from django.contrib.auth import get_user_model
+        from openedx.core.djangoapps.xblock.api import load_block
+        self.upstream_settings = {}
+        try:
+            upstream = load_block(upstream_key, get_user_model().objects.get(id=user_id)
+            upstream_version = get_library_block(upstream.usage_key).version_num
+        except:  # @@TODO handle missing
+            self.upstream_version = None
+            return
+        self.upstream_version = upstream_version
+        for field_name, field in upstream.fields.items():
+            if field.scope == Scope.settings:
+                value = getattr(upstream, field_name)
+                self.upstream_settings[field_name] = value
+                if apply_settings and field_name not in self.upstream_overidden:
+                    setattr(self, field_name, value)
+
+    #@XBlock.json_handler
+    #def upstream_info(self, _data=None, _suffix=None):
+    #    """
+    #    @@TODO write this
+    #    """
+    #    return {
+    #        "upstream": self.upstream,
+    #        "available_version": ...,
+    #        ... update info ...
+    #    }
+
+    @XBlock._handler
+    def update_from_upstream(self, request=None, suffix=None):
+        user_id = requester.user.id if request and request.user else 0
+        self._sync_with_upstream(user_id=user_id, apply_updates=True)
+        self.save()
+
+    def save(self, *args, **kwargs):
+        """
+        @@TODO
+        """
+        for field_name, value in self.upstream_settings:
+            if field_name not in self.upstream_overridden:
+                if value != getattr(block, field_name):
+                    self.upstream_overridden.append(field_name)
+        super().save()
+
+
+def is_block_valid_upstream(usage_key):
+    """
+    @@TODO move
+    """
+    return isinstance(usage_key, LibraryUsageLocatorV2)
