@@ -130,12 +130,17 @@ class AuthoringMixin(XBlockMixin):
         print("4==================")
         self.upstream_version = upstream_version
         for field_name, field in upstream.fields.items():
+            if field.scope not in [Scope.settings, Scope.content]:
+                continue
+            value = getattr(upstream, field_name)
             if field.scope == Scope.settings:
-                value = getattr(upstream, field_name)
                 self.upstream_settings[field_name] = value
-                print(field_name)
-                if apply_updates and field_name not in self.upstream_overidden:
-                    setattr(self, field_name, value)
+                if field_name in self.upstream_overridden:
+                    continue
+            if not apply_updates:
+                continue
+            print("UPDATE:", field_name)
+            setattr(self, field_name, value)
         print("5==================")
         print(self.upstream_settings)
 
