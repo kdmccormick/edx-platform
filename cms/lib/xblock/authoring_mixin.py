@@ -8,7 +8,7 @@ import logging
 from django.conf import settings
 from web_fragments.fragment import Fragment
 from xblock.core import XBlock, XBlockMixin
-from xblock.fields import Integer, String, Scope, Dict
+from xblock.fields import String, Scope
 
 log = logging.getLogger(__name__)
 
@@ -56,6 +56,8 @@ class AuthoringMixin(XBlockMixin):
     # BEGIN CONTENT SYNC STUFF
     # @@TODO move?
     ##########################
+    from xblock.fields import String, Integer, List, Dict
+    from opaque_keys.edx.keys import UsageKey
 
     upstream = String(
         scope=Scope.settings,
@@ -99,35 +101,43 @@ class AuthoringMixin(XBlockMixin):
         enforce_type=True,
     )
 
-    def set_upstream(self, upstream_key: UsageKey, user_id: int):
+    def set_upstream(self, upstream_key: UsageKey, user_id: int) -> None:
         """
         @@TODO
         """
-        assert is_block_valid_upstream(upstream_key)
         self.upstream = str(upstream_key)
-        self._sync_with_upstream(user_id=user_id, apply_updates=False))
+        self._sync_with_upstream(user_id=user_id, apply_updates=False)
 
-    def _sync_with_upstream(self, *, user_id: int, apply_updates: bool)
+    def _sync_with_upstream(self, *, user_id: int, apply_updates: bool) -> None:
         """
         @@TODO
         """
+        upstream_key = UsageKey.from_string(self.upstream)
+        assert is_block_valid_upstream(upstream_key)
         from openedx.core.djangoapps.content_libraries.api import get_library_block
         from django.contrib.auth import get_user_model
         from openedx.core.djangoapps.xblock.api import load_block
         self.upstream_settings = {}
         try:
-            upstream = load_block(upstream_key, get_user_model().objects.get(id=user_id)
-            upstream_version = get_library_block(upstream.usage_key).version_num
+            print("3==================")
+            upstream = load_block(upstream_key, get_user_model().objects.get(id=user_id))
+            upstream_version = get_library_block(upstream_key).version_num
         except:  # @@TODO handle missing
+            print("4a=================")
             self.upstream_version = None
+            raise
             return
+        print("4==================")
         self.upstream_version = upstream_version
         for field_name, field in upstream.fields.items():
             if field.scope == Scope.settings:
                 value = getattr(upstream, field_name)
                 self.upstream_settings[field_name] = value
-                if apply_settings and field_name not in self.upstream_overidden:
+                print(field_name)
+                if apply_updates and field_name not in self.upstream_overidden:
                     setattr(self, field_name, value)
+        print("5==================")
+        print(self.upstream_settings)
 
     #@XBlock.json_handler
     #def upstream_info(self, _data=None, _suffix=None):
@@ -140,7 +150,7 @@ class AuthoringMixin(XBlockMixin):
     #        ... update info ...
     #    }
 
-    @XBlock._handler
+    @XBlock.handler
     def update_from_upstream(self, request=None, suffix=None):
         user_id = requester.user.id if request and request.user else 0
         self._sync_with_upstream(user_id=user_id, apply_updates=True)
@@ -150,14 +160,18 @@ class AuthoringMixin(XBlockMixin):
         """
         @@TODO
         """
-        for field_name, value in self.upstream_settings:
+        for field_name, value in self.upstream_settings.items():
             if field_name not in self.upstream_overridden:
-                if value != getattr(block, field_name):
+                if value != getattr(self, field_name):
                     self.upstream_overridden.append(field_name)
         super().save()
 
 
-def is_block_valid_upstream(usage_key):
+from opaque_keys.edx.keys import UsageKey
+from opaque_keys.edx.locator import LibraryUsageLocatorV2
+
+
+def is_block_valid_upstream(usage_key: UsageKey) -> bool:
     """
     @@TODO move
     """

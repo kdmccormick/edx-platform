@@ -374,10 +374,14 @@ def _import_xml_node_to_parent(
     if copied_from_block:
         # Store a reference to where this block was copied from, in the 'copied_from_block' field (AuthoringMixin)
         temp_xblock.copied_from_block = copied_from_block
+        copied_from_key = UsageKey.from_string(copied_from_block)
         from cms.lib.xblock.authoring_mixin import is_block_valid_upstream   # @@TODO move
+        print("1===========================")
+        print(copied_from_key)
         if is_block_valid_upstream(copied_from_key):
+            print("2===========================")
             upstream_link_requested = lambda: True  ## @@TODO ask user
-            if upstream_link_requested()
+            if upstream_link_requested():
                 temp_xblock.set_upstream(copied_from_key, user_id)
 
     # Save the XBlock into modulestore. We need to save the block and its parent for this to work:
