@@ -425,3 +425,14 @@ class CachingDescriptorSystem(MakoDescriptorSystem, EditInfoRuntimeMixin):  # li
 
         block.add_aside(new_aside)
         return new_aside
+
+    def save_block(self, block: XBlock) -> None:
+        """
+        @@TODO
+        """
+        from cms.lib.xblock.authoring_mixin import AuthoringMixin
+        if isinstance(block, AuthoringMixin):
+            for field_name, value in block.upstream_settings:
+                if field_name not in block.upstream_overridden:
+                    if value != getattr(block, field_name):
+                        block.upstream_overriden.append(field_name)
