@@ -16,7 +16,7 @@ from opaque_keys.edx.keys import UsageKey
 from opaque_keys.edx.locator import LibraryUsageLocatorV2
 from rest_framework.exceptions import NotFound
 from xblock.exceptions import XBlockNotFoundError
-from xblock.fields import Scope, String, Integer, List, Dict
+from xblock.fields import Scope, String, Integer, Dict, Set
 from xblock.core import XBlockMixin, XBlock
 from webob import Request, Response
 
@@ -77,16 +77,16 @@ class UpstreamInfo:
 
 class UpstreamSyncMixin(XBlockMixin):
     """
-    @@TODO docstring
+    Mixed into CMS XBlocks so that they be associated & synced with uptsream (e.g. content library) blocks.
     """
 
     upstream = String(
         scope=Scope.settings,
         help=(
-            "The usage key of a block (generally within a Content Library) which serves as a source of upstream "
-            "updates for this block, or None if there is no such upstream. Please note: It is valid for upstream_block "
-            "to hold a usage key for a block that does not exist (or does not *yet* exist) on this instance, "
-            "particularly if this block was imported from a different instance."
+            "The usage key of a block (generally within a content library) which serves as a source of upstream "
+            "updates for this block, or None if there is no such upstream. Please note: It is valid for this field "
+            "to hold a usage key for an upstream block that does not exist (or does not *yet* exist) on this instance, "
+            "particularly if this downstream block was imported from a different instance."
         ),
         hidden=True,
         default=None,
@@ -95,18 +95,20 @@ class UpstreamSyncMixin(XBlockMixin):
     upstream_version = Integer(
         scope=Scope.settings,
         help=(
-            "The upstream_block's version number, at the time this block was created from it. "
-            "If this version is older than the upstream_block's latest version, then CMS will "
-            "allow this block to fetch updated content from upstream_block."
+            "Record of the upstream block's version number at the time this block was created from it. If "
+            "upstream_version is smaller than the upstream block's latest version, then the user will be able to sync "
+            "updates into this downstream block."
         ),
         hidden=True,
         default=None,
         enforce_type=True,
     )
-    upstream_overridden = List(
+    upstream_overridden = Set(
         scope=Scope.settings,
         help=(
-            "@@TODO helptext"
+            "Names of the fields which have values set on the upstream block yet have been explicitly overridden "
+            "on this downstream block. Unless explicitly cleared by ther user, these overrides will persist even "
+            "when updates are synced from the upstream."
         ),
         hidden=True,
         default=[],
@@ -147,11 +149,14 @@ class UpstreamSyncMixin(XBlockMixin):
             return Response(upstream_info["error"], status_code=400)
         self.sync_from_upstream(user=request.user, apply_updates=True)
         self.save()
+        self.runtime.modulestore.update_item(self, request.user.id)
         return Response(json.dumps(self.get_upstream_info()), indent=4)
 
     def sync_from_upstream(self, *, user: User, apply_updates: bool) -> None:
         """
         @@TODO docstring
+
+        Does NOT save the block; that is left to the caller.
 
         Raises: InvalidKeyError, UnsupportedUpstreamKeyType, XBlockNotFoundError
         """
@@ -160,7 +165,7 @@ class UpstreamSyncMixin(XBlockMixin):
             self.upstream_overridden = []
             self.upstream_version = None
             return
-        upstream_key = usage_key = validate_upstream_key(self.upstream)
+        upstream_key = validate_upstream_key(self.upstream)
         self.upstream_settings = {}
         try:
             upstream_block = xblock_api.load_block(upstream_key, user)
@@ -180,10 +185,6 @@ class UpstreamSyncMixin(XBlockMixin):
                 continue
             setattr(self, field_name, value)
         self.upstream_version = self._lib_block.version_num
-        self.save()
-        # @@TODO why isn't self.save() sufficient? do we really need to invoke modulestore here?
-        from xmodule.modulestore.django import modulestore  # pylint: disable=wrong-import-order
-        modulestore().update_item(self, user.id)
 
     def get_upstream_info(self) -> UpstreamInfo | None:
         """
