@@ -7141,8 +7141,9 @@ class Flag:
         return self.value
 
 
-ENABLE_CONTENT_LIBRARIES = Flag(default=True)
-
-
-MY_EXPERIMENT_1 = Experiment([Flag(default)])
-
+ENABLE_CONTENT_LIBRARIES = Flag(False)
+ENABLE_CONTENT_LIBRARIES.override(Scope(superuser=True), True)
+ENABLE_CONTENT_LIBRARIES.override(Scope(is_staff=True), True)
+ENABLE_CONTENT_LIBRARIES.override(Scope(org="LateAdopterX"), False)
+ENABLE_CONTENT_LIBRARIES.override(Scope(org="EarlyAdopterX"), True)
+ENABLE_CONTENT_LIBRARIES.override(Scope(course="course-v1:EarlyAdopterX+ImportantCourse+1"), False)
