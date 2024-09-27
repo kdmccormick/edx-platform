@@ -103,15 +103,16 @@ class ContainerHandlerSerializer(serializers.Serializer):
         return None
 
 
-class UpstreamInfoSerializer(serializers.Serializer):
+class UpstreamLinkSerializer(serializers.Serializer):
     """
     Serializer holding info for syncing a block with its upstream (eg, a library block).
     """
     upstream_ref = serializers.CharField()
-    current_version = serializers.IntegerField(allow_null=True)
-    latest_version = serializers.IntegerField(allow_null=True)
-    warning = serializers.CharField(allow_null=True)
-    can_sync = serializers.BooleanField()
+    version_synced = serializers.IntegerField()
+    version_available = serializers.IntegerField(allow_null=True)
+    version_declined = serializers.IntegerField(allow_null=True)
+    error_message = serializers.CharField(allow_null=True)
+    prompt_sync = serializers.BooleanField()
 
 
 class ChildVerticalContainerSerializer(serializers.Serializer):
@@ -124,7 +125,7 @@ class ChildVerticalContainerSerializer(serializers.Serializer):
     block_type = serializers.CharField()
     user_partition_info = serializers.DictField()
     user_partitions = serializers.ListField()
-    upstream_info = UpstreamInfoSerializer(allow_null=True)
+    upstream_link = UpstreamLinkSerializer(allow_null=True)
     actions = serializers.SerializerMethodField()
     validation_messages = MessageValidation(many=True)
     render_error = serializers.CharField()

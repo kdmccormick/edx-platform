@@ -195,7 +195,7 @@ class ContainerVerticalViewTest(BaseXBlockContainer):
                 "name": self.html_unit_first.display_name_with_default,
                 "block_id": str(self.html_unit_first.location),
                 "block_type": self.html_unit_first.location.block_type,
-                "upstream_info": None,
+                "upstream_link": None,
                 "user_partition_info": expected_user_partition_info,
                 "user_partitions": expected_user_partitions,
                 "actions": {
@@ -221,12 +221,13 @@ class ContainerVerticalViewTest(BaseXBlockContainer):
                     "can_delete": True,
                     "can_manage_tags": True,
                 },
-                "upstream_info": {
+                "upstream_link": {
                     "upstream_ref": "lb:FakeOrg:FakeLib:html:FakeBlock",
-                    "current_version": 5,
-                    "latest_version": None,
-                    "can_sync": False,
-                    "warning": "Linked library item was not found in the system",
+                    "version_synced": 5,
+                    "version_available": None,
+                    "version_declined": None,
+                    "error_message": "Linked library item was not found in the system",
+                    "prompt_sync": False,
                 },
                 "user_partition_info": expected_user_partition_info,
                 "user_partitions": expected_user_partitions,

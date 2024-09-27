@@ -20,7 +20,7 @@ from cms.djangoapps.contentstore.rest_api.v1.serializers import (
     ContainerHandlerSerializer,
     VerticalContainerSerializer,
 )
-from cms.lib.xblock.upstream_sync import inspect_upstream_link_as_json
+from cms.lib.xblock.upstream_sync import UpstreamLink
 from openedx.core.lib.api.view_utils import view_auth_classes
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.exceptions import ItemNotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
@@ -199,7 +199,7 @@ class VerticalContainerView(APIView, ContainerHandlerMixin):
                     "block_type": "drag-and-drop-v2",
                     "user_partition_info": {},
                     "user_partitions": {}
-                    "upstream_info": null,
+                    "upstream_link": null,
                     "actions": {
                         "can_copy": true,
                         "can_duplicate": true,
@@ -217,12 +217,12 @@ class VerticalContainerView(APIView, ContainerHandlerMixin):
                     "block_type": "video",
                     "user_partition_info": {},
                     "user_partitions": {}
-                    "upstream_info": {
+                    "upstream_link": {
                         "upstream_ref": "lb:org:mylib:video:404",
-                        "current_version": 16
-                        "latest_version": null,
-                        "warning": "Linked library item not found: lb:org:mylib:video:404",
-                        "can_sync": false,
+                        "version_synced": 16
+                        "version_available": null,
+                        "error_message": "Linked library item not found: lb:org:mylib:video:404",
+                        "prompt_sync": false,
                     },
                     "actions": {
                         "can_copy": true,
@@ -241,12 +241,12 @@ class VerticalContainerView(APIView, ContainerHandlerMixin):
                     "block_type": "html",
                     "user_partition_info": {},
                     "user_partitions": {},
-                    "upstream_info": {
+                    "upstream_link": {
                         "upstream_ref": "lb:org:mylib:html:abcd",
-                        "current_version": 43,
-                        "latest_version": 49,
-                        "warning": null,
-                        "can_sync": true,
+                        "version_synced": 43,
+                        "version_available": 49,
+                        "error_message": null,
+                        "prompt_sync": true,
                     },
                     "actions": {
                         "can_copy": true,
@@ -283,6 +283,7 @@ class VerticalContainerView(APIView, ContainerHandlerMixin):
                     child_info = modulestore().get_item(child)
                     user_partition_info = get_visibility_partition_info(child_info, course=course)
                     user_partitions = get_user_partition_info(child_info, course=course)
+                    upstream_link = UpstreamLink.try_fetch_for_block(child_info)
                     validation_messages = get_xblock_validation_messages(child_info)
                     render_error = get_xblock_render_error(request, child_info)
 
@@ -293,7 +294,7 @@ class VerticalContainerView(APIView, ContainerHandlerMixin):
                         "block_type": child_info.location.block_type,
                         "user_partition_info": user_partition_info,
                         "user_partitions": user_partitions,
-                        "upstream_info": inspect_upstream_link_as_json(child_info),
+                        "upstream_link": upstream_link.to_json() if upstream_link else None,
                         "validation_messages": validation_messages,
                         "render_error": render_error,
                     })
