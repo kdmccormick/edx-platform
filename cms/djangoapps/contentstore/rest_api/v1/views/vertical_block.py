@@ -20,7 +20,7 @@ from cms.djangoapps.contentstore.rest_api.v1.serializers import (
     ContainerHandlerSerializer,
     VerticalContainerSerializer,
 )
-from cms.lib.xblock.upstream_sync import inspect_upstream_link_as_json
+from cms.lib.xblock.upstream_sync import UpstreamLink
 from openedx.core.lib.api.view_utils import view_auth_classes
 from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.exceptions import ItemNotFoundError  # lint-amnesty, pylint: disable=wrong-import-order
@@ -293,7 +293,7 @@ class VerticalContainerView(APIView, ContainerHandlerMixin):
                         "block_type": child_info.location.block_type,
                         "user_partition_info": user_partition_info,
                         "user_partitions": user_partitions,
-                        "upstream_info": inspect_upstream_link_as_json(child_info),
+                        "upstream_info": UpstreamLink.try_fetch_for_block(child_info).to_json(),
                         "validation_messages": validation_messages,
                         "render_error": render_error,
                     })

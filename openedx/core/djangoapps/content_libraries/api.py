@@ -212,7 +212,8 @@ class LibraryXBlockMetadata:
     usage_key = attr.ib(type=LibraryUsageLocatorV2)
     created = attr.ib(type=datetime)
     modified = attr.ib(type=datetime)
-    version_num = attr.ib(type=int)
+    draft_version_num = attr.ib(type=int)
+    published_version_num = attr.ib(default=None, type=int)
     display_name = attr.ib("")
     last_published = attr.ib(default=None, type=datetime)
     last_draft_created = attr.ib(default=None, type=datetime)
@@ -233,6 +234,7 @@ class LibraryXBlockMetadata:
             published_by = last_publish_log.published_by.username
 
         draft = component.versioning.draft
+        published = component.versioning.published  # @@TODO set None if NotFound
         last_draft_created = draft.created if draft else None
         last_draft_created_by = draft.publishable_entity_version.created_by if draft else None
 
@@ -249,7 +251,8 @@ class LibraryXBlockMetadata:
             last_draft_created=last_draft_created,
             last_draft_created_by=last_draft_created_by,
             has_unpublished_changes=component.versioning.has_unpublished_changes,
-            version_num=component.versioning.draft.version_num,
+            published_version_num=published.version_num if published else None,
+            draft_version_num=component.versioning.draft.version_num,
         )
 
 

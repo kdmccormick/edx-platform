@@ -5,7 +5,8 @@ from django.urls import path, re_path
 
 from cms.djangoapps.contentstore.rest_api.v2.views import (
     HomePageCoursesViewV2,
-    UpstreamSyncView,
+    UpstreamLinkView,
+    SyncFromUpstreamView,
 )
 
 app_name = "v2"
@@ -17,8 +18,13 @@ urlpatterns = [
         name="courses",
     ),
     re_path(
-        fr'^upstream_sync/{settings.USAGE_KEY_PATTERN}$',
-        UpstreamSyncView.as_view(),
-        name="upstream_sync"
+        fr'^downstreams/{settings.USAGE_KEY_PATTERN}/link$',
+        UpstreamLinkView.as_view(),
+        name="upstream_link"
+    ),
+    re_path(
+        fr'^downstreams/{settings.USAGE_KEY_PATTERN}/sync$',
+        SyncFromUpstreamView.as_view(),
+        name="sync_from_upstream"
     ),
 ]

@@ -12,7 +12,7 @@ exposed through this module's public Python interface.
 import typing as t
 from dataclasses import dataclass, asdict
 
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import UsageKey, CourseKey
@@ -24,9 +24,6 @@ from xblock.core import XBlockMixin, XBlock
 
 import openedx.core.djangoapps.xblock.api as xblock_api
 from openedx.core.djangoapps.content_libraries.api import get_library_block
-
-
-User = get_user_model()
 
 
 class BadUpstream(Exception):
@@ -46,30 +43,111 @@ class BadDownstream(Exception):
 
 
 @dataclass(frozen=True)
-class UpstreamInfo:
+class UpstreamLink:
     """
     Metadata about a downstream's relationship with an upstream.
     """
     upstream_ref: str  # Reference to the upstream content, e.g., a serialized library block usage key.
-    current_version: int  # Version of the upstream to which the downstream was last synced.
-    latest_version: int | None  # Latest version of the upstream that's available, or None if it couldn't be loaded.
+    version_synced: int  # Version of the upstream to which the downstream was last synced.
+    version_available: int | None  # Latest version of the upstream that's available, or None if it couldn't be loaded.
+    version_declined: int | None  # Latest version which the user has declined to sync with, if any.
+    error_message: str | None
+
+    @property
+    def prompt_sync(self) -> bool:
+        """
+        Should we invite the downstream's authors to sync the latest upstream updates?
+        """
+        return bool(
+            self.upstream_ref and
+            self.version_available and
+            self.version_available > self.version_synced and
+            self.version_available > (self.version_declined or 0)
+        )
+
+    def to_json(self) -> dict[str, t.Any]:
+        """
+        Get an JSON-API-friendly representation of this upstream link.
+        """
+        return {
+            **asdict(self),
+            "prompt_sync": self.prompt_sync,
+        }
+
+    @classmethod
+    def try_fetch_for_block(cls, downstream: XBlock) -> t.Self | None:
+        """
+        Same as `fetch_for_block`, but upon failure, sets `.error_message` instead of raising an exception.
+        """
+        try:
+            return cls.fetch_for_block(downstream)
+        except (BadDownstream, BadUpstream) as exc:
+            return cls(
+                upstream_ref=downstream.upstream,
+                version_synced=downstream.upstream_version,
+                version_available=None,
+                version_declined=None,
+                error_message=str(exc),
+            )
+
+    @classmethod
+    def fetch_for_block(cls, downstream: XBlock) -> t.Self | None:
+        """
+        Get info on a block's relationship with its upstream without actually loading any upstream content.
+
+        Currently, the only supported upstream are LC-backed Library Components. This may change in the future (see
+        module docstring).
+
+        Raises: BadUpstream, BadDownstream
+        """
+        if not downstream.upstream:
+            return None
+        if not isinstance(downstream.usage_key.context_key, CourseKey):
+            raise BadDownstream(_("Cannot update content because it does not belong to a course."))
+        if downstream.has_children:
+            raise BadDownstream(_("Updating content with children is not yet supported."))
+        try:
+            upstream_key = LibraryUsageLocatorV2.from_string(downstream.upstream)
+        except InvalidKeyError as exc:
+            raise BadUpstream(_("Reference to linked library item is malformed")) from exc
+        downstream_type = downstream.usage_key.block_type
+        if upstream_key.block_type != downstream_type:
+            # Note: Currently, we strictly enforce that the downstream and upstream block_types must exactly match.
+            #       It could be reasonable to relax this requirement in the future if there's product need for it.
+            #       For example, there's no reason that a StaticTabBlock couldn't take updates from an HtmlBlock.
+            raise BadUpstream(
+                _("Content type mismatch: {downstream_type} cannot be linked to {upstream_type}.").format(
+                    downstream_type=downstream_type, upstream_type=upstream_key.block_type
+                )
+            ) from TypeError(
+                f"downstream block '{downstream.usage_key}' is linked to "
+                f"upstream block of different type '{upstream_key}'"
+            )
+        try:
+            lib_meta = get_library_block(upstream_key)
+        except XBlockNotFoundError as exc:
+            raise BadUpstream(_("Linked library item was not found in the system")) from exc
+        return cls(
+            upstream_ref=downstream.upstream,
+            version_synced=downstream.upstream_version,
+            version_available=(lib_meta.published_version_num if lib_meta else None),
+            version_declined=downstream.upstream_version_declined,
+            error_message=None,
+        )
 
 
-def sync_from_upstream(downstream: XBlock, user: User, *, apply_updates: bool) -> None:
+def sync_from_upstream(downstream: XBlock, user: AbstractUser, *, apply_updates: bool) -> None:
     """
     @@TODO docstring
 
     Does not save `downstream` to the store. That is left up to the caller.
 
-    Raises: BadUpstream
+    Raises: BadUpstream, BadDownstream
     """
-
-    # No upstream -> no sync.
-    if not downstream.upstream:
-        return
-
     # Try to load the upstream.
-    upstream_info = inspect_upstream_link(downstream)  # Can raise BadUpstream
+    upstream_link = UpstreamLink.fetch_for_block(downstream)  # Can raise BadUpstream or BadUpstream
+    if not upstream_link:
+        return  # No upstream -> nothing to sync.
     try:
         upstream = xblock_api.load_block(UsageKey.from_string(downstream.upstream), user)
     except NotFound as exc:
@@ -89,7 +167,7 @@ def sync_from_upstream(downstream: XBlock, user: User, *, apply_updates: bool) -
         old_upstream_value = None
         if restore_field_name := customizable_fields.get(field.name):
 
-            # ...then write its latest upstream value to a hidden field.
+            # ...then save its latest upstream value to a hidden field.
             old_upstream_value = getattr(downstream, restore_field_name)
             setattr(downstream, restore_field_name, new_upstream_value)
 
@@ -100,14 +178,14 @@ def sync_from_upstream(downstream: XBlock, user: User, *, apply_updates: bool) -
         # ...*and* the field is non-customized...
         if field_name in customizable_fields:
 
-            # Determining whether a field has been customized will differ in Beta vs Future release.
-            # See "PRESRVING DOWNSTREAM CUSTOMIZATIONS" comment below for details.
+            # (Determining whether a field has been customized will differ in Beta vs Future release.
+            #  See "PRESRVING DOWNSTREAM CUSTOMIZATIONS" comment below for details.
 
-            # FUTURE BEHAVIOR: field is "customized" iff we have noticed that the user edited it.
-            # if field_name in downstream.downstream_customized:
-            #     continue
+            #  FUTURE BEHAVIOR: field is "customized" iff we have noticed that the user edited it.
+            #  if field_name in downstream.downstream_customized:
+            #      continue
 
-            # BETA BEHAVIOR: field is "customized" iff we have the previous upstream value, but field doesn't match it.
+            #  BETA BEHAVIOR: field is "customized" iff we have the prev upstream value, but field doesn't match it.)
             downstream_value = getattr(downstream, field_name)
             if old_upstream_value and downstream_value != old_upstream_value:
                 continue
@@ -116,80 +194,7 @@ def sync_from_upstream(downstream: XBlock, user: User, *, apply_updates: bool) -
         setattr(downstream, field_name, new_upstream_value)
 
     # Done syncing. Record the latest upstream version for future reference.
-    downstream.upstream_version = upstream_info.latest_version
-
-
-def inspect_upstream_link(downstream: XBlock) -> UpstreamInfo | None:
-    """
-    Get info on a block's relationship with its upstream without actually loading any upstream content.
-
-    Currently, the only supported upstream are LC-backed Library Components. This may change in the future (see
-    module docstring).
-
-    Raises: BadUpstream, BadDownstream
-    """
-    if not downstream.upstream:
-        return None
-    if not isinstance(downstream.usage_key.context_key, CourseKey):
-        raise BadDownstream(_("Cannot update content because it does not belong to a course."))
-    if downstream.has_children:
-        raise BadDownstream(_("Updating content with children is not yet supported."))
-    try:
-        upstream_key = LibraryUsageLocatorV2.from_string(downstream.upstream)
-    except InvalidKeyError as exc:
-        raise BadUpstream(_("Reference to linked library item is malformed")) from exc
-    downstream_type = downstream.usage_key.block_type
-    if upstream_key.block_type != downstream_type:
-        # Note: Currently, we strictly enforce that the downstream and upstream block_types must exactly match.
-        #       It could be reasonable to relax this requirement in the future if there's product need for it.
-        #       For example, there's no reason that a StaticTabBlock couldn't take updates from an HtmlBlock.
-        raise BadUpstream(
-            _("Content type mismatch. {downstream_type} content cannot be linked to {upstream_type} content.").format(
-                downstream_type=downstream_type, upstream_type=upstream_key.block_type
-            )
-        ) from TypeError(
-            f"downstream block '{downstream.usage_key}' is linked to "
-            f"upstream block of different type '{upstream_key}'"
-        )
-    try:
-        lib_meta = get_library_block(upstream_key)
-    except XBlockNotFoundError as exc:
-        raise BadUpstream(_("Linked library item was not found in the system")) from exc
-    return UpstreamInfo(
-        upstream_ref=downstream.upstream,
-        current_version=downstream.upstream_version,
-        latest_version=(lib_meta.version_num if lib_meta else None),
-    )
-
-
-def inspect_upstream_link_as_json(downstream: XBlock) -> dict[str, t.Any] | None:
-    """
-    Same as `inspect_upstream_link`, but return a dict (or None) suitable for a JSON API reseponse.
-
-    Does not raise.
-    In the event of a BadUpstream/BadDownstream, returns the error message in the `warning` field.
-    """
-    try:
-        upstream_info = inspect_upstream_link(downstream)
-    except (BadDownstream, BadUpstream) as exc:
-        return {
-            "upstream_ref": downstream.upstream,
-            "current_version": downstream.upstream_version,
-            "latest_version": None,
-            "can_sync": False,
-            "warning": str(exc),
-        }
-    if not upstream_info:
-        return None
-    return {
-        **asdict(upstream_info),
-        "can_sync": (
-            upstream_info.upstream_ref and
-            upstream_info.latest_version and
-            upstream_info.latest_version > upstream_info.current_version
-        ),
-        "warning": None,
-    }
+    downstream.upstream_version = upstream_link.version_available
 
 
 class UpstreamSyncMixin(XBlockMixin):
@@ -211,9 +216,17 @@ class UpstreamSyncMixin(XBlockMixin):
     )
     upstream_version = Integer(
         help=(
-            "Record of the upstream block's version number at the time this block was created from it. If "
-            "upstream_version is smaller than the upstream block's latest version, then the user will be able "
-            "to sync updates into this downstream block."
+            "Record of the upstream block's version number at the time this block was created from it. If this "
+            "upstream_version is smaller than the upstream block's latest published version, then the author will be "
+            "invited to sync updates into this downstream block, presuming that they have not already declined to sync "
+            "said version."
+        ),
+        default=None, scope=Scope.settings, hidden=True, enforce_type=True,
+    )
+    upstream_version_declined = Integer(
+        help=(
+            "Record of the latest upstream version for which the author declined to sync updates, or None if they have "
+            "never declined an update."
         ),
         default=None, scope=Scope.settings, hidden=True, enforce_type=True,
     )
