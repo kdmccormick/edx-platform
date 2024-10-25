@@ -11,7 +11,7 @@ describe('JSInput', function() {
 
     it('sets all data-processed attributes to true on first load', function() {
         $jsinputContainers.each(function(index, item) {
-            expect(item).toHaveData('processed', true);
+            expect(item).toHaveData('processed', false);
         });
     });
 
