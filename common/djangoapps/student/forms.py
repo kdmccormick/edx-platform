@@ -18,6 +18,7 @@ from openedx.core.djangoapps.user_api.preferences.api import get_user_preference
 from common.djangoapps.student.message_types import AccountRecovery as AccountRecoveryMessage
 
 
+
 def send_account_recovery_email_for_user(user, request, email=None):
     """
     Send out a account recovery email for the given user.
