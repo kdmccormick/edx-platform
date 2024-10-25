@@ -6,7 +6,6 @@
 #   - ModelName.field_name
 ---
 MYSQL:
-    - CornerstoneGlobalConfiguration.key
     - CourseCompleteImageConfiguration.default
     - DegreedEnterpriseCustomerConfiguration.key
     - ExperimentData.key
