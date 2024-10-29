@@ -8,7 +8,7 @@
 }
 
 @if $visual-grid == true or $visual-grid == yes {
-  body:before {
+  body:before { /* stylelint-disable-line */
     content: '';
     display: inline-block;
 
