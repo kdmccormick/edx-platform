@@ -117,42 +117,6 @@ def _get_count_from_last_line(filename, file_type):
         return None
 
 
-def _get_stylelint_violations():
-    """
-    Returns the number of Stylelint violations.
-    """
-    REPO_ROOT = repo_root()
-    REPORT_DIR = REPO_ROOT / 'reports'
-    stylelint_report_dir = (REPORT_DIR / "stylelint")
-    stylelint_report = stylelint_report_dir / "stylelint.report"
-    _prepare_report_dir(stylelint_report_dir)
-
-    command = [
-        'node', 'node_modules/stylelint',
-        '*scss_files',
-        '--custom-formatter', 'stylelint-formatter-pretty/index.js'
-    ]
-
-    with open(stylelint_report, 'w') as report_file:
-        subprocess.run(
-            command,
-            check=True,
-            stdout=report_file,
-            stderr=subprocess.STDOUT,
-            text=True
-        )
-
-    try:
-        return int(_get_count_from_last_line(stylelint_report, "stylelint"))
-    except TypeError:
-        fail_quality(
-            'stylelint',
-            "FAILURE: Number of stylelint violations could not be found in {stylelint_report}".format(
-                stylelint_report=stylelint_report
-            )
-        )
-
-
 def run_eslint():
     """
     Runs eslint on static asset directories.
@@ -205,28 +169,6 @@ def run_eslint():
         )
     else:
         print("successfully run eslint with violations")
-        print(num_violations)
-
-
-def run_stylelint():
-    """
-    Runs stylelint on Sass files.
-    If limit option is passed, fails build if more violations than the limit are found.
-    """
-
-    violations_limit = 0
-    num_violations = _get_stylelint_violations()
-    # Fail if number of violations is greater than the limit
-    if num_violations > violations_limit:
-        fail_quality(
-            'stylelint',
-            "FAILURE: Stylelint failed with too many violations: ({count}).\nThe limit is {violations_limit}.".format(
-                count=num_violations,
-                violations_limit=violations_limit,
-            )
-        )
-    else:
-        print("successfully run stylelint with violations")
         print(num_violations)
 
 
@@ -526,16 +468,12 @@ def run_xsslint():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=['eslint', 'stylelint',
-                                            'xsslint', 'pii_check', 'check_keywords'])
+    parser.add_argument("command", choices=['eslint', 'xsslint', 'pii_check', 'check_keywords'])
 
     argument = parser.parse_args()
 
     if argument.command == 'eslint':
         run_eslint()
-
-    elif argument.command == 'stylelint':
-        run_stylelint()
 
     elif argument.command == 'xsslint':
         run_xsslint()

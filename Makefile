@@ -209,12 +209,12 @@ eslint:	## check javascript for quality issues
 	python scripts/quality_test.py eslint
 
 stylelint: ## check css/scss for quality issues
-	python scripts/quality_test.py stylelint
+	node_modules/.bin/stylelint '**/*.scss' --custom-formatter stylelint-formatter-pretty/index.js
 
 xsslint: ## check xss for quality issues
 	python scripts/quality_test.py xsslint
 
-pycodestyle: ## check python files for quality issues 
+pycodestyle: ## check python files for quality issues
 	pycodestyle .
 
 pii_check: ## check django models for pii annotations
