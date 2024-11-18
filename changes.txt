@@ -1,0 +1,4 @@
+%s/^\(\w*\)[ \n]*=[ \n]*ENV_TOKENS\.get([ \n]*'\1',[ \n]*\1[, \n]*)/# DELETE ME: \1 is always defined
+
+%s/^\(\w*\)[ \n]*=[ \n]*ENV_TOKENS\.get([ \n]*'\1',[ \n]*\(.*\)[, \n]*)/# CHECK DEFAULT: \1 = \2
+
