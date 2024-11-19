@@ -69,11 +69,13 @@ class Mut:
     def to_python(self) -> str:
         raise NotImplementedError
 
+
 @dataclass(frozen=True)
 class PushLeft(Mut):
     value: object
     def to_python(self):
         return f"{self.ref}.insert(0, {self.value!r})"
+
 
 @dataclass(frozen=True)
 class PushRight(Mut):
@@ -81,17 +83,18 @@ class PushRight(Mut):
     def to_python(self):
         return f"{self.ref}.append({self.value!r})"
 
+
 @dataclass(frozen=True)
 class PopLeft(Mut):
-    value: object
     def to_python(self):
         return f"{self.ref}.pop(0)"
 
+
 @dataclass(frozen=True)
 class PopRight(Mut):
-    value: object
     def to_python(self):
         return f"{self.ref}.pop()"
+
 
 @dataclass(frozen=True)
 class Update(Mut):
@@ -102,16 +105,8 @@ class Update(Mut):
 
 @dataclass(frozen=True)
 class Delete(Mut):
-    pass
     def to_python(self):
         return f"del {self.ref}"
-
-
-l1 = [     "b", "c",    , "f1"]
-l2 = ["a", "b",      "d", "f2", "g"]
-
-
-
 
 
 def diff_json_settings(json1: object, json2: object, path: list[str | int]) -> list[Mut]:
@@ -123,13 +118,13 @@ def diff_json_settings(json1: object, json2: object, path: list[str | int]) -> l
         if len(json1) == len(json2):
             update_muts = [
                 Update([*path, i], json2[i])
-                for i in len(json1) if json1[i] != json2[i]
+                for i in range(len(json1)) if json1[i] != json2[i]
             ]
         best_left1 = None
         best_left2 = None
         best_length = 0
-        for left1 in range(0, len(json1)):
-            for left2 in range(i1, len(json2)):
+        for left1 in range(len(json1)):
+            for left2 in range(len(json2)):
                 right1 = left1
                 right2 = left2
                 length = 0
@@ -146,35 +141,14 @@ def diff_json_settings(json1: object, json2: object, path: list[str | int]) -> l
                 *(PopLeft(path) for _ in range(best_left1)),
                 *(PopRight(path) for _ in range(best_left2 + best_length, len(json1))),
                 *(PushLeft(path, value) for value in json2[:best_left2]),
-                *(PushRight(path, value) for value in json2[(best_left2 + best_overlap):]),
+                *(PushRight(path, value) for value in json2[(best_left2 + best_length):]),
             ]
-        if len(list_muts) < len(json2) and len(list_muts) < list(update_muts):
-            return list_muts
-        elif len(update_muts) < len(json2):
+
+        if list_muts and len(list_muts) < len(json2):
+            if (not update_muts) or len(list_muts) < len(update_muts):
+                return list_muts
+        elif update_muts and len(update_muts) < len(json2):
             return update_muts
-
-
-        if len(update_muts) < len(json2) and len(update_muts) <
-        append_muts = [
-            Append(path, json[i]) for i in range(
-        ]
-
-        if len(json1) < len(json2):
-            ix = 0
-            while ix < len(json1):
-                if json1[ix] != json2[ix]:
-                    break
-                ix += 1
-            if ix > 0:
-                return [Append(path, json2[i]) for i in range(ix, len(json2))]
-        if False and len(json1) == len(json2):  # @@TODO
-            ele_replacements = []
-            for ix, ele1 in enumerate(json1):
-                if ele1 == (ele2 := json2[ix]):
-                    ele_replacements.append(Replace([*path, ix], ele2))
-            if len(ele_rplacements) < len(json1):
-                return ele_replacements
-
     if isinstance(json1, dict) and isinstance(json2, dict) and PYREF_NAME_KEY not in json1:
         muts = []
         kept_something = False
