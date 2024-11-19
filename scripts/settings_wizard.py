@@ -16,6 +16,7 @@ from mock import patch
 from path import Path
 from pprint import pprint
 
+import click
 from django.conf import settings
 
 
@@ -26,20 +27,30 @@ PYREF_MODULE_KEY = "@@MODULE"
 PYREF_ARGS_KEY = "@@ARGS"
 PYREF_KWARGS_KEY = "@@KWARGS"
 
-def main():
-    #show_json()
-    #settings_json = settings_value_to_json(get_settings_dict(settings))
-    #json.dump(settings_json, sys.stdout, indent=4)
 
-    with open("production.json") as f:
-        prod = json.load(f)
-    with open("tutor_production.json") as f:
-        tutor_prod = json.load(f)
-    muts = diff_json_settings(prod, tutor_prod, [])
+@click.group()
+def main() -> None:
+    pass
+
+
+@main.command()
+def to_json() -> None:
+    settings_json = settings_value_to_json(get_settings_dict(settings))
+    print(json.dumps(settings_json, indent=4))
+
+
+@click.argument('file1', type=click.File('r'))
+@click.argument('file2', type=click.File('r'))
+@main.command()
+def diff_json(file1, file2):
+    json1 = json.load(file1)
+    json2 = json.load(file2)
+    muts = diff_json_settings(json1, json2, [])
     for mut in muts:
         print(mut.to_python())
 
 
+@main.command()
 def show_types():
     result = map_types_to_keypaths(get_settings_dict(settings))
     for typ, keypaths in sorted(result.items(), key=(lambda tk: str(tk[0]))):
@@ -48,15 +59,6 @@ def show_types():
         print(typ.__name__)
         for keypath in sorted(keypaths):
             print(f"\t{keypath_to_settings_ref(keypath)}")
-
-
-def show_json():
-    import json, sys
-    #print(*generate_settings_module_lines(*clean_settings_value(get_settings_dict(settings))), sep="\n")
-
-
-def show_python():
-    settings_json = settings_value_to_json(get_settings_dict(settings))
 
 
 @dataclass(frozen=True)
@@ -143,7 +145,6 @@ def diff_json_settings(json1: object, json2: object, path: list[str | int]) -> l
                 *(PushLeft(path, value) for value in json2[:best_left2]),
                 *(PushRight(path, value) for value in json2[(best_left2 + best_length):]),
             ]
-
         if list_muts and len(list_muts) < len(json2):
             if (not update_muts) or len(list_muts) < len(update_muts):
                 return list_muts
@@ -291,7 +292,7 @@ def map_types_to_keypaths(obj: object) -> KeyPathsByType:
     children: list[tuple[Key, object]]
     if isinstance(obj, dict):
         children = obj.items()
-    elif isinstance(obj, (str, path.Path, TextIOBase)):
+    elif isinstance(obj, (str, Path, TextIOBase)):
         # These are all technically enumerable, but we don't want to do that.
         children = []
     elif repr(obj.__class__) == "<class 'django.utils.functional.lazy.<locals>.__proxy__'>":
