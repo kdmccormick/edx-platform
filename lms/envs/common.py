@@ -5565,5 +5565,7 @@ SURVEY_REPORT_EXTRA_DATA = {}
 # .. eg ['US', 'CA']
 DISABLED_COUNTRIES = []
 
-
 LMS_COMM_DEFAULT_FROM_EMAIL = "no-reply@example.com"
+
+from openedx.core.lib.derived import derive_settings
+derive_settings(__name__)
