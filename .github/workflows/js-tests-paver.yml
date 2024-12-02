@@ -1,4 +1,4 @@
-name: Javascript tests
+name: Javascript tests PAVER
 
 on:
   pull_request:
@@ -64,13 +64,13 @@ jobs:
           make base-requirements
 
       - uses: c-hive/gha-npm-cache@v1
-
-      - name: Install npm
-        run: npm ci  
-
       - name: Run JS Tests
+        env:
+          TEST_SUITE: js-unit
+          SCRIPT_TO_RUN: ./scripts/generic-ci-tests.sh
         run: |
-          xvfb-run --auto-servernum make test-js
+          npm install -g jest
+          xvfb-run --auto-servernum ./scripts/all-tests.sh
 
       - name: Save Job Artifacts
         uses: actions/upload-artifact@v4
