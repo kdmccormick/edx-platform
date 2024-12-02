@@ -214,7 +214,7 @@ xsslint: ## check xss for quality issuest
 	--config=scripts.xsslint_config \
 	--thresholds=scripts/xsslint_thresholds.json
 
-pycodestyle: ## check python files for quality issues 
+pycodestyle: ## check python files for quality issues
 	pycodestyle .
 
 ## Re-enable --lint flag when this issue https://github.com/openedx/edx-platform/issues/35775 is resolved
@@ -225,13 +225,12 @@ pii_check: ## check django models for pii annotations
 		--app_name cms \
 		--coverage \
 		--lint
-	
 	DJANGO_SETTINGS_MODULE=lms.envs.test \
 	code_annotations django_find_annotations \
 		--config_file .pii_annotations.yml \
 		--app_name lms \
 		--coverage \
-		--lint	
+		--lint
 
 check_keywords: ## check django models for reserve keywords
 	DJANGO_SETTINGS_MODULE=cms.envs.test \
@@ -242,8 +241,14 @@ check_keywords: ## check django models for reserve keywords
 	python manage.py lms check_reserved_keywords \
 	--override_file db_keyword_overrides.yml
 
+NODE_KARMA_START=node --max_old_space_size=4096 node_modules/.bin/karma start --single-run=true --capture-timeout=60000 --browsers=FirefoxNoUpdates
+
 test-js: ## run javascript tests
-	node --max_old_space_size=4096 node_modules/.bin/karma start common/static/karma_common.conf.js \
-		--single-run=true \
-		--capture-timeout=60000 \
-		--browsers=FirefoxNoUpdates
+	TEST_SUITE='cms javascript' $(NODE_KARMA_START) cms/static/karma_cms.conf.js
+	TEST_SUITE='cms-squire javascript' $(NODE_KARMA_START) cms/static/karma_cms_squire.conf.js
+	TEST_SUITE='cms-webpack javascript' $(NODE_KARMA_START) cms/static/karma_cms_webpack.conf.js
+	TEST_SUITE='lms javascript' $(NODE_KARMA_START) lms/static/karma_lms.conf.js
+	TEST_SUITE='xmodule javascript' $(NODE_KARMA_START) xmodule/js/karma_xmodule.conf.js
+	TEST_SUITE='xmodule-webpack javascript' $(NODE_KARMA_START) xmodule/js/karma_xmodule_webpack.conf.js
+	TEST_SUITE='common javascript' $(NODE_KARMA_START) common/static/karma_cms.conf.js
+	TEST_SUITE='common-requirejs javascript' $(NODE_KARMA_START) common/static/karma_cms_requirejs.conf.js
