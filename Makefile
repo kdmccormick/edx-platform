@@ -205,9 +205,6 @@ migrate: migrate-lms migrate-cms
 ubuntu-requirements: ## Install ubuntu 22.04 system packages needed for `pip install` to work on ubuntu.
 	sudo apt install libmysqlclient-dev libxmlsec1-dev
 
-eslint:	## check javascript for quality issues
-	python scripts/eslint.py
-
 xsslint: ## check xss for quality issuest
 	python scripts/xsslint/xss_linter.py \
 	--rule-totals \
@@ -240,15 +237,3 @@ check_keywords: ## check django models for reserve keywords
 	DJANGO_SETTINGS_MODULE=lms.envs.test \
 	python manage.py lms check_reserved_keywords \
 	--override_file db_keyword_overrides.yml
-
-NODE_KARMA_START=node --max_old_space_size=4096 node_modules/.bin/karma start --single-run=true --capture-timeout=60000 --browsers=FirefoxNoUpdates
-
-test-js: ## run javascript tests
-	TEST_SUITE='cms javascript' $(NODE_KARMA_START) cms/static/karma_cms.conf.js
-	TEST_SUITE='cms-squire javascript' $(NODE_KARMA_START) cms/static/karma_cms_squire.conf.js
-	TEST_SUITE='cms-webpack javascript' $(NODE_KARMA_START) cms/static/karma_cms_webpack.conf.js
-	TEST_SUITE='lms javascript' $(NODE_KARMA_START) lms/static/karma_lms.conf.js
-	TEST_SUITE='xmodule javascript' $(NODE_KARMA_START) xmodule/js/karma_xmodule.conf.js
-	TEST_SUITE='xmodule-webpack javascript' $(NODE_KARMA_START) xmodule/js/karma_xmodule_webpack.conf.js
-	TEST_SUITE='common javascript' $(NODE_KARMA_START) common/static/karma_cms.conf.js
-	TEST_SUITE='common-requirejs javascript' $(NODE_KARMA_START) common/static/karma_cms_requirejs.conf.js
