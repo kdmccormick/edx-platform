@@ -26,6 +26,15 @@ var defineFooter = new RegExp('(' + defineCallFooter.source + ')|('
 var staticRootLms = process.env.STATIC_ROOT_LMS || './test_root/staticfiles';
 var staticRootCms = process.env.STATIC_ROOT_CMS || (staticRootLms + '/studio');
 
+class DieHardPlugin {
+  apply(compiler) {
+    compiler.hooks.failed.tap('DieHardPlugin', (error) => {
+      console.error(error);
+      process.exit(1);
+    });
+  }
+}
+
 var workerConfig = function() {
     try {
         return {
@@ -153,6 +162,7 @@ module.exports = Merge.smart({
                 // any other way to declare that dependency.
                 $script: 'scriptjs'
             }),
+            new DieHardPlugin(),
         ],
 
         module: {
