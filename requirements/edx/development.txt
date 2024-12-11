@@ -1179,8 +1179,6 @@ libsass==0.10.0
     # via
     #   -c requirements/edx/../constraints.txt
     #   -r requirements/edx/assets.txt
-    #   -r requirements/edx/doc.txt
-    #   -r requirements/edx/testing.txt
 loremipsum==1.0.5
     # via
     #   -r requirements/edx/doc.txt
@@ -1257,10 +1255,6 @@ mistune==3.0.2
     # via
     #   -r requirements/edx/doc.txt
     #   sphinx-mdinclude
-mock==5.1.0
-    # via
-    #   -r requirements/edx/doc.txt
-    #   -r requirements/edx/testing.txt
 mongoengine==0.29.1
     # via
     #   -r requirements/edx/doc.txt
@@ -1447,10 +1441,6 @@ path-py==12.5.0
     #   edx-enterprise
     #   ora2
     #   staff-graded-xblock
-paver==1.3.4
-    # via
-    #   -r requirements/edx/doc.txt
-    #   -r requirements/edx/testing.txt
 pbr==6.1.0
     # via
     #   -r requirements/edx/doc.txt
@@ -1647,10 +1637,6 @@ pylti1p3==2.0.0
     # via
     #   -r requirements/edx/doc.txt
     #   -r requirements/edx/testing.txt
-pymemcache==4.0.0
-    # via
-    #   -r requirements/edx/doc.txt
-    #   -r requirements/edx/testing.txt
 pymongo==4.4.0
     # via
     #   -c requirements/edx/../constraints.txt
@@ -1752,10 +1738,6 @@ python-ipware==3.0.0
     #   -r requirements/edx/doc.txt
     #   -r requirements/edx/testing.txt
     #   django-ipware
-python-memcached==1.62
-    # via
-    #   -r requirements/edx/doc.txt
-    #   -r requirements/edx/testing.txt
 python-slugify==8.0.4
     # via
     #   -r requirements/edx/doc.txt
@@ -1949,7 +1931,6 @@ six==1.17.0
     #   libsass
     #   optimizely-sdk
     #   pact-python
-    #   paver
     #   py2neo
     #   pyjwkest
     #   python-dateutil
@@ -2215,10 +2196,7 @@ walrus==0.9.4
     #   -r requirements/edx/testing.txt
     #   edx-event-bus-redis
 watchdog==6.0.0
-    # via
-    #   -r requirements/edx/development.in
-    #   -r requirements/edx/doc.txt
-    #   -r requirements/edx/testing.txt
+    # via -r requirements/edx/development.in
 wcwidth==0.2.13
     # via
     #   -r requirements/edx/doc.txt
