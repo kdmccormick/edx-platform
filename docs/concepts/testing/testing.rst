@@ -38,12 +38,12 @@ Unit Tests
 
 -  As a rule of thumb, your unit tests should cover every code branch.
 
--  Mock or patch external dependencies. We use the voidspace `Mock Library`_.
+-  Mock or patch external dependencies using `unittest.mock`_ functions.
 
 -  We unit test Python code (using `unittest`_) and Javascript (using
    `Jasmine`_)
 
-.. _Mock Library: http://www.voidspace.org.uk/python/mock/
+.. _unittest.mock: https://docs.python.org/3/library/unittest.mock.html
 .. _unittest: http://docs.python.org/2/library/unittest.html
 .. _Jasmine: http://jasmine.github.io/
 
@@ -103,10 +103,10 @@ When developing tests, it is often helpful to be able to really just run one sin
 
 Various ways to run tests using pytest::
 
-    pytest path/test_m­odule.py                          # Run all tests in a module.
-    pytest path/test_m­odule.p­y:­:te­st_func               # Run a specific test within a module.
-    pytest path/test_m­odule.p­y:­:Te­stC­las­s               # Run all tests in a class
-    pytest path/test_m­odule.p­y:­:Te­stC­las­s::­tes­t_m­ethod  # Run a specific method of a class.
+    pytest path/test_module.py                          # Run all tests in a module.
+    pytest path/test_module.py::test_func               # Run a specific test within a module.
+    pytest path/test_module.py::TestClass               # Run all tests in a class
+    pytest path/test_module.py::TestClass::test_method  # Run a specific method of a class.
     pytest path/testing/                                # Run all tests in a directory.
 
 For example, this command runs a single python unit test file::
@@ -114,7 +114,7 @@ For example, this command runs a single python unit test file::
     pytest xmodule/tests/test_stringify.py
 
 Note -
-edx-platorm has multiple services (lms, cms) in it. The environment for each service is different enough that we run some tests in both environments in Github Actions. 
+edx-platorm has multiple services (lms, cms) in it. The environment for each service is different enough that we run some tests in both environments in Github Actions.
 To test in each of these environments (especially for tests in "common" and "xmodule" directories), you will need to test in each seperately.
 To specify that the tests are run with the relevant service as root, Add --rootdir flag at end of your pytest call and specify the env to test in::
 
@@ -231,57 +231,35 @@ If you run into flakiness, check (and feel free to contribute to) this
 Running Javascript Unit Tests
 -----------------------------
 
-Before running Javascript unit tests, you will need to be running Firefox or Chrome in a place visible to edx-platform. If running this in devstack, you can run ``make dev.up.firefox`` or ``make dev.up.chrome``. Firefox is the default browser for the tests, so if you decide to use Chrome, you will need to prefix the test command with ``SELENIUM_BROWSER=chrome SELENIUM_HOST=edx.devstack.chrome`` (if using devstack).
+Before running Javascript unit tests, you will need to be running Firefox or Chrome in a place visible to edx-platform.
+If you are using Tutor Dev to run edx-platform, then you can do so by installing and enabling the
+``test-legacy-js`` plugin from `openedx-tutor-plugins`_, and then rebuilding
+the ``openedx-dev`` image:
+
+.. code-block:: python
+
+    tutor plugins install https://github.com/openedx/openedx-tutor-plugins/tree/main/plugins/tutor-contrib-test-legacy-js
+    tutor plugins enable test-legacy-js
+    tutor images build openedx-dev
+
+.. _openedx-tutor-plugins: https://github.com/openedx/openedx-tutor-plugins/
 
 We use Jasmine to run JavaScript unit tests. To run all the JavaScript
 tests::
 
-    paver test_js
+    npm run test
 
 To run a specific set of JavaScript tests and print the results to the
 console, run these commands::
 
-    paver test_js_run -s lms
-    paver test_js_run -s cms
-    paver test_js_run -s cms-squire
-    paver test_js_run -s xmodule
-    paver test_js_run -s xmodule-webpack
-    paver test_js_run -s common
-    paver test_js_run -s common-requirejs
-
-To run JavaScript tests in a browser, run these commands::
-
-    paver test_js_dev -s lms
-    paver test_js_dev -s cms
-    paver test_js_dev -s cms-squire
-    paver test_js_dev -s xmodule
-    paver test_js_dev -s xmodule-webpack
-    paver test_js_dev -s common
-    paver test_js_dev -s common-requirejs
-
-Debugging Specific Javascript Tests
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The best way to debug individual tests is to run the test suite in the browser and
-use your browser's Javascript debugger. The debug page will allow you to select
-an individual test and only view the results of that test.
-
-
-Debugging Tests in a Browser
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To debug these tests on devstack in a local browser:
-
-* first run the appropriate test_js_dev command from above
-* open http://localhost:19876/debug.html in your host system's browser of choice
-* this will run all the tests and show you the results including details of any failures
-* you can click on an individually failing test and/or suite to re-run it by itself
-* you can now use the browser's developer tools to debug as you would any other JavaScript code
-
-Note: the port is also output to the console that you ran the tests from if you find that easier.
-
-These paver commands call through to Karma. For more
-info, see `karma-runner.github.io <https://karma-runner.github.io/>`__.
+    npm run test-cms-vanilla
+    npm run test-cms-require
+    npm run test-cms-webpack
+    npm run test-lms-webpack
+    npm run test-xmodule-vanilla
+    npm run test-xmodule-webpack
+    npm run test-common-vanilla
+    npm run test-common-require
 
 Testing internationalization with dummy translations
 ----------------------------------------------------
