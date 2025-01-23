@@ -40,7 +40,7 @@ class Derived:
     TODO doc
     TODO typing
     """
-    def __init__(self, calculate_value: t.Callable)
+    def __init__(self, calculate_value: t.Callable):
         self.calculate_value = calculate_value
 
 
@@ -62,20 +62,24 @@ def _derive_dict_items(settings, the_dict: dict):
     for key, child in the_dict.items():
         if isinstance(child, Derived):
             the_dict[key] = child.calculate_value(settings)
-        elif isinstance(child, Sequence):
+        elif isinstance(child, Sequence) and not isinstance(child, str):
+            the_dict[key] = _derive_sequence_items(settings, child)
             _derive_sequence_items(settings, child)
         elif isinstance(child, dict):
             _derive_dict_items(settings, child)
 
 
-def _derive_sequence_items(settings, sequence: Sequence):
+def _derive_sequence_items(settings, the_seq: Sequence):
     """
     TODO doc
     """
-    for ix, child in enumerate(sequence):
+    result = []
+    for ix, child in enumerate(the_seq):
         if isinstance(child, Derived):
-            the_dict[ix] = child.calculate_value(settings)
-        elif isinstance(value, Sequence):
-            _derive_sequence_items(settings, child)
-        elif isinstance(value, dict):
+            result.append(child.calculate_value(settings))
+        elif isinstance(child, Sequence) and not isinstance(child, str):
+            result.append(_derive_sequence_items(settings, child))
+        elif isinstance(child, dict):
             _derive_dict_items(settings, child)
+            result.append(child)
+    return type(the_seq)(result)

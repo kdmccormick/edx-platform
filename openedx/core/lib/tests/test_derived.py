@@ -5,7 +5,7 @@ Tests for derived.py
 
 import sys
 from unittest import TestCase
-from openedx.core.lib.derived import Derived
+from openedx.core.lib.derived import Derived, derive_settings
 
 
 class TestDerivedSettings(TestCase):
@@ -14,7 +14,6 @@ class TestDerivedSettings(TestCase):
     """
     def setUp(self):
         super().setUp()
-        clear_for_tests()
         self.module = sys.modules[__name__]
         self.module.SIMPLE_VALUE = 'paneer'
         self.module.DERIVED_VALUE = Derived(lambda settings: 'mutter ' + settings.SIMPLE_VALUE)
