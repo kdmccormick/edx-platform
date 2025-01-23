@@ -1,0 +1,4884 @@
+{
+    "ABSOLUTE_URL_OVERRIDES": {},
+    "ACCOUNT_MICROFRONTEND_URL": null,
+    "ACCOUNT_VISIBILITY_CONFIGURATION": {
+        "default_visibility": "all_users",
+        "public_fields": [
+            "account_privacy",
+            "profile_image",
+            "username"
+        ],
+        "bulk_shareable_fields": [
+            "account_privacy",
+            "profile_image",
+            "username",
+            "bio",
+            "course_certificates",
+            "country",
+            "date_joined",
+            "language_proficiencies",
+            "level_of_education",
+            "social_links",
+            "time_zone"
+        ],
+        "custom_shareable_fields": [
+            "account_privacy",
+            "profile_image",
+            "username",
+            "bio",
+            "course_certificates",
+            "country",
+            "date_joined",
+            "language_proficiencies",
+            "level_of_education",
+            "social_links",
+            "time_zone",
+            "name"
+        ],
+        "admin_fields": [
+            "account_privacy",
+            "profile_image",
+            "username",
+            "bio",
+            "course_certificates",
+            "country",
+            "date_joined",
+            "language_proficiencies",
+            "level_of_education",
+            "social_links",
+            "time_zone",
+            "name",
+            "email",
+            "id",
+            "verified_name",
+            "extended_profile",
+            "gender",
+            "state",
+            "goals",
+            "is_active",
+            "last_login",
+            "mailing_address",
+            "requires_parental_consent",
+            "secondary_email",
+            "secondary_email_enabled",
+            "year_of_birth",
+            "phone_number",
+            "activation_key",
+            "pending_name_change"
+        ]
+    },
+    "ACE_CHANNEL_DEFAULT_EMAIL": "django_email",
+    "ACE_CHANNEL_DEFAULT_PUSH": "push_notification",
+    "ACE_CHANNEL_SAILTHRU_API_KEY": null,
+    "ACE_CHANNEL_SAILTHRU_API_SECRET": null,
+    "ACE_CHANNEL_SAILTHRU_DEBUG": true,
+    "ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME": "Automated Communication Engine Email",
+    "ACE_CHANNEL_TRANSACTIONAL_EMAIL": "django_email",
+    "ACE_ENABLED_CHANNELS": [
+        "django_email"
+    ],
+    "ACE_ENABLED_POLICIES": [
+        "bulk_email_optout"
+    ],
+    "ACE_ROUTING_KEY": "edx.lms.core.default",
+    "ACTIVATION_EMAIL_FROM_ADDRESS": "",
+    "ACTIVATION_EMAIL_SUPPORT_LINK": "",
+    "ADMINS": [],
+    "AFFILIATE_COOKIE_NAME": "dev_affiliate_id",
+    "AI_TRANSLATIONS_API_URL": "http://localhost:18760/api/v1",
+    "ALGOLIA_APP_ID": null,
+    "ALGOLIA_SEARCH_API_KEY": null,
+    "ALLOWED_HOSTS": [
+        "*",
+        "local.openedx.io",
+        "preview.local.openedx.io"
+    ],
+    "ALL_LANGUAGES": [
+        [
+            "aa",
+            "Afar"
+        ],
+        [
+            "ab",
+            "Abkhazian"
+        ],
+        [
+            "af",
+            "Afrikaans"
+        ],
+        [
+            "ak",
+            "Akan"
+        ],
+        [
+            "sq",
+            "Albanian"
+        ],
+        [
+            "am",
+            "Amharic"
+        ],
+        [
+            "ar",
+            "Arabic"
+        ],
+        [
+            "an",
+            "Aragonese"
+        ],
+        [
+            "hy",
+            "Armenian"
+        ],
+        [
+            "as",
+            "Assamese"
+        ],
+        [
+            "av",
+            "Avaric"
+        ],
+        [
+            "ae",
+            "Avestan"
+        ],
+        [
+            "ay",
+            "Aymara"
+        ],
+        [
+            "az",
+            "Azerbaijani"
+        ],
+        [
+            "ba",
+            "Bashkir"
+        ],
+        [
+            "bm",
+            "Bambara"
+        ],
+        [
+            "eu",
+            "Basque"
+        ],
+        [
+            "be",
+            "Belarusian"
+        ],
+        [
+            "bn",
+            "Bengali"
+        ],
+        [
+            "bh",
+            "Bihari languages"
+        ],
+        [
+            "bi",
+            "Bislama"
+        ],
+        [
+            "bs",
+            "Bosnian"
+        ],
+        [
+            "br",
+            "Breton"
+        ],
+        [
+            "bg",
+            "Bulgarian"
+        ],
+        [
+            "my",
+            "Burmese"
+        ],
+        [
+            "ca",
+            "Catalan"
+        ],
+        [
+            "ch",
+            "Chamorro"
+        ],
+        [
+            "ce",
+            "Chechen"
+        ],
+        [
+            "zh",
+            "Chinese"
+        ],
+        [
+            "zh_HANS",
+            "Simplified Chinese"
+        ],
+        [
+            "zh_HANT",
+            "Traditional Chinese"
+        ],
+        [
+            "cu",
+            "Church Slavic"
+        ],
+        [
+            "cv",
+            "Chuvash"
+        ],
+        [
+            "kw",
+            "Cornish"
+        ],
+        [
+            "co",
+            "Corsican"
+        ],
+        [
+            "cr",
+            "Cree"
+        ],
+        [
+            "cs",
+            "Czech"
+        ],
+        [
+            "da",
+            "Danish"
+        ],
+        [
+            "dv",
+            "Divehi"
+        ],
+        [
+            "nl",
+            "Dutch"
+        ],
+        [
+            "dz",
+            "Dzongkha"
+        ],
+        [
+            "en",
+            "English"
+        ],
+        [
+            "eo",
+            "Esperanto"
+        ],
+        [
+            "et",
+            "Estonian"
+        ],
+        [
+            "ee",
+            "Ewe"
+        ],
+        [
+            "fo",
+            "Faroese"
+        ],
+        [
+            "fj",
+            "Fijian"
+        ],
+        [
+            "fi",
+            "Finnish"
+        ],
+        [
+            "fr",
+            "French"
+        ],
+        [
+            "fy",
+            "Western Frisian"
+        ],
+        [
+            "ff",
+            "Fulah"
+        ],
+        [
+            "ka",
+            "Georgian"
+        ],
+        [
+            "de",
+            "German"
+        ],
+        [
+            "gd",
+            "Gaelic"
+        ],
+        [
+            "ga",
+            "Irish"
+        ],
+        [
+            "gl",
+            "Galician"
+        ],
+        [
+            "gv",
+            "Manx"
+        ],
+        [
+            "el",
+            "Greek"
+        ],
+        [
+            "gn",
+            "Guarani"
+        ],
+        [
+            "gu",
+            "Gujarati"
+        ],
+        [
+            "ht",
+            "Haitian"
+        ],
+        [
+            "ha",
+            "Hausa"
+        ],
+        [
+            "he",
+            "Hebrew"
+        ],
+        [
+            "hz",
+            "Herero"
+        ],
+        [
+            "hi",
+            "Hindi"
+        ],
+        [
+            "ho",
+            "Hiri Motu"
+        ],
+        [
+            "hr",
+            "Croatian"
+        ],
+        [
+            "hu",
+            "Hungarian"
+        ],
+        [
+            "ig",
+            "Igbo"
+        ],
+        [
+            "is",
+            "Icelandic"
+        ],
+        [
+            "io",
+            "Ido"
+        ],
+        [
+            "ii",
+            "Sichuan Yi"
+        ],
+        [
+            "iu",
+            "Inuktitut"
+        ],
+        [
+            "ie",
+            "Interlingue"
+        ],
+        [
+            "ia",
+            "Interlingua"
+        ],
+        [
+            "id",
+            "Indonesian"
+        ],
+        [
+            "ik",
+            "Inupiaq"
+        ],
+        [
+            "it",
+            "Italian"
+        ],
+        [
+            "jv",
+            "Javanese"
+        ],
+        [
+            "ja",
+            "Japanese"
+        ],
+        [
+            "kl",
+            "Kalaallisut"
+        ],
+        [
+            "kn",
+            "Kannada"
+        ],
+        [
+            "ks",
+            "Kashmiri"
+        ],
+        [
+            "kr",
+            "Kanuri"
+        ],
+        [
+            "kk",
+            "Kazakh"
+        ],
+        [
+            "km",
+            "Central Khmer"
+        ],
+        [
+            "ki",
+            "Kikuyu"
+        ],
+        [
+            "rw",
+            "Kinyarwanda"
+        ],
+        [
+            "ky",
+            "Kirghiz"
+        ],
+        [
+            "kv",
+            "Komi"
+        ],
+        [
+            "kg",
+            "Kongo"
+        ],
+        [
+            "ko",
+            "Korean"
+        ],
+        [
+            "kj",
+            "Kuanyama"
+        ],
+        [
+            "ku",
+            "Kurdish"
+        ],
+        [
+            "lo",
+            "Lao"
+        ],
+        [
+            "la",
+            "Latin"
+        ],
+        [
+            "lv",
+            "Latvian"
+        ],
+        [
+            "li",
+            "Limburgan"
+        ],
+        [
+            "ln",
+            "Lingala"
+        ],
+        [
+            "lt",
+            "Lithuanian"
+        ],
+        [
+            "lb",
+            "Luxembourgish"
+        ],
+        [
+            "lu",
+            "Luba-Katanga"
+        ],
+        [
+            "lg",
+            "Ganda"
+        ],
+        [
+            "mk",
+            "Macedonian"
+        ],
+        [
+            "mh",
+            "Marshallese"
+        ],
+        [
+            "ml",
+            "Malayalam"
+        ],
+        [
+            "mi",
+            "Maori"
+        ],
+        [
+            "mr",
+            "Marathi"
+        ],
+        [
+            "ms",
+            "Malay"
+        ],
+        [
+            "mg",
+            "Malagasy"
+        ],
+        [
+            "mt",
+            "Maltese"
+        ],
+        [
+            "mn",
+            "Mongolian"
+        ],
+        [
+            "na",
+            "Nauru"
+        ],
+        [
+            "nv",
+            "Navajo"
+        ],
+        [
+            "nr",
+            "Ndebele, South"
+        ],
+        [
+            "nd",
+            "Ndebele, North"
+        ],
+        [
+            "ng",
+            "Ndonga"
+        ],
+        [
+            "ne",
+            "Nepali"
+        ],
+        [
+            "nn",
+            "Norwegian Nynorsk"
+        ],
+        [
+            "nb",
+            "Bokm\u00e5l, Norwegian"
+        ],
+        [
+            "no",
+            "Norwegian"
+        ],
+        [
+            "ny",
+            "Chichewa"
+        ],
+        [
+            "oc",
+            "Occitan"
+        ],
+        [
+            "oj",
+            "Ojibwa"
+        ],
+        [
+            "or",
+            "Oriya"
+        ],
+        [
+            "om",
+            "Oromo"
+        ],
+        [
+            "os",
+            "Ossetian"
+        ],
+        [
+            "pa",
+            "Panjabi"
+        ],
+        [
+            "fa",
+            "Persian"
+        ],
+        [
+            "pi",
+            "Pali"
+        ],
+        [
+            "pl",
+            "Polish"
+        ],
+        [
+            "pt",
+            "Portuguese"
+        ],
+        [
+            "ps",
+            "Pushto"
+        ],
+        [
+            "qu",
+            "Quechua"
+        ],
+        [
+            "rm",
+            "Romansh"
+        ],
+        [
+            "ro",
+            "Romanian"
+        ],
+        [
+            "rn",
+            "Rundi"
+        ],
+        [
+            "ru",
+            "Russian"
+        ],
+        [
+            "sg",
+            "Sango"
+        ],
+        [
+            "sa",
+            "Sanskrit"
+        ],
+        [
+            "si",
+            "Sinhala"
+        ],
+        [
+            "sk",
+            "Slovak"
+        ],
+        [
+            "sl",
+            "Slovenian"
+        ],
+        [
+            "se",
+            "Northern Sami"
+        ],
+        [
+            "sm",
+            "Samoan"
+        ],
+        [
+            "sn",
+            "Shona"
+        ],
+        [
+            "sd",
+            "Sindhi"
+        ],
+        [
+            "so",
+            "Somali"
+        ],
+        [
+            "st",
+            "Sotho, Southern"
+        ],
+        [
+            "es",
+            "Spanish"
+        ],
+        [
+            "sc",
+            "Sardinian"
+        ],
+        [
+            "sr",
+            "Serbian"
+        ],
+        [
+            "ss",
+            "Swati"
+        ],
+        [
+            "su",
+            "Sundanese"
+        ],
+        [
+            "sw",
+            "Swahili"
+        ],
+        [
+            "sv",
+            "Swedish"
+        ],
+        [
+            "ty",
+            "Tahitian"
+        ],
+        [
+            "ta",
+            "Tamil"
+        ],
+        [
+            "tt",
+            "Tatar"
+        ],
+        [
+            "te",
+            "Telugu"
+        ],
+        [
+            "tg",
+            "Tajik"
+        ],
+        [
+            "tl",
+            "Tagalog"
+        ],
+        [
+            "th",
+            "Thai"
+        ],
+        [
+            "bo",
+            "Tibetan"
+        ],
+        [
+            "ti",
+            "Tigrinya"
+        ],
+        [
+            "to",
+            "Tonga (Tonga Islands)"
+        ],
+        [
+            "tn",
+            "Tswana"
+        ],
+        [
+            "ts",
+            "Tsonga"
+        ],
+        [
+            "tk",
+            "Turkmen"
+        ],
+        [
+            "tr",
+            "Turkish"
+        ],
+        [
+            "tw",
+            "Twi"
+        ],
+        [
+            "ug",
+            "Uighur"
+        ],
+        [
+            "uk",
+            "Ukrainian"
+        ],
+        [
+            "ur",
+            "Urdu"
+        ],
+        [
+            "uz",
+            "Uzbek"
+        ],
+        [
+            "ve",
+            "Venda"
+        ],
+        [
+            "vi",
+            "Vietnamese"
+        ],
+        [
+            "vo",
+            "Volap\u00fck"
+        ],
+        [
+            "cy",
+            "Welsh"
+        ],
+        [
+            "wa",
+            "Walloon"
+        ],
+        [
+            "wo",
+            "Wolof"
+        ],
+        [
+            "xh",
+            "Xhosa"
+        ],
+        [
+            "yi",
+            "Yiddish"
+        ],
+        [
+            "yo",
+            "Yoruba"
+        ],
+        [
+            "za",
+            "Zhuang"
+        ],
+        [
+            "zu",
+            "Zulu"
+        ]
+    ],
+    "ALTERNATE_ENV_TASKS": {},
+    "ALTERNATE_QUEUES": [
+        "edx.cms.core.default"
+    ],
+    "ALTERNATE_WORKER_QUEUES": "cms",
+    "ANALYTICS_API_CLIENT": {
+        "url": "http://host.docker.internal:8000/api/v0",
+        "token": "edx"
+    },
+    "ANALYTICS_API_KEY": "",
+    "ANALYTICS_API_URL": "http://localhost:18100",
+    "ANALYTICS_DASHBOARD_NAME": {
+        "@@PYREF": "gettext_lazy",
+        "@@MODULE": "django.contrib.translation.utils",
+        "@@ARGS": [
+            "Your Platform Insights"
+        ]
+    },
+    "ANALYTICS_DASHBOARD_URL": "",
+    "ANONYMOUS_SURVEY_REPORT": false,
+    "API_ACCESS_FROM_EMAIL": null,
+    "API_ACCESS_MANAGER_EMAIL": null,
+    "API_DOCUMENTATION_URL": "https://course-catalog-api-guide.readthedocs.io/en/latest/",
+    "APPEND_SLASH": true,
+    "APP_UPGRADE_CACHE_TIMEOUT": 3600,
+    "ASSET_IGNORE_REGEX": "(^\\._.*$)|(^\\.DS_Store$)|(^.*~$)",
+    "ASSET_KEY_PATTERN": "(?P<asset_key_string>(?:/?c4x(:/)?/[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|(?:[^/]+))",
+    "AUTHENTICATION_BACKENDS": [
+        "social_core.backends.google.GoogleOAuth2",
+        "social_core.backends.linkedin.LinkedinOAuth2",
+        "social_core.backends.facebook.FacebookOAuth2",
+        "social_core.backends.azuread.AzureADOAuth2",
+        "common.djangoapps.third_party_auth.appleid.AppleIdAuth",
+        "common.djangoapps.third_party_auth.identityserver3.IdentityServer3",
+        "common.djangoapps.third_party_auth.saml.SAMLAuthBackend",
+        "common.djangoapps.third_party_auth.lti.LTIAuthBackend",
+        "rules.permissions.ObjectPermissionBackend",
+        "django.contrib.auth.backends.AllowAllUsersModelBackend",
+        "bridgekeeper.backends.RulePermissionBackend"
+    ],
+    "AUTHN_MICROFRONTEND_DOMAIN": null,
+    "AUTHN_MICROFRONTEND_URL": null,
+    "AUTH_DOCUMENTATION_URL": "https://course-catalog-api-guide.readthedocs.io/en/latest/authentication/index.html",
+    "AUTH_PASSWORD_VALIDATORS": [
+        {
+            "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        },
+        {
+            "NAME": "common.djangoapps.util.password_policy_validators.MinimumLengthValidator",
+            "OPTIONS": {
+                "min_length": 8
+            }
+        },
+        {
+            "NAME": "common.djangoapps.util.password_policy_validators.MaximumLengthValidator",
+            "OPTIONS": {
+                "max_length": 75
+            }
+        }
+    ],
+    "AUTH_TOKENS": {
+        "SITE_NAME": "local.openedx.io",
+        "BOOK_URL": "",
+        "LOG_DIR": "/openedx/data/logs",
+        "LOGGING_ENV": "sandbox",
+        "OAUTH_OIDC_ISSUER": "http://local.openedx.io/oauth2",
+        "PLATFORM_NAME": "Kyle's Open edX",
+        "FEATURES": {
+            "CERTIFICATES_HTML_VIEW": true,
+            "PREVIEW_LMS_BASE": "preview.local.openedx.io",
+            "ENABLE_CSMH_EXTENDED": false,
+            "ENABLE_COMBINED_LOGIN_REGISTRATION": true,
+            "ENABLE_GRADE_DOWNLOADS": true,
+            "ENABLE_LEARNER_RECORDS": false,
+            "ENABLE_MOBILE_REST_API": true,
+            "ENABLE_OAUTH2_PROVIDER": true,
+            "ENABLE_PREREQUISITE_COURSES": true,
+            "ENABLE_THIRD_PARTY_AUTH": true,
+            "MILESTONES_APP": true
+        },
+        "LMS_ROOT_URL": "http://local.openedx.io",
+        "CMS_ROOT_URL": "http://studio.local.openedx.io",
+        "CMS_BASE": "studio.local.openedx.io",
+        "LMS_BASE": "local.openedx.io",
+        "CONTACT_EMAIL": "contact@local.overhang.io",
+        "CELERY_BROKER_TRANSPORT": "redis",
+        "CELERY_BROKER_HOSTNAME": "redis:6379",
+        "CELERY_BROKER_VHOST": "0",
+        "CELERY_BROKER_USER": "",
+        "CELERY_BROKER_PASSWORD": "",
+        "ALTERNATE_WORKER_QUEUES": "cms",
+        "ENABLE_COMPREHENSIVE_THEMING": true,
+        "EMAIL_BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "EMAIL_HOST": "smtp",
+        "EMAIL_PORT": 8025,
+        "EMAIL_USE_TLS": false,
+        "ACE_ROUTING_KEY": "edx.lms.core.default",
+        "HTTPS": "off",
+        "LANGUAGE_CODE": "en",
+        "SESSION_COOKIE_DOMAIN": "local.openedx.io",
+        "SECRET_KEY": "o5wToOrEitfAxwP8E5U0n5zi",
+        "AWS_ACCESS_KEY_ID": "",
+        "AWS_SECRET_ACCESS_KEY": "",
+        "DOC_STORE_CONFIG": null,
+        "XQUEUE_INTERFACE": {
+            "django_auth": null,
+            "url": null
+        },
+        "DATABASES": {
+            "default": {
+                "ENGINE": "django.db.backends.mysql",
+                "HOST": "mysql",
+                "PORT": 3306,
+                "NAME": "openedx",
+                "USER": "openedx",
+                "PASSWORD": "auLBXeYu",
+                "ATOMIC_REQUESTS": true,
+                "OPTIONS": {
+                    "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+                    "charset": "utf8mb4"
+                }
+            }
+        },
+        "EMAIL_HOST_USER": "",
+        "EMAIL_HOST_PASSWORD": ""
+    },
+    "AUTH_USER_MODEL": "auth.User",
+    "AUTO_GENERATED_USERNAME_RANDOM_STRING_LENGTH": 4,
+    "AVAILABLE_DISCUSSION_TOURS": [],
+    "AWS_ACCESS_KEY_ID": null,
+    "AWS_BUCKET_ACL": "public-read",
+    "AWS_DEFAULT_ACL": "public-read",
+    "AWS_QUERYSTRING_AUTH": true,
+    "AWS_QUERYSTRING_EXPIRE": 315360000,
+    "AWS_S3_CUSTOM_DOMAIN": "edxuploads.s3.amazonaws.com",
+    "AWS_SECRET_ACCESS_KEY": null,
+    "AWS_SES_REGION_ENDPOINT": "email.us-east-1.amazonaws.com",
+    "AWS_SES_REGION_NAME": "us-east-1",
+    "AWS_STORAGE_BUCKET_NAME": "edxuploads",
+    "BASE_COOKIE_DOMAIN": "localhost",
+    "BEAMER_PRODUCT_ID": "",
+    "BLOCK_STRUCTURES_SETTINGS": {
+        "COURSE_PUBLISH_TASK_DELAY": 30,
+        "TASK_DEFAULT_RETRY_DELAY": 30,
+        "TASK_MAX_RETRIES": 5
+    },
+    "BOOK_URL": "",
+    "BRANCH_IO_KEY": null,
+    "BRAZE_COURSE_ENROLLMENT_CANVAS_ID": "",
+    "BROKER_CONNECTION_TIMEOUT": 1,
+    "BROKER_HEARTBEAT": 60.0,
+    "BROKER_HEARTBEAT_CHECKRATE": 2,
+    "BROKER_POOL_LIMIT": 0,
+    "BROKER_TRANSPORT_OPTIONS": {
+        "fanout_patterns": true,
+        "fanout_prefix": true
+    },
+    "BROKER_URL": "redis://:@redis:6379/0",
+    "BROKER_USE_SSL": false,
+    "BUGS_EMAIL": "bugs@example.com",
+    "BULK_COURSE_EMAIL_LAST_LOGIN_ELIGIBILITY_PERIOD": null,
+    "BULK_EMAIL_DEFAULT_FROM_EMAIL": "no-reply@example.com",
+    "BULK_EMAIL_DEFAULT_RETRY_DELAY": 30,
+    "BULK_EMAIL_EMAILS_PER_TASK": 500,
+    "BULK_EMAIL_INFINITE_RETRY_CAP": 1000,
+    "BULK_EMAIL_JOB_SIZE_THRESHOLD": 100,
+    "BULK_EMAIL_LOG_SENT_EMAILS": false,
+    "BULK_EMAIL_MAX_RETRIES": 5,
+    "BULK_EMAIL_RETRY_DELAY_BETWEEN_SENDS": 0.02,
+    "BULK_EMAIL_ROUTING_KEY": "edx.lms.core.high",
+    "BULK_EMAIL_ROUTING_KEY_SMALL_JOBS": "edx.lms.core.default",
+    "CACHES": {
+        "course_structure_cache": {
+            "KEY_PREFIX": "course_structure",
+            "KEY_FUNCTION": "common.djangoapps.util.memcache.safe_key",
+            "LOCATION": [
+                "localhost:11211"
+            ],
+            "TIMEOUT": "604800",
+            "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+            "OPTIONS": {
+                "no_delay": true,
+                "ignore_exc": true,
+                "use_pooling": true,
+                "connect_timeout": 0.5
+            }
+        },
+        "celery": {
+            "KEY_PREFIX": "celery",
+            "KEY_FUNCTION": "common.djangoapps.util.memcache.safe_key",
+            "LOCATION": [
+                "localhost:11211"
+            ],
+            "TIMEOUT": "7200",
+            "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+            "OPTIONS": {
+                "no_delay": true,
+                "ignore_exc": true,
+                "use_pooling": true,
+                "connect_timeout": 0.5
+            }
+        },
+        "mongo_metadata_inheritance": {
+            "KEY_PREFIX": "mongo_metadata_inheritance",
+            "KEY_FUNCTION": "common.djangoapps.util.memcache.safe_key",
+            "LOCATION": [
+                "localhost:11211"
+            ],
+            "TIMEOUT": 300,
+            "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+            "OPTIONS": {
+                "no_delay": true,
+                "ignore_exc": true,
+                "use_pooling": true,
+                "connect_timeout": 0.5
+            }
+        },
+        "staticfiles": {
+            "KEY_FUNCTION": "common.djangoapps.util.memcache.safe_key",
+            "LOCATION": [
+                "localhost:11211"
+            ],
+            "KEY_PREFIX": "release",
+            "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+            "OPTIONS": {
+                "no_delay": true,
+                "ignore_exc": true,
+                "use_pooling": true,
+                "connect_timeout": 0.5
+            }
+        },
+        "default": {
+            "VERSION": "1",
+            "KEY_FUNCTION": "common.djangoapps.util.memcache.safe_key",
+            "LOCATION": [
+                "localhost:11211"
+            ],
+            "KEY_PREFIX": "default",
+            "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+            "OPTIONS": {
+                "no_delay": true,
+                "ignore_exc": true,
+                "use_pooling": true,
+                "connect_timeout": 0.5
+            }
+        },
+        "configuration": {
+            "KEY_FUNCTION": "common.djangoapps.util.memcache.safe_key",
+            "LOCATION": [
+                "localhost:11211"
+            ],
+            "KEY_PREFIX": "configuration",
+            "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+            "OPTIONS": {
+                "no_delay": true,
+                "ignore_exc": true,
+                "use_pooling": true,
+                "connect_timeout": 0.5
+            }
+        },
+        "general": {
+            "KEY_FUNCTION": "common.djangoapps.util.memcache.safe_key",
+            "LOCATION": [
+                "localhost:11211"
+            ],
+            "KEY_PREFIX": "general",
+            "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+            "OPTIONS": {
+                "no_delay": true,
+                "ignore_exc": true,
+                "use_pooling": true,
+                "connect_timeout": 0.5
+            }
+        },
+        "loc_cache": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "edx_location_mem_cache"
+        }
+    },
+    "CACHE_MIDDLEWARE_ALIAS": "default",
+    "CACHE_MIDDLEWARE_KEY_PREFIX": "",
+    "CACHE_MIDDLEWARE_SECONDS": 600,
+    "CALCULATOR_HELP_URL": "https://edx.readthedocs.io/projects/open-edx-building-and-running-a-course/en/latest/exercises_tools/calculator.html",
+    "CCX_MAX_STUDENTS_ALLOWED": 200,
+    "CC_MERCHANT_NAME": "Kyle's Open edX",
+    "CELERYBEAT_SCHEDULE": {
+        "refresh-saml-metadata": {
+            "task": "common.djangoapps.third_party_auth.fetch_saml_metadata",
+            "schedule": {
+                "@@PYREF": "timedelta",
+                "@@MODULE": "datetime",
+                "@@KWARGS": {
+                    "seconds": 86400.0,
+                    "microseconds": 0
+                }
+            }
+        }
+    },
+    "CELERYD_HIJACK_ROOT_LOGGER": false,
+    "CELERYD_PREFETCH_MULTIPLIER": 1,
+    "CELERY_BROKER_HOSTNAME": "redis:6379",
+    "CELERY_BROKER_PASSWORD": "",
+    "CELERY_BROKER_TRANSPORT": "redis",
+    "CELERY_BROKER_USER": "",
+    "CELERY_BROKER_USE_SSL": false,
+    "CELERY_BROKER_VHOST": "0",
+    "CELERY_CREATE_MISSING_QUEUES": true,
+    "CELERY_DEFAULT_EXCHANGE": "edx.lms.core",
+    "CELERY_DEFAULT_EXCHANGE_TYPE": "direct",
+    "CELERY_DEFAULT_QUEUE": "edx.lms.core.default",
+    "CELERY_DEFAULT_ROUTING_KEY": "edx.lms.core.default",
+    "CELERY_EVENT_QUEUE_TTL": null,
+    "CELERY_EXTRA_IMPORTS": [],
+    "CELERY_IGNORE_RESULT": false,
+    "CELERY_IMPORTS": [
+        "poll.tasks"
+    ],
+    "CELERY_MESSAGE_COMPRESSION": "gzip",
+    "CELERY_QUEUES": {
+        "edx.lms.core.high": {},
+        "edx.lms.core.default": {},
+        "edx.lms.core.high_mem": {},
+        "edx.cms.core.default": {}
+    },
+    "CELERY_QUEUE_HA_POLICY": "all",
+    "CELERY_RESULT_BACKEND": "django-cache",
+    "CELERY_RESULT_SERIALIZER": "json",
+    "CELERY_ROUTES": "openedx.core.lib.celery.routers.route_task",
+    "CELERY_SEND_EVENTS": true,
+    "CELERY_SEND_TASK_SENT_EVENT": true,
+    "CELERY_STORE_ERRORS_EVEN_IF_IGNORED": true,
+    "CELERY_TASK_SERIALIZER": "json",
+    "CELERY_TIMEZONE": "UTC",
+    "CELERY_TRACK_STARTED": true,
+    "CERTIFICATE_DATE_FORMAT": "%B %-d, %Y",
+    "CERTIFICATE_TEMPLATE_LANGUAGES": {
+        "en": "English",
+        "es": "Espa\u00f1ol"
+    },
+    "CERT_NAME_LONG": "Certificate of Achievement",
+    "CERT_NAME_SHORT": "Certificate",
+    "CERT_QUEUE": "test-pull",
+    "CHAT_COMPLETION_API": "",
+    "CHAT_COMPLETION_API_KEY": "",
+    "CHECKPOINT_PATTERN": "(?P<checkpoint_name>[^/]+)",
+    "CMS_BASE": "studio.local.openedx.io",
+    "CMS_ROOT_URL": "http://studio.local.openedx.io",
+    "CODE_JAIL": {
+        "python_bin": "/edx/app/edxapp/venvs/edxapp-sandbox/bin/python",
+        "user": "sandbox",
+        "limits": {
+            "CPU": 1,
+            "VMEM": 536870912,
+            "REALTIME": 3,
+            "PROXY": 0
+        },
+        "limit_overrides": {}
+    },
+    "CODE_JAIL_REST_SERVICE_CONNECT_TIMEOUT": 0.5,
+    "CODE_JAIL_REST_SERVICE_HOST": "http://127.0.0.1:8550",
+    "CODE_JAIL_REST_SERVICE_READ_TIMEOUT": 3.5,
+    "CODE_JAIL_REST_SERVICE_REMOTE_EXEC": "xmodule.capa.safe_exec.remote_exec.send_safe_exec_request_v0",
+    "COMMENTS_SERVICE_KEY": "",
+    "COMMENTS_SERVICE_URL": "",
+    "COMMON_ROOT": "/openedx/edx-platform/common",
+    "COMPLETION_BY_VIEWING_DELAY_MS": 5000,
+    "COMPLETION_VIDEO_COMPLETE_PERCENTAGE": 0.95,
+    "COMPREHENSIVE_THEME_DIRS": [
+        "/openedx/themes"
+    ],
+    "COMPREHENSIVE_THEME_LOCALE_PATHS": [],
+    "CONFIG_FILE": "/openedx/config/lms.env.yml",
+    "CONFIG_PREFIX": "lms.",
+    "CONTACT_EMAIL": "contact@local.overhang.io",
+    "CONTACT_MAILING_ADDRESS": "SET-ME-PLEASE",
+    "CONTENTSTORE": {
+        "ENGINE": "xmodule.contentstore.mongo.MongoContentStore",
+        "OPTIONS": {
+            "db": "edxapp",
+            "host": "localhost",
+            "password": "password",
+            "port": 27017,
+            "user": "edxapp",
+            "ssl": false,
+            "auth_source": null
+        },
+        "ADDITIONAL_OPTIONS": {},
+        "DOC_STORE_CONFIG": {
+            "db": "edxapp",
+            "host": "localhost",
+            "replicaSet": "",
+            "password": "password",
+            "port": 27017,
+            "user": "edxapp",
+            "collection": "modulestore",
+            "ssl": false,
+            "socketTimeoutMS": 6000,
+            "connectTimeoutMS": 2000,
+            "auth_source": null,
+            "read_preference": "SECONDARY_PREFERRED"
+        }
+    },
+    "CONTENT_TYPE_GATE_GROUP_IDS": {
+        "limited_access": 1,
+        "full_access": 2
+    },
+    "CONTEXT_PROCESSORS": [
+        "django.template.context_processors.request",
+        "django.template.context_processors.static",
+        "django.template.context_processors.i18n",
+        "django.contrib.auth.context_processors.auth",
+        "django.template.context_processors.csrf",
+        "django.template.context_processors.media",
+        "django.template.context_processors.tz",
+        "django.contrib.messages.context_processors.messages",
+        "sekizai.context_processors.sekizai",
+        "common.djangoapps.edxmako.shortcuts.marketing_link_context_processor",
+        "lms.djangoapps.courseware.context_processor.user_timezone_locale_prefs",
+        "help_tokens.context_processor",
+        "openedx.core.djangoapps.site_configuration.context_processors.configuration_context",
+        "lms.djangoapps.mobile_api.context_processor.is_from_mobile_app",
+        "openedx.features.survey_report.context_processors.admin_extra_context"
+    ],
+    "COOL_OFF_DAYS": 14,
+    "CORS_ALLOW_HEADERS": [
+        "accept",
+        "authorization",
+        "content-type",
+        "user-agent",
+        "x-csrftoken",
+        "x-requested-with",
+        "cache-control",
+        "expires",
+        "pragma",
+        "use-jwt-cookie"
+    ],
+    "COUNTRIES_FIRST": [],
+    "COUNTRIES_OVERRIDE": {
+        "TW": "Taiwan",
+        "XK": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Kosovo"
+            ]
+        }
+    },
+    "COURSES_API_CACHE_TIMEOUT": 3600,
+    "COURSES_ROOT": "/openedx/data",
+    "COURSES_WITH_UNSAFE_CODE": [],
+    "COURSE_ABOUT_VISIBILITY_PERMISSION": "see_exists",
+    "COURSE_BLOCKS_API_EXTRA_FIELDS": [],
+    "COURSE_BULK_EMAIL_HELP_URL": "https://edx.readthedocs.io/projects/open-edx-building-and-running-a-course/en/latest/manage_live_course/bulk_email.html",
+    "COURSE_CATALOG_API_URL": "http://localhost:8008/api/v1",
+    "COURSE_CATALOG_URL_ROOT": "http://localhost:8008",
+    "COURSE_CATALOG_VISIBILITY_PERMISSION": "see_exists",
+    "COURSE_ENROLLMENT_MODES": {
+        "audit": {
+            "id": 1,
+            "slug": "audit",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Audit"
+                ]
+            },
+            "min_price": 0
+        },
+        "verified": {
+            "id": 2,
+            "slug": "verified",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Verified"
+                ]
+            },
+            "min_price": 1
+        },
+        "professional": {
+            "id": 3,
+            "slug": "professional",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Professional"
+                ]
+            },
+            "min_price": 1
+        },
+        "no-id-professional": {
+            "id": 4,
+            "slug": "no-id-professional",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "No-Id-Professional"
+                ]
+            },
+            "min_price": 0
+        },
+        "credit": {
+            "id": 5,
+            "slug": "credit",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Credit"
+                ]
+            },
+            "min_price": 0
+        },
+        "honor": {
+            "id": 6,
+            "slug": "honor",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Honor"
+                ]
+            },
+            "min_price": 0
+        },
+        "masters": {
+            "id": 7,
+            "slug": "masters",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Master's"
+                ]
+            },
+            "min_price": 0
+        },
+        "executive-education": {
+            "id": 8,
+            "slug": "executive-educations",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Executive Education"
+                ]
+            },
+            "min_price": 1
+        },
+        "unpaid-executive-education": {
+            "id": 9,
+            "slug": "unpaid-executive-education",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Unpaid Executive Education"
+                ]
+            },
+            "min_price": 0
+        },
+        "paid-executive-education": {
+            "id": 10,
+            "slug": "paid-executive-education",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Paid Executive Education"
+                ]
+            },
+            "min_price": 1
+        },
+        "unpaid-bootcamp": {
+            "id": 11,
+            "slug": "unpaid-bootcamp",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Unpaid Bootcamp"
+                ]
+            },
+            "min_price": 0
+        },
+        "paid-bootcamp": {
+            "id": 12,
+            "slug": "paid-bootcamp",
+            "display_name": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Paid Bootcamp"
+                ]
+            },
+            "min_price": 1
+        }
+    },
+    "COURSE_ID_PATTERN": "(?P<course_id>[^/+]+(/|\\+)[^/+]+(/|\\+)[^/?]+)",
+    "COURSE_KEY_PATTERN": "(?P<course_key_string>[^/+]+(/|\\+)[^/+]+(/|\\+)[^/?]+)",
+    "COURSE_KEY_REGEX": "(?:[^/+]+(/|\\+)[^/+]+(/|\\+)[^/?]+)",
+    "COURSE_LISTINGS": {},
+    "COURSE_LIVE_GLOBAL_CREDENTIALS": {
+        "BIG_BLUE_BUTTON": {
+            "KEY": null,
+            "SECRET": null,
+            "URL": null
+        }
+    },
+    "COURSE_MEMBER_API_ENROLLMENT_LIMIT": 1000,
+    "COURSE_MODE_DEFAULTS": {
+        "android_sku": null,
+        "bulk_sku": null,
+        "currency": "usd",
+        "description": null,
+        "expiration_datetime": null,
+        "ios_sku": null,
+        "min_price": 0,
+        "name": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Audit"
+            ]
+        },
+        "sku": null,
+        "slug": "audit",
+        "suggested_prices": ""
+    },
+    "COURSE_OLX_VALIDATION_IGNORE_LIST": null,
+    "COURSE_OLX_VALIDATION_STAGE": 1,
+    "CREATE_FINANCIAL_ASSISTANCE_APPLICATION_URL": "/core/api/financial_assistance_applications",
+    "CREDENTIALS_COURSE_COMPLETION_STATE": "awarded",
+    "CREDENTIALS_GENERATION_ROUTING_KEY": "edx.lms.core.default",
+    "CREDENTIALS_INTERNAL_SERVICE_URL": "http://localhost:8008",
+    "CREDENTIALS_PUBLIC_SERVICE_URL": "http://localhost:8008",
+    "CREDENTIALS_SERVICE_USERNAME": "credentials_service_user",
+    "CREDIT_HELP_LINK_URL": "",
+    "CREDIT_NOTIFICATION_CACHE_TIMEOUT": 18000,
+    "CREDIT_PROVIDER_SECRET_KEYS": {},
+    "CREDIT_PROVIDER_TIMESTAMP_EXPIRATION": 900,
+    "CREDIT_TASK_DEFAULT_RETRY_DELAY": 30,
+    "CREDIT_TASK_MAX_RETRIES": 5,
+    "CROSS_DOMAIN_CSRF_COOKIE_DOMAIN": "",
+    "CROSS_DOMAIN_CSRF_COOKIE_NAME": "",
+    "CSRF_COOKIE_AGE": 31449600,
+    "CSRF_COOKIE_DOMAIN": null,
+    "CSRF_COOKIE_HTTPONLY": false,
+    "CSRF_COOKIE_MASKED": false,
+    "CSRF_COOKIE_NAME": "csrftoken",
+    "CSRF_COOKIE_PATH": "/",
+    "CSRF_COOKIE_SAMESITE": "Lax",
+    "CSRF_COOKIE_SECURE": false,
+    "CSRF_FAILURE_VIEW": "django.views.csrf.csrf_failure",
+    "CSRF_HEADER_NAME": "HTTP_X_CSRFTOKEN",
+    "CSRF_TRUSTED_ORIGINS": [],
+    "CSRF_TRUSTED_ORIGINS_WITH_SCHEME": [],
+    "CSRF_USE_SESSIONS": false,
+    "CSV_EXPIRATION_DAYS": 90,
+    "CUSTOM_PAGES_HELP_URL": "https://edx.readthedocs.io/projects/open-edx-building-and-running-a-course/en/latest/course_assets/pages.html#adding-custom-pages",
+    "CUSTOM_RESOURCE_TEMPLATES_DIRECTORY": null,
+    "DASHBOARD_COURSE_LIMIT": null,
+    "DATABASES": {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "HOST": "mysql",
+            "PORT": 3306,
+            "NAME": "openedx",
+            "USER": "openedx",
+            "PASSWORD": "auLBXeYu",
+            "ATOMIC_REQUESTS": true,
+            "OPTIONS": {
+                "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+                "charset": "utf8mb4"
+            }
+        }
+    },
+    "DATABASE_ROUTERS": [
+        "openedx.core.lib.django_courseware_routers.StudentModuleHistoryExtendedRouter",
+        "edx_django_utils.db.read_replica.ReadReplicaRouter"
+    ],
+    "DATA_CONSENT_SHARE_CACHE_TIMEOUT": 28800,
+    "DATA_DIR": "/edx/var/edxapp/data",
+    "DATA_UPLOAD_MAX_MEMORY_SIZE": null,
+    "DATA_UPLOAD_MAX_NUMBER_FIELDS": null,
+    "DATA_UPLOAD_MAX_NUMBER_FILES": 100,
+    "DATETIME_FORMAT": "N j, Y, P",
+    "DATETIME_INPUT_FORMATS": [
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%d %H:%M:%S.%f",
+        "%Y-%m-%d %H:%M",
+        "%m/%d/%Y %H:%M:%S",
+        "%m/%d/%Y %H:%M:%S.%f",
+        "%m/%d/%Y %H:%M",
+        "%m/%d/%y %H:%M:%S",
+        "%m/%d/%y %H:%M:%S.%f",
+        "%m/%d/%y %H:%M"
+    ],
+    "DATE_FORMAT": "N j, Y",
+    "DATE_INPUT_FORMATS": [
+        "%Y-%m-%d",
+        "%m/%d/%Y",
+        "%m/%d/%y",
+        "%b %d %Y",
+        "%b %d, %Y",
+        "%d %b %Y",
+        "%d %b, %Y",
+        "%B %d %Y",
+        "%B %d, %Y",
+        "%d %B %Y",
+        "%d %B, %Y"
+    ],
+    "DCS_SESSION_COOKIE_SAMESITE": "None",
+    "DCS_SESSION_COOKIE_SAMESITE_FORCE_ALL": true,
+    "DEBUG": false,
+    "DEBUG_PROPAGATE_EXCEPTIONS": false,
+    "DEBUG_TOOLBAR_PATCH_SETTINGS": false,
+    "DEBUG_TRACK_LOG": false,
+    "DECIMAL_SEPARATOR": ".",
+    "DEFAULT_AUTO_FIELD": "django.db.models.AutoField",
+    "DEFAULT_CHARSET": "utf-8",
+    "DEFAULT_COURSE_ABOUT_IMAGE_URL": "images/pencils.jpg",
+    "DEFAULT_COURSE_VISIBILITY_IN_CATALOG": "both",
+    "DEFAULT_EMAIL_LOGO_URL": "https://edx-cdn.org/v3/default/logo.png",
+    "DEFAULT_ENTERPRISE_ENROLLMENT_INTENTIONS_ROLE": "default_enterprise_enrollment_intentions_learner",
+    "DEFAULT_EXCEPTION_REPORTER": "django.views.debug.ExceptionReporter",
+    "DEFAULT_EXCEPTION_REPORTER_FILTER": "django.views.debug.SafeExceptionReporterFilter",
+    "DEFAULT_FEEDBACK_EMAIL": "feedback@example.com",
+    "DEFAULT_FILE_STORAGE": "django.core.files.storage.FileSystemStorage",
+    "DEFAULT_FROM_EMAIL": "registration@example.com",
+    "DEFAULT_GROUPS": [],
+    "DEFAULT_HASHING_ALGORITHM": "sha256",
+    "DEFAULT_INDEX_TABLESPACE": "",
+    "DEFAULT_JWT_ISSUER": {
+        "ISSUER": "http://127.0.0.1:8000/oauth2",
+        "AUDIENCE": "change-me",
+        "SECRET_KEY": "SET-ME-PLEASE"
+    },
+    "DEFAULT_MOBILE_AVAILABLE": false,
+    "DEFAULT_NOTIFICATION_ICON_URL": "",
+    "DEFAULT_PRIORITY_QUEUE": "edx.lms.core.default",
+    "DEFAULT_SITE_THEME": null,
+    "DEFAULT_TABLESPACE": "",
+    "DEFAULT_TEMPLATE_ENGINE": {
+        "NAME": "django",
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "APP_DIRS": false,
+        "DIRS": [
+            "/openedx/edx-platform/lms/templates",
+            "/openedx/edx-platform/common/templates",
+            "/openedx/edx-platform/xmodule/capa/templates",
+            "/openedx/edx-platform/common/djangoapps/pipeline_mako/templates",
+            "/openedx/edx-platform/common/static"
+        ],
+        "OPTIONS": {
+            "loaders": [
+                "openedx.core.djangoapps.theming.template_loaders.ThemeTemplateLoader",
+                "common.djangoapps.edxmako.makoloader.MakoFilesystemLoader",
+                "common.djangoapps.edxmako.makoloader.MakoAppDirectoriesLoader"
+            ],
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.template.context_processors.static",
+                "django.template.context_processors.i18n",
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.csrf",
+                "django.template.context_processors.media",
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                "sekizai.context_processors.sekizai",
+                "common.djangoapps.edxmako.shortcuts.marketing_link_context_processor",
+                "lms.djangoapps.courseware.context_processor.user_timezone_locale_prefs",
+                "help_tokens.context_processor",
+                "openedx.core.djangoapps.site_configuration.context_processors.configuration_context",
+                "lms.djangoapps.mobile_api.context_processor.is_from_mobile_app",
+                "openedx.features.survey_report.context_processors.admin_extra_context"
+            ],
+            "debug": false
+        }
+    },
+    "DEFAULT_TEMPLATE_ENGINE_DIRS": [
+        "/openedx/edx-platform/lms/templates",
+        "/openedx/edx-platform/common/templates",
+        "/openedx/edx-platform/xmodule/capa/templates",
+        "/openedx/edx-platform/common/djangoapps/pipeline_mako/templates",
+        "/openedx/edx-platform/common/static"
+    ],
+    "DEPRECATED_ADVANCED_COMPONENT_TYPES": [],
+    "DEV_CONTENT": true,
+    "DISABLED_COUNTRIES": [],
+    "DISABLED_ORGS_FOR_PROGRAM_NUDGE": [],
+    "DISABLE_ACCOUNT_ACTIVATION_REQUIREMENT_SWITCH": "verify_student_disable_account_activation_requirement",
+    "DISALLOWED_USER_AGENTS": [],
+    "DISCUSSIONS_HELP_URL": "https://edx.readthedocs.io/projects/open-edx-building-and-running-a-course/en/latest/course_components/create_discussion.html",
+    "DISCUSSIONS_MFE_FEEDBACK_URL": null,
+    "DISCUSSIONS_MICROFRONTEND_URL": null,
+    "DISCUSSION_MODERATION_CLOSE_REASON_CODES": {
+        "academic-integrity": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Post violates honour code or academic integrity"
+            ]
+        },
+        "read-only": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Post should be read-only"
+            ]
+        },
+        "duplicate": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Post is a duplicate"
+            ]
+        },
+        "off-topic": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Post is off-topic"
+            ]
+        }
+    },
+    "DISCUSSION_MODERATION_EDIT_REASON_CODES": {
+        "grammar-spelling": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Has grammar / spelling issues"
+            ]
+        },
+        "needs-clarity": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Content needs clarity"
+            ]
+        },
+        "academic-integrity": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Has academic integrity concern"
+            ]
+        },
+        "inappropriate-language": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Has inappropriate language"
+            ]
+        },
+        "format-change": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Formatting changes needed"
+            ]
+        },
+        "post-type-change": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Post type needs change"
+            ]
+        },
+        "contains-pii": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Contains personally identifiable information"
+            ]
+        },
+        "violates-guidelines": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Violates community guidelines"
+            ]
+        }
+    },
+    "DISCUSSION_SETTINGS": {
+        "MAX_COMMENT_DEPTH": 2,
+        "COURSE_PUBLISH_TASK_DELAY": 30
+    },
+    "DJFS": {
+        "type": "osfs",
+        "directory_root": "/edx/var/edxapp/django-pyfs/static/django-pyfs",
+        "url_root": "/static/django-pyfs"
+    },
+    "DOC_STORE_CONFIG": null,
+    "ECOMMERCE_API_SIGNING_KEY": "SET-ME-PLEASE",
+    "ECOMMERCE_API_TIMEOUT": 5,
+    "ECOMMERCE_API_URL": "http://localhost:8002/api/v2",
+    "ECOMMERCE_ORDERS_API_CACHE_TIMEOUT": 3600,
+    "ECOMMERCE_PUBLIC_URL_ROOT": "http://localhost:8002",
+    "ECOMMERCE_SERVICE_WORKER_USERNAME": "ecommerce_worker",
+    "EDXMKTG_LOGGED_IN_COOKIE_NAME": "edxloggedin",
+    "EDXMKTG_USER_INFO_COOKIE_NAME": "edx-user-info",
+    "EDXMKTG_USER_INFO_COOKIE_VERSION": 1,
+    "EDXNOTES_CLIENT_NAME": "edx-notes",
+    "EDXNOTES_CONNECT_TIMEOUT": 0.5,
+    "EDXNOTES_HELP_URL": "https://edx.readthedocs.io/projects/open-edx-building-and-running-a-course/en/latest/exercises_tools/notes.html",
+    "EDXNOTES_INTERNAL_API": "http://localhost:18120/api/v1",
+    "EDXNOTES_PUBLIC_API": "http://localhost:18120/api/v1",
+    "EDXNOTES_READ_TIMEOUT": 1.5,
+    "EDX_API_KEY": null,
+    "EDX_BRAZE_API_KEY": null,
+    "EDX_BRAZE_API_SERVER": null,
+    "EDX_DRF_EXTENSIONS": {
+        "JWT_PAYLOAD_USER_ATTRIBUTE_MAPPING": {},
+        "VERIFY_LMS_USER_ID_PROPERTY_NAME": "id"
+    },
+    "EDX_PLATFORM_REVISION": "release",
+    "EDX_ROOT_URL": "",
+    "ELASTICSEARCH_INDEX_PREFIX": "",
+    "ELASTIC_SEARCH_CONFIG": [
+        {}
+    ],
+    "EMAIL_BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+    "EMAIL_FILE_PATH": "/edx/var/edxapp/data/emails/lms",
+    "EMAIL_HOST": "smtp",
+    "EMAIL_HOST_PASSWORD": "",
+    "EMAIL_HOST_USER": "",
+    "EMAIL_OPTIN_MINIMUM_AGE": 13,
+    "EMAIL_PORT": 8025,
+    "EMAIL_SSL_CERTFILE": null,
+    "EMAIL_SSL_KEYFILE": null,
+    "EMAIL_SUBJECT_PREFIX": "[Django] ",
+    "EMAIL_TIMEOUT": null,
+    "EMAIL_USE_LOCALTIME": false,
+    "EMAIL_USE_SSL": false,
+    "EMAIL_USE_TLS": false,
+    "EMBARGO_SITE_REDIRECT_URL": null,
+    "ENABLE_AUTHN_LOGIN_BLOCK_HIBP_POLICY": false,
+    "ENABLE_AUTHN_LOGIN_NUDGE_HIBP_POLICY": false,
+    "ENABLE_AUTHN_REGISTER_HIBP_POLICY": false,
+    "ENABLE_AUTHN_RESET_PASSWORD_HIBP_POLICY": false,
+    "ENABLE_CODEJAIL_REST_SERVICE": false,
+    "ENABLE_COMPREHENSIVE_THEMING": true,
+    "ENABLE_COPPA_COMPLIANCE": false,
+    "ENABLE_CREDIT_ELIGIBILITY": true,
+    "ENABLE_DYNAMIC_REGISTRATION_FIELDS": false,
+    "ENABLE_JASMINE": false,
+    "ENABLE_MFE_CONFIG_API": false,
+    "ENABLE_MULTICOURSE": false,
+    "ENABLE_REQUIRE_THIRD_PARTY_AUTH": false,
+    "ENFORCE_SESSION_EMAIL_MATCH": false,
+    "ENROLLMENT_COURSE_DETAILS_CACHE_TIMEOUT": 60,
+    "ENTERPRISE_ADMIN_ROLE": "enterprise_admin",
+    "ENTERPRISE_ALL_SERVICE_USERNAMES": [
+        "ecommerce_worker",
+        "enterprise_worker",
+        "license_manager_worker",
+        "enterprise_catalog_worker",
+        "enterprise_channel_worker",
+        "enterprise_access_worker",
+        "enterprise_subsidy_worker"
+    ],
+    "ENTERPRISE_API_CACHE_TIMEOUT": 3600,
+    "ENTERPRISE_API_URL": "http://local.openedx.io/enterprise/api/v1/",
+    "ENTERPRISE_BACKEND_SERVICE_EDX_OAUTH2_KEY": "enterprise-backend-service-key",
+    "ENTERPRISE_BACKEND_SERVICE_EDX_OAUTH2_PROVIDER_URL": "http://127.0.0.1:8000/oauth2",
+    "ENTERPRISE_BACKEND_SERVICE_EDX_OAUTH2_SECRET": "enterprise-backend-service-secret",
+    "ENTERPRISE_CATALOG_ADMIN_ROLE": "catalog_admin",
+    "ENTERPRISE_CATALOG_INTERNAL_ROOT_URL": "http://enterprise.catalog.app:18160",
+    "ENTERPRISE_CONSENT_API_URL": {
+        "@@PYREF": "_generate_default_enterprise_consent_api_url",
+        "@@MODULE": "lms.envs.production_new"
+    },
+    "ENTERPRISE_COURSE_ENROLLMENT_AUDIT_MODES": [
+        "audit",
+        "honor"
+    ],
+    "ENTERPRISE_CUSTOMER_CATALOG_DEFAULT_CONTENT_FILTER": {},
+    "ENTERPRISE_CUSTOMER_COOKIE_NAME": "enterprise_customer_uuid",
+    "ENTERPRISE_CUSTOMER_LOGO_IMAGE_SIZE": 512,
+    "ENTERPRISE_CUSTOMER_SUCCESS_EMAIL": "customersuccess@edx.org",
+    "ENTERPRISE_DASHBOARD_ADMIN_ROLE": "dashboard_admin",
+    "ENTERPRISE_ENROLLMENT_API_ADMIN_ROLE": "enrollment_api_admin",
+    "ENTERPRISE_ENROLLMENT_API_URL": "http://local.openedx.io/api/enrollment/v1/",
+    "ENTERPRISE_EXCLUDED_REGISTRATION_FIELDS": {
+        "@@PYREF": "set",
+        "@@ARGS": [
+            [
+                "age",
+                "gender",
+                "goals",
+                "level_of_education",
+                "mailing_address",
+                "year_of_birth"
+            ]
+        ]
+    },
+    "ENTERPRISE_FULFILLMENT_OPERATOR_ROLE": "fulfillment_operator",
+    "ENTERPRISE_INTEGRATIONS_EMAIL": "enterprise-integrations@edx.org",
+    "ENTERPRISE_LEARNER_ROLE": "enterprise_learner",
+    "ENTERPRISE_MANUAL_REPORTING_CUSTOMER_UUIDS": [],
+    "ENTERPRISE_MARKETING_FOOTER_QUERY_PARAMS": {},
+    "ENTERPRISE_OPERATOR_ROLE": "enterprise_openedx_operator",
+    "ENTERPRISE_PLATFORM_WELCOME_TEMPLATE": {
+        "@@PYREF": "gettext_lazy",
+        "@@MODULE": "django.contrib.translation.utils",
+        "@@ARGS": [
+            "Welcome to {platform_name}."
+        ]
+    },
+    "ENTERPRISE_PROXY_LOGIN_WELCOME_TEMPLATE": {
+        "@@PYREF": "gettext_lazy",
+        "@@MODULE": "django.contrib.translation.utils",
+        "@@ARGS": [
+            "{start_bold}{enterprise_name}{end_bold} has partnered with {start_bold}{platform_name}{end_bold} to offer you high-quality learning opportunities from the world's best institutions and universities."
+        ]
+    },
+    "ENTERPRISE_PUBLIC_ENROLLMENT_API_URL": "http://local.openedx.io/api/enrollment/v1/",
+    "ENTERPRISE_READONLY_ACCOUNT_FIELDS": [
+        "username",
+        "name",
+        "email",
+        "country"
+    ],
+    "ENTERPRISE_REPORTING_CONFIG_ADMIN_ROLE": "reporting_config_admin",
+    "ENTERPRISE_SERVICE_WORKER_USERNAME": "enterprise_worker",
+    "ENTERPRISE_SPECIFIC_BRANDED_WELCOME_TEMPLATE": {
+        "@@PYREF": "gettext_lazy",
+        "@@MODULE": "django.contrib.translation.utils",
+        "@@ARGS": [
+            "You have left the {start_bold}{enterprise_name}{end_bold} website and are now on the {platform_name} site. {enterprise_name} has partnered with {platform_name} to offer you high-quality, always available learning programs to help you advance your knowledge and career. {line_break}Please note that {platform_name} has a different {privacy_policy_link_start}Privacy Policy{privacy_policy_link_end} from {enterprise_name}."
+        ]
+    },
+    "ENTERPRISE_SSO_ORCHESTRATOR_OPERATOR_ROLE": "sso_orchestrator_operator",
+    "ENTERPRISE_SUPPORT_URL": "",
+    "ENTERPRISE_TAGLINE": "",
+    "ENTERPRISE_VSF_UUID": "e815503343644ac7845bc82325c34460",
+    "ENTITLEMENTS_EXPIRATION_ROUTING_KEY": "edx.lms.core.default",
+    "ENTITLEMENT_EXPIRED_ALERT_PERIOD": 90,
+    "ENV_ROOT": "/openedx",
+    "ENV_TOKENS": {
+        "SITE_NAME": "local.openedx.io",
+        "BOOK_URL": "",
+        "LOG_DIR": "/openedx/data/logs",
+        "LOGGING_ENV": "sandbox",
+        "OAUTH_OIDC_ISSUER": "http://local.openedx.io/oauth2",
+        "PLATFORM_NAME": "Kyle's Open edX",
+        "FEATURES": {
+            "CERTIFICATES_HTML_VIEW": true,
+            "PREVIEW_LMS_BASE": "preview.local.openedx.io",
+            "ENABLE_CSMH_EXTENDED": false,
+            "ENABLE_COMBINED_LOGIN_REGISTRATION": true,
+            "ENABLE_GRADE_DOWNLOADS": true,
+            "ENABLE_LEARNER_RECORDS": false,
+            "ENABLE_MOBILE_REST_API": true,
+            "ENABLE_OAUTH2_PROVIDER": true,
+            "ENABLE_PREREQUISITE_COURSES": true,
+            "ENABLE_THIRD_PARTY_AUTH": true,
+            "MILESTONES_APP": true
+        },
+        "LMS_ROOT_URL": "http://local.openedx.io",
+        "CMS_ROOT_URL": "http://studio.local.openedx.io",
+        "CMS_BASE": "studio.local.openedx.io",
+        "LMS_BASE": "local.openedx.io",
+        "CONTACT_EMAIL": "contact@local.overhang.io",
+        "CELERY_BROKER_TRANSPORT": "redis",
+        "CELERY_BROKER_HOSTNAME": "redis:6379",
+        "CELERY_BROKER_VHOST": "0",
+        "CELERY_BROKER_USER": "",
+        "CELERY_BROKER_PASSWORD": "",
+        "ALTERNATE_WORKER_QUEUES": "cms",
+        "ENABLE_COMPREHENSIVE_THEMING": true,
+        "EMAIL_BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "EMAIL_HOST": "smtp",
+        "EMAIL_PORT": 8025,
+        "EMAIL_USE_TLS": false,
+        "ACE_ROUTING_KEY": "edx.lms.core.default",
+        "HTTPS": "off",
+        "LANGUAGE_CODE": "en",
+        "SESSION_COOKIE_DOMAIN": "local.openedx.io",
+        "SECRET_KEY": "o5wToOrEitfAxwP8E5U0n5zi",
+        "AWS_ACCESS_KEY_ID": "",
+        "AWS_SECRET_ACCESS_KEY": "",
+        "DOC_STORE_CONFIG": null,
+        "XQUEUE_INTERFACE": {
+            "django_auth": null,
+            "url": null
+        },
+        "DATABASES": {
+            "default": {
+                "ENGINE": "django.db.backends.mysql",
+                "HOST": "mysql",
+                "PORT": 3306,
+                "NAME": "openedx",
+                "USER": "openedx",
+                "PASSWORD": "auLBXeYu",
+                "ATOMIC_REQUESTS": true,
+                "OPTIONS": {
+                    "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+                    "charset": "utf8mb4"
+                }
+            }
+        },
+        "EMAIL_HOST_USER": "",
+        "EMAIL_HOST_PASSWORD": ""
+    },
+    "EVENT_BUS_PRODUCER_CONFIG": {
+        "org.openedx.learning.certificate.created.v1": {
+            "learning-certificate-lifecycle": {
+                "event_key_field": "certificate.course.course_key",
+                "enabled": false
+            }
+        },
+        "org.openedx.learning.certificate.revoked.v1": {
+            "learning-certificate-lifecycle": {
+                "event_key_field": "certificate.course.course_key",
+                "enabled": false
+            }
+        },
+        "org.openedx.learning.course.unenrollment.completed.v1": {
+            "course-unenrollment-lifecycle": {
+                "event_key_field": "enrollment.course.course_key",
+                "enabled": false
+            }
+        },
+        "org.openedx.learning.xblock.skill.verified.v1": {
+            "learning-xblock-skill-verified": {
+                "event_key_field": "xblock_info.usage_key",
+                "enabled": false
+            }
+        },
+        "org.openedx.learning.user.course_access_role.added.v1": {
+            "learning-course-access-role-lifecycle": {
+                "event_key_field": "course_access_role_data.course_key",
+                "enabled": false
+            }
+        },
+        "org.openedx.learning.user.course_access_role.removed.v1": {
+            "learning-course-access-role-lifecycle": {
+                "event_key_field": "course_access_role_data.course_key",
+                "enabled": false
+            }
+        },
+        "org.openedx.enterprise.learner_credit_course_enrollment.revoked.v1": {
+            "learner-credit-course-enrollment-lifecycle": {
+                "event_key_field": "learner_credit_course_enrollment.uuid",
+                "enabled": false
+            }
+        },
+        "org.openedx.content_authoring.xblock.published.v1": {
+            "course-authoring-xblock-lifecycle": {
+                "event_key_field": "xblock_info.usage_key",
+                "enabled": false
+            }
+        },
+        "org.openedx.content_authoring.xblock.deleted.v1": {
+            "course-authoring-xblock-lifecycle": {
+                "event_key_field": "xblock_info.usage_key",
+                "enabled": false
+            }
+        },
+        "org.openedx.content_authoring.xblock.duplicated.v1": {
+            "course-authoring-xblock-lifecycle": {
+                "event_key_field": "xblock_info.usage_key",
+                "enabled": false
+            }
+        },
+        "org.openedx.learning.course.passing.status.updated.v1": {
+            "learning-badges-lifecycle": {
+                "event_key_field": "course_passing_status.course.course_key",
+                "enabled": false
+            }
+        },
+        "org.openedx.learning.ccx.course.passing.status.updated.v1": {
+            "learning-badges-lifecycle": {
+                "event_key_field": "course_passing_status.course.ccx_course_key",
+                "enabled": false
+            }
+        }
+    },
+    "EVENT_TRACKING_BACKENDS": {
+        "tracking_logs": {
+            "ENGINE": "eventtracking.backends.routing.RoutingBackend",
+            "OPTIONS": {
+                "backends": {
+                    "logger": {
+                        "ENGINE": "eventtracking.backends.logger.LoggerBackend",
+                        "OPTIONS": {
+                            "name": "tracking",
+                            "max_event_size": 50000
+                        }
+                    }
+                },
+                "processors": [
+                    {
+                        "ENGINE": "common.djangoapps.track.shim.LegacyFieldMappingProcessor"
+                    },
+                    {
+                        "ENGINE": "common.djangoapps.track.shim.PrefixedEventProcessor"
+                    }
+                ]
+            }
+        },
+        "segmentio": {
+            "ENGINE": "eventtracking.backends.routing.RoutingBackend",
+            "OPTIONS": {
+                "backends": {
+                    "segment": {
+                        "ENGINE": "eventtracking.backends.segment.SegmentBackend"
+                    }
+                },
+                "processors": [
+                    {
+                        "ENGINE": "eventtracking.processors.whitelist.NameWhitelistProcessor",
+                        "OPTIONS": {
+                            "whitelist": []
+                        }
+                    },
+                    {
+                        "ENGINE": "common.djangoapps.track.shim.GoogleAnalyticsProcessor"
+                    }
+                ]
+            }
+        }
+    },
+    "EVENT_TRACKING_ENABLED": true,
+    "EVENT_TRACKING_PROCESSORS": [],
+    "EVENT_TRACKING_SEGMENTIO_EMIT_WHITELIST": [],
+    "EXAMS_DASHBOARD_MICROFRONTEND_URL": null,
+    "EXAMS_SERVICE_URL": "http://localhost:18740/api/v1",
+    "EXEC_ED_LANDING_PAGE": "https://www.getsmarter.com/account",
+    "EXPIRED_NOTIFICATIONS_DELETE_BATCH_SIZE": 10000,
+    "EXPLICIT_QUEUES": {
+        "openedx.core.djangoapps.content.course_overviews.tasks.async_course_overview_update": {
+            "queue": "edx.lms.core.high_mem"
+        },
+        "lms.djangoapps.bulk_email.tasks.send_course_email": {
+            "queue": "edx.lms.core.high"
+        },
+        "openedx.core.djangoapps.heartbeat.tasks.sample_task": {
+            "queue": "edx.lms.core.high"
+        },
+        "lms.djangoapps.instructor_task.tasks.calculate_grades_csv": {
+            "queue": "edx.lms.core.high_mem"
+        },
+        "lms.djangoapps.instructor_task.tasks.calculate_problem_grade_report": {
+            "queue": "edx.lms.core.high_mem"
+        },
+        "lms.djangoapps.instructor_task.tasks.generate_certificates": {
+            "queue": "edx.lms.core.high_mem"
+        },
+        "lms.djangoapps.verify_student.tasks.send_verification_status_email": {
+            "queue": "edx.lms.core.default"
+        },
+        "lms.djangoapps.verify_student.tasks.send_ace_message": {
+            "queue": "edx.lms.core.default"
+        },
+        "lms.djangoapps.verify_student.tasks.send_request_to_ss_for_user": {
+            "queue": "edx.lms.core.high"
+        },
+        "openedx.core.djangoapps.schedules.tasks._recurring_nudge_schedule_send": {
+            "queue": "edx.lms.core.default"
+        },
+        "openedx.core.djangoapps.schedules.tasks._upgrade_reminder_schedule_send": {
+            "queue": "edx.lms.core.default"
+        },
+        "openedx.core.djangoapps.schedules.tasks._course_update_schedule_send": {
+            "queue": "edx.lms.core.default"
+        },
+        "openedx.core.djangoapps.schedules.tasks.v1.tasks.send_grade_to_credentials": {
+            "queue": "edx.lms.core.default"
+        },
+        "common.djangoapps.entitlements.tasks.expire_old_entitlements": {
+            "queue": "edx.lms.core.default"
+        },
+        "lms.djangoapps.grades.tasks.recalculate_course_and_subsection_grades_for_user": {
+            "queue": "edx.lms.core.default"
+        },
+        "lms.djangoapps.grades.tasks.recalculate_subsection_grade_v3": {
+            "queue": "edx.lms.core.default"
+        },
+        "openedx.core.djangoapps.programs.tasks.award_program_certificates": {
+            "queue": "edx.lms.core.default"
+        },
+        "openedx.core.djangoapps.programs.tasks.revoke_program_certificates": {
+            "queue": "edx.lms.core.default"
+        },
+        "openedx.core.djangoapps.programs.tasks.update_certificate_available_date_on_course_update": {
+            "queue": "edx.lms.core.default"
+        },
+        "openedx.core.djangoapps.programs.tasks.award_course_certificate": {
+            "queue": "edx.lms.core.default"
+        },
+        "openassessment.workflow.tasks.update_workflows_for_all_blocked_submissions_task": {
+            "queue": "edx.lms.core.ora_workflow_update"
+        },
+        "openassessment.workflow.tasks.update_workflows_for_course_task": {
+            "queue": "edx.lms.core.ora_workflow_update"
+        },
+        "openassessment.workflow.tasks.update_workflows_for_ora_block_task": {
+            "queue": "edx.lms.core.ora_workflow_update"
+        },
+        "openassessment.workflow.tasks.update_workflow_for_submission_task": {
+            "queue": "edx.lms.core.ora_workflow_update"
+        }
+    },
+    "FACEBOOK_API_VERSION": null,
+    "FACEBOOK_APP_ID": null,
+    "FACEBOOK_APP_SECRET": null,
+    "FAVICON_PATH": "images/favicon.ico",
+    "FAVICON_URL": null,
+    "FCM_APP_NAME": "fcm-edx-platform",
+    "FEATURES": {
+        "DISPLAY_DEBUG_INFO_TO_STAFF": true,
+        "DISPLAY_HISTOGRAMS_TO_STAFF": false,
+        "REROUTE_ACTIVATION_EMAIL": false,
+        "DISABLE_START_DATES": false,
+        "ENABLE_DISCUSSION_SERVICE": true,
+        "ENABLE_TEXTBOOK": true,
+        "ENABLE_DISCUSSION_HOME_PANEL": false,
+        "ENABLE_DISCUSSION_EMAIL_DIGEST": false,
+        "ENABLE_UNICODE_USERNAME": false,
+        "ENABLE_DJANGO_ADMIN_SITE": true,
+        "ENABLE_LMS_MIGRATION": false,
+        "ENABLE_MASQUERADE": true,
+        "DISABLE_LOGIN_BUTTON": false,
+        "ENABLE_OAUTH2_PROVIDER": true,
+        "ENABLE_XBLOCK_VIEW_ENDPOINT": false,
+        "ENABLE_CORS_HEADERS": false,
+        "COURSES_ARE_BROWSABLE": true,
+        "ENABLE_HELP_LINK": true,
+        "HIDE_DASHBOARD_COURSES_UNTIL_ACTIVATED": false,
+        "ENABLE_STUDENT_HISTORY_VIEW": true,
+        "ENABLE_DEBUG_RUN_PYTHON": false,
+        "ENABLE_SERVICE_STATUS": false,
+        "AUTOPLAY_VIDEOS": false,
+        "ENABLE_AUTOADVANCE_VIDEOS": false,
+        "ENABLE_INSTRUCTOR_BACKGROUND_TASKS": true,
+        "INDIVIDUAL_DUE_DATES": false,
+        "CUSTOM_COURSES_EDX": false,
+        "ENABLE_VERIFIED_CERTIFICATES": false,
+        "ENABLE_COURSE_OLX_VALIDATION": false,
+        "DISABLE_HONOR_CERTIFICATES": false,
+        "DISABLE_AUDIT_CERTIFICATES": false,
+        "AUTOMATIC_AUTH_FOR_TESTING": false,
+        "RESTRICT_AUTOMATIC_AUTH": true,
+        "ENABLE_LOGIN_MICROFRONTEND": false,
+        "SKIP_EMAIL_VALIDATION": false,
+        "ENABLE_COSMETIC_DISPLAY_PRICE": false,
+        "AUTOMATIC_VERIFY_STUDENT_IDENTITY_FOR_TESTING": false,
+        "MAX_PROBLEM_RESPONSES_COUNT": 5000,
+        "ENABLED_PAYMENT_REPORTS": [
+            "refund_report",
+            "itemized_purchase_report",
+            "university_revenue_share",
+            "certificate_status"
+        ],
+        "ENABLE_MAX_FAILED_LOGIN_ATTEMPTS": true,
+        "SQUELCH_PII_IN_LOGS": true,
+        "EMBARGO": false,
+        "ALLOW_WIKI_ROOT_ACCESS": true,
+        "ENABLE_THIRD_PARTY_AUTH": true,
+        "ENABLE_MKTG_SITE": false,
+        "PREVENT_CONCURRENT_LOGINS": true,
+        "ALWAYS_REDIRECT_HOMEPAGE_TO_DASHBOARD_FOR_AUTHENTICATED_USER": true,
+        "ENABLE_COURSE_SORTING_BY_START_DATE": true,
+        "ENABLE_COURSE_HOME_REDIRECT": true,
+        "ENABLE_MOBILE_REST_API": true,
+        "ENABLE_COMBINED_LOGIN_REGISTRATION_FOOTER": false,
+        "ENABLE_MKTG_EMAIL_OPT_IN": false,
+        "ENABLE_FOOTER_MOBILE_APP_LINKS": false,
+        "ENABLE_EDXNOTES": false,
+        "ENABLE_PUBLISHER": false,
+        "MILESTONES_APP": true,
+        "ENABLE_PREREQUISITE_COURSES": true,
+        "MODE_CREATION_FOR_TESTING": false,
+        "EXPOSE_CACHE_PROGRAMS_ENDPOINT": false,
+        "ENABLE_COURSEWARE_SEARCH": false,
+        "ENABLE_COURSEWARE_SEARCH_FOR_COURSE_STAFF": false,
+        "ENABLE_DASHBOARD_SEARCH": false,
+        "LOG_POSTPAY_CALLBACKS": true,
+        "LICENSING": false,
+        "CERTIFICATES_HTML_VIEW": true,
+        "CUSTOM_CERTIFICATE_TEMPLATES_ENABLED": false,
+        "ENABLE_COURSE_DISCOVERY": false,
+        "ENABLE_COURSE_FILENAME_CCX_SUFFIX": false,
+        "ENABLE_SOFTWARE_SECURE_FAKE": false,
+        "ENABLE_TEAMS": true,
+        "ENABLE_VIDEO_BUMPER": false,
+        "SHOW_BUMPER_PERIODICITY": 604800,
+        "ENABLE_SPECIAL_EXAMS": false,
+        "ENABLE_LTI_PROVIDER": false,
+        "SHOW_HEADER_LANGUAGE_SELECTOR": false,
+        "FALLBACK_TO_ENGLISH_TRANSCRIPTS": true,
+        "SHOW_FOOTER_LANGUAGE_SELECTOR": false,
+        "ENABLE_CSMH_EXTENDED": false,
+        "ENABLE_READING_FROM_MULTIPLE_HISTORY_TABLES": true,
+        "ENABLE_XBLOCK_XML_VALIDATION": true,
+        "ALLOW_PUBLIC_ACCOUNT_CREATION": true,
+        "SHOW_REGISTRATION_LINKS": true,
+        "ENABLE_COOKIE_CONSENT": false,
+        "ENABLE_ENROLLMENT_TRACK_USER_PARTITION": true,
+        "ENABLE_ONE_CLICK_PROGRAM_PURCHASE": false,
+        "ALLOW_EMAIL_ADDRESS_CHANGE": true,
+        "ENABLE_BULK_ENROLLMENT_VIEW": false,
+        "ENABLE_ENTERPRISE_INTEGRATION": false,
+        "ENABLE_HTML_XBLOCK_STUDENT_VIEW_DATA": false,
+        "ENABLE_PASSWORD_RESET_FAILURE_EMAIL": false,
+        "UNSUPPORTED_BROWSER_ALERT_VERSIONS": "{i:10,f:-3,o:-3,s:-3,c:-3}",
+        "ENABLE_ACCOUNT_DELETION": true,
+        "ENABLE_ENROLLMENT_RESET": false,
+        "DISABLE_MOBILE_COURSE_AVAILABLE": false,
+        "ENABLE_CHANGE_USER_PASSWORD_ADMIN": false,
+        "ENABLE_AUTHN_MICROFRONTEND": false,
+        "ENABLE_ORA_ALL_FILE_URLS": false,
+        "ENABLE_ORA_USER_STATE_UPLOAD_DATA": false,
+        "ENABLE_ORA_USERNAMES_ON_DATA_EXPORT": false,
+        "ENABLE_COURSE_ASSESSMENT_GRADE_CHANGE_SIGNAL": false,
+        "ALLOW_ADMIN_ENTERPRISE_COURSE_ENROLLMENT_DELETION": false,
+        "ENABLE_BULK_USER_RETIREMENT": false,
+        "ENABLE_INTEGRITY_SIGNATURE": false,
+        "ENABLE_LTI_PII_ACKNOWLEDGEMENT": false,
+        "ENABLE_NEW_BULK_EMAIL_EXPERIENCE": false,
+        "MARK_LIBRARY_CONTENT_BLOCK_COMPLETE_ON_VIEW": false,
+        "DISABLE_UNENROLLMENT": false,
+        "ENABLE_CERTIFICATES_IDV_REQUIREMENT": false,
+        "DISABLE_ALLOWED_ENROLLMENT_IF_ENROLLMENT_CLOSED": false,
+        "SEND_LEARNING_CERTIFICATE_LIFECYCLE_EVENTS_TO_BUS": false,
+        "ENABLE_GRADING_METHOD_IN_PROBLEMS": false,
+        "ENABLE_COURSEWARE_SEARCH_VERIFIED_ENROLLMENT_REQUIRED": false,
+        "BADGES_ENABLED": false,
+        "ENABLE_CREDIT_ELIGIBILITY": true,
+        "test_django_plugin": true,
+        "ALLOW_HIDING_DISCUSSION_TAB": false,
+        "DISPLAY_ANALYTICS_ENROLLMENTS": true,
+        "ENABLE_CCX_ANALYTICS_DASHBOARD_URL": false,
+        "MAX_ENROLLMENT_INSTR_BUTTONS": 200,
+        "ENABLE_GRADE_DOWNLOADS": true,
+        "ALLOW_COURSE_STAFF_GRADE_DOWNLOADS": false,
+        "ALLOW_AUTOMATED_SIGNUPS": false,
+        "ENABLE_AUTOMATED_SIGNUPS_EXTRA_FIELDS": false,
+        "CERTIFICATES_INSTRUCTOR_GENERATION": false,
+        "ENABLE_CERTIFICATES_INSTRUCTOR_MANAGE": false,
+        "BATCH_ENROLLMENT_NOTIFY_USERS_DEFAULT": true,
+        "PREVIEW_LMS_BASE": "preview.local.openedx.io",
+        "ENABLE_COMBINED_LOGIN_REGISTRATION": true,
+        "ENABLE_LEARNER_RECORDS": false
+    },
+    "FEEDBACK_SUBMISSION_EMAIL": "",
+    "FERNET_KEYS": [
+        "DUMMY KEY CHANGE BEFORE GOING TO PRODUCTION"
+    ],
+    "FIELD_OVERRIDE_PROVIDERS": [
+        "openedx.features.personalized_learner_schedules.show_answer.show_answer_field_override.ShowAnswerFieldOverride"
+    ],
+    "FILE_UPLOAD_DIRECTORY_PERMISSIONS": null,
+    "FILE_UPLOAD_HANDLERS": [
+        "django.core.files.uploadhandler.MemoryFileUploadHandler",
+        "django.core.files.uploadhandler.TemporaryFileUploadHandler"
+    ],
+    "FILE_UPLOAD_MAX_MEMORY_SIZE": 2621440,
+    "FILE_UPLOAD_PERMISSIONS": 420,
+    "FILE_UPLOAD_STORAGE_BUCKET_NAME": "SET-ME-PLEASE (ex. bucket-name)",
+    "FILE_UPLOAD_STORAGE_PREFIX": "submissions_attachments",
+    "FILE_UPLOAD_TEMP_DIR": null,
+    "FINANCE_EMAIL": "",
+    "FINANCIAL_ASSISTANCE_APPLICATION_STATUS_URL": "/core/api/financial_assistance_application/status/",
+    "FINANCIAL_ASSISTANCE_MAX_LENGTH": 2500,
+    "FINANCIAL_ASSISTANCE_MIN_LENGTH": 1250,
+    "FINANCIAL_REPORTS": {
+        "STORAGE_TYPE": "localfs",
+        "BUCKET": null,
+        "ROOT_PATH": "sandbox"
+    },
+    "FIREBASE_APP": null,
+    "FIREBASE_CREDENTIALS": null,
+    "FIREBASE_CREDENTIALS_PATH": null,
+    "FIRST_DAY_OF_WEEK": 0,
+    "FIRST_PURCHASE_DISCOUNT_OVERRIDE_CODE": "",
+    "FIRST_PURCHASE_DISCOUNT_OVERRIDE_PERCENTAGE": 15,
+    "FIXTURE_DIRS": [],
+    "FOOTER_BROWSER_CACHE_MAX_AGE": 300,
+    "FOOTER_CACHE_TIMEOUT": 1800,
+    "FOOTER_CSS": {
+        "openedx": {
+            "ltr": "style-lms-footer",
+            "rtl": "style-lms-footer-rtl"
+        },
+        "edx": {
+            "ltr": "style-lms-footer-edx",
+            "rtl": "style-lms-footer-edx-rtl"
+        }
+    },
+    "FOOTER_OPENEDX_LOGO_IMAGE": "https://logos.openedx.org/open-edx-logo-tag.png",
+    "FOOTER_OPENEDX_URL": "https://open.edx.org",
+    "FORCE_SCRIPT_NAME": null,
+    "FORMAT_MODULE_PATH": null,
+    "FORM_RENDERER": "django.forms.renderers.DjangoTemplates",
+    "FORUM_ELASTIC_SEARCH_CONFIG": [
+        {
+            "host": "elasticsearch"
+        }
+    ],
+    "FORUM_MONGODB_CLIENT_PARAMETERS": {
+        "host": "mongodb"
+    },
+    "FORUM_MONGODB_DATABASE": "cs_comments_service",
+    "FORUM_SEARCH_BACKEND": "forum.search.es.ElasticsearchBackend",
+    "GENERAL_RECOMMENDATION": {},
+    "GENERATE_PROFILE_SCORES": false,
+    "GEOIP_PATH": "/openedx/edx-platform/common/static/data/geoip/GeoLite2-Country.mmdb",
+    "GITHUB_REPO_ROOT": "/edx/var/edxapp/data",
+    "GOOGLE_ANALYTICS_4_ID": null,
+    "GOOGLE_ANALYTICS_ACCOUNT": null,
+    "GOOGLE_ANALYTICS_LINKEDIN": null,
+    "GOOGLE_ANALYTICS_TRACKING_ID": null,
+    "GOOGLE_SITE_VERIFICATION_ID": null,
+    "GRADEBOOK_FREEZE_DAYS": 30,
+    "GRADES_DOWNLOAD": {
+        "STORAGE_CLASS": "django.core.files.storage.FileSystemStorage",
+        "STORAGE_KWARGS": {
+            "location": "/tmp/edx-s3/grades"
+        },
+        "STORAGE_TYPE": null,
+        "BUCKET": null,
+        "ROOT_PATH": null
+    },
+    "GRADES_DOWNLOAD_ROUTING_KEY": "edx.lms.core.high_mem",
+    "HEARTBEAT_CELERY_ROUTING_KEY": "edx.lms.core.high",
+    "HEARTBEAT_CELERY_TIMEOUT": 5,
+    "HEARTBEAT_CHECKS": [
+        "openedx.core.djangoapps.heartbeat.default_checks.check_modulestore",
+        "openedx.core.djangoapps.heartbeat.default_checks.check_database"
+    ],
+    "HEARTBEAT_EXTENDED_CHECKS": [
+        "openedx.core.djangoapps.heartbeat.default_checks.check_celery"
+    ],
+    "HELP_TOKENS_BOOKS": {
+        "learner": "https://edx.readthedocs.io/projects/open-edx-learner-guide",
+        "course_author": "https://edx.readthedocs.io/projects/open-edx-building-and-running-a-course"
+    },
+    "HELP_TOKENS_INI_FILE": "/openedx/edx-platform/lms/envs/help_tokens.ini",
+    "HELP_TOKENS_LANGUAGE_CODE": "en",
+    "HELP_TOKENS_VERSION": "latest",
+    "HIBP_LOGIN_BLOCK_PASSWORD_FREQUENCY_THRESHOLD": 5,
+    "HIBP_LOGIN_NUDGE_PASSWORD_FREQUENCY_THRESHOLD": 3,
+    "HIBP_REGISTRATION_PASSWORD_FREQUENCY_THRESHOLD": 3,
+    "HIGH_MEM_QUEUE": "edx.lms.core.high_mem",
+    "HIGH_PRIORITY_QUEUE": "edx.lms.core.high",
+    "HOMEPAGE_COURSE_MAX": null,
+    "HOSTNAME_MODULESTORE_DEFAULT_MAPPINGS": {
+        "preview.local.openedx.io": "draft-preferred"
+    },
+    "HOTJAR_SITE_ID": 0,
+    "HTTPS": "off",
+    "ICP_LICENSE": null,
+    "ICP_LICENSE_INFO": {},
+    "IDA_LOGOUT_URI_LIST": [],
+    "ID_VERIFICATION_SUPPORT_LINK": "",
+    "IGNORABLE_404_URLS": [],
+    "INSTALLED_APPS": [
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.humanize",
+        "django.contrib.messages",
+        "django.contrib.redirects",
+        "django.contrib.sessions",
+        "django.contrib.sites",
+        "openedx.core.djangoapps.staticfiles.apps.EdxPlatformStaticFilesConfig",
+        "django_celery_results",
+        "openedx.core.djangoapps.common_initialization.apps.CommonInitializationConfig",
+        "lms.djangoapps.lms_initialization.apps.LMSInitializationConfig",
+        "openedx.core.djangoapps.common_views",
+        "simple_history",
+        "config_models",
+        "openedx.core.djangoapps.config_model_utils",
+        "waffle",
+        "openedx.core.djangoapps.service_status",
+        "common.djangoapps.status",
+        "common.djangoapps.edxmako.apps.EdxMakoConfig",
+        "pipeline",
+        "common.djangoapps.static_replace",
+        "webpack_loader",
+        "web_fragments",
+        "openedx.core.djangoapps.plugin_api",
+        "openedx.core.djangoapps.contentserver",
+        "openedx.core.djangoapps.site_configuration",
+        "openedx.core.djangoapps.video_config",
+        "openedx.core.djangoapps.video_pipeline",
+        "lms.djangoapps.courseware",
+        "lms.djangoapps.coursewarehistoryextended",
+        "common.djangoapps.student.apps.StudentConfig",
+        "common.djangoapps.split_modulestore_django.apps.SplitModulestoreDjangoBackendAppConfig",
+        "lms.djangoapps.static_template_view",
+        "lms.djangoapps.staticbook",
+        "common.djangoapps.track",
+        "eventtracking.django.apps.EventTrackingConfig",
+        "common.djangoapps.util",
+        "lms.djangoapps.certificates.apps.CertificatesConfig",
+        "lms.djangoapps.instructor_task",
+        "openedx.core.djangoapps.course_groups",
+        "lms.djangoapps.bulk_email",
+        "lms.djangoapps.branding",
+        "lms.djangoapps.course_home_api",
+        "lms.djangoapps.user_tours",
+        "openedx.core.djangoapps.xblock.apps.LmsXBlockAppConfig",
+        "lms.djangoapps.support",
+        "oauth2_provider",
+        "openedx.core.djangoapps.oauth_dispatch.apps.OAuthDispatchAppConfig",
+        "common.djangoapps.third_party_auth",
+        "openedx.core.djangoapps.system_wide_roles",
+        "openedx.core.djangoapps.auth_exchange",
+        "wiki",
+        "django_notify",
+        "lms.djangoapps.course_wiki",
+        "mptt",
+        "sekizai",
+        "wiki.plugins.links",
+        "lms.djangoapps.course_wiki.plugins.markdownedx",
+        "django.contrib.admin",
+        "lms.djangoapps.debug",
+        "openedx.core.djangoapps.util.apps.UtilConfig",
+        "openedx.core.djangoapps.django_comment_common",
+        "lms.djangoapps.edxnotes",
+        "rest_framework",
+        "rest_framework_jwt",
+        "openedx.core.djangoapps.user_api",
+        "common.djangoapps.course_modes.apps.CourseModesConfig",
+        "openedx.core.djangoapps.enrollments.apps.EnrollmentsConfig",
+        "common.djangoapps.entitlements.apps.EntitlementsConfig",
+        "lms.djangoapps.bulk_enroll",
+        "lms.djangoapps.verify_student.apps.VerifyStudentConfig",
+        "openedx.core.djangoapps.dark_lang",
+        "lms.djangoapps.rss_proxy",
+        "openedx.core.djangoapps.embargo",
+        "common.djangoapps.course_action_state",
+        "django_countries",
+        "lms.djangoapps.mobile_api.apps.MobileApiConfig",
+        "social_django",
+        "lms.djangoapps.survey.apps.SurveyConfig",
+        "lms.djangoapps.lms_xblock.apps.LMSXBlockConfig",
+        "submissions",
+        "openassessment",
+        "openassessment.assessment",
+        "openassessment.fileupload",
+        "openassessment.staffgrader",
+        "openassessment.workflow",
+        "openassessment.xblock",
+        "edxval",
+        "openedx.core.djangoapps.content.course_overviews.apps.CourseOverviewsConfig",
+        "openedx.core.djangoapps.content.block_structure.apps.BlockStructureConfig",
+        "lms.djangoapps.course_blocks",
+        "lms.djangoapps.mailing",
+        "corsheaders",
+        "openedx.core.djangoapps.cors_csrf",
+        "lms.djangoapps.commerce.apps.CommerceConfig",
+        "openedx.core.djangoapps.credit.apps.CreditConfig",
+        "lms.djangoapps.teams",
+        "common.djangoapps.xblock_django",
+        "openedx.core.djangoapps.programs.apps.ProgramsConfig",
+        "openedx.core.djangoapps.catalog",
+        "sorl.thumbnail",
+        "milestones",
+        "lms.djangoapps.gating.apps.GatingConfig",
+        "statici18n",
+        "openedx.core.djangoapps.api_admin",
+        "openedx.core.djangoapps.verified_track_content",
+        "lms.djangoapps.learner_dashboard",
+        "lms.djangoapps.badges.apps.BadgesConfig",
+        "django_sites_extensions",
+        "lms.djangoapps.email_marketing.apps.EmailMarketingConfig",
+        "release_util",
+        "rules.apps.AutodiscoverRulesConfig",
+        "bridgekeeper",
+        "user_tasks",
+        "celery_utils",
+        "openedx.core.djangoapps.crawlers",
+        "common.djangoapps.database_fixups",
+        "openedx.core.djangoapps.waffle_utils",
+        "lms.djangoapps.course_goals.apps.CourseGoalsConfig",
+        "openedx_tagging.core.tagging.apps.TaggingConfig",
+        "openedx.core.djangoapps.content_tagging",
+        "openedx.features.calendar_sync",
+        "openedx.features.course_bookmarks",
+        "openedx.features.course_experience",
+        "openedx.features.enterprise_support.apps.EnterpriseSupportConfig",
+        "openedx.features.learner_profile",
+        "openedx.features.course_duration_limits",
+        "openedx.features.content_type_gating",
+        "openedx.features.discounts",
+        "openedx.features.effort_estimation",
+        "openedx.features.name_affirmation_api.apps.NameAffirmationApiConfig",
+        "lms.djangoapps.experiments",
+        "django_filters",
+        "drf_yasg",
+        "csrf.apps.CsrfAppConfig",
+        "xss_utils",
+        "openedx.core.djangoapps.heartbeat",
+        "openedx.core.djangoapps.course_date_signals",
+        "openedx.core.djangoapps.external_user_ids",
+        "openedx.core.djangoapps.schedules",
+        "openedx.core.djangoapps.content.learning_sequences.apps.LearningSequencesConfig",
+        "organizations",
+        "lms.djangoapps.bulk_user_retirement",
+        "openedx.core.djangoapps.agreements",
+        "openedx.features.survey_report",
+        "edx_django_utils.user",
+        "pylti1p3.contrib.django.lti1p3_tool_config",
+        "edx_ace",
+        "lms.djangoapps.mfe_config_api",
+        "openedx.core.djangoapps.notifications",
+        "openedx_events",
+        "openedx_learning.apps.authoring.collections",
+        "openedx_learning.apps.authoring.components",
+        "openedx_learning.apps.authoring.contents",
+        "openedx_learning.apps.authoring.publishing",
+        "edx_sga",
+        "enterprise",
+        "consent",
+        "integrated_channels.integrated_channel",
+        "integrated_channels.degreed",
+        "integrated_channels.degreed2",
+        "integrated_channels.sap_success_factors",
+        "integrated_channels.cornerstone",
+        "integrated_channels.xapi",
+        "integrated_channels.blackboard",
+        "integrated_channels.canvas",
+        "integrated_channels.moodle",
+        "django_object_actions",
+        "openedx.core.djangoapps.ace_common.apps.AceCommonConfig",
+        "openedx.core.djangoapps.bookmarks.apps.BookmarksConfig",
+        "openedx.core.djangoapps.content_libraries.apps.ContentLibrariesConfig",
+        "openedx.core.djangoapps.course_apps.apps.CourseAppsConfig",
+        "openedx.core.djangoapps.course_live.apps.CourseLiveConfig",
+        "openedx.core.djangoapps.courseware_api.apps.CoursewareAPIConfig",
+        "openedx.core.djangoapps.credentials.apps.CredentialsConfig",
+        "lms.djangoapps.discussion.apps.DiscussionConfig",
+        "openedx.core.djangoapps.discussions.apps.DiscussionsConfig",
+        "lms.djangoapps.grades.apps.GradesConfig",
+        "lms.djangoapps.instructor.apps.InstructorConfig",
+        "openedx.core.djangoapps.password_policy.apps.PasswordPolicyConfig",
+        "openedx.core.djangoapps.plugins.apps.PluginsConfig",
+        "lms.djangoapps.program_enrollments.apps.ProgramEnrollmentsConfig",
+        "openedx.core.djangoapps.theming.apps.ThemingConfig",
+        "openedx.core.djangoapps.user_authn.apps.UserAuthnConfig",
+        "openedx.core.djangoapps.zendesk_proxy.apps.ZendeskProxyConfig",
+        "edx_proctoring.apps.EdxProctoringConfig",
+        "bulk_grades.apps.BulkGradesConfig",
+        "completion.apps.CompletionAppConfig",
+        "super_csv.apps.SuperCSVConfig",
+        "edx_when.apps.EdxWhenConfig",
+        "edx_name_affirmation.apps.EdxNameAffirmationConfig",
+        "edx_toggles.apps.TogglesConfig",
+        "lti_consumer.apps.LTIConsumerApp",
+        "forum.apps.ForumConfig",
+        "push_notifications"
+    ],
+    "INTEGRATED_CHANNELS_API_CHUNK_TRANSMISSION_LIMIT": {},
+    "INTERNAL_IPS": [],
+    "INVOICE_CORP_ADDRESS": "Please place your corporate address\nin this configuration",
+    "INVOICE_PAYMENT_INSTRUCTIONS": "This is where you can\nput directions on how people\nbuying registration codes",
+    "IS_ELIGIBLE_FOR_FINANCIAL_ASSISTANCE_URL": "/core/api/course_eligibility/",
+    "JWT_AUTH": {
+        "JWT_VERIFY_EXPIRATION": true,
+        "JWT_PAYLOAD_GET_USERNAME_HANDLER": {
+            "@@PYREF": "TODO_FillInThisLambda",
+            "@@KWARGS": {
+                "hint": "'JWT_PAYLOAD_GET_USERNAME_HANDLER': lambda d: d.get('username'),"
+            }
+        },
+        "JWT_LEEWAY": 1,
+        "JWT_DECODE_HANDLER": "edx_rest_framework_extensions.auth.jwt.decoder.jwt_decode_handler",
+        "JWT_AUTH_COOKIE": "edx-jwt-cookie",
+        "JWT_EXPIRATION": 30,
+        "JWT_IN_COOKIE_EXPIRATION": 3600,
+        "JWT_LOGIN_CLIENT_ID": "login-service-client-id",
+        "JWT_LOGIN_SERVICE_USERNAME": "login_service_user",
+        "JWT_SUPPORTED_VERSION": "1.2.0",
+        "JWT_ALGORITHM": "HS256",
+        "JWT_SECRET_KEY": "dev key",
+        "JWT_SIGNING_ALGORITHM": "RS512",
+        "JWT_PRIVATE_SIGNING_JWK": null,
+        "JWT_PUBLIC_SIGNING_JWK_SET": null,
+        "JWT_ISSUER": "http://127.0.0.1:8000/oauth2",
+        "JWT_AUDIENCE": "change-me",
+        "JWT_ISSUERS": [
+            {
+                "ISSUER": "http://127.0.0.1:8000/oauth2",
+                "AUDIENCE": "change-me",
+                "SECRET_KEY": "dev key"
+            }
+        ],
+        "JWT_AUTH_COOKIE_HEADER_PAYLOAD": "edx-jwt-cookie-header-payload",
+        "JWT_AUTH_COOKIE_SIGNATURE": "edx-jwt-cookie-signature",
+        "JWT_AUTH_HEADER_PREFIX": "JWT"
+    },
+    "JWT_EXPIRATION": 30,
+    "JWT_ISSUER": "http://127.0.0.1:8000/oauth2",
+    "JWT_PRIVATE_SIGNING_KEY": null,
+    "KEYS_WITH_MERGED_VALUES": [
+        "FEATURES",
+        "TRACKING_BACKENDS",
+        "EVENT_TRACKING_BACKENDS",
+        "JWT_AUTH",
+        "CELERY_QUEUES",
+        "MKTG_URL_LINK_MAP",
+        "REST_FRAMEWORK",
+        "EVENT_BUS_PRODUCER_CONFIG"
+    ],
+    "LANGUAGES": [
+        [
+            "en",
+            "English"
+        ],
+        [
+            "rtl",
+            "Right-to-Left Test Language"
+        ],
+        [
+            "eo",
+            "Dummy Language (Esperanto)"
+        ],
+        [
+            "am",
+            "\u12a0\u121b\u122d\u129b"
+        ],
+        [
+            "ar",
+            "\u0627\u0644\u0639\u0631\u0628\u064a\u0629"
+        ],
+        [
+            "az",
+            "az\u0259rbaycanca"
+        ],
+        [
+            "bg-bg",
+            "\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438 (\u0411\u044a\u043b\u0433\u0430\u0440\u0438\u044f)"
+        ],
+        [
+            "bn-bd",
+            "\u09ac\u09be\u0982\u09b2\u09be (\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6)"
+        ],
+        [
+            "bn-in",
+            "\u09ac\u09be\u0982\u09b2\u09be (\u09ad\u09be\u09b0\u09a4)"
+        ],
+        [
+            "bs",
+            "bosanski"
+        ],
+        [
+            "ca",
+            "Catal\u00e0"
+        ],
+        [
+            "ca@valencia",
+            "Catal\u00e0 (Val\u00e8ncia)"
+        ],
+        [
+            "cs",
+            "\u010ce\u0161tina"
+        ],
+        [
+            "cy",
+            "Cymraeg"
+        ],
+        [
+            "da",
+            "dansk"
+        ],
+        [
+            "de-de",
+            "Deutsch (Deutschland)"
+        ],
+        [
+            "el",
+            "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+        ],
+        [
+            "en-uk",
+            "English (United Kingdom)"
+        ],
+        [
+            "en@lolcat",
+            "LOLCAT English"
+        ],
+        [
+            "en@pirate",
+            "Pirate English"
+        ],
+        [
+            "es-419",
+            "Espa\u00f1ol (Latinoam\u00e9rica)"
+        ],
+        [
+            "es-ar",
+            "Espa\u00f1ol (Argentina)"
+        ],
+        [
+            "es-ec",
+            "Espa\u00f1ol (Ecuador)"
+        ],
+        [
+            "es-es",
+            "Espa\u00f1ol (Espa\u00f1a)"
+        ],
+        [
+            "es-mx",
+            "Espa\u00f1ol (M\u00e9xico)"
+        ],
+        [
+            "es-pe",
+            "Espa\u00f1ol (Per\u00fa)"
+        ],
+        [
+            "et-ee",
+            "Eesti (Eesti)"
+        ],
+        [
+            "eu-es",
+            "euskara (Espainia)"
+        ],
+        [
+            "fa",
+            "\u0641\u0627\u0631\u0633\u06cc"
+        ],
+        [
+            "fa-ir",
+            "\u0641\u0627\u0631\u0633\u06cc (\u0627\u06cc\u0631\u0627\u0646)"
+        ],
+        [
+            "fi-fi",
+            "Suomi (Suomi)"
+        ],
+        [
+            "fil",
+            "Filipino"
+        ],
+        [
+            "fr",
+            "Fran\u00e7ais"
+        ],
+        [
+            "gl",
+            "Galego"
+        ],
+        [
+            "gu",
+            "\u0a97\u0ac1\u0a9c\u0ab0\u0abe\u0aa4\u0ac0"
+        ],
+        [
+            "he",
+            "\u05e2\u05d1\u05e8\u05d9\u05ea"
+        ],
+        [
+            "hi",
+            "\u0939\u093f\u0928\u094d\u0926\u0940"
+        ],
+        [
+            "hr",
+            "hrvatski"
+        ],
+        [
+            "hu",
+            "magyar"
+        ],
+        [
+            "hy-am",
+            "\u0540\u0561\u0575\u0565\u0580\u0565\u0576 (\u0540\u0561\u0575\u0561\u057d\u057f\u0561\u0576)"
+        ],
+        [
+            "id",
+            "Bahasa Indonesia"
+        ],
+        [
+            "it-it",
+            "Italiano (Italia)"
+        ],
+        [
+            "ja-jp",
+            "\u65e5\u672c\u8a9e (\u65e5\u672c)"
+        ],
+        [
+            "kk-kz",
+            "\u049b\u0430\u0437\u0430\u049b \u0442\u0456\u043b\u0456 (\u049a\u0430\u0437\u0430\u049b\u0441\u0442\u0430\u043d)"
+        ],
+        [
+            "km-kh",
+            "\u1797\u17b6\u179f\u17b6\u1781\u17d2\u1798\u17c2\u179a (\u1780\u1798\u17d2\u1796\u17bb\u1787\u17b6)"
+        ],
+        [
+            "kn",
+            "\u0c95\u0ca8\u0ccd\u0ca8\u0ca1"
+        ],
+        [
+            "ko-kr",
+            "\ud55c\uad6d\uc5b4 (\ub300\ud55c\ubbfc\uad6d)"
+        ],
+        [
+            "lt-lt",
+            "Lietuvi\u0173 (Lietuva)"
+        ],
+        [
+            "ml",
+            "\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02"
+        ],
+        [
+            "mn",
+            "\u041c\u043e\u043d\u0433\u043e\u043b \u0445\u044d\u043b"
+        ],
+        [
+            "mr",
+            "\u092e\u0930\u093e\u0920\u0940"
+        ],
+        [
+            "ms",
+            "Bahasa Melayu"
+        ],
+        [
+            "nb",
+            "Norsk bokm\u00e5l"
+        ],
+        [
+            "ne",
+            "\u0928\u0947\u092a\u093e\u0932\u0940"
+        ],
+        [
+            "nl-nl",
+            "Nederlands (Nederland)"
+        ],
+        [
+            "or",
+            "\u0b13\u0b21\u0b3c\u0b3f\u0b06"
+        ],
+        [
+            "pl",
+            "Polski"
+        ],
+        [
+            "pt-br",
+            "Portugu\u00eas (Brasil)"
+        ],
+        [
+            "pt-pt",
+            "Portugu\u00eas (Portugal)"
+        ],
+        [
+            "ro",
+            "rom\u00e2n\u0103"
+        ],
+        [
+            "ru",
+            "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
+        ],
+        [
+            "si",
+            "\u0dc3\u0dd2\u0d82\u0dc4\u0dbd"
+        ],
+        [
+            "sk",
+            "Sloven\u010dina"
+        ],
+        [
+            "sl",
+            "Sloven\u0161\u010dina"
+        ],
+        [
+            "sq",
+            "shqip"
+        ],
+        [
+            "sr",
+            "\u0421\u0440\u043f\u0441\u043a\u0438"
+        ],
+        [
+            "sv",
+            "svenska"
+        ],
+        [
+            "sw",
+            "Kiswahili"
+        ],
+        [
+            "ta",
+            "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd"
+        ],
+        [
+            "te",
+            "\u0c24\u0c46\u0c32\u0c41\u0c17\u0c41"
+        ],
+        [
+            "th",
+            "\u0e44\u0e17\u0e22"
+        ],
+        [
+            "tr-tr",
+            "T\u00fcrk\u00e7e (T\u00fcrkiye)"
+        ],
+        [
+            "uk",
+            "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430"
+        ],
+        [
+            "ur",
+            "\u0627\u0631\u062f\u0648"
+        ],
+        [
+            "vi",
+            "Ti\u1ebfng Vi\u1ec7t"
+        ],
+        [
+            "uz",
+            "\u040e\u0437\u0431\u0435\u043a"
+        ],
+        [
+            "zh-cn",
+            "\u4e2d\u6587 (\u7b80\u4f53)"
+        ],
+        [
+            "zh-hk",
+            "\u4e2d\u6587 (\u9999\u6e2f)"
+        ],
+        [
+            "zh-tw",
+            "\u4e2d\u6587 (\u53f0\u7063)"
+        ]
+    ],
+    "LANGUAGES_BIDI": [
+        "he",
+        "ar",
+        "fa",
+        "ur",
+        "fa-ir",
+        "rtl"
+    ],
+    "LANGUAGE_CODE": "en",
+    "LANGUAGE_COOKIE_AGE": null,
+    "LANGUAGE_COOKIE_DOMAIN": null,
+    "LANGUAGE_COOKIE_HTTPONLY": false,
+    "LANGUAGE_COOKIE_NAME": "openedx-language-preference",
+    "LANGUAGE_COOKIE_PATH": "/",
+    "LANGUAGE_COOKIE_SAMESITE": null,
+    "LANGUAGE_COOKIE_SECURE": false,
+    "LANGUAGE_DICT": {
+        "en": "English",
+        "rtl": "Right-to-Left Test Language",
+        "eo": "Dummy Language (Esperanto)",
+        "am": "\u12a0\u121b\u122d\u129b",
+        "ar": "\u0627\u0644\u0639\u0631\u0628\u064a\u0629",
+        "az": "az\u0259rbaycanca",
+        "bg-bg": "\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438 (\u0411\u044a\u043b\u0433\u0430\u0440\u0438\u044f)",
+        "bn-bd": "\u09ac\u09be\u0982\u09b2\u09be (\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6)",
+        "bn-in": "\u09ac\u09be\u0982\u09b2\u09be (\u09ad\u09be\u09b0\u09a4)",
+        "bs": "bosanski",
+        "ca": "Catal\u00e0",
+        "ca@valencia": "Catal\u00e0 (Val\u00e8ncia)",
+        "cs": "\u010ce\u0161tina",
+        "cy": "Cymraeg",
+        "da": "dansk",
+        "de-de": "Deutsch (Deutschland)",
+        "el": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac",
+        "en-uk": "English (United Kingdom)",
+        "en@lolcat": "LOLCAT English",
+        "en@pirate": "Pirate English",
+        "es-419": "Espa\u00f1ol (Latinoam\u00e9rica)",
+        "es-ar": "Espa\u00f1ol (Argentina)",
+        "es-ec": "Espa\u00f1ol (Ecuador)",
+        "es-es": "Espa\u00f1ol (Espa\u00f1a)",
+        "es-mx": "Espa\u00f1ol (M\u00e9xico)",
+        "es-pe": "Espa\u00f1ol (Per\u00fa)",
+        "et-ee": "Eesti (Eesti)",
+        "eu-es": "euskara (Espainia)",
+        "fa": "\u0641\u0627\u0631\u0633\u06cc",
+        "fa-ir": "\u0641\u0627\u0631\u0633\u06cc (\u0627\u06cc\u0631\u0627\u0646)",
+        "fi-fi": "Suomi (Suomi)",
+        "fil": "Filipino",
+        "fr": "Fran\u00e7ais",
+        "gl": "Galego",
+        "gu": "\u0a97\u0ac1\u0a9c\u0ab0\u0abe\u0aa4\u0ac0",
+        "he": "\u05e2\u05d1\u05e8\u05d9\u05ea",
+        "hi": "\u0939\u093f\u0928\u094d\u0926\u0940",
+        "hr": "hrvatski",
+        "hu": "magyar",
+        "hy-am": "\u0540\u0561\u0575\u0565\u0580\u0565\u0576 (\u0540\u0561\u0575\u0561\u057d\u057f\u0561\u0576)",
+        "id": "Bahasa Indonesia",
+        "it-it": "Italiano (Italia)",
+        "ja-jp": "\u65e5\u672c\u8a9e (\u65e5\u672c)",
+        "kk-kz": "\u049b\u0430\u0437\u0430\u049b \u0442\u0456\u043b\u0456 (\u049a\u0430\u0437\u0430\u049b\u0441\u0442\u0430\u043d)",
+        "km-kh": "\u1797\u17b6\u179f\u17b6\u1781\u17d2\u1798\u17c2\u179a (\u1780\u1798\u17d2\u1796\u17bb\u1787\u17b6)",
+        "kn": "\u0c95\u0ca8\u0ccd\u0ca8\u0ca1",
+        "ko-kr": "\ud55c\uad6d\uc5b4 (\ub300\ud55c\ubbfc\uad6d)",
+        "lt-lt": "Lietuvi\u0173 (Lietuva)",
+        "ml": "\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02",
+        "mn": "\u041c\u043e\u043d\u0433\u043e\u043b \u0445\u044d\u043b",
+        "mr": "\u092e\u0930\u093e\u0920\u0940",
+        "ms": "Bahasa Melayu",
+        "nb": "Norsk bokm\u00e5l",
+        "ne": "\u0928\u0947\u092a\u093e\u0932\u0940",
+        "nl-nl": "Nederlands (Nederland)",
+        "or": "\u0b13\u0b21\u0b3c\u0b3f\u0b06",
+        "pl": "Polski",
+        "pt-br": "Portugu\u00eas (Brasil)",
+        "pt-pt": "Portugu\u00eas (Portugal)",
+        "ro": "rom\u00e2n\u0103",
+        "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+        "si": "\u0dc3\u0dd2\u0d82\u0dc4\u0dbd",
+        "sk": "Sloven\u010dina",
+        "sl": "Sloven\u0161\u010dina",
+        "sq": "shqip",
+        "sr": "\u0421\u0440\u043f\u0441\u043a\u0438",
+        "sv": "svenska",
+        "sw": "Kiswahili",
+        "ta": "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd",
+        "te": "\u0c24\u0c46\u0c32\u0c41\u0c17\u0c41",
+        "th": "\u0e44\u0e17\u0e22",
+        "tr-tr": "T\u00fcrk\u00e7e (T\u00fcrkiye)",
+        "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
+        "ur": "\u0627\u0631\u062f\u0648",
+        "vi": "Ti\u1ebfng Vi\u1ec7t",
+        "uz": "\u040e\u0437\u0431\u0435\u043a",
+        "zh-cn": "\u4e2d\u6587 (\u7b80\u4f53)",
+        "zh-hk": "\u4e2d\u6587 (\u9999\u6e2f)",
+        "zh-tw": "\u4e2d\u6587 (\u53f0\u7063)"
+    },
+    "LEARNER_ENGAGEMENT_PROMPT_FOR_ACTIVE_CONTRACT": "",
+    "LEARNER_ENGAGEMENT_PROMPT_FOR_NON_ACTIVE_CONTRACT": "",
+    "LEARNER_PROGRESS_PROMPT_FOR_ACTIVE_CONTRACT": "",
+    "LEARNER_PROGRESS_PROMPT_FOR_NON_ACTIVE_CONTRACT": "",
+    "LEARNING_MICROFRONTEND_URL": null,
+    "LMS_BASE": "local.openedx.io",
+    "LMS_COMM_DEFAULT_FROM_EMAIL": "no-reply@example.com",
+    "LMS_ENROLLMENT_API_PATH": "/api/enrollment/v1/",
+    "LMS_INTERNAL_ROOT_URL": "http://local.openedx.io",
+    "LMS_MIGRATION_ALLOWED_IPS": [],
+    "LMS_ROOT_URL": "http://local.openedx.io",
+    "LMS_SEGMENT_KEY": null,
+    "LOCALE_PATHS": [
+        "/openedx/edx-platform/conf/locale"
+    ],
+    "LOCAL_LOGLEVEL": "INFO",
+    "LOGGING": {
+        "version": 1,
+        "disable_existing_loggers": false,
+        "formatters": {
+            "standard": {
+                "format": "%(asctime)s %(levelname)s %(process)d [%(name)s] [user %(userid)s] [ip %(remoteip)s] %(filename)s:%(lineno)d - %(message)s"
+            },
+            "syslog_format": {
+                "format": "[service_variant=lms][%(name)s][env:sandbox] %(levelname)s [94472ac4abb9  %(process)d] [user %(userid)s] [ip %(remoteip)s] [%(filename)s:%(lineno)d] - %(message)s"
+            },
+            "raw": {
+                "format": "%(message)s"
+            }
+        },
+        "filters": {
+            "require_debug_false": {
+                "()": "django.utils.log.RequireDebugFalse"
+            },
+            "userid_context": {
+                "()": "edx_django_utils.logging.UserIdFilter"
+            },
+            "remoteip_context": {
+                "()": "edx_django_utils.logging.RemoteIpFilter"
+            }
+        },
+        "handlers": {
+            "console": {
+                "level": "INFO",
+                "class": "logging.StreamHandler",
+                "formatter": "standard",
+                "filters": [
+                    "userid_context",
+                    "remoteip_context"
+                ],
+                "stream": {
+                    "@@PYREF": "stderr",
+                    "@@MODULE": "sys"
+                }
+            },
+            "mail_admins": {
+                "level": "ERROR",
+                "filters": [
+                    "require_debug_false"
+                ],
+                "class": "django.utils.log.AdminEmailHandler"
+            },
+            "local": {
+                "level": "INFO",
+                "class": "logging.handlers.SysLogHandler",
+                "address": "/dev/log",
+                "formatter": "syslog_format",
+                "filters": [
+                    "userid_context",
+                    "remoteip_context"
+                ],
+                "facility": 16
+            },
+            "tracking": {
+                "level": "DEBUG",
+                "class": "logging.handlers.SysLogHandler",
+                "address": "/dev/log",
+                "facility": 17,
+                "formatter": "raw"
+            }
+        },
+        "loggers": {
+            "tracking": {
+                "handlers": [
+                    "tracking"
+                ],
+                "level": "DEBUG",
+                "propagate": false
+            },
+            "": {
+                "handlers": [
+                    "console",
+                    "local"
+                ],
+                "level": "INFO",
+                "propagate": false
+            },
+            "django.request": {
+                "handlers": [
+                    "mail_admins"
+                ],
+                "level": "ERROR",
+                "propagate": true
+            },
+            "requests.packages.urllib3": {
+                "level": "WARN"
+            }
+        }
+    },
+    "LOGGING_CONFIG": "logging.config.dictConfig",
+    "LOGGING_ENV": "sandbox",
+    "LOGIN_AND_REGISTER_FORM_RATELIMIT": "100/5m",
+    "LOGIN_ISSUE_SUPPORT_LINK": "",
+    "LOGIN_REDIRECT_URL": "/login",
+    "LOGIN_REDIRECT_WHITELIST": [],
+    "LOGIN_URL": "/login",
+    "LOGISTRATION_API_RATELIMIT": "20/m",
+    "LOGISTRATION_PER_EMAIL_RATELIMIT_RATE": "30/5m",
+    "LOGISTRATION_RATELIMIT_RATE": "100/5m",
+    "LOGOUT_REDIRECT_URL": null,
+    "LOGO_IMAGE_EXTRA_TEXT": "",
+    "LOGO_TRADEMARK_URL": null,
+    "LOGO_URL": null,
+    "LOGO_URL_PNG": null,
+    "LOG_DIR": "/openedx/data/logs",
+    "LTI_AGGREGATE_SCORE_PASSBACK_DELAY": 900,
+    "LTI_USER_EMAIL_DOMAIN": "lti.example.com",
+    "MAILCHIMP_NEW_USER_LIST_ID": "",
+    "MAINTENANCE_BANNER_TEXT": null,
+    "MAKO_MODULE_DIR": "/tmp/mako_lms",
+    "MAKO_TEMPLATE_DIRS_BASE": [
+        "/openedx/themes",
+        "/openedx/edx-platform/lms/templates",
+        "/openedx/edx-platform/common/templates",
+        "/openedx/edx-platform/xmodule/capa/templates",
+        "/openedx/edx-platform/common/djangoapps/pipeline_mako/templates",
+        "/openedx/edx-platform/openedx/core/djangoapps/cors_csrf/templates",
+        "/openedx/edx-platform/openedx/core/djangoapps/dark_lang/templates",
+        "/openedx/edx-platform/openedx/core/lib/license/templates",
+        "/openedx/edx-platform/openedx/features/course_experience/templates"
+    ],
+    "MANAGERS": [],
+    "MARKETING_EMAILS_OPT_IN": false,
+    "MAX_BLOCKS_PER_CONTENT_LIBRARY": 1000,
+    "MAX_BOOKMARKS_PER_COURSE": 100,
+    "MAX_FAILED_LOGIN_ATTEMPTS_ALLOWED": 6,
+    "MAX_FAILED_LOGIN_ATTEMPTS_LOCKOUT_PERIOD_SECS": 1800,
+    "MAX_FILEUPLOADS_PER_INPUT": 20,
+    "MEDIA_ROOT": "/edx/var/edxapp/media/",
+    "MEDIA_URL": "/media/",
+    "MESSAGE_STORAGE": "django.contrib.messages.storage.session.SessionStorage",
+    "MFE_CONFIG": {},
+    "MFE_CONFIG_API_CACHE_TIMEOUT": 300,
+    "MFE_CONFIG_OVERRIDES": {},
+    "MIDDLEWARE": [
+        "openedx.core.lib.x_forwarded_for.middleware.XForwardedForMiddleware",
+        "edx_django_utils.security.csp.middleware.content_security_policy_middleware",
+        "crum.CurrentRequestUserMiddleware",
+        "edx_django_utils.cache.middleware.RequestCacheMiddleware",
+        "edx_django_utils.monitoring.CachedCustomMonitoringMiddleware",
+        "edx_django_utils.monitoring.CodeOwnerMonitoringMiddleware",
+        "edx_django_utils.monitoring.CookieMonitoringMiddleware",
+        "edx_django_utils.monitoring.DeploymentMonitoringMiddleware",
+        "edx_django_utils.monitoring.FrontendMonitoringMiddleware",
+        "openedx.core.djangoapps.cookie_metadata.middleware.CookieNameChange",
+        "openedx.core.lib.request_utils.IgnoredErrorMiddleware",
+        "lms.djangoapps.mobile_api.middleware.AppVersionUpgrade",
+        "openedx.core.djangoapps.header_control.middleware.HeaderControlMiddleware",
+        "lms.djangoapps.discussion.django_comment_client.middleware.AjaxExceptionMiddleware",
+        "django.middleware.common.CommonMiddleware",
+        "django.contrib.sites.middleware.CurrentSiteMiddleware",
+        "edx_rest_framework_extensions.auth.jwt.middleware.JwtAuthCookieMiddleware",
+        "django_sites_extensions.middleware.RedirectMiddleware",
+        "openedx.core.djangoapps.safe_sessions.middleware.SafeSessionMiddleware",
+        "openedx.core.djangoapps.cache_toolbox.middleware.CacheBackedAuthenticationMiddleware",
+        "openedx.core.djangoapps.safe_sessions.middleware.EmailChangeMiddleware",
+        "common.djangoapps.student.middleware.UserStandingMiddleware",
+        "openedx.core.djangoapps.user_api.middleware.UserTagsEventContextMiddleware",
+        "django.contrib.messages.middleware.MessageMiddleware",
+        "common.djangoapps.track.middleware.TrackMiddleware",
+        "django.middleware.csrf.CsrfViewMiddleware",
+        "corsheaders.middleware.CorsMiddleware",
+        "openedx.core.djangoapps.cors_csrf.middleware.CorsCSRFMiddleware",
+        "openedx.core.djangoapps.cors_csrf.middleware.CsrfCrossDomainCookieMiddleware",
+        "openedx.core.djangoapps.geoinfo.middleware.CountryMiddleware",
+        "openedx.core.djangoapps.embargo.middleware.EmbargoMiddleware",
+        "enterprise.middleware.EnterpriseLanguagePreferenceMiddleware",
+        "openedx.core.djangoapps.lang_pref.middleware.LanguagePreferenceMiddleware",
+        "openedx.core.djangoapps.dark_lang.middleware.DarkLangMiddleware",
+        "django.middleware.locale.LocaleMiddleware",
+        "lms.djangoapps.discussion.django_comment_client.utils.ViewNameMiddleware",
+        "codejail.django_integration.ConfigureCodeJailMiddleware",
+        "openedx.core.djangoapps.session_inactivity_timeout.middleware.SessionInactivityTimeout",
+        "django.middleware.clickjacking.XFrameOptionsMiddleware",
+        "lms.djangoapps.courseware.middleware.CacheCourseIdMiddleware",
+        "lms.djangoapps.courseware.middleware.RedirectMiddleware",
+        "lms.djangoapps.course_wiki.middleware.WikiAccessMiddleware",
+        "openedx.core.djangoapps.theming.middleware.CurrentSiteThemeMiddleware",
+        "waffle.middleware.WaffleMiddleware",
+        "edx_django_utils.cache.middleware.TieredCacheMiddleware",
+        "edx_rest_framework_extensions.middleware.RequestCustomAttributesMiddleware",
+        "edx_rest_framework_extensions.auth.jwt.middleware.EnsureJWTAuthSettingsMiddleware",
+        "simple_history.middleware.HistoryRequestMiddleware",
+        "openedx.core.djangoapps.site_configuration.middleware.SessionCookieDomainOverrideMiddleware"
+    ],
+    "MIGRATION_MODULES": {},
+    "MKTG_URLS": {},
+    "MKTG_URL_LINK_MAP": {
+        "ABOUT": "about",
+        "CONTACT": "contact",
+        "FAQ": "help",
+        "COURSES": "courses",
+        "ROOT": "root",
+        "TOS": "tos",
+        "HONOR": "honor",
+        "TOS_AND_HONOR": "edx-terms-service",
+        "PRIVACY": "privacy",
+        "PRESS": "press",
+        "BLOG": "blog",
+        "DONATE": "donate",
+        "SITEMAP.XML": "sitemap_xml",
+        "WHAT_IS_VERIFIED_CERT": "verified-certificate"
+    },
+    "MKTG_URL_OVERRIDES": {},
+    "MOBILE_APP_USER_AGENT_REGEXES": [
+        "edX/org.edx.mobile"
+    ],
+    "MOBILE_SEARCH_COURSE_LIMIT": 100,
+    "MOBILE_STORE_ACE_URLS": {
+        "google": "https://play.google.com/store/apps/details?id=org.edx.mobile",
+        "apple": "https://itunes.apple.com/us/app/edx/id945480667?mt=8"
+    },
+    "MOBILE_STORE_LOGO_URLS": {
+        "google": "http://email-media.s3.amazonaws.com/edX/2021/store_google_253x78.jpg",
+        "apple": "http://email-media.s3.amazonaws.com/edX/2021/store_apple_229x78.jpg"
+    },
+    "MODULESTORE": {
+        "default": {
+            "ENGINE": "xmodule.modulestore.mixed.MixedModuleStore",
+            "OPTIONS": {
+                "mappings": {},
+                "stores": [
+                    {
+                        "NAME": "split",
+                        "ENGINE": "xmodule.modulestore.split_mongo.split_draft.DraftVersioningModuleStore",
+                        "DOC_STORE_CONFIG": {
+                            "db": "edxapp",
+                            "host": "localhost",
+                            "replicaSet": "",
+                            "password": "password",
+                            "port": 27017,
+                            "user": "edxapp",
+                            "collection": "modulestore",
+                            "ssl": false,
+                            "socketTimeoutMS": 6000,
+                            "connectTimeoutMS": 2000,
+                            "auth_source": null,
+                            "read_preference": "SECONDARY_PREFERRED"
+                        },
+                        "OPTIONS": {
+                            "default_class": "xmodule.hidden_block.HiddenBlock",
+                            "fs_root": "/edx/var/edxapp/data",
+                            "render_template": "common.djangoapps.edxmako.shortcuts.render_to_string"
+                        }
+                    },
+                    {
+                        "NAME": "draft",
+                        "ENGINE": "xmodule.modulestore.mongo.DraftMongoModuleStore",
+                        "DOC_STORE_CONFIG": {
+                            "db": "edxapp",
+                            "host": "localhost",
+                            "replicaSet": "",
+                            "password": "password",
+                            "port": 27017,
+                            "user": "edxapp",
+                            "collection": "modulestore",
+                            "ssl": false,
+                            "socketTimeoutMS": 6000,
+                            "connectTimeoutMS": 2000,
+                            "auth_source": null,
+                            "read_preference": "SECONDARY_PREFERRED"
+                        },
+                        "OPTIONS": {
+                            "default_class": "xmodule.hidden_block.HiddenBlock",
+                            "fs_root": "/edx/var/edxapp/data",
+                            "render_template": "common.djangoapps.edxmako.shortcuts.render_to_string"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "MODULESTORE_BRANCH": "published-only",
+    "MODULESTORE_FIELD_OVERRIDE_PROVIDERS": [
+        "openedx.features.content_type_gating.field_override.ContentTypeGatingFieldOverride",
+        "lms.djangoapps.courseware.self_paced_overrides.SelfPacedDateOverrideProvider"
+    ],
+    "MONGODB_LOG": {},
+    "MONTH_DAY_FORMAT": "F j",
+    "NODE_MODULES_ROOT": "/openedx/edx-platform/node_modules",
+    "NOTES_DISABLED_TABS": [
+        "course_structure",
+        "tags"
+    ],
+    "NOTIFICATIONS_DEFAULT_FROM_EMAIL": "no-reply@example.com",
+    "NOTIFICATIONS_EXPIRY": 60,
+    "NOTIFICATION_CREATION_BATCH_SIZE": 76,
+    "NOTIFICATION_EMAIL_CSS": "templates/credit_notifications/credit_notification.css",
+    "NOTIFICATION_EMAIL_EDX_LOGO": "templates/credit_notifications/edx-logo-header.png",
+    "NOTIFICATION_TYPE_ICONS": {},
+    "NUMBER_GROUPING": 0,
+    "OAUTH2_DEFAULT_SCOPES": {
+        "read": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Read access"
+            ]
+        },
+        "write": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Write access"
+            ]
+        },
+        "email": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Know your email address"
+            ]
+        },
+        "profile": {
+            "@@PYREF": "gettext_lazy",
+            "@@MODULE": "django.contrib.translation.utils",
+            "@@ARGS": [
+                "Know your name and username"
+            ]
+        }
+    },
+    "OAUTH2_PROVIDER": {
+        "OAUTH2_VALIDATOR_CLASS": "openedx.core.djangoapps.oauth_dispatch.dot_overrides.validators.EdxOAuth2Validator",
+        "REFRESH_TOKEN_EXPIRE_SECONDS": 7776000,
+        "SCOPES_BACKEND_CLASS": "openedx.core.djangoapps.oauth_dispatch.scopes.ApplicationModelScopes",
+        "SCOPES": {
+            "read": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Read access"
+                ]
+            },
+            "write": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Write access"
+                ]
+            },
+            "email": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Know your email address"
+                ]
+            },
+            "profile": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Know your name and username"
+                ]
+            },
+            "certificates:read": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Retrieve your course certificates"
+                ]
+            },
+            "grades:read": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Retrieve your grades for your enrolled courses"
+                ]
+            },
+            "tpa:read": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Retrieve your third-party authentication username mapping"
+                ]
+            },
+            "user_id": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Know your user identifier"
+                ]
+            }
+        },
+        "DEFAULT_SCOPES": {
+            "read": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Read access"
+                ]
+            },
+            "write": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Write access"
+                ]
+            },
+            "email": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Know your email address"
+                ]
+            },
+            "profile": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Know your name and username"
+                ]
+            }
+        },
+        "REQUEST_APPROVAL_PROMPT": "auto_even_if_expired",
+        "ERROR_RESPONSE_WITH_SCOPES": true
+    },
+    "OAUTH2_PROVIDER_APPLICATION_MODEL": "oauth2_provider.Application",
+    "OAUTH_DELETE_EXPIRED": true,
+    "OAUTH_ENFORCE_CLIENT_SECURE": true,
+    "OAUTH_ENFORCE_SECURE": true,
+    "OAUTH_EXPIRE_CONFIDENTIAL_CLIENT_DAYS": 365,
+    "OAUTH_EXPIRE_DELTA": {
+        "@@PYREF": "timedelta",
+        "@@MODULE": "datetime",
+        "@@KWARGS": {
+            "seconds": 31536000.0,
+            "microseconds": 0
+        }
+    },
+    "OAUTH_EXPIRE_DELTA_PUBLIC": {
+        "@@PYREF": "timedelta",
+        "@@MODULE": "datetime",
+        "@@KWARGS": {
+            "seconds": 2592000.0,
+            "microseconds": 0
+        }
+    },
+    "OAUTH_EXPIRE_PUBLIC_CLIENT_DAYS": 30,
+    "OAUTH_ID_TOKEN_EXPIRATION": 3600,
+    "OAUTH_OIDC_ISSUER": "http://local.openedx.io/oauth2",
+    "OPENAPI_CACHE_TIMEOUT": 3600,
+    "OPENEDX_ROOT": "/openedx/edx-platform/openedx",
+    "OPTIMIZELY_FULLSTACK_SDK_KEY": null,
+    "OPTIMIZELY_PROJECT_ID": null,
+    "OPTIONAL_APPS": [
+        [
+            "problem_builder",
+            "openedx.core.djangoapps.content.course_overviews.apps.CourseOverviewsConfig"
+        ],
+        [
+            "edx_sga",
+            null
+        ],
+        [
+            "submissions",
+            "openedx.core.djangoapps.content.course_overviews.apps.CourseOverviewsConfig"
+        ],
+        [
+            "openassessment",
+            "openedx.core.djangoapps.content.course_overviews.apps.CourseOverviewsConfig"
+        ],
+        [
+            "openassessment.assessment",
+            "openedx.core.djangoapps.content.course_overviews.apps.CourseOverviewsConfig"
+        ],
+        [
+            "openassessment.fileupload",
+            "openedx.core.djangoapps.content.course_overviews.apps.CourseOverviewsConfig"
+        ],
+        [
+            "openassessment.staffgrader",
+            "openedx.core.djangoapps.content.course_overviews.apps.CourseOverviewsConfig"
+        ],
+        [
+            "openassessment.workflow",
+            "openedx.core.djangoapps.content.course_overviews.apps.CourseOverviewsConfig"
+        ],
+        [
+            "openassessment.xblock",
+            "openedx.core.djangoapps.content.course_overviews.apps.CourseOverviewsConfig"
+        ],
+        [
+            "edxval",
+            "openedx.core.djangoapps.content.course_overviews.apps.CourseOverviewsConfig"
+        ],
+        [
+            "enterprise",
+            null
+        ],
+        [
+            "consent",
+            null
+        ],
+        [
+            "integrated_channels.integrated_channel",
+            null
+        ],
+        [
+            "integrated_channels.degreed",
+            null
+        ],
+        [
+            "integrated_channels.degreed2",
+            null
+        ],
+        [
+            "integrated_channels.sap_success_factors",
+            null
+        ],
+        [
+            "integrated_channels.cornerstone",
+            null
+        ],
+        [
+            "integrated_channels.xapi",
+            null
+        ],
+        [
+            "integrated_channels.blackboard",
+            null
+        ],
+        [
+            "integrated_channels.canvas",
+            null
+        ],
+        [
+            "integrated_channels.moodle",
+            null
+        ],
+        [
+            "django_object_actions",
+            null
+        ]
+    ],
+    "OPTIONAL_FIELD_API_RATELIMIT": "10/h",
+    "ORA2_FILE_PREFIX": null,
+    "ORA_GRADING_MICROFRONTEND_URL": null,
+    "ORA_MICROFRONTEND_URL": null,
+    "ORA_PEER_LEASE_EXPIRATION_HOURS": 8,
+    "ORA_SETTINGS_HELP_URL": "https://edx.readthedocs.io/projects/open-edx-building-and-running-a-course/en/latest/course_assets/pages.html#configuring-course-level-open-response-assessment-settings",
+    "ORA_STAFF_LEASE_EXPIRATION_HOURS": 8,
+    "ORA_WORKFLOW_UPDATE_ROUTING_KEY": "edx.lms.core.ora_workflow_update",
+    "ORDER_HISTORY_MICROFRONTEND_URL": null,
+    "OUTCOME_SURVEYS_EVENTS_ENABLED": true,
+    "P3P_HEADER": "CP=\"Open EdX does not have a P3P policy.\"",
+    "PAID_COURSE_REGISTRATION_CURRENCY": [
+        "usd",
+        "$"
+    ],
+    "PARENTAL_CONSENT_AGE_LIMIT": 13,
+    "PARTNER_SUPPORT_EMAIL": "",
+    "PASSWORD_HASHERS": [
+        "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+        "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+        "django.contrib.auth.hashers.Argon2PasswordHasher",
+        "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+        "django.contrib.auth.hashers.ScryptPasswordHasher"
+    ],
+    "PASSWORD_POLICY_COMPLIANCE_API_TIMEOUT": 5,
+    "PASSWORD_POLICY_COMPLIANCE_ROLLOUT_CONFIG": {
+        "ENFORCE_COMPLIANCE_ON_LOGIN": false,
+        "STAFF_USER_COMPLIANCE_DEADLINE": null,
+        "ELEVATED_PRIVILEGE_USER_COMPLIANCE_DEADLINE": null,
+        "GENERAL_USER_COMPLIANCE_DEADLINE": null
+    },
+    "PASSWORD_RESET_EMAIL_RATE": "2/h",
+    "PASSWORD_RESET_IP_RATE": "1/m",
+    "PASSWORD_RESET_SUPPORT_LINK": "",
+    "PASSWORD_RESET_TIMEOUT": 259200,
+    "PAYMENT_SUPPORT_EMAIL": "billing@example.com",
+    "PDF_RECEIPT_BILLING_ADDRESS": "Enter your receipt billing address here.",
+    "PDF_RECEIPT_COBRAND_LOGO_HEIGHT_MM": 12,
+    "PDF_RECEIPT_COBRAND_LOGO_PATH": "/openedx/edx-platform/lms/static/images/logo.png",
+    "PDF_RECEIPT_DISCLAIMER_TEXT": "ENTER YOUR RECEIPT DISCLAIMER TEXT HERE.",
+    "PDF_RECEIPT_FOOTER_TEXT": "Enter your receipt footer text here.",
+    "PDF_RECEIPT_LOGO_HEIGHT_MM": 12,
+    "PDF_RECEIPT_LOGO_PATH": "/openedx/edx-platform/lms/static/images/openedx-logo-tag.png",
+    "PDF_RECEIPT_TAX_ID": "00-0000000",
+    "PDF_RECEIPT_TAX_ID_LABEL": "fake Tax ID",
+    "PDF_RECEIPT_TERMS_AND_CONDITIONS": "Enter your receipt terms and conditions here.",
+    "PIPELINE": {
+        "PIPELINE_ENABLED": true,
+        "CSS_COMPRESSOR": null,
+        "JS_COMPRESSOR": "pipeline.compressors.uglifyjs.UglifyJSCompressor",
+        "DISABLE_WRAPPER": true,
+        "UGLIFYJS_BINARY": "node_modules/.bin/uglifyjs",
+        "STYLESHEETS": {
+            "style-vendor": {
+                "source_filenames": [
+                    "css/vendor/font-awesome.css",
+                    "css/vendor/jquery.qtip.min.css"
+                ],
+                "output_filename": "css/lms-style-vendor.css"
+            },
+            "style-vendor-tinymce-content": {
+                "source_filenames": [
+                    "js/vendor/tinymce/js/tinymce/skins/ui/studio-tmce5/content.min.css"
+                ],
+                "output_filename": "css/lms-style-vendor-tinymce-content.css"
+            },
+            "style-vendor-tinymce-skin": {
+                "source_filenames": [
+                    "js/vendor/tinymce/js/tinymce/skins/ui/studio-tmce5/skin.min.css"
+                ],
+                "output_filename": "css/lms-style-vendor-tinymce-skin.css"
+            },
+            "style-main-v1": {
+                "source_filenames": [
+                    "css/lms-main-v1.css"
+                ],
+                "output_filename": "css/lms-main-v1.css"
+            },
+            "style-main-v1-rtl": {
+                "source_filenames": [
+                    "css/lms-main-v1-rtl.css"
+                ],
+                "output_filename": "css/lms-main-v1-rtl.css"
+            },
+            "style-course-vendor": {
+                "source_filenames": [
+                    "js/vendor/CodeMirror/codemirror.css",
+                    "css/vendor/jquery.treeview.css",
+                    "css/vendor/ui-lightness/jquery-ui-1.8.22.custom.css"
+                ],
+                "output_filename": "css/lms-style-course-vendor.css"
+            },
+            "style-course": {
+                "source_filenames": [
+                    "css/lms-course.css"
+                ],
+                "output_filename": "css/lms-course.css"
+            },
+            "style-course-rtl": {
+                "source_filenames": [
+                    "css/lms-course-rtl.css"
+                ],
+                "output_filename": "css/lms-course-rtl.css"
+            },
+            "style-student-notes": {
+                "source_filenames": [
+                    "css/vendor/edxnotes/annotator.min.css"
+                ],
+                "output_filename": "css/lms-style-student-notes.css"
+            },
+            "style-inline-discussion": {
+                "source_filenames": [
+                    "css/discussion/inline-discussion.css"
+                ],
+                "output_filename": "css/discussion/inline-discussion.css"
+            },
+            "style-inline-discussion-rtl": {
+                "source_filenames": [
+                    "css/discussion/inline-discussion-rtl.css"
+                ],
+                "output_filename": "css/discussion/inline-discussion-rtl.css"
+            },
+            "style-lms-footer": {
+                "source_filenames": [
+                    "css/lms-footer.css"
+                ],
+                "output_filename": "css/lms-footer.css"
+            },
+            "style-lms-footer-rtl": {
+                "source_filenames": [
+                    "css/lms-footer-rtl.css"
+                ],
+                "output_filename": "css/lms-footer-rtl.css"
+            },
+            "style-lms-footer-edx": {
+                "source_filenames": [
+                    "css/lms-footer-edx.css"
+                ],
+                "output_filename": "css/lms-footer-edx.css"
+            },
+            "style-lms-footer-edx-rtl": {
+                "source_filenames": [
+                    "css/lms-footer-edx-rtl.css"
+                ],
+                "output_filename": "css/lms-footer-edx-rtl.css"
+            },
+            "style-certificates": {
+                "source_filenames": [
+                    "certificates/css/main-ltr.css",
+                    "css/vendor/font-awesome.css"
+                ],
+                "output_filename": "css/certificates-style.css"
+            },
+            "style-certificates-rtl": {
+                "source_filenames": [
+                    "certificates/css/main-rtl.css",
+                    "css/vendor/font-awesome.css"
+                ],
+                "output_filename": "css/certificates-style-rtl.css"
+            },
+            "style-mobile": {
+                "source_filenames": [
+                    "css/lms-mobile.css"
+                ],
+                "output_filename": "css/lms-mobile.css"
+            },
+            "style-mobile-rtl": {
+                "source_filenames": [
+                    "css/lms-mobile-rtl.css"
+                ],
+                "output_filename": "css/lms-mobile-rtl.css"
+            }
+        },
+        "JAVASCRIPT": {
+            "base_application": {
+                "source_filenames": [
+                    "js/src/utility.js",
+                    "js/src/logger.js",
+                    "js/user_dropdown_v1.js",
+                    "js/dialog_tab_controls.js",
+                    "js/src/string_utils.js",
+                    "js/form.ext.js",
+                    "js/src/ie_shim.js",
+                    "js/src/accessibility_tools.js",
+                    "js/toggle_login_modal.js",
+                    "js/src/lang_edx.js"
+                ],
+                "output_filename": "js/lms-base-application.js"
+            },
+            "application": {
+                "source_filenames": [
+                    "js/src/ajax_prefix.js",
+                    "js/src/jquery.immediateDescendents.js",
+                    "js/src/xproblem.js",
+                    "common/js/xblock/core.js",
+                    "common/js/xblock/runtime.v1.js",
+                    "lms/js/xblock/lms.runtime.v1.js",
+                    "js/src/utility.js",
+                    "js/src/logger.js",
+                    "js/user_dropdown_v1.js",
+                    "js/dialog_tab_controls.js",
+                    "js/src/string_utils.js",
+                    "js/form.ext.js",
+                    "js/src/ie_shim.js",
+                    "js/src/accessibility_tools.js",
+                    "js/toggle_login_modal.js",
+                    "js/src/lang_edx.js",
+                    "js/calculator.js",
+                    "js/feedback_form.js",
+                    "js/main.js",
+                    "js/sticky_filter.js",
+                    "js/query-params.js",
+                    "common/js/vendor/moment-with-locales.js",
+                    "common/js/vendor/moment-timezone-with-data.js"
+                ],
+                "output_filename": "js/lms-application.js"
+            },
+            "courseware": {
+                "source_filenames": [
+                    "js/ajax-error.js",
+                    "js/courseware.js",
+                    "js/histogram.js",
+                    "js/navigation.js",
+                    "js/modules/tab.js"
+                ],
+                "output_filename": "js/lms-courseware.js"
+            },
+            "base_vendor": {
+                "source_filenames": [
+                    "common/js/vendor/jquery.js",
+                    "common/js/vendor/jquery-migrate.js",
+                    "js/vendor/jquery.cookie.js",
+                    "js/vendor/url.min.js",
+                    "common/js/vendor/underscore.js",
+                    "common/js/vendor/underscore.string.js",
+                    "common/js/vendor/picturefill.js",
+                    "edx-ui-toolkit/js/utils/global-loader.js",
+                    "edx-ui-toolkit/js/utils/string-utils.js",
+                    "edx-ui-toolkit/js/utils/html-utils.js",
+                    "common/js/vendor/require.js",
+                    "js/RequireJS-namespace-undefine.js",
+                    "js/vendor/URI.min.js",
+                    "common/js/vendor/backbone.js"
+                ],
+                "output_filename": "js/lms-base-vendor.js"
+            },
+            "main_vendor": {
+                "source_filenames": [
+                    "common/js/vendor/jquery.js",
+                    "common/js/vendor/jquery-migrate.js",
+                    "js/vendor/jquery.cookie.js",
+                    "js/vendor/url.min.js",
+                    "common/js/vendor/underscore.js",
+                    "common/js/vendor/underscore.string.js",
+                    "common/js/vendor/picturefill.js",
+                    "edx-ui-toolkit/js/utils/global-loader.js",
+                    "edx-ui-toolkit/js/utils/string-utils.js",
+                    "edx-ui-toolkit/js/utils/html-utils.js",
+                    "common/js/vendor/require.js",
+                    "js/RequireJS-namespace-undefine.js",
+                    "js/vendor/URI.min.js",
+                    "common/js/vendor/backbone.js",
+                    "js/vendor/json2.js",
+                    "js/vendor/jquery-ui.min.js",
+                    "js/vendor/jquery.qtip.min.js",
+                    "js/vendor/jquery.ba-bbq.min.js"
+                ],
+                "output_filename": "js/lms-main_vendor.js"
+            },
+            "discussion": {
+                "source_filenames": [
+                    "js/customwmd.js",
+                    "js/mathjax_accessible.js",
+                    "js/mathjax_delay_renderer.js",
+                    "common/js/discussion/content.js",
+                    "common/js/discussion/discussion.js",
+                    "common/js/discussion/mathjax_include.js",
+                    "common/js/discussion/models/discussion_course_settings.js",
+                    "common/js/discussion/models/discussion_user.js",
+                    "common/js/discussion/utils.js",
+                    "common/js/discussion/views/discussion_content_view.js",
+                    "common/js/discussion/views/discussion_inline_view.js",
+                    "common/js/discussion/views/discussion_thread_edit_view.js",
+                    "common/js/discussion/views/discussion_thread_list_view.js",
+                    "common/js/discussion/views/discussion_thread_profile_view.js",
+                    "common/js/discussion/views/discussion_thread_show_view.js",
+                    "common/js/discussion/views/discussion_thread_view.js",
+                    "common/js/discussion/views/discussion_topic_menu_view.js",
+                    "common/js/discussion/views/new_post_view.js",
+                    "common/js/discussion/views/response_comment_edit_view.js",
+                    "common/js/discussion/views/response_comment_show_view.js",
+                    "common/js/discussion/views/response_comment_view.js",
+                    "common/js/discussion/views/thread_response_edit_view.js",
+                    "common/js/discussion/views/thread_response_show_view.js",
+                    "common/js/discussion/views/thread_response_view.js"
+                ],
+                "output_filename": "js/discussion.js"
+            },
+            "discussion_vendor": {
+                "source_filenames": [
+                    "js/Markdown.Converter.js",
+                    "js/Markdown.Sanitizer.js",
+                    "js/Markdown.Editor.js",
+                    "js/vendor/jquery.timeago.js",
+                    "js/src/jquery.timeago.locale.js",
+                    "js/vendor/jquery.truncate.js",
+                    "js/jquery.ajaxfileupload.js",
+                    "js/split.js"
+                ],
+                "output_filename": "js/discussion_vendor.js"
+            },
+            "instructor_dash": {
+                "source_filenames": [
+                    "js/instructor_dashboard/certificates.js",
+                    "js/instructor_dashboard/cohort_management.js",
+                    "js/instructor_dashboard/course_info.js",
+                    "js/instructor_dashboard/data_download.js",
+                    "js/instructor_dashboard/data_download_2.js",
+                    "js/instructor_dashboard/discussions_management.js",
+                    "js/instructor_dashboard/e-commerce.js",
+                    "js/instructor_dashboard/ecommerce.js",
+                    "js/instructor_dashboard/extensions.js",
+                    "js/instructor_dashboard/instructor_dashboard.js",
+                    "js/instructor_dashboard/membership.js",
+                    "js/instructor_dashboard/metrics.js",
+                    "js/instructor_dashboard/open_response_assessment.js",
+                    "js/instructor_dashboard/proctoring.js",
+                    "js/instructor_dashboard/send_email.js",
+                    "js/instructor_dashboard/student_admin.js",
+                    "js/instructor_dashboard/util.js"
+                ],
+                "output_filename": "js/instructor_dash.js"
+            },
+            "dashboard": {
+                "source_filenames": [
+                    "js/dashboard/credit.js",
+                    "js/dashboard/donation.js",
+                    "js/dashboard/dropdown.js",
+                    "js/dashboard/legacy.js",
+                    "js/dashboard/track_events.js"
+                ],
+                "output_filename": "js/dashboard.js"
+            },
+            "verify_student": {
+                "source_filenames": [
+                    "js/sticky_filter.js",
+                    "js/query-params.js",
+                    "js/verify_student/models/verification_model.js",
+                    "js/verify_student/views/error_view.js",
+                    "js/verify_student/views/image_input_view.js",
+                    "js/verify_student/views/webcam_photo_view.js",
+                    "js/verify_student/views/step_view.js",
+                    "js/verify_student/views/intro_step_view.js",
+                    "js/verify_student/views/make_payment_step_view.js",
+                    "js/verify_student/views/face_photo_step_view.js",
+                    "js/verify_student/views/id_photo_step_view.js",
+                    "js/verify_student/views/review_photos_step_view.js",
+                    "js/verify_student/views/enrollment_confirmation_step_view.js",
+                    "js/verify_student/views/pay_and_verify_view.js",
+                    "js/verify_student/pay_and_verify.js"
+                ],
+                "output_filename": "js/verify_student.js"
+            },
+            "reverify": {
+                "source_filenames": [
+                    "js/verify_student/views/error_view.js",
+                    "js/verify_student/views/image_input_view.js",
+                    "js/verify_student/views/webcam_photo_view.js",
+                    "js/verify_student/views/step_view.js",
+                    "js/verify_student/views/face_photo_step_view.js",
+                    "js/verify_student/views/id_photo_step_view.js",
+                    "js/verify_student/views/review_photos_step_view.js",
+                    "js/verify_student/views/reverify_success_step_view.js",
+                    "js/verify_student/models/verification_model.js",
+                    "js/verify_student/views/reverify_view.js",
+                    "js/verify_student/reverify.js"
+                ],
+                "output_filename": "js/reverify.js"
+            },
+            "incourse_reverify": {
+                "source_filenames": [
+                    "js/verify_student/views/error_view.js",
+                    "js/verify_student/views/image_input_view.js",
+                    "js/verify_student/views/webcam_photo_view.js",
+                    "js/verify_student/models/verification_model.js",
+                    "js/verify_student/views/incourse_reverify_view.js",
+                    "js/verify_student/incourse_reverify.js"
+                ],
+                "output_filename": "js/incourse_reverify.js"
+            },
+            "ccx": {
+                "source_filenames": [
+                    "js/ccx/schedule.js"
+                ],
+                "output_filename": "js/ccx.js"
+            },
+            "footer_edx": {
+                "source_filenames": [
+                    "js/footer-edx.js"
+                ],
+                "output_filename": "js/footer-edx.js"
+            },
+            "certificates_wv": {
+                "source_filenames": [
+                    "common/js/vendor/jquery.js",
+                    "common/js/vendor/jquery-migrate.js",
+                    "js/vendor/jquery.cookie.js",
+                    "js/src/logger.js",
+                    "js/utils/facebook.js"
+                ],
+                "output_filename": "js/certificates/web_view.js"
+            },
+            "credit_wv": {
+                "source_filenames": [
+                    "common/js/vendor/jquery.js",
+                    "common/js/vendor/jquery-migrate.js",
+                    "js/vendor/jquery.cookie.js",
+                    "js/src/logger.js"
+                ],
+                "output_filename": "js/credit/web_view.js"
+            },
+            "proctoring": {
+                "source_filenames": [
+                    "proctoring/js/models/proctored_exam_allowance_model.js",
+                    "proctoring/js/models/proctored_exam_attempt_model.js",
+                    "proctoring/js/models/proctored_exam_bulk_allowance_model.js",
+                    "proctoring/js/models/proctored_exam_model.js",
+                    "proctoring/js/models/learner_onboarding_model.js",
+                    "proctoring/js/collections/proctored_exam_allowance_collection.js",
+                    "proctoring/js/collections/proctored_exam_attempt_grouped_collection.js",
+                    "proctoring/js/collections/proctored_exam_onboarding_collection.js",
+                    "proctoring/js/collections/proctored_exam_collection.js",
+                    "proctoring/js/views/Backbone.ModalDialog.js",
+                    "proctoring/js/views/proctored_exam_add_allowance_view.js",
+                    "proctoring/js/views/proctored_exam_add_bulk_allowance_view.js",
+                    "proctoring/js/views/proctored_exam_allowance_view.js",
+                    "proctoring/js/views/proctored_exam_attempt_view.js",
+                    "proctoring/js/views/proctored_exam_edit_allowance_view.js",
+                    "proctoring/js/views/proctored_exam_onboarding_view.js",
+                    "proctoring/js/views/proctored_exam_view.js",
+                    "proctoring/js/views/proctored_exam_info.js",
+                    "proctoring/js/views/proctored_exam_instructor_launch.js",
+                    "proctoring/js/proctored_app.js",
+                    "proctoring/js/exam_action_handler.js",
+                    "proctoring/js/dropdown.js"
+                ],
+                "output_filename": "js/lms-proctoring.js"
+            }
+        }
+    },
+    "PLATFORM_DESCRIPTION": {
+        "@@PYREF": "gettext_lazy",
+        "@@MODULE": "django.contrib.translation.utils",
+        "@@ARGS": [
+            "Your Platform Description Here"
+        ]
+    },
+    "PLATFORM_FACEBOOK_ACCOUNT": "http://www.facebook.com/YourPlatformFacebookAccount",
+    "PLATFORM_NAME": "Kyle's Open edX",
+    "PLATFORM_TWITTER_ACCOUNT": "@YourPlatformTwitterAccount",
+    "POLICY_CHANGE_GRADES_ROUTING_KEY": "edx.lms.core.default",
+    "POLICY_CHANGE_TASK_RATE_LIMIT": "900/h",
+    "PREPEND_LOCALE_PATHS": [],
+    "PREPEND_WWW": false,
+    "PRESS_EMAIL": "press@example.com",
+    "PREVIEW_DOMAIN": "preview.local.openedx.io",
+    "PROCTORED_EXAM_VIEWABLE_PAST_DUE": false,
+    "PROCTORING_BACKENDS": {
+        "DEFAULT": "null",
+        "null": {}
+    },
+    "PROCTORING_SETTINGS": {},
+    "PROFILE_IMAGE_BACKEND": {
+        "class": "openedx.core.storage.OverwriteStorage",
+        "options": {
+            "location": "/edx/var/edxapp/media/profile-images/",
+            "base_url": "/media/profile-images/"
+        }
+    },
+    "PROFILE_IMAGE_DEFAULT_FILENAME": "images/profiles/default",
+    "PROFILE_IMAGE_DEFAULT_FILE_EXTENSION": "png",
+    "PROFILE_IMAGE_HASH_SEED": "placeholder_secret_key",
+    "PROFILE_IMAGE_MAX_BYTES": 1048576,
+    "PROFILE_IMAGE_MIN_BYTES": 100,
+    "PROFILE_IMAGE_SIZES_MAP": {
+        "full": 500,
+        "large": 120,
+        "medium": 50,
+        "small": 30
+    },
+    "PROFILE_MICROFRONTEND_URL": null,
+    "PROGRAM_CERTIFICATES_ROUTING_KEY": "edx.lms.core.default",
+    "PROGRAM_CONSOLE_MICROFRONTEND_URL": null,
+    "PROGRESS_HELP_URL": "https://edx.readthedocs.io/projects/open-edx-building-and-running-a-course/en/latest/course_assets/pages.html?highlight=progress#hiding-or-showing-the-wiki-or-progress-pages",
+    "PROJECT_ROOT": "/openedx/edx-platform/lms",
+    "PROVISIONING_ENTERPRISE_CUSTOMER_ADMIN_ROLE": "provisioning_enterprise_customer_admin",
+    "PROVISIONING_PENDING_ENTERPRISE_CUSTOMER_ADMIN_ROLE": "provisioning_pending_enterprise_customer_users_admin",
+    "PYTHON_LIB_FILENAME": "python_lib.zip",
+    "QUEUE_VARIANT": "lms.",
+    "RATELIMIT_ENABLE": true,
+    "RATELIMIT_RATE": "120/m",
+    "RATE_LIMIT_FOR_VIDEO_METADATA_API": "10/minute",
+    "RECALCULATE_GRADES_ROUTING_KEY": "edx.lms.core.default",
+    "REDIRECT_CACHE_KEY_PREFIX": "redirects",
+    "REDIRECT_CACHE_TIMEOUT": null,
+    "REGISTRATION_CODE_LENGTH": 8,
+    "REGISTRATION_EMAIL_PATTERNS_ALLOWED": null,
+    "REGISTRATION_EXTENSION_FORM": null,
+    "REGISTRATION_EXTRA_FIELDS": {
+        "confirm_email": "hidden",
+        "level_of_education": "optional",
+        "gender": "optional",
+        "year_of_birth": "optional",
+        "mailing_address": "optional",
+        "goals": "optional",
+        "honor_code": "required",
+        "terms_of_service": "hidden",
+        "city": "hidden",
+        "country": "hidden"
+    },
+    "REGISTRATION_FIELD_ORDER": [
+        "name",
+        "first_name",
+        "last_name",
+        "username",
+        "email",
+        "confirm_email",
+        "password",
+        "city",
+        "state",
+        "country",
+        "year_of_birth",
+        "level_of_education",
+        "gender",
+        "specialty",
+        "profession",
+        "company",
+        "title",
+        "mailing_address",
+        "goals",
+        "honor_code",
+        "terms_of_service"
+    ],
+    "REGISTRATION_RATELIMIT": "60/7d",
+    "REGISTRATION_VALIDATION_RATELIMIT": "30/7d",
+    "REPO_ROOT": "/openedx/edx-platform",
+    "REQUIRE_BASE_URL": "./",
+    "REQUIRE_BUILD_PROFILE": "lms/js/build.js",
+    "REQUIRE_DEBUG": false,
+    "REQUIRE_JS": "common/js/vendor/require.js",
+    "REQUIRE_JS_PATH_OVERRIDES": {
+        "course_bookmarks/js/views/bookmark_button": "course_bookmarks/js/views/bookmark_button.js",
+        "js/views/message_banner": "js/views/message_banner.js",
+        "moment": "common/js/vendor/moment-with-locales.js",
+        "moment-timezone": "common/js/vendor/moment-timezone-with-data.js",
+        "js/courseware/course_info_events": "js/courseware/course_info_events.js",
+        "js/courseware/accordion_events": "js/courseware/accordion_events.js",
+        "js/dateutil_factory": "js/dateutil_factory.js",
+        "js/courseware/link_clicked_events": "js/courseware/link_clicked_events.js",
+        "js/courseware/toggle_element_visibility": "js/courseware/toggle_element_visibility.js",
+        "js/student_account/logistration_factory": "js/student_account/logistration_factory.js",
+        "js/courseware/courseware_factory": "js/courseware/courseware_factory.js",
+        "js/groups/views/cohorts_dashboard_factory": "js/groups/views/cohorts_dashboard_factory.js",
+        "js/groups/discussions_management/discussions_dashboard_factory": "js/discussions_management/views/discussions_dashboard_factory.js",
+        "draggabilly": "js/vendor/draggabilly.js",
+        "hls": "common/js/vendor/hls.js"
+    },
+    "RESET_PASSWORD_API_RATELIMIT": "30/7d",
+    "RESET_PASSWORD_TOKEN_VALIDATE_API_RATELIMIT": "30/7d",
+    "REST_FRAMEWORK": {
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "openedx.core.djangolib.default_auth_classes.DefaultJwtAuthentication",
+            "openedx.core.djangolib.default_auth_classes.DefaultSessionAuthentication"
+        ],
+        "DEFAULT_PAGINATION_CLASS": "edx_rest_framework_extensions.paginators.DefaultPagination",
+        "DEFAULT_RENDERER_CLASSES": [
+            "rest_framework.renderers.JSONRenderer"
+        ],
+        "EXCEPTION_HANDLER": "openedx.core.lib.request_utils.ignored_error_exception_handler",
+        "PAGE_SIZE": 10,
+        "URL_FORMAT_OVERRIDE": null,
+        "DEFAULT_THROTTLE_RATES": {
+            "user": "60/minute",
+            "service_user": "800/minute",
+            "registration_validation": "30/minute",
+            "high_service_user": "2000/minute"
+        }
+    },
+    "RETIRED_EMAIL_DOMAIN": "retired.invalid",
+    "RETIRED_EMAIL_FMT": "retired__user_{}@retired.invalid",
+    "RETIRED_EMAIL_PREFIX": "retired__user_",
+    "RETIRED_USERNAME_FMT": "retired__user_{}",
+    "RETIRED_USERNAME_PREFIX": "retired__user_",
+    "RETIRED_USER_SALTS": [
+        "abc",
+        "123"
+    ],
+    "RETIREMENT_SERVICE_WORKER_USERNAME": "RETIREMENT_SERVICE_USER",
+    "RETIREMENT_STATES": [
+        "PENDING",
+        "LOCKING_ACCOUNT",
+        "LOCKING_COMPLETE",
+        "RETIRING_FORUMS",
+        "FORUMS_COMPLETE",
+        "RETIRING_EMAIL_LISTS",
+        "EMAIL_LISTS_COMPLETE",
+        "RETIRING_ENROLLMENTS",
+        "ENROLLMENTS_COMPLETE",
+        "RETIRING_NOTES",
+        "NOTES_COMPLETE",
+        "RETIRING_LMS",
+        "LMS_COMPLETE",
+        "ERRORED",
+        "ABORTED",
+        "COMPLETE"
+    ],
+    "RETRY_ACTIVATION_EMAIL_MAX_ATTEMPTS": 5,
+    "RETRY_ACTIVATION_EMAIL_TIMEOUT": 0.5,
+    "RETRY_CALENDAR_SYNC_EMAIL_MAX_ATTEMPTS": 5,
+    "REVISION_CONFIG": {},
+    "REVISION_CONFIG_FILE": "/openedx/config/revisions.yml",
+    "ROOT_URLCONF": "lms.urls",
+    "RSS_PROXY_CACHE_TIMEOUT": 3600,
+    "SEARCH_COURSEWARE_CONTENT_LOG_PARAMS": false,
+    "SEARCH_ENGINE": "search.elastic.ElasticSearchEngine",
+    "SEARCH_FILTER_GENERATOR": "lms.lib.courseware_search.lms_filter_generator.LmsSearchFilterGenerator",
+    "SEARCH_INITIALIZER": "lms.lib.courseware_search.lms_search_initializer.LmsSearchInitializer",
+    "SEARCH_RESULT_PROCESSOR": "lms.lib.courseware_search.lms_result_processor.LmsSearchResultProcessor",
+    "SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING": false,
+    "SEARCH_SKIP_INVITATION_ONLY_FILTERING": true,
+    "SEARCH_SKIP_SHOW_IN_CATALOG_FILTERING": true,
+    "SECRET_KEY": "o5wToOrEitfAxwP8E5U0n5zi",
+    "SECRET_KEY_FALLBACKS": [],
+    "SECURE_CONTENT_TYPE_NOSNIFF": true,
+    "SECURE_CROSS_ORIGIN_OPENER_POLICY": "same-origin",
+    "SECURE_HSTS_INCLUDE_SUBDOMAINS": false,
+    "SECURE_HSTS_PRELOAD": false,
+    "SECURE_HSTS_SECONDS": 0,
+    "SECURE_PROXY_SSL_HEADER": [
+        "HTTP_X_FORWARDED_PROTO",
+        "https"
+    ],
+    "SECURE_REDIRECT_EXEMPT": [],
+    "SECURE_REFERRER_POLICY": "same-origin",
+    "SECURE_SSL_HOST": null,
+    "SECURE_SSL_REDIRECT": false,
+    "SECURITY_PAGE_URL": null,
+    "SERVER_EMAIL": "devops@example.com",
+    "SERVICE_VARIANT": "lms",
+    "SESSION_CACHE_ALIAS": "default",
+    "SESSION_COOKIE_AGE": 1209600,
+    "SESSION_COOKIE_DOMAIN": "local.openedx.io",
+    "SESSION_COOKIE_HTTPONLY": true,
+    "SESSION_COOKIE_NAME": "sessionid",
+    "SESSION_COOKIE_PATH": "/",
+    "SESSION_COOKIE_SAMESITE": "None",
+    "SESSION_COOKIE_SECURE": false,
+    "SESSION_ENGINE": "django.contrib.sessions.backends.cache",
+    "SESSION_EXPIRE_AT_BROWSER_CLOSE": false,
+    "SESSION_FILE_PATH": null,
+    "SESSION_INACTIVITY_TIMEOUT_IN_SECONDS": null,
+    "SESSION_SAVE_EVERY_REQUEST": false,
+    "SESSION_SERIALIZER": "openedx.core.lib.session_serializers.PickleSerializer",
+    "SETTINGS_MODULE": "lms.envs.production_new",
+    "SHARED_COOKIE_DOMAIN": "local.openedx.io",
+    "SHIBBOLETH_DOMAIN_PREFIX": "shib:",
+    "SHORT_DATETIME_FORMAT": "m/d/Y P",
+    "SHORT_DATE_FORMAT": "m/d/Y",
+    "SHOW_ACCOUNT_ACTIVATION_CTA": false,
+    "SHOW_ACTIVATE_CTA_POPUP_COOKIE_NAME": "show-account-activation-popup",
+    "SIGNING_BACKEND": "django.core.signing.TimestampSigner",
+    "SILENCED_SYSTEM_CHECKS": [],
+    "SIMPLE_HISTORY_DATE_INDEX": false,
+    "SIMPLE_WIKI_REQUIRE_LOGIN_EDIT": true,
+    "SIMPLE_WIKI_REQUIRE_LOGIN_VIEW": false,
+    "SINGLE_LEARNER_COURSE_REGRADE_ROUTING_KEY": "edx.lms.core.default",
+    "SITE_ID": 1,
+    "SITE_NAME": "local.openedx.io",
+    "SOCIAL_AUTH_LTI_CONSUMER_SECRETS": {},
+    "SOCIAL_AUTH_OAUTH_SECRETS": {},
+    "SOCIAL_AUTH_PIPELINE_TIMEOUT": 600,
+    "SOCIAL_AUTH_SAML_SP_PRIVATE_KEY": "",
+    "SOCIAL_AUTH_SAML_SP_PRIVATE_KEY_DICT": {},
+    "SOCIAL_AUTH_SAML_SP_PUBLIC_CERT": "",
+    "SOCIAL_AUTH_SAML_SP_PUBLIC_CERT_DICT": {},
+    "SOCIAL_MEDIA_FOOTER_ACE_URLS": {
+        "reddit": "http://www.reddit.com/r/edx",
+        "twitter": "https://twitter.com/edXOnline",
+        "linkedin": "http://www.linkedin.com/company/edx",
+        "facebook": "http://www.facebook.com/EdxOnline"
+    },
+    "SOCIAL_MEDIA_FOOTER_DISPLAY": {
+        "facebook": {
+            "title": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Facebook"
+                ]
+            },
+            "icon": "fa-facebook-square",
+            "action": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Like {platform_name} on Facebook"
+                ]
+            }
+        },
+        "twitter": {
+            "title": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Twitter"
+                ]
+            },
+            "icon": "fa-twitter-square",
+            "action": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Follow {platform_name} on Twitter"
+                ]
+            }
+        },
+        "linkedin": {
+            "title": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "LinkedIn"
+                ]
+            },
+            "icon": "fa-linkedin-square",
+            "action": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Follow {platform_name} on LinkedIn"
+                ]
+            }
+        },
+        "instagram": {
+            "title": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Instagram"
+                ]
+            },
+            "icon": "fa-instagram",
+            "action": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Follow {platform_name} on Instagram"
+                ]
+            }
+        },
+        "tumblr": {
+            "title": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Tumblr"
+                ]
+            },
+            "icon": "fa-tumblr"
+        },
+        "meetup": {
+            "title": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Meetup"
+                ]
+            },
+            "icon": "fa-calendar"
+        },
+        "reddit": {
+            "title": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Reddit"
+                ]
+            },
+            "icon": "fa-reddit-square",
+            "action": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Subscribe to the {platform_name} subreddit"
+                ]
+            }
+        },
+        "vk": {
+            "title": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "VK"
+                ]
+            },
+            "icon": "fa-vk"
+        },
+        "weibo": {
+            "title": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Weibo"
+                ]
+            },
+            "icon": "fa-weibo"
+        },
+        "youtube": {
+            "title": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Youtube"
+                ]
+            },
+            "icon": "fa-youtube-square",
+            "action": {
+                "@@PYREF": "gettext_lazy",
+                "@@MODULE": "django.contrib.translation.utils",
+                "@@ARGS": [
+                    "Subscribe to the {platform_name} YouTube channel"
+                ]
+            }
+        }
+    },
+    "SOCIAL_MEDIA_FOOTER_NAMES": [
+        "facebook",
+        "twitter",
+        "linkedin",
+        "instagram",
+        "reddit"
+    ],
+    "SOCIAL_MEDIA_LOGO_URLS": {
+        "reddit": "http://email-media.s3.amazonaws.com/edX/2021/social_5_reddit.png",
+        "twitter": "http://email-media.s3.amazonaws.com/edX/2021/social_2_twitter.png",
+        "linkedin": "http://email-media.s3.amazonaws.com/edX/2021/social_3_linkedin.png",
+        "facebook": "http://email-media.s3.amazonaws.com/edX/2021/social_1_fb.png"
+    },
+    "SOCIAL_PLATFORMS": {
+        "facebook": {
+            "display_name": "Facebook",
+            "url_stub": "facebook.com/",
+            "example": "https://www.facebook.com/username"
+        },
+        "twitter": {
+            "display_name": "Twitter",
+            "url_stub": "twitter.com/",
+            "example": "https://www.twitter.com/username"
+        },
+        "linkedin": {
+            "display_name": "LinkedIn",
+            "url_stub": "linkedin.com/in/",
+            "example": "www.linkedin.com/in/username"
+        }
+    },
+    "SOCIAL_SHARING_SETTINGS": {
+        "CUSTOM_COURSE_URLS": false,
+        "DASHBOARD_FACEBOOK": false,
+        "FACEBOOK_BRAND": null,
+        "CERTIFICATE_FACEBOOK": false,
+        "CERTIFICATE_FACEBOOK_TEXT": null,
+        "CERTIFICATE_TWITTER": false,
+        "CERTIFICATE_TWITTER_TEXT": null,
+        "DASHBOARD_TWITTER": false,
+        "DASHBOARD_TWITTER_TEXT": null,
+        "TWITTER_BRAND": null
+    },
+    "SOFTWARE_SECURE_REQUEST_RETRY_DELAY": 3600,
+    "SOFTWARE_SECURE_RETRY_MAX_ATTEMPTS": 6,
+    "SOFTWARE_SECURE_VERIFICATION_ROUTING_KEY": "edx.lms.core.high",
+    "SSL_AUTH_DN_FORMAT_STRING": "/C=US/ST=Massachusetts/O=Massachusetts Institute of Technology/OU=Client CA v1/CN={0}/emailAddress={1}",
+    "SSL_AUTH_EMAIL_DOMAIN": "MIT.EDU",
+    "STATICFILES_DIRS": [
+        "/openedx/edx-platform/common/static",
+        "/openedx/edx-platform/lms/static",
+        "/openedx/edx-platform/node_modules/@edx",
+        "/openedx/edx-platform/xmodule/static"
+    ],
+    "STATICFILES_FINDERS": [
+        "openedx.core.djangoapps.theming.finders.ThemeFilesFinder",
+        "django.contrib.staticfiles.finders.FileSystemFinder",
+        "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+        "openedx.core.lib.xblock_pipeline.finder.XBlockPipelineFinder",
+        "pipeline.finders.PipelineFinder"
+    ],
+    "STATICFILES_IGNORE_PATTERNS": [
+        "*.py",
+        "*.pyc",
+        "sass/*.scss",
+        "sass/*/*.scss",
+        "sass/*/*/*.scss",
+        "sass/*/*/*/*.scss",
+        "spec",
+        "spec_helpers",
+        "xmodule_js"
+    ],
+    "STATICFILES_STORAGE": "openedx.core.storage.ProductionStorage",
+    "STATICFILES_STORAGE_KWARGS": {},
+    "STATICI18N_FILENAME_FUNCTION": "statici18n.utils.legacy_filename",
+    "STATICI18N_OUTPUT_DIR": "js/i18n",
+    "STATICI18N_ROOT": "/openedx/edx-platform/lms/static",
+    "STATIC_GRAB": false,
+    "STATIC_ROOT": "/openedx/staticfiles",
+    "STATIC_ROOT_BASE": null,
+    "STATIC_TEMPLATE_VIEW_DEFAULT_FILE_EXTENSION": "html",
+    "STATIC_URL": "/static/",
+    "STATIC_URL_BASE": null,
+    "STATUS_MESSAGE_PATH": "/openedx/status_message.json",
+    "STORAGES": {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage"
+        },
+        "staticfiles": {
+            "BACKEND": "openedx.core.storage.ProductionStorage"
+        }
+    },
+    "STUDENTMODULEHISTORYEXTENDED_OFFSET": 10000,
+    "STUDENT_FILEUPLOAD_MAX_SIZE": 4000000,
+    "STUDIO_NAME": "Studio",
+    "STUDIO_SHORT_NAME": "Studio",
+    "SUPPORT_HOW_TO_UNENROLL_LINK": "",
+    "SUPPORT_SITE_LINK": "",
+    "SURVEY_REPORT_CHECK_THRESHOLD": 6,
+    "SURVEY_REPORT_ENABLE": true,
+    "SURVEY_REPORT_ENDPOINT": "https://hooks.zapier.com/hooks/catch/11595998/3ouwv7m/",
+    "SURVEY_REPORT_EXTRA_DATA": {},
+    "SWAGGER_SETTINGS": {
+        "DEFAULT_INFO": "openedx.core.apidocs.api_info",
+        "DEEP_LINKING": true
+    },
+    "SWIFT_AUTH_URL": null,
+    "SWIFT_AUTH_VERSION": null,
+    "SWIFT_KEY": null,
+    "SWIFT_REGION_NAME": null,
+    "SWIFT_TEMP_URL_DURATION": 1800,
+    "SWIFT_TEMP_URL_KEY": null,
+    "SWIFT_TENANT_ID": null,
+    "SWIFT_TENANT_NAME": null,
+    "SWIFT_USERNAME": null,
+    "SWIFT_USE_TEMP_URLS": null,
+    "SYSLOG_SERVER": "",
+    "SYSTEM_ENTERPRISE_PROVISIONING_ADMIN_ROLE": "enterprise_provisioning_admin",
+    "SYSTEM_TO_FEATURE_ROLE_MAPPING": {
+        "enterprise_learner": [
+            "default_enterprise_enrollment_intentions_learner"
+        ],
+        "enterprise_admin": [
+            "dashboard_admin",
+            "catalog_admin",
+            "enrollment_api_admin",
+            "reporting_config_admin",
+            "default_enterprise_enrollment_intentions_learner"
+        ],
+        "enterprise_openedx_operator": [
+            "dashboard_admin",
+            "catalog_admin",
+            "enrollment_api_admin",
+            "reporting_config_admin",
+            "fulfillment_operator",
+            "sso_orchestrator_operator",
+            "default_enterprise_enrollment_intentions_learner"
+        ],
+        "enterprise_provisioning_admin": [
+            "provisioning_enterprise_customer_admin",
+            "provisioning_pending_enterprise_customer_users_admin"
+        ]
+    },
+    "SYSTEM_WIDE_ROLE_CLASSES": [],
+    "TEAMS_HELP_URL": "https://edx.readthedocs.io/projects/open-edx-building-and-running-a-course/en/latest/course_features/teams/teams_setup.html",
+    "TECH_SUPPORT_EMAIL": "technical@example.com",
+    "TEMPLATES": [
+        {
+            "NAME": "django",
+            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "APP_DIRS": false,
+            "DIRS": [
+                "/openedx/edx-platform/lms/templates",
+                "/openedx/edx-platform/common/templates",
+                "/openedx/edx-platform/xmodule/capa/templates",
+                "/openedx/edx-platform/common/djangoapps/pipeline_mako/templates",
+                "/openedx/edx-platform/common/static"
+            ],
+            "OPTIONS": {
+                "loaders": [
+                    "openedx.core.djangoapps.theming.template_loaders.ThemeTemplateLoader",
+                    "common.djangoapps.edxmako.makoloader.MakoFilesystemLoader",
+                    "common.djangoapps.edxmako.makoloader.MakoAppDirectoriesLoader"
+                ],
+                "context_processors": [
+                    "django.template.context_processors.request",
+                    "django.template.context_processors.static",
+                    "django.template.context_processors.i18n",
+                    "django.contrib.auth.context_processors.auth",
+                    "django.template.context_processors.csrf",
+                    "django.template.context_processors.media",
+                    "django.template.context_processors.tz",
+                    "django.contrib.messages.context_processors.messages",
+                    "sekizai.context_processors.sekizai",
+                    "common.djangoapps.edxmako.shortcuts.marketing_link_context_processor",
+                    "lms.djangoapps.courseware.context_processor.user_timezone_locale_prefs",
+                    "help_tokens.context_processor",
+                    "openedx.core.djangoapps.site_configuration.context_processors.configuration_context",
+                    "lms.djangoapps.mobile_api.context_processor.is_from_mobile_app",
+                    "openedx.features.survey_report.context_processors.admin_extra_context"
+                ],
+                "debug": false
+            }
+        },
+        {
+            "NAME": "mako",
+            "BACKEND": "common.djangoapps.edxmako.backend.Mako",
+            "APP_DIRS": false,
+            "DIRS": [
+                "/openedx/themes",
+                "/openedx/edx-platform/lms/templates",
+                "/openedx/edx-platform/common/templates",
+                "/openedx/edx-platform/xmodule/capa/templates",
+                "/openedx/edx-platform/common/djangoapps/pipeline_mako/templates",
+                "/openedx/edx-platform/openedx/core/djangoapps/cors_csrf/templates",
+                "/openedx/edx-platform/openedx/core/djangoapps/dark_lang/templates",
+                "/openedx/edx-platform/openedx/core/lib/license/templates",
+                "/openedx/edx-platform/openedx/features/course_experience/templates"
+            ],
+            "OPTIONS": {
+                "context_processors": [
+                    "django.template.context_processors.request",
+                    "django.template.context_processors.static",
+                    "django.template.context_processors.i18n",
+                    "django.contrib.auth.context_processors.auth",
+                    "django.template.context_processors.csrf",
+                    "django.template.context_processors.media",
+                    "django.template.context_processors.tz",
+                    "django.contrib.messages.context_processors.messages",
+                    "sekizai.context_processors.sekizai",
+                    "common.djangoapps.edxmako.shortcuts.marketing_link_context_processor",
+                    "lms.djangoapps.courseware.context_processor.user_timezone_locale_prefs",
+                    "help_tokens.context_processor",
+                    "openedx.core.djangoapps.site_configuration.context_processors.configuration_context",
+                    "lms.djangoapps.mobile_api.context_processor.is_from_mobile_app",
+                    "openedx.features.survey_report.context_processors.admin_extra_context"
+                ],
+                "debug": false
+            }
+        }
+    ],
+    "TEST_NON_SERIALIZED_APPS": [],
+    "TEST_RUNNER": "django.test.runner.DiscoverRunner",
+    "TEXTBOOKS_HELP_URL": "https://edx.readthedocs.io/projects/open-edx-building-and-running-a-course/en/latest/course_assets/textbooks.html",
+    "THIRD_PARTY_AUTH_CUSTOM_AUTH_FORMS": {},
+    "THIRD_PARTY_AUTH_OLD_CONFIG": null,
+    "THOUSAND_SEPARATOR": ",",
+    "TIME_FORMAT": "P",
+    "TIME_INPUT_FORMATS": [
+        "%H:%M:%S",
+        "%H:%M:%S.%f",
+        "%H:%M"
+    ],
+    "TIME_ZONE": "UTC",
+    "TIME_ZONE_DISPLAYED_FOR_DEADLINES": "UTC",
+    "TOKEN_SIGNING": {
+        "JWT_ISSUER": "http://127.0.0.1:8740",
+        "JWT_SIGNING_ALGORITHM": "RS512",
+        "JWT_SUPPORTED_VERSION": "1.2.0",
+        "JWT_PUBLIC_SIGNING_JWK_SET": null
+    },
+    "TPA_AUTOMATIC_LOGOUT_ENABLED": false,
+    "TPA_PROVIDER_BURST_THROTTLE": "10/min",
+    "TPA_PROVIDER_SUSTAINED_THROTTLE": "50/hr",
+    "TRACKING_BACKENDS": {
+        "logger": {
+            "ENGINE": "common.djangoapps.track.backends.logger.LoggerBackend",
+            "OPTIONS": {
+                "name": "tracking"
+            }
+        }
+    },
+    "TRACKING_IGNORE_URL_PATTERNS": [
+        "^/event",
+        "^/login",
+        "^/heartbeat",
+        "^/segmentio/event",
+        "^/performance"
+    ],
+    "TRACKING_SEGMENTIO_ALLOWED_TYPES": [
+        "track"
+    ],
+    "TRACKING_SEGMENTIO_DISALLOWED_SUBSTRING_NAMES": [],
+    "TRACKING_SEGMENTIO_SOURCE_MAP": {
+        "analytics-android": "mobile",
+        "analytics-ios": "mobile"
+    },
+    "TRACKING_SEGMENTIO_WEBHOOK_SECRET": null,
+    "TRACK_MAX_EVENT": 50000,
+    "TRANSLATORS_GUIDE": "https://edx.readthedocs.org/projects/edx-developer-guide/en/latest/conventions/internationalization/i18n_translators_guide.html",
+    "UNIVERSITY_EMAIL": "university@example.com",
+    "USAGE_ID_PATTERN": "(?P<usage_id>(?:i4x://?[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|(?:[^/]+))",
+    "USAGE_KEY_PATTERN": "(?P<usage_key_string>(?:i4x://?[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|(?:[^/]+))",
+    "USERNAME_PATTERN": "(?P<username>[\\w .@_+-]+)",
+    "USERNAME_REGEX_PARTIAL": "[\\w .@_+-]+",
+    "USERNAME_REPLACEMENT_WORKER": "REPLACE WITH VALID USERNAME",
+    "USER_STATE_BATCH_SIZE": 5000,
+    "USE_DEPRECATED_PYTZ": false,
+    "USE_EXTRACTED_ANNOTATABLE_BLOCK": false,
+    "USE_EXTRACTED_DISCUSSION_BLOCK": false,
+    "USE_EXTRACTED_HTML_BLOCK": false,
+    "USE_EXTRACTED_LTI_BLOCK": false,
+    "USE_EXTRACTED_POLL_QUESTION_BLOCK": false,
+    "USE_EXTRACTED_PROBLEM_BLOCK": false,
+    "USE_EXTRACTED_VIDEO_BLOCK": false,
+    "USE_EXTRACTED_WORD_CLOUD_BLOCK": false,
+    "USE_I18N": true,
+    "USE_L10N": true,
+    "USE_THOUSAND_SEPARATOR": false,
+    "USE_TZ": true,
+    "USE_X_FORWARDED_HOST": false,
+    "USE_X_FORWARDED_PORT": false,
+    "VERIFICATION_EXPIRY_EMAIL": {
+        "RESEND_DAYS": 15,
+        "DAYS_RANGE": 1,
+        "DEFAULT_EMAILS": 2
+    },
+    "VERIFY_STUDENT": {
+        "DAYS_GOOD_FOR": 365,
+        "EXPIRING_SOON_WINDOW": 28
+    },
+    "VIDEO_CDN_URL": {},
+    "VIDEO_IMAGE_MAX_AGE": 31536000,
+    "VIDEO_IMAGE_SETTINGS": {
+        "VIDEO_IMAGE_MAX_BYTES": 2097152,
+        "VIDEO_IMAGE_MIN_BYTES": 2048,
+        "STORAGE_KWARGS": {
+            "location": "/edx/var/edxapp/media/"
+        },
+        "DIRECTORY_PREFIX": "video-images/",
+        "BASE_URL": "/media/"
+    },
+    "VIDEO_TRANSCRIPTS_MAX_AGE": 31536000,
+    "VIDEO_TRANSCRIPTS_SETTINGS": {
+        "VIDEO_TRANSCRIPTS_MAX_BYTES": 3145728,
+        "STORAGE_KWARGS": {
+            "location": "/edx/var/edxapp/media/"
+        },
+        "DIRECTORY_PREFIX": "video-transcripts/",
+        "BASE_URL": "/media/"
+    },
+    "VIDEO_UPLOAD_PIPELINE": {
+        "VEM_S3_BUCKET": "",
+        "BUCKET": "",
+        "ROOT_PATH": ""
+    },
+    "WEBPACK_CONFIG_PATH": "webpack.prod.config.js",
+    "WEBPACK_LOADER": {
+        "DEFAULT": {
+            "BUNDLE_DIR_NAME": "bundles/",
+            "STATS_FILE": "/openedx/staticfiles/webpack-stats.json"
+        },
+        "WORKERS": {
+            "BUNDLE_DIR_NAME": "bundles/",
+            "STATS_FILE": "/openedx/staticfiles/webpack-worker-stats.json"
+        }
+    },
+    "WIKI_ACCOUNT_HANDLING": false,
+    "WIKI_ANONYMOUS": false,
+    "WIKI_CAN_ASSIGN": {
+        "@@PYREF": "CAN_ASSIGN",
+        "@@MODULE": "lms.djangoapps.course_wiki.settings"
+    },
+    "WIKI_CAN_CHANGE_PERMISSIONS": {
+        "@@PYREF": "CAN_CHANGE_PERMISSIONS",
+        "@@MODULE": "lms.djangoapps.course_wiki.settings"
+    },
+    "WIKI_CAN_DELETE": {
+        "@@PYREF": "CAN_DELETE",
+        "@@MODULE": "lms.djangoapps.course_wiki.settings"
+    },
+    "WIKI_CAN_MODERATE": {
+        "@@PYREF": "CAN_MODERATE",
+        "@@MODULE": "lms.djangoapps.course_wiki.settings"
+    },
+    "WIKI_EDITOR": "lms.djangoapps.course_wiki.editors.CodeMirror",
+    "WIKI_ENABLED": true,
+    "WIKI_HELP_URL": "https://edx.readthedocs.io/projects/open-edx-building-and-running-a-course/en/latest/course_assets/course_wiki.html",
+    "WIKI_LINK_DEFAULT_LEVEL": 2,
+    "WIKI_LINK_LIVE_LOOKUPS": false,
+    "WIKI_SHOW_MAX_CHILDREN": 0,
+    "WIKI_USE_BOOTSTRAP_SELECT_WIDGET": false,
+    "WRITABLE_GRADEBOOK_URL": null,
+    "WSGI_APPLICATION": null,
+    "XBLOCK_EXTRA_MIXINS": [],
+    "XBLOCK_FIELD_DATA_WRAPPERS": [
+        "lms.djangoapps.courseware.field_overrides:OverrideModulestoreFieldData.wrap"
+    ],
+    "XBLOCK_FS_STORAGE_BUCKET": null,
+    "XBLOCK_FS_STORAGE_PREFIX": null,
+    "XBLOCK_MIXINS": [
+        {
+            "@@PYREF": "LmsBlockMixin",
+            "@@MODULE": "lms.djangoapps.lms_xblock.mixin"
+        },
+        {
+            "@@PYREF": "InheritanceMixin",
+            "@@MODULE": "xmodule.modulestore.inheritance"
+        },
+        {
+            "@@PYREF": "XModuleMixin",
+            "@@MODULE": "xmodule.x_module"
+        },
+        {
+            "@@PYREF": "EditInfoMixin",
+            "@@MODULE": "xmodule.modulestore.edit_info"
+        }
+    ],
+    "XBLOCK_RUNTIME_V2_EPHEMERAL_DATA_CACHE": "default",
+    "XBLOCK_SETTINGS": {
+        "VideoBlock": {
+            "licensing_enabled": false,
+            "YOUTUBE_API_KEY": "PUT_YOUR_API_KEY_HERE"
+        }
+    },
+    "XDOMAIN_PROXY_CACHE_TIMEOUT": 900,
+    "XMODULE_ROOT": "/openedx/edx-platform/xmodule",
+    "XQUEUE_INTERFACE": {
+        "django_auth": null,
+        "url": null
+    },
+    "XQUEUE_WAITTIME_BETWEEN_REQUESTS": 5,
+    "X_FRAME_OPTIONS": "DENY",
+    "YEAR_MONTH_FORMAT": "F Y",
+    "YOUTUBE": {
+        "API": "https://www.youtube.com/iframe_api",
+        "TEST_TIMEOUT": 1500,
+        "METADATA_URL": "https://www.googleapis.com/youtube/v3/videos/",
+        "TRANSCRIPTS": {
+            "CAPTION_TRACKS_REGEX": "captionTracks\\\"\\:\\[(?P<caption_tracks>[^\\]]+)",
+            "YOUTUBE_URL_BASE": "https://www.youtube.com/watch?v=",
+            "ALLOWED_LANGUAGE_CODES": [
+                "en",
+                "en-US",
+                "en-GB"
+            ]
+        },
+        "IMAGE_API": "http://img.youtube.com/vi/{youtube_id}/0.jpg"
+    },
+    "YOUTUBE_API_KEY": "PUT_YOUR_API_KEY_HERE",
+    "ZENDESK_API_KEY": null,
+    "ZENDESK_CUSTOM_FIELDS": {},
+    "ZENDESK_GROUP_ID_MAPPING": {},
+    "ZENDESK_OAUTH_ACCESS_TOKEN": null,
+    "ZENDESK_URL": null,
+    "ZENDESK_USER": null
+}
