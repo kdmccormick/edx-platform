@@ -6,7 +6,7 @@ import logging
 from codejail.safe_exec import SafeExecException, json_safe
 from codejail.safe_exec import not_safe_exec as codejail_not_safe_exec
 from codejail.safe_exec import safe_exec as codejail_safe_exec
-from edx_django_utils.monitoring import function_trace, record_exception
+from edx_django_utils.monitoring import function_trace, record_exception, set_custom_attribute
 
 from . import lazymod
 from .remote_exec import is_codejail_rest_service_enabled, is_codejail_in_darklaunch, get_remote_exec
@@ -21,7 +21,23 @@ CODE_PROLOG = """\
 from __future__ import absolute_import, division
 
 import os
-os.environ["OPENBLAS_NUM_THREADS"] = "1"    # See TNL-6456
+
+# openblas is a math library used by numpy. It will try to allocate multiple
+# threads by default, but this may exceed resource limits and cause a segfault.
+# Limiting to 1 thread will prevent this in all configurations.
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+
+# Any code that uses the tempfile module to create temporary files should use
+# the ./tmp directory that codejail creates in each sandbox, rather than trying
+# to use a global temp dir (which should be blocked by AppArmor anyhow).
+# This is needed for matplotlib among other things.
+#
+# matplotlib will complain on stderr about the non-standard temp dir if we
+# don't explicitly tell it "no really, use this". This pollutes the output
+# when codejail returns an error message (which includes stderr). So we also
+# set MPLCONFIGDIR as a special case.
+os.environ["TMPDIR"] = os.getcwd() + "/tmp"
+os.environ["MPLCONFIGDIR"] = os.environ["TMPDIR"]
 
 import random2 as random_module
 import sys
@@ -94,7 +110,7 @@ def safe_exec(
     limit_overrides_context=None,
     slug=None,
     unsafely=False,
-):
+):  # pylint: disable=too-many-statements
     """
     Execute python code safely.
 
@@ -157,7 +173,8 @@ def safe_exec(
             "extra_files": extra_files,
         }
 
-        emsg, exception = get_remote_exec(data)
+        with function_trace('safe_exec.remote_exec'):
+            emsg, exception = get_remote_exec(data)
 
     else:
 
@@ -169,14 +186,16 @@ def safe_exec(
 
         # Run the code!  Results are side effects in globals_dict.
         try:
-            exec_fn(
-                code_prolog + LAZY_IMPORTS + code,
-                globals_dict,
-                python_path=python_path,
-                extra_files=extra_files,
-                limit_overrides_context=limit_overrides_context,
-                slug=slug,
-            )
+            trace_name = 'safe_exec.local_exec_darklaunch' if is_codejail_in_darklaunch() else 'safe_exec.local_exec'
+            with function_trace(trace_name):
+                exec_fn(
+                    code_prolog + LAZY_IMPORTS + code,
+                    globals_dict,
+                    python_path=python_path,
+                    extra_files=extra_files,
+                    limit_overrides_context=limit_overrides_context,
+                    slug=slug,
+                )
         except SafeExecException as e:
             # Saving SafeExecException e in exception to be used later.
             exception = e
@@ -199,11 +218,15 @@ def safe_exec(
                     "unsafely": unsafely,
                     "extra_files": extra_files,
                 }
-                remote_emsg, _remote_exception = get_remote_exec(data)
+                with function_trace('safe_exec.remote_exec_darklaunch'):
+                    remote_emsg, _remote_exception = get_remote_exec(data)
                 log.info(
                     f"Remote execution in darklaunch mode produces: {darklaunch_globals} or exception: {remote_emsg}"
                 )
                 log.info(f"Local execution in darklaunch mode produces: {globals_dict} or exception: {emsg}")
+                set_custom_attribute('dark_launch_emsg_match', remote_emsg == emsg)
+                set_custom_attribute('remote_emsg_exists', remote_emsg is not None)
+                set_custom_attribute('local_emsg_exists', emsg is not None)
             except Exception as e:  # pragma: no cover  # pylint: disable=broad-except
                 # Swallows all exceptions and logs it in monitoring so that dark launch doesn't cause issues during
                 # deploy.

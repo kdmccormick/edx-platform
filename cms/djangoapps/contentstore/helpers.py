@@ -82,6 +82,22 @@ def is_unit(xblock, parent_xblock=None):
     return False
 
 
+def is_library_content(xblock):
+    """
+    Returns true if the specified xblock is library content.
+    """
+    return xblock.category == 'library_content'
+
+
+def get_parent_if_split_test(xblock):
+    """
+    Returns the parent of the specified xblock if it is a split test, otherwise returns None.
+    """
+    parent_xblock = get_parent_xblock(xblock)
+    if parent_xblock and parent_xblock.category == 'split_test':
+        return parent_xblock
+
+
 def xblock_has_own_studio_page(xblock, parent_xblock=None):
     """
     Returns true if the specified xblock has an associated Studio page. Most xblocks do
@@ -520,11 +536,11 @@ def _import_xml_node_to_parent(
 
     if xblock_class.has_children and temp_xblock.children:
         raise NotImplementedError("We don't yet support pasting XBlocks with children")
-    temp_xblock.parent = parent_key
     if copied_from_block:
         _fetch_and_set_upstream_link(copied_from_block, copied_from_version_num, temp_xblock, user)
     # Save the XBlock into modulestore. We need to save the block and its parent for this to work:
     new_xblock = store.update_item(temp_xblock, user.id, allow_not_found=True)
+    new_xblock.parent = parent_key
     parent_xblock.children.append(new_xblock.location)
     store.update_item(parent_xblock, user.id)
 
