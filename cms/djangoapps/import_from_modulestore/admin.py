@@ -2,6 +2,8 @@
 This module contains the admin configuration for the Import model.
 """
 from django.contrib import admin
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from .models import Import, PublishableEntityImport, PublishableEntityMapping
 
@@ -12,41 +14,30 @@ class ImportAdmin(admin.ModelAdmin):
     """
 
     list_display = (
-        'uuid',
-        'created',
-        'status',
         'source_key',
+        'composition_level',
+        'update_existing',
+        'target',
+        'target_collection',
         'target_change',
+        'task_status',
+        'task_state',
+        'task_started_by',
     )
-    list_filter = (
-        'user_task_status__state',
-    )
-    search_fields = (
-        'source_key',
-        'target_change',
-    )
+    search_fields = ('source_key', 'target', 'target_collection')
+    readonly_fields = ('task_status', 'target_change')
 
-    raw_id_fields = ('user',)
-    readonly_fields = ('user_task_status',)
+    def task_status(self, obj: Import) -> str:
+        return mark_safe('<a href="{}">{}</a>'.format(
+            reverse("admin:user_tasks_usertaskstatus_change", args=(obj.task_status.pk,)),
+            f"{obj.task_status.uuid}",
+        )) if obj.task_status else "(Task not yet created)"
 
-    def uuid(self, obj):
-        """
-        Returns the UUID of the import.
-        """
-        return getattr(obj.user_task_status, 'uuid', None)
+    def task_state(self, obj: Import) -> str:
+        return obj.task_status.state if obj.task_status else None
 
-    def created(self, obj):
-        """
-        Returns the creation date of the import.
-        """
-        return getattr(obj.user_task_status, 'created', None)
-
-    def status(self, obj):
-        """
-        Returns the status of the import.
-        """
-        return getattr(obj.user_task_status, 'state', None)
-
+    def task_started_by(self, obj: Import):
+        return obj.task_status.user if obj.task_status else None
 
 admin.site.register(Import, ImportAdmin)
 admin.site.register(PublishableEntityImport)

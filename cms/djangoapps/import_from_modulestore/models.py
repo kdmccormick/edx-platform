@@ -13,7 +13,9 @@ from opaque_keys.edx.django.models import (
     LearningContextKeyField,
     UsageKeyField,
 )
-from openedx_learning.api.authoring_models import LearningPackage, PublishableEntity
+from openedx_learning.api.authoring_models import (
+    LearningPackage, PublishableEntity, Collection, DraftChangeLog, DraftChangeLogRecord
+)
 
 from .data import CompositionLevel, ImportStatus
 
@@ -22,59 +24,83 @@ User = get_user_model()
 
 class Import(models.Model):
     """
-    Represents the action of a user importing a modulestore-based course or legacy
-    library into a learning-core based learning package (today, that is always a content library).
-    """
+    The action of a user importing a ModuleStore-based course or legacy library into a learning-core based learning package
 
-    user_task_status = models.OneToOneField(
+    (Note: Currently, a learning package is always a content library.)
+
+    Each Import is tied to a single UserTaskStatus, which connects the Import to a user and tracks the progress of the import.
+    """
+    task_status = models.OneToOneField(
         UserTaskStatus,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='import_event',
+        related_name='modulestore_import',
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    # Note: For now, this will always be a course key. In the future, it may be a legacy library key.
-    source_key = LearningContextKeyField(help_text=_('The modulestore course'), max_length=255, db_index=True)
-    target_change = models.ForeignKey(to='oel_publishing.DraftChangeLog', on_delete=models.SET_NULL, null=True)
+    source_key = LearningContextKeyField(
+        max_length=255,
+        db_index=True,
+        help_text=_('Key of the content source (a course or a legacy library)')
+    )
     composition_level = models.CharField(
         max_length=255,
         choices=CompositionLevel.choices(),
-        help_text=_('The composition level of the target learning package'),
+        help_text=_('Maximum hierachy level at which content should be aggregated in target library'),
         default=CompositionLevel.COMPONENT.value,
     )
-    override = models.BooleanField(
+    update_existing = models.BooleanField(
         default=False,
         help_text=_(
-            'If true, the import will override any existing content in the target learning package.'
+            'If a piece of content already exists in the content library, should the import process update it?'
         ),
+    )
+    target = models.ForeignKey(
+        LearningPackage,
+        on_delete=models.CASCADE,
+        help_text=_('Content will be imported into this library'),
+    )
+    target_collection = models.ForeignKey(
+        Collection,
+        on_delete=models.SET_NULL,
+        null=True,
+        help_text=_('Optional - Collection (within the target library) into which imported content will be grouped'),
+    )
+    target_change = models.ForeignKey(
+        DraftChangeLog, on_delete=models.SET_NULL, null=True,
+        help_text=_('Changelog entry related to this import event'),
     )
 
     class Meta:
-        verbose_name = _('Import from modulestore')
-        verbose_name_plural = _('Imports from modulestore')
+        verbose_name = _('ModuleStore Import')
+        verbose_name_plural = _('ModuleStore Imports')
 
     def __str__(self):
-        return f'{self.source_key} → {self.target_change}'
+        return f'Import #{self.pk}: {self.source_key} → {self.target}'
 
-    def set_status(self: Self, status: ImportStatus):
-        """
-        Set import status.
-        """
-        user_task_status: UserTaskStatus = self.user_task_status
+    def __repr__(self):
+        return f"Import(pk={self.pk}, source_key='{self.source_key}', target='{self.target}')"
 
-        if status in ImportStatus.FAILED_STATUSES.value:
-            user_task_status.fail(status.value)
-        elif status == ImportStatus.CANCELED:
-            user_task_status.cancel()
-        else:
-            user_task_status.set_state(status.value)
+    #def fail(self, message: str):
+    #    """
+    #    Mark the import as failed, with a message.
+    #    """
+    #    if not self.task_status:
+    #        raise ValueError( f"Cannot mark {self!r} as failed... it does not even have an associated UserTaskStatus!")
+    #    self.task_status.fail(message)
 
-        user_task_status.save()
-
-        if status in [ImportStatus.IMPORTED, ImportStatus.CANCELED]:
-            self.clean_related_staged_content()
+    #def set_progress_state(self: Self, state: ImportProgressState):
+    #    """
+    #    Mark the import as in-progress with a particular state.
+    #    """
+    #    if not self.task_status:
+    #        raise ValueError(
+    #            f"Cannot set state of {self!r} to {state} because the import does not yet "
+    #            "have an associated UserTaskStatus. "
+    #        )
+    #    user_task_status.set_state(state)
+    #    user_task_status.save()
+    #    if status in [ImportStatus.IMPORTED, ImportStatus.CANCELED]:
+    #        self.clean_related_staged_content()
 
     def clean_related_staged_content(self) -> None:
         """
@@ -88,10 +114,9 @@ class PublishableEntityMapping(TimeStampedModel):
     """
     Represents a mapping between a source usage key and a target publishable entity.
     """
-
     source_usage_key = UsageKeyField(
         max_length=255,
-        help_text=_('Original usage key/ID of the thing that has been imported.'),
+        help_text=_('Original usage key of the XBlock that has been imported.'),
     )
     target_package = models.ForeignKey(LearningPackage, on_delete=models.CASCADE)
     target_entity = models.ForeignKey(PublishableEntity, on_delete=models.CASCADE)
@@ -113,7 +138,7 @@ class PublishableEntityImport(TimeStampedModel):
     import_event = models.ForeignKey(Import, on_delete=models.CASCADE)
     resulting_mapping = models.ForeignKey(PublishableEntityMapping, on_delete=models.SET_NULL, null=True, blank=True)
     resulting_change = models.OneToOneField(
-        to='oel_publishing.DraftChangeLogRecord',
+        DraftChangeLogRecord,
         # a changelog record can be pruned, which would set this to NULL, but not delete the
         # entire import record
         null=True,
