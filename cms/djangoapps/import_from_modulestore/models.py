@@ -17,7 +17,7 @@ from openedx_learning.api.authoring_models import (
     LearningPackage, PublishableEntity, Collection, DraftChangeLog, DraftChangeLogRecord
 )
 
-from .data import CompositionLevel, ImportStatus
+from .data import CompositionLevel, ImportProgressState
 
 User = get_user_model()
 
@@ -48,10 +48,10 @@ class Import(models.Model):
         help_text=_('Maximum hierachy level at which content should be aggregated in target library'),
         default=CompositionLevel.COMPONENT.value,
     )
-    update_existing = models.BooleanField(
+    replace_existing = models.BooleanField(
         default=False,
         help_text=_(
-            'If a piece of content already exists in the content library, should the import process update it?'
+            'If a piece of content already exists in the content library, should the import process replace it?'
         ),
     )
     target = models.ForeignKey(

@@ -9,8 +9,8 @@ from rest_framework.permissions import IsAdminUser
 from user_tasks.models import UserTaskStatus
 from user_tasks.views import StatusViewSet
 
-from cms.djangoapps.import_from_modulestore.api import import_to_library
-from cms.djangoapps.import_from_modulestore.views.v0.serializers import ImportSerializer, StatusWithImportSerializer
+from cms.djangoapps.import_from_modulestore.api import import_from_modulestore
+from cms.djangoapps.import_from_modulestore.rest_api.v0.serializers import ImportSerializer, StatusWithImportSerializer
 from openedx.core.djangoapps.content_libraries.api import ContentLibrary
 from openedx.core.lib.api.authentication import BearerAuthenticationAllowInactiveUser
 
@@ -30,19 +30,17 @@ class ImportViewSet(StatusViewSet):
         Request body:
             {
                 "source_key": "<source_course_key>",
-                "target": "<target_library>",
-                "usage_keys_string": "<comma_separated_usage_keys>",
+                "target": "<target_library_or_collection>",
                 "composition_level": "<composition_level>",
-                "override": "<boolean>"
+                "replace_existin": "<boolean>"
             }
 
         Example request:
             {
                 "source_key": "course-v1:edX+DemoX+2014_T1",
                 "target": "library-v1:org1+lib_1",
-                "usage_keys_string": "block-v1:edX+DemoX+2014_T1+type@sequential+block@chapter_1",
                 "composition_level": "component",
-                "override": true
+                "replace_existin": "false,"
             }
 
         Example response:
@@ -113,9 +111,8 @@ class ImportViewSet(StatusViewSet):
             org__short_name=library_key.org, slug=library_key.slug
         ).learning_package_id
 
-        _, task = import_to_library(
+        _, task = import_from_modulestore(
             source_key=validated_data['source_key'],
-            usage_ids=validated_data['usage_keys_string'],
             target_learning_package_id=learning_package_id,
             user_id=request.user.pk,
             composition_level=validated_data['composition_level'],

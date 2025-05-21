@@ -21,10 +21,6 @@ class ImportSerializer(serializers.ModelSerializer):
         help_text="The target library key to import into.",
         required=True,
     )
-    usage_keys_string = serializers.CharField(
-        help_text="Comma separated list of usage keys to import.",
-        required=True,
-    )
 
     class Meta:
         model = Import

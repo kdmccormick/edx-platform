@@ -142,7 +142,7 @@ urlpatterns = oauth2_urlpatterns + [
     path('api/courses/', include('cms.djangoapps.contentstore.api.urls', namespace='courses_api')
          ),
     path('api/import_from_modulestore/',
-         include('cms.djangoapps.import_from_modulestore.views.urls', namespace='import_from_modulestore_api')),
+         include('cms.djangoapps.import_from_modulestore.rest_api.urls', namespace='import_from_modulestore_api')),
     re_path(fr'^export/{COURSELIKE_KEY_PATTERN}$', contentstore_views.export_handler,
             name='export_handler'),
     re_path(fr'^export_output/{COURSELIKE_KEY_PATTERN}$', contentstore_views.export_output_handler,

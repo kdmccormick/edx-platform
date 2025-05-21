@@ -3,40 +3,52 @@ API for course to library import.
 """
 from typing import Sequence
 
+from django.contrib.auth import AbstractUser
+from opaque_keys.edx.locator import LibraryLocatorV2, LibraryCollectionLocator
 from opaque_keys.edx.keys import LearningContextKey
+from openedx_learning.api.authoring import get_collection
 from user_tasks.tasks import UserTask
 
+from openedx.core.djangoapps.content_libraries.api import get_library
+
+from . import tasks
 from .helpers import cancel_incomplete_old_imports
+from .data import CompositionLevel, ImportData
 from .models import Import as _Import
-from .tasks import import_to_library_task
 from .validators import validate_usage_keys_to_import
 
 
-def import_to_library(
+
+def start_import_from_modulestore(
     source_key: LearningContextKey,
-    usage_ids: Sequence[str],
-    target_learning_package_id: int,
-    user_id: int,
-    composition_level: str,
-    override: bool = False,
-) -> tuple[_Import, UserTask]:
+    target_key: LibraryLocatorV2 | LibraryCollectionLocator,
+    user: AbstractUser,
+    composition_level: CompositionLevel,
+    replace_existing: bool = False,
+) -> tuple[ImportData, UserTask]:
     """
     Import staged content to a library from staged content.
     """
-    validate_usage_keys_to_import(usage_ids)
-
-    import_from_modulestore = _Import.objects.create(
+    if isinstance(target_key, LibraryCollectionLocator):
+        target_package = get_library(target_key.library_key).learning_package
+        target_collection = get_collection(target_package.id, target_key.collection_id)
+    else:
+        target_package = get_library(target_key).learning_package
+        target_collection = None
+    modulestore_import = _Import.objects.create(
         source_key=source_key,
-        user_id=user_id,
+        user=user.id,
         composition_level=composition_level,
-        override=override,
+        replace_existing=replace_existing,
+        target=target_package,
+        target_collection=target_collection,
     )
-    cancel_incomplete_old_imports(import_from_modulestore)
+    return start_import_from_modulestore_task(modulestore_import)
 
-    task = import_to_library_task.delay(
-        import_pk=import_from_modulestore.pk,
-        usage_key_strings=usage_ids,
-        learning_package_id=target_learning_package_id,
-        user_id=user_id,
-    )
-    return import_from_modulestore, task
+
+def start_import_from_modulestore_task(modulestore_import: _Import) -> tuple[ImportData, UserTask]:
+    """
+    """
+    cancel_incomplete_old_imports(modulestore_import)
+    task = tasks.import_from_modulestore.delay(import_pk=modulestore_import.pk)
+    return modulestore_import, task

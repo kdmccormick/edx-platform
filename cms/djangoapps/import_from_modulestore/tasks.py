@@ -21,7 +21,7 @@ from .models import Import, PublishableEntityImport, StagedContentForImport
 log = get_task_logger(__name__)
 
 
-class ImportToLibraryTask(UserTask):
+class ImportFromModulestoreTask(UserTask):
     """
     Base class for import to library tasks.
     """
@@ -54,16 +54,10 @@ class ImportToLibraryTask(UserTask):
         return f'Import course to library (library_id={library_id}, import_id={import_id})'
 
 
-@shared_task(base=ImportToLibraryTask, bind=True)
+@shared_task(base=ImportFromModulestoreTask, bind=True)
 # Note: The decorator @set_code_owner_attribute cannot be used here because the UserTaskMixin
 #   does stack inspection and can't handle additional decorators.
-def import_to_library_task(
-    self,
-    import_pk: int,
-    usage_key_strings: Sequence[str],
-    learning_package_id: int,
-    user_id: int,  # pylint: disable=unused-argument
-) -> None:
+def import_from_modulestore(self, import_pk: int) -> None:
     """
     Import to library task.
 
@@ -74,22 +68,22 @@ def import_to_library_task(
 
     try:
         import_event = Import.objects.get(pk=import_pk)
-        import_event.user_task_status = self.status
-        import_event.save(update_fields=['user_task_status'])
     except Import.DoesNotExist:
-        log.info('Import event not found for pk %s', import_pk)
+        self.fail(f"Modulestore Import object with id={import_pk} does not exist")
         return
+    import_event.user_task_status = self.status
+    import_event.save(update_fields=['user_task_status'])
 
     # Step 1: Save course to staged content task by sections/chapters.
-    save_leagacy_content_to_staged_content(import_event)
+    _save_legacy_content_to_staged_content(import_event)
 
     self.status.increment_completed_steps()
 
     # Step 2: Import staged content to library task.
-    import_staged_content_to_library(import_event, learning_package_id, usage_key_strings)
+    _import_staged_content_to_library(import_event, learning_package)
 
 
-def save_leagacy_content_to_staged_content(import_event: Import) -> None:
+def _save_legacy_content_to_staged_content(import_event: Import) -> None:
     """
     Save course to staged content task by sections/chapters.
     """
@@ -121,28 +115,16 @@ def save_leagacy_content_to_staged_content(import_event: Import) -> None:
         raise exc
 
 
-def import_staged_content_to_library(
-    import_event: Import, learning_package_id: int, usage_key_strings: Sequence[str]
-) -> None:
+def _import_staged_content_to_library(import_event: Import, target: LearningPackage) -> None:
     """
     Import staged content to library task.
     """
-    target_learning_package = LearningPackage.objects.get(id=learning_package_id)
-
     imported_publishable_versions = []
     import_event.set_status(ImportStatus.IMPORTING)
-    with authoring_api.bulk_draft_changes_for(learning_package_id=learning_package_id) as change_log:
+    with authoring_api.bulk_draft_changes_for(learning_package_id=target.id) as change_log:
         try:
-            for usage_key_string in usage_key_strings:
-                staged_content_for_import = import_event.staged_content_for_import.get(
-                    source_usage_key=usage_key_string
-                )
-                publishable_versions = import_from_staged_content(
-                    import_event,
-                    usage_key_string,
-                    target_learning_package,
-                    staged_content_for_import.staged_content,
-                )
+            for staged_content in import_event.staged_content_for_import:
+                publishable_versions = import_from_staged_content(import_event, target, staged_content)
                 imported_publishable_versions.extend(publishable_versions)
         except Exception:  # pylint: disable=broad-except
             import_event.set_status(ImportStatus.IMPORTING_FAILED)

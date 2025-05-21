@@ -1,11 +1,13 @@
 """
 This module contains the admin configuration for the Import model.
 """
-from django.contrib import admin
+from django.db.models import QuerySet
+from django.contrib import admin, auth, messages
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from .models import Import, PublishableEntityImport, PublishableEntityMapping
+from .api import start_new_task_for_import
 
 
 class ImportAdmin(admin.ModelAdmin):
@@ -36,9 +38,21 @@ class ImportAdmin(admin.ModelAdmin):
     def task_state(self, obj: Import) -> str:
         return obj.task_status.state if obj.task_status else None
 
-    def task_started_by(self, obj: Import):
+    def task_started_by(self, obj: Import) -> auth.AbstractUser:
         return obj.task_status.user if obj.task_status else None
+
 
 admin.site.register(Import, ImportAdmin)
 admin.site.register(PublishableEntityImport)
 admin.site.register(PublishableEntityMapping)
+
+
+@admin.action(description="Start new import task")
+def start_new_import_task(modeladmin: ImportAdmin, request, queryset: QuerySet[Import]):
+    if not queryset:
+        modeladmin.message_user(request, "No Import objects selected to start", level=messages.WARNING)
+        return
+    num_started = len(queryset)
+    for import_model in queryset:
+        start_new_task_for_import(import_model)
+    modeladmin.message_user(request, f"Started {num_started} import tasks", level=messages.SUCCESS)
