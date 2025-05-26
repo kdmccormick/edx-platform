@@ -1,7 +1,7 @@
 """
 Models for the course to library import app.
 """
-from typing import Self
+from __future__ import annotations
 
 from django.contrib.auth import get_user_model
 from django.db import models
@@ -18,18 +18,20 @@ from openedx_learning.api.authoring_models import (
 )
 
 from openedx.core.djangoapps.content_staging.models import StagedContent
-from .data import CompositionLevel, ImportProgressState
+from .data import CompositionLevel
 
 User = get_user_model()
 
 
 class Import(models.Model):
     """
-    The action of a user importing a ModuleStore-based course or legacy library into a learning-core based learning package
+    The action of a user importing a ModuleStore-based course or legacy library into a
+    learning-core based learning package
 
     (Note: Currently, a learning package is always a content library.)
 
-    Each Import is tied to a single UserTaskStatus, which connects the Import to a user and tracks the progress of the import.
+    Each Import is tied to a single UserTaskStatus, which connects the Import to a user and
+    tracks the progress of the import.
     """
     task_status = models.OneToOneField(
         UserTaskStatus,

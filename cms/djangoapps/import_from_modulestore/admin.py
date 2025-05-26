@@ -4,7 +4,7 @@ This module contains the admin configuration for the Import model.
 from __future__ import annotations
 
 from django.db.models import QuerySet
-from django.contrib import admin, auth, messages
+from django.contrib import admin, messages
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.utils.safestring import mark_safe

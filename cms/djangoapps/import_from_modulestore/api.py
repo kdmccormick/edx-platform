@@ -1,8 +1,6 @@
 """
 API for course to library import.
 """
-from typing import Sequence
-
 from django.contrib.auth.models import AbstractUser
 from opaque_keys.edx.locator import LibraryLocatorV2, LibraryCollectionLocator
 from opaque_keys.edx.keys import LearningContextKey
@@ -12,10 +10,8 @@ from user_tasks.tasks import UserTask
 from openedx.core.djangoapps.content_libraries.api import get_library
 
 from . import tasks
-from .helpers import cancel_incomplete_old_imports
-from .data import CompositionLevel 
+from .data import CompositionLevel
 from .models import Import as _Import
-from .validators import validate_usage_keys_to_import
 
 
 def start_import_from_modulestore(
@@ -46,7 +42,7 @@ def start_import_from_modulestore(
 
 def start_import_from_modulestore_task(user: AbstractUser, modulestore_import: _Import) -> tuple[_Import, UserTask]:
     """
+    @@TODO
     """
-#    cancel_incomplete_old_imports(modulestore_import)
     task = tasks.import_from_modulestore.delay(user_id=user.id, import_pk=modulestore_import.pk)
     return modulestore_import, task
