@@ -1,6 +1,8 @@
 """
 Helper functions for importing course content into a library.
 """
+from __future__ import annotations
+
 from datetime import datetime, timezone
 from functools import partial
 import logging
@@ -9,6 +11,7 @@ import os
 import secrets
 from typing import TYPE_CHECKING
 
+from django.contrib.auth.models import AbstractUser
 from django.db import transaction
 from django.db.utils import IntegrityError
 from lxml import etree
@@ -22,43 +25,20 @@ from openedx.core.djangoapps.content_libraries import api
 from openedx.core.djangoapps.content_staging import api as content_staging_api
 from xmodule.modulestore.django import modulestore
 
-from .data import CompositionLevel, ImportStatus, PublishableVersionWithMapping
+from .data import CompositionLevel, ImportProgressState, PublishableVersionWithMapping
 from .models import Import, PublishableEntityMapping
 
 if TYPE_CHECKING:
-    from openedx_learning.apps.authoring_models import LearningPackage
+    from openedx_learning.api.authoring_models import LearningPackage
     from xblock.core import XBlock
-
     from openedx.core.djangoapps.content_staging.api import _StagedContent as StagedContent
 
 
 log = logging.getLogger(__name__)
-parser = etree.XMLParser(strip_cdata=False)
-
-# The create functions have different kwarg names for the child list,
-# so we need to use partial to set the child list to empty.
-CONTAINER_CREATORS_MAP: dict[str, partial] = {
-    api.ContainerType.Section.olx_tag: partial(authoring_api.create_section_and_version, subsections=[]),
-    api.ContainerType.Subsection.olx_tag: partial(authoring_api.create_subsection_and_version, units=[]),
-    api.ContainerType.Unit.olx_tag: partial(authoring_api.create_unit_and_version, components=[]),
-}
-
-CONTAINER_OVERRIDERS_MAP: dict[str, partial] = {
-    api.ContainerType.Section.olx_tag: partial(authoring_api.create_next_section_version, subsections=[]),
-    api.ContainerType.Subsection.olx_tag: partial(authoring_api.create_next_subsection_version, units=[]),
-    api.ContainerType.Unit.olx_tag: partial(authoring_api.create_next_unit_version, components=[]),
-}
 
 
-def import_from_staged_content(import_event: Import, staged_content: 'StagedContent') -> list[PublishableVersionWithMapping]:
-    """
-    Import staged content to a library from staged content.
 
-    Returns a list of PublishableVersionWithMappings created during the import.
-    """
-    parser = etree.XMLParser(strip_cdata=False)
-    node = etree.fromstring(staged_content.olx, parser=parser)
-    return _import_complicated_child(node, import_event.target)
+
 
 
 def _process_import(usage_key_string, block_to_import) -> list[PublishableVersionWithMapping]:
@@ -129,18 +109,6 @@ def _import_complicated_child(child, child_usage_key_string):
         container_type = None
     if (not container_type) or container_type > composition_level:
         return child_component_versions_with_mapping
-    container_version_with_mapping = get_or_create_container(
-        child.tag,
-        child.get('url_name'),
-        child.get('display_name', child.tag),
-        child_usage_key_string,
-    )
-    child_component_versions = [
-        child_component_version.publishable_version for child_component_version
-        in child_component_versions_with_mapping
-    ]
-    _update_container_components(container_version_with_mapping.publishable_version, child_component_versions)
-    return [container_version_with_mapping] + child_component_versions_with_mapping
 
 
 def get_or_create_container(
@@ -156,39 +124,6 @@ def get_or_create_container(
     Creates a container (e.g., chapter, sequential, vertical) in the
     content library.
     """
-    try:
-        container_creator_func = self.CONTAINER_CREATORS_MAP[container_type]
-        container_override_func = self.CONTAINER_OVERRIDERS_MAP[container_type]
-    except KeyError as exc:
-        raise ValueError(f"Unknown container type: {container_type}") from exc
-
-    try:
-        container_version = self.content_library.learning_package.publishable_entities.get(key=key)
-    except PublishableEntity.DoesNotExist:
-        container_version = None
-
-    if container_version and self.override:
-        container_version = container_override_func(
-            container_version.container,
-            title=display_name or f"New {container_type}",
-            created=datetime.now(tz=timezone.utc),
-            created_by=self.import_event.user_id,
-        )
-    elif not container_version:
-        _, container_version = container_creator_func(
-            self.learning_package.id,
-            key=key or secrets.token_hex(16),
-            title=display_name or f"New {container_type}",
-            created=datetime.now(tz=timezone.utc),
-            created_by=self.import_event.user_id,
-        )
-
-    publishable_entity_mapping, _ = get_or_create_publishable_entity_mapping(
-        block_usage_key_string,
-        container_version.container.publishable_entity,
-    )
-
-    return PublishableVersionWithMapping(container_version, publishable_entity_mapping)
 
 def _update_container_components(self, container_version, component_versions):
     """
@@ -273,7 +208,6 @@ def _handle_component_override(self, usage_key, new_content):
         return component_version
     library_usage_key = api.library_component_usage_key(self.library_key, component)
 
-    component_version = api.set_library_block_olx(library_usage_key, new_content)
 
     return component_version
 
@@ -381,18 +315,3 @@ def get_items_to_import(import_event: Import) -> list['XBlock']:
 
     return items_to_import
 
-
-def cancel_incomplete_old_imports(import_event: Import) -> None:
-    """
-    Cancel any incomplete imports that have the same target as the current import.
-
-    When a new import is created, we want to cancel any other incomplete user imports that have the same target.
-    """
-    incomplete_user_imports_with_same_target = Import.objects.filter(
-        user=import_event.user,
-        target_change=import_event.target_change,
-        source_key=import_event.source_key,
-        staged_content_for_import__isnull=False
-    ).exclude(pk=import_event.pk)
-    for incomplete_import in incomplete_user_imports_with_same_target:
-        incomplete_import.set_status(ImportStatus.CANCELED)

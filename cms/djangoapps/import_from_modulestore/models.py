@@ -17,6 +17,7 @@ from openedx_learning.api.authoring_models import (
     LearningPackage, PublishableEntity, Collection, DraftChangeLog, DraftChangeLogRecord
 )
 
+from openedx.core.djangoapps.content_staging.models import StagedContent
 from .data import CompositionLevel, ImportProgressState
 
 User = get_user_model()
@@ -46,7 +47,7 @@ class Import(models.Model):
         max_length=255,
         choices=CompositionLevel.choices(),
         help_text=_('Maximum hierachy level at which content should be aggregated in target library'),
-        default=CompositionLevel.COMPONENT.value,
+        default=CompositionLevel.Component.value,
     )
     replace_existing = models.BooleanField(
         default=False,
@@ -63,6 +64,7 @@ class Import(models.Model):
         Collection,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
         help_text=_('Optional - Collection (within the target library) into which imported content will be grouped'),
     )
     target_change = models.ForeignKey(
@@ -122,6 +124,7 @@ class PublishableEntityMapping(TimeStampedModel):
     target_entity = models.ForeignKey(PublishableEntity, on_delete=models.CASCADE)
 
     class Meta:
+        # For any source legacy block, it can only be imported into a given learning package once.
         unique_together = ('source_usage_key', 'target_package')
 
     def __str__(self):
@@ -132,7 +135,7 @@ class PublishableEntityImport(TimeStampedModel):
     """
     Represents a publishableentity version that has been imported into a learning package (e.g. content library)
 
-    This is a many-to-many relationship between a container version and a course to library import.
+    This is a many-to-many relationship between an entity version and a course to library import.
     """
 
     import_event = models.ForeignKey(Import, on_delete=models.CASCADE)
@@ -158,14 +161,13 @@ class StagedContentForImport(TimeStampedModel):
     """
     Represents m2m relationship between an import and staged content created for that import.
     """
-
-    import_event = models.ForeignKey(
+    modulestore_import = models.ForeignKey(
         Import,
         on_delete=models.CASCADE,
         related_name='staged_content_for_import',
     )
     staged_content = models.OneToOneField(
-        to='content_staging.StagedContent',
+        to=StagedContent,
         on_delete=models.CASCADE,
         related_name='staged_content_for_import',
     )
@@ -179,8 +181,8 @@ class StagedContentForImport(TimeStampedModel):
 
     class Meta:
         unique_together = (
-            ('import_event', 'staged_content'),
+            ('modulestore_import', 'staged_content'),
         )
 
     def __str__(self):
-        return f'{self.import_event} → {self.staged_content}'
+        return f'{self.modulestore_import} → {self.staged_content}'

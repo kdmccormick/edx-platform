@@ -9,10 +9,11 @@ from rest_framework.permissions import IsAdminUser
 from user_tasks.models import UserTaskStatus
 from user_tasks.views import StatusViewSet
 
-from cms.djangoapps.import_from_modulestore.api import import_from_modulestore
-from cms.djangoapps.import_from_modulestore.rest_api.v0.serializers import ImportSerializer, StatusWithImportSerializer
 from openedx.core.djangoapps.content_libraries.api import ContentLibrary
 from openedx.core.lib.api.authentication import BearerAuthenticationAllowInactiveUser
+
+from ...api import start_import_from_modulestore
+from .serializers import ImportSerializer, StatusWithImportSerializer
 
 
 class ImportViewSet(StatusViewSet):
@@ -111,7 +112,7 @@ class ImportViewSet(StatusViewSet):
             org__short_name=library_key.org, slug=library_key.slug
         ).learning_package_id
 
-        _, task = import_from_modulestore(
+        _, task = start_import_from_modulestore(
             source_key=validated_data['source_key'],
             target_learning_package_id=learning_package_id,
             user_id=request.user.pk,
