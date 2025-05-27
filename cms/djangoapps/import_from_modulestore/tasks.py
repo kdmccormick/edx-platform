@@ -6,7 +6,6 @@ import os
 from datetime import datetime, timezone
 from enum import Enum
 
-
 from celery import shared_task
 from celery.utils.log import get_task_logger
 from django.db import IntegrityError
@@ -14,7 +13,7 @@ from edx_django_utils.monitoring import set_code_owner_attribute_from_module
 from lxml import etree
 from lxml.etree import _ElementTree as XmlTree
 from opaque_keys.edx.keys import UsageKey, LearningContextKey
-from opaque_keys.edx.locator import CourseLocator, LibraryLocator, LibraryContainerLocator
+from opaque_keys.edx.locator import CourseLocator, LibraryLocator, LibraryUsageLocatorV2, LibraryContainerLocator
 from openedx_learning.api import authoring as authoring_api
 from openedx_learning.api.authoring_models import (
     Component,
@@ -96,7 +95,10 @@ class ImportFromModulestoreTask(UserTask):
 #   does stack inspection and can't handle additional decorators.
 def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
     """
-    @@TODO
+    Import a course or legacy library into a learning package based on params pointed to by import_pk.
+
+    Currently, the target learning package must be associated with a V2 content library, but that
+    restriction may be loosened in the future as more types of learning packages are developed.
     """
     # pylint: disable=too-many-statements
     # This is a large function, but breaking it up futher would probably not
@@ -157,11 +159,11 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
     status.set_state(ImportStep.LOADING)
     try:
         legacy_root = modulestore().get_item(source_usage_key)
-    except modulestore_exceptions.ItemNotFoundError:
-        status.fail("@@TODO")
+    except modulestore_exceptions.ItemNotFoundError as exc:
+        status.fail(f"Failed to load source item '{source_usage_key}' from ModuleStore: {exc}")
         return
     if not legacy_root:
-        status.fail("@@TODO")
+        status.fail(f"Could not find source item '{source_usage_key}' in ModuleStore")
         return
     status.increment_completed_steps()
 
@@ -182,8 +184,8 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
     parser = etree.XMLParser(strip_cdata=False)
     try:
         root_node = etree.fromstring(staged.staged_content.olx, parser=parser)
-    except etree.ParseError as exc:  # @@TODO
-        status.fail(f"@@TODO {exc}")
+    except etree.ParseError as exc:
+        status.fail(f"Failed to parse source OLX (from staged content with id = {staged.staged_content.id}): {exc}")
     status.increment_completed_steps()
 
     status.set_state(ImportStep.IMPORTING_ASSETS)
@@ -210,6 +212,8 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
     status.increment_completed_steps()
 
     status.set_state(ImportStep.IMPORTING_STRUCTURE)
+
+    class Nope(Exception): pass
     try:
         with authoring_api.bulk_draft_changes_for(modulestore_import.target.id) as change_log:
             _import_node(
@@ -221,10 +225,9 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
                 created_at=datetime.now(timezone.utc),
                 created_by=status.user_id,
             )
-    except Exception as exc:  # pylint: disable=broad-except
+    except Nope: # Exception as exc:  # pylint: disable=broad-except
         status.fail("@@TODO {exc}")
     modulestore_import.target_change = change_log
-    modulestore_import.save(update_fields={'target_change'})
     status.increment_completed_steps()
 
 
@@ -246,37 +249,37 @@ def _import_node(
     will happen for any container which is above the specific `CompositionLevel`, as well as
     for the source course/library root block.
     """
-    result: PublishableEntityVersion | None = None
-    source_block_id = source_node['url_name']  # @@TODO what if no urlname?
-    source_usage_key: UsageKey = modulestore_import.source_key.make_usage_key(source_node.tag, source_block_id)
+    # The OLX tag will map to one of the following...
+    #   * A wiki tag                  --> Ignore
+    #   * A recognized container type --> Import children, and import container if requested.
+    #   * A legacy library root       --> Import children, but NOT the root itself.
+    #   * A course root               --> Import children, but NOT the root itself (for Teak, at least. Future
+    #                                     releases may support treating the Course as an importable container).
+    #   * Something else              --> Try to import it as a component. If that fails, then it's either an un-
+    #                                     supported component type, or it's an XBlock with dynamic children, which we
+    #                                     do not support in libraries as of Teak.
+    import_node: bool
+    import_children: bool
+    container_type: ContainerType | None  # if None, import as Component
+    if source_node.tag == "wiki":
+        return None
     try:
         container_type = ContainerType.from_source_olx_tag(source_node.tag)
     except ValueError:
-        # If the OLX tag is not a recognized container, then it is one of the following:
-        # * A legacy library root, which has no semantic meaning on its own... we import its children
-        #   but not the library root block itself.
-        # * A course root, which may be considered a 'container' in a future release... but as of Teak,
-        #   we just import its children and ignore the course root block itself.
-        # * A component, which we will try to import... although the target package may reject it if it's
-        #   an unsupported component type.
-        # * A dynamic block (e.g. SplitTest)... as of Teak, these are not supported and will be skipped.
-        if source_node.tag not in {"course", "library"}:
-            # Component or dynamic block. Assume component... _import_component will skip it if it's an
-            # unsupported component type or a dynamic block.
-            # (@@TODO if it's a dynamic block, should we be importing its children...?)
-            source_olx: str = etree.tostring(source_node).decode('utf-8')
-            if result_component := _import_component(
-                content_by_filename=content_by_filename,
-                source_key=source_usage_key,
-                olx=source_olx,
-                target_library=target_library,
-                replace_existing=modulestore_import.replace_existing,
-                created_by=created_by,
-                created_at=created_at,
-            ):
-                result = result_component.publishable_entity_version
+        container_type = None
+        if source_node.tag in {"course", "library"}:
+            import_node = False
+            import_children = True
+        else:
+            import_node = True
+            import_children = False
     else:
-        children: list[PublishableEntityVersion] = []
+        this_level = CompositionLevel(container_type.value)
+        requested_level = CompositionLevel(modulestore_import.composition_level)
+        import_node = not this_level.is_higher_in_course_hierarchy(requested_level)
+        import_children = True
+    children: list[PublishableEntityVersion] = []
+    if import_children:
         for child_node in source_node.getchildren():
             if child := _import_node(
                 modulestore_import=modulestore_import,
@@ -288,9 +291,13 @@ def _import_node(
                 created_at=created_at,
             ):
                 children.append(child)
-        this_level = CompositionLevel(container_type.value)
-        requested_level = CompositionLevel(modulestore_import.composition_level)
-        if not this_level.is_higher_in_course_hierarchy(requested_level):
+    result: PublishableEntityVersion | None = None
+    if import_node:
+        if not (source_block_id := source_node.get('url_name')):
+            # @@TODO fail more gracefully and/or have a fallback
+            raise ValueError(f"node is missing url_name: {etree.tostring(source_node)}")
+        source_usage_key: UsageKey = modulestore_import.source_key.make_usage_key(source_node.tag, source_block_id)
+        if container_type:
             if result_container := _import_container(
                 source_key=source_usage_key,
                 container_type=container_type,
@@ -302,11 +309,22 @@ def _import_node(
                 created_at=created_at,
             ):
                 result = result_container.publishable_entity_version
+        else:
+            if result_component := _import_component(
+                content_by_filename=content_by_filename,
+                source_key=source_usage_key,
+                olx=etree.tostring(source_node).decode('utf-8'),
+                target_library=target_library,
+                replace_existing=modulestore_import.replace_existing,
+                created_by=created_by,
+                created_at=created_at,
+            ):
+                result = result_component.publishable_entity_version
     if result:
         mapping, _ = PublishableEntityMapping.objects.get_or_create(
             source_usage_key=source_usage_key,
             target_package_id=modulestore_import.target_id,
-            target_entity=result,
+            target_entity_id=result.entity_id,
         )
         PublishableEntityImport.objects.create(
             modulestore_import=modulestore_import,
@@ -360,7 +378,7 @@ def _import_container(
         container.container_pk,
         title=title,
         entity_rows=[
-            authoring_api.ContainerEntityRow(entity_pk=child.id, version_pk=None)
+            authoring_api.ContainerEntityRow(entity_pk=child.entity_id, version_pk=None)
             for child in children
         ],
         created=created_at,
@@ -409,7 +427,10 @@ def _import_component(
     if component_existed and not replace_existing:
         return component.versioning.draft
     component_version = libraries_api.set_library_block_olx(
-        target_library.library_key.make_usage_key(source_key.block_type, source_key.block_id),
+        # mypy thinks LibraryUsageLocatorV2 is abstract. It's not.
+        LibraryUsageLocatorV2(  # type: ignore[abstract]
+            target_library.library_key, source_key.block_type, source_key.block_id
+        ),
         new_olx_str=olx,
     )
     for filename, content_pk in content_by_filename.items():
