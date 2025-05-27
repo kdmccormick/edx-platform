@@ -1,7 +1,6 @@
 """
 This module contains the data models for the import_from_modulestore app.
 """
-import typing as t
 from enum import Enum
 
 from openedx.core.djangoapps.content_libraries.api import ContainerType
@@ -14,7 +13,7 @@ class CompositionLevel(Enum):
     Enumeration of composition levels for course content.
     """
     # These are defined in increasing order of complexity so that
-    # `includes` works correctly.  If you add new composition levels, 
+    # `includes` works correctly.  If you add new composition levels,
     # be sure to keep the order correct. If you add compoisition levels
     # which do not fit into an obvious ordering, then adjust the implementation
     # of `includes` to handle that complexity.
@@ -26,7 +25,7 @@ class CompositionLevel(Enum):
     @property
     def is_complex(self):
         return self is not self.Component
-    
+
     def is_higher_in_course_hierarchy(self, other: 'CompositionLevel') -> bool:
         """
         Is this composition level 'above' (more complex than the other?)

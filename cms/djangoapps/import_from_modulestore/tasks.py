@@ -212,18 +212,19 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
     status.set_state(ImportStep.IMPORTING_STRUCTURE)
     try:
         with authoring_api.bulk_draft_changes_for(modulestore_import.target.id) as change_log:
-            modulestore_import.target_change = change_log
-            modulestore_import.save(update_fields={'target_change'})
             _import_node(
                 modulestore_import=modulestore_import,
                 content_by_filename=content_by_filename,
                 source_node=root_node,
                 target_library=library,
-                created_at=datetime.now(datetime.timezone.utc),
+                target_change=change_log,
+                created_at=datetime.now(timezone.utc),
                 created_by=status.user_id,
             )
     except Exception as exc:  # pylint: disable=broad-except
         status.fail("@@TODO {exc}")
+    modulestore_import.target_change = change_log
+    modulestore_import.save(update_fields={'target_change'})
     status.increment_completed_steps()
 
 
@@ -232,7 +233,8 @@ def _import_node(
     content_by_filename: dict[str, int],
     source_node: XmlTree,
     target_library: ContentLibrary,
-    created_at: datetime.datetime,
+    target_change: DraftChangeLog,
+    created_at: datetime,
     created_by: int,
 ) -> PublishableEntityVersion | None:
     """
@@ -281,6 +283,8 @@ def _import_node(
                 content_by_filename=content_by_filename,
                 source_node=child_node,
                 target_library=target_library,
+                target_change=target_change,
+                created_by=created_by,
                 created_at=created_at,
             ):
                 children.append(child)
@@ -293,6 +297,7 @@ def _import_node(
                 title=source_node.get('display_name', source_block_id),
                 children=children,
                 target_library=target_library,
+                replace_existing=modulestore_import.replace_existing,
                 created_by=created_by,
                 created_at=created_at,
             ):
@@ -300,22 +305,20 @@ def _import_node(
     if result:
         mapping, _ = PublishableEntityMapping.objects.get_or_create(
             source_usage_key=source_usage_key,
-            target_package_id=target_library.learning_package_id,
+            target_package_id=modulestore_import.target_id,
             target_entity=result,
         )
-        # The callers of this function should have ensured that target_change is set.
-        target_change: DraftChangeLog = staged.modulestore_import.target_change  # type: ignore[assignment]
         PublishableEntityImport.objects.create(
             import_event=modulestore_import,
             resulting_mapping=mapping,
-            resulting_change=target_change.records.get(entity=result),
+            resulting_change=target_change.records.get(entity_id=result.entity_id),
         )
         if target_collection := modulestore_import.target_collection:
             # @@TODO - should we do this in bulk for efficiency?
             authoring_api.add_to_collection(
-                learning_package_id=target_library.learning_package_id,
+                learning_package_id=modulestore_import.target_id,
                 key=target_collection.key,
-                entities_qset=PublishableEntity.objects.filter(id=result.id),
+                entities_qset=PublishableEntity.objects.filter(id=result.entity_id),
                 created_by=created_by,
             )
     return result
@@ -329,7 +332,7 @@ def _import_container(
     target_library: ContentLibrary,
     replace_existing: bool,
     created_by: int,
-    created_at: datetime.datetime,
+    created_at: datetime,
 ) -> ContainerVersion:
     """
     @@TODO
@@ -343,7 +346,7 @@ def _import_container(
         container = libraries_api.create_container(
             library_key=target_library.library_key,
             container_type=container_type,
-            slug=target_key.block_id,
+            slug=target_key.container_id,
             title=title,
             created=created_at,
             user_id=created_by,
@@ -373,14 +376,16 @@ def _import_component(
     target_library: ContentLibrary,
     replace_existing: bool,
     created_by: int,
-    created_at: datetime.datetime,
+    created_at: datetime,
 ) -> ComponentVersion | None:
     """
     Create a block in a library (@@TODO) from a staged content block.
     """
     component_type = authoring_api.get_or_create_component_type("xblock.v1", source_key.block_type)
+    # We have ensured earlier in this task that the library's learning_package_id is not None.
+    target_package_id: int = target_library.learning_package_id  # type: ignore[assignment]
     try:
-        component = authoring_api.get_components(target_library.learning_package_id).get(
+        component = authoring_api.get_components(target_package_id).get(
             component_type=component_type,
             local_key=source_key.block_id,
         )
@@ -395,7 +400,7 @@ def _import_component(
             log.error(f"Error validating block  for library {target_library.library_key}: {e}")
             return None
         component = authoring_api.create_component(
-            target_library.learning_package_id,
+            target_package_id,
             component_type=component_type,
             local_key=source_key.block_id,
             created=created_at,
