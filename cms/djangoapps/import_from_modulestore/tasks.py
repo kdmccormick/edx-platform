@@ -309,7 +309,7 @@ def _import_node(
             target_entity=result,
         )
         PublishableEntityImport.objects.create(
-            import_event=modulestore_import,
+            modulestore_import=modulestore_import,
             resulting_mapping=mapping,
             resulting_change=target_change.records.get(entity_id=result.entity_id),
         )

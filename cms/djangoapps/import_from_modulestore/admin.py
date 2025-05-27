@@ -55,10 +55,10 @@ class ImportAdmin(admin.ModelAdmin):
         )) if obj.task_status else "(Task not yet created)"
 
     def task_state(self, obj: Import) -> str:
-        return obj.task_status.state if obj.task_status else None
+        return obj.task_status.state if obj.task_status else "(No status)"
 
     def task_started_by(self, obj: Import) -> AuthUser:
-        return obj.task_status.user if obj.task_status else None
+        return obj.task_status.user if obj.task_status else "(No status)"
 
 
 admin.site.register(Import, ImportAdmin)

@@ -140,7 +140,7 @@ class PublishableEntityImport(TimeStampedModel):
     This is a many-to-many relationship between an entity version and a course to library import.
     """
 
-    import_event = models.ForeignKey(Import, on_delete=models.CASCADE)
+    modulestore_import = models.ForeignKey(Import, on_delete=models.CASCADE)
     resulting_mapping = models.ForeignKey(PublishableEntityMapping, on_delete=models.SET_NULL, null=True, blank=True)
     resulting_change = models.OneToOneField(
         DraftChangeLogRecord,
@@ -152,11 +152,11 @@ class PublishableEntityImport(TimeStampedModel):
 
     class Meta:
         unique_together = (
-            ('import_event', 'resulting_mapping'),
+            ('modulestore_import', 'resulting_mapping'),
         )
 
     def __str__(self):
-        return f'{self.import_event} → {self.resulting_mapping}'
+        return f'{self.modulestore_import} → {self.resulting_mapping}'
 
 
 class StagedContentForImport(TimeStampedModel):
