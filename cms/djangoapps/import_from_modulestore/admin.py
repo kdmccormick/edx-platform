@@ -5,9 +5,10 @@ from __future__ import annotations
 
 from django.db.models import QuerySet
 from django.contrib import admin, messages
-from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+
+from openedx.core.types.user import AuthUser
 
 from .models import Import, PublishableEntityImport, PublishableEntityMapping
 from .api import start_import_from_modulestore_task
@@ -56,7 +57,7 @@ class ImportAdmin(admin.ModelAdmin):
     def task_state(self, obj: Import) -> str:
         return obj.task_status.state if obj.task_status else None
 
-    def task_started_by(self, obj: Import) -> AbstractUser:
+    def task_started_by(self, obj: Import) -> AuthUser:
         return obj.task_status.user if obj.task_status else None
 
 

@@ -1,6 +1,7 @@
 """
 This module contains the data models for the import_from_modulestore app.
 """
+import typing as t
 from enum import Enum
 
 from openedx.core.djangoapps.content_libraries.api import ContainerType
@@ -10,9 +11,13 @@ from django.utils.translation import gettext_lazy as _
 
 class CompositionLevel(Enum):
     """
-    Enumeration of composition levels for course content, increasing order of complexity.
+    Enumeration of composition levels for course content.
     """
-
+    # These are defined in increasing order of complexity so that
+    # `includes` works correctly.  If you add new composition levels, 
+    # be sure to keep the order correct. If you add compoisition levels
+    # which do not fit into an obvious ordering, then adjust the implementation
+    # of `includes` to handle that complexity.
     Component = 'component'
     Unit = ContainerType.Unit.value
     Subsection = ContainerType.Subsection.value
@@ -21,6 +26,15 @@ class CompositionLevel(Enum):
     @property
     def is_complex(self):
         return self is not self.Component
+    
+    def is_higher_in_course_hierarchy(self, other: 'CompositionLevel') -> bool:
+        """
+        Is this composition level 'above' (more complex than the other?)
+        """
+        # mypy doesn't seem to understand that `self` is an instance of the enum.
+        # self: 'CompositionLevel'
+        levels: list[CompositionLevel] = list(self.__class__)
+        return levels.index(self) > levels.index(other)
 
 #  @@TODO
 #    @property
@@ -54,16 +68,10 @@ class CompositionLevel(Enum):
 #            return CompositionLevel.Component
 
     @classmethod
-    def values(cls):
-        """
-        Returns all levels of composition levels.
-        """
-        return [composition_level.value for composition_level in cls]
-
-    @classmethod
     def choices(cls):
         """
-        Returns all supported levels of composition levels as a list of tuples.
+        Returns all supported levels of composition levels as a list of tuples,
+        for use in a Django Models ChoiceField.
         """
         return [
             (composition_level.value, composition_level.name)

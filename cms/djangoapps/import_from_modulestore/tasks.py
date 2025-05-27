@@ -20,6 +20,7 @@ from openedx_learning.api.authoring_models import (
     Component,
     ComponentVersion,
     ContainerVersion,
+    DraftChangeLog,
     LearningPackage,
     PublishableEntity,
     PublishableEntityVersion,
@@ -145,7 +146,8 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
         pk=modulestore_import.pk
     )
     for incomplete_import in imports_to_cancel:
-        incomplete_import.task_status.cancel()
+        if incomplete_import.task_status:
+            incomplete_import.task_status.cancel()
     status.increment_completed_steps()
 
     status.set_state(ImportStep.CLEANING)
@@ -189,7 +191,7 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
     now = datetime.now(tz=timezone.utc)
     for staged_content_file_data in staging_api.get_staged_content_static_files(staged.staged_content.id):
         old_path = staged_content_file_data.filename
-        file_data = staging_api.get_staged_content_static_file_data(staged.staged_content, old_path)
+        file_data = staging_api.get_staged_content_static_file_data(staged.staged_content_id, old_path)
         if not file_data:
             log.error(
                 f"Staged content {staged.staged_content.id} included referenced file {old_path}, "
@@ -218,7 +220,7 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
                 source_node=root_node,
                 target=library,
             )
-    except exc:  # pylint: disable=bare-except
+    except Exception as exc:  # pylint: disable=broad-except
         status.fail("@@TODO {exc}")
     status.increment_completed_steps()
 
@@ -239,6 +241,8 @@ def _import_node(
     for the source course/library root block.
     """
     result: PublishableEntityVersion | None = None
+    # The callers of this function should have ensured that task_status is set.
+    created_by: int = staged.modulestore_import.task_status.user_id  # type: ignore[union-attr]
     try:
         container_type = ContainerType.from_source_olx_tag(source_node.tag)
     except ValueError:
@@ -250,19 +254,17 @@ def _import_node(
         # * A component, which we will try to import... although the target package may reject it if it's
         #   an unsupported component type.
         # * A dynamic block (e.g. SplitTest)... as of Teak, these are not supported and will be skipped.
-        if source_node.tag in {"course", "library_root"}:
-            # Course or library root -- skip and just import children.
-            result = None
-        else:
+        if source_node.tag not in {"course", "library"}:
             # Component or dynamic block. Assume component... _import_component will skip it if it's an
             # unsupported component type or a dynamic block.
             # (@@TODO if it's a dynamic block, should we be importing its children...?)
-            result = _import_component(
+            if result_component := _import_component(
                 staged=staged,
                 content_by_filename=content_by_filename,
                 source_node=source_node,
                 target=target,
-            ).publishable_entity
+            ):
+                result = result_component.publishable_entity_version
     else:
         children: list[PublishableEntityVersion] = []
         for child_node in source_node.getchildren():
@@ -273,23 +275,24 @@ def _import_node(
                 target=target,
             ):
                 children.append(child)
-        if staged.modulestore_import.composition_level >= CompositionLevel(container_type):
-            result = _import_container(
+        this_level = CompositionLevel(container_type.value)
+        requested_level = CompositionLevel(staged.modulestore_import.composition_level)
+        if not this_level.is_higher_in_course_hierarchy(requested_level):
+            if result_container := _import_container(
                 staged=staged,
                 source_node=source_node,
                 container_type=container_type,
                 children=children,
                 target=target,
-            ).publishable_entity_version
-        else:
-            result = None
-    if result:
+            ):
+                result = result_container.publishable_entity_version
+    if result and (target_collection := staged.modulestore_import.target_collection):
         # @@TODO - should we do this in bulk for efficiency?
         authoring_api.add_to_collection(
-            staged.modulestore_import.target,
-            staged.modulestore_import.target_collection.key,
-            PublishableEntity.objects.filter(id=result.id),
-            created_by=staged.modulestore_import.task_status.user_id,
+            learning_package_id=staged.modulestore_import.target_id,
+            key=target_collection.key,
+            entities_qset=PublishableEntity.objects.filter(id=result.id),
+            created_by=created_by,
         )
     return result
 
@@ -308,9 +311,10 @@ def _import_container(
     slug: str = source_node.get('url_name')
     title: str = source_node.get('display_name', source_node.tag)
     replace_existing = staged.modulestore_import.replace_existing
-    user_id = staged.modulestore_import.status.user_id
     source_key = staged.modulestore_import.source_key.make_usage_key(source_node.tag, slug)
-    target_key = LibraryContainerLocator(target.library_key, container_type, slug)
+    target_key = LibraryContainerLocator(target.library_key, container_type.value, slug)
+    # The callers of this function should have ensured that task_status is set.
+    created_by: int = staged.modulestore_import.task_status.user_id  # type: ignore[union-attr]
     try:
         container = libraries_api.get_container(target_key)
         container_existed = True
@@ -322,31 +326,34 @@ def _import_container(
             slug=slug,
             title=title,
             created=now,
-            user_id=user_id,
+            user_id=created_by,
         )
     mapping, _ = PublishableEntityMapping.objects.get_or_create(
         source_usage_key=source_key,
         target_package=target.learning_package_id,
-        target_entity=container.publishable_entity_id,
+        target_entity=container.container_pk,
     )
     if container_existed and not replace_existing:
-        return container.versioning.draft
-    container_version = authoring_api.create_next_container_version(
-        container.id,
+        return ContainerVersion.objects.get(
+            container_id=container.container_pk,
+            publishable_entity_version__version_num=container.draft_version_num,
+        )
+    container_version: ContainerVersion = authoring_api.create_next_container_version(
+        container.container_pk,
         title=title,
         entity_rows=[
-            authoring_api.ContainerEntityRow(entity_pk=child, version_pk=None)
+            authoring_api.ContainerEntityRow(entity_pk=child.id, version_pk=None)
             for child in children
         ],
         created=now,
-        created_by=user_id,
+        created_by=created_by,
     )
+    # The callers of this function should have ensured that target_change is set.
+    target_change: DraftChangeLog = staged.modulestore_import.target_change  # type: ignore[assignment]
     PublishableEntityImport.objects.create(
-        modulestore_import=staged.modulestore_import,
+        import_event=staged.modulestore_import,
         resulting_mapping=mapping,
-        resulting_change=staged.modulestore_import.target_change.records.get(
-            entity=container.publishable_entity_id,
-        ),
+        resulting_change=target_change.records.get(entity=container.container_pk),
     )
     return container_version
 
@@ -365,9 +372,11 @@ def _import_component(
     source_usage_key: UsageKey = staged.modulestore_import.source_key.make_usage_key(block_type, block_id)
     replace_existing = staged.modulestore_import.replace_existing
     component_type = authoring_api.get_or_create_component_type("xblock.v1", block_type)
-
+    target_package_id: int = staged.modulestore_import.target_id
+    # The callers of this function should have ensured that task_status is set.
+    created_by: int = staged.modulestore_import.task_status.user_id  # type: ignore[union-attr]
     try:
-        component = authoring_api.get_components(target.learning_package_id).get(
+        component = authoring_api.get_components(target_package_id).get(
             component_type=component_type,
             local_key=block_id,
         )
@@ -384,7 +393,7 @@ def _import_component(
             component_type=component_type,
             local_key=block_id,
             created=datetime.now(tz=timezone.utc),
-            created_by=staged.modulestore_import.task_status.user_id,
+            created_by=created_by,
         )
     mapping, _ = PublishableEntityMapping.objects.get_or_create(
         source_usage_key=source_usage_key,
@@ -393,18 +402,17 @@ def _import_component(
     )
     if component_existed and not replace_existing:
         return component.versioning.draft
-    olx_bytes: bytes = etree.tostring(source_node)
-    olx: str = olx_bytes.decode('utf-8')
+    olx: str = etree.tostring(source_node).decode('utf-8')
     component_version = libraries_api.set_library_block_olx(
         target.library_key.make_usage_key(block_type, block_id),
-        olx_bytes,
+        new_olx_str=olx,
     )
+    # The callers of this function should have ensured that target_change is set.
+    target_change: DraftChangeLog = staged.modulestore_import.target_change  # type: ignore[assignment]
     PublishableEntityImport.objects.create(
-        modulestore_import=staged.modulestore_import,
+        import_event=staged.modulestore_import,
         resulting_mapping=mapping,
-        resulting_change=staged.modulestore_import.target_change.records.get(
-            entity=component.publishable_entity_id,
-        ),
+        resulting_change=target_change.records.get(entity_id=component.publishable_entity_id),
     )
     for filename, content_pk in content_by_filename.items():
         filename_no_ext, _ = os.path.splitext(filename)
