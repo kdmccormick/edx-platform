@@ -79,10 +79,10 @@ class Import(models.Model):
         verbose_name_plural = _('ModuleStore Imports')
 
     def __str__(self):
-        return f'Import #{self.pk}: {self.source_key} → {self.target}'
+        return f'ModuleStore Import #{self.pk}: {self.source_key} → {self.target}'
 
     def __repr__(self):
-        return f"Import(pk={self.pk}, source_key='{self.source_key}', target='{self.target}')"
+        return f"import_from_modulestore.Import(pk={self.pk}, source_key='{self.source_key}', target='{self.target}')"
 
     #def fail(self, message: str):
     #    """

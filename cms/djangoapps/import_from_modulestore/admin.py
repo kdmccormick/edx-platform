@@ -14,7 +14,7 @@ from .models import Import, PublishableEntityImport, PublishableEntityMapping
 from .api import start_import_from_modulestore_task
 
 
-@admin.action(description="Start new import task")
+@admin.action(description="Start import task with these parameters")
 def start_new_import_task(modeladmin: ImportAdmin, request, queryset: QuerySet[Import]):
     """
     todo
@@ -24,6 +24,14 @@ def start_new_import_task(modeladmin: ImportAdmin, request, queryset: QuerySet[I
         return
     num_started = len(queryset)
     for import_model in queryset:
+        if import_model.task_status:
+            import_model = Import.objects.create(
+                source_key=import_model.source_key,
+                composition_level=import_model.composition_level,
+                replace_existing=import_model.replace_existing,
+                target=import_model.target,
+                target_collection=import_model.target_collection,
+            )
         start_import_from_modulestore_task(request.user, import_model)
     modeladmin.message_user(request, f"Started {num_started} import tasks", level=messages.SUCCESS)
 
@@ -34,6 +42,7 @@ class ImportAdmin(admin.ModelAdmin):
     """
 
     list_display = (
+        'id',
         'source_key',
         'composition_level',
         'replace_existing',

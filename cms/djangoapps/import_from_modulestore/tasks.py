@@ -113,6 +113,8 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
     except Import.DoesNotExist:
         status.fail(f"Modulestore Import object with id={import_pk} does not exist")
         return
+    if modulestore_import.task_status:
+        status.fail(f"Import has already been executed: {modulestore_import!r}")
     modulestore_import.task_status = self.status
     modulestore_import.save(update_fields=['task_status'])
     source_context_key: LearningContextKey = modulestore_import.source_key
