@@ -214,11 +214,10 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
     status.increment_completed_steps()
 
     status.set_state(ImportStep.IMPORTING_STRUCTURE)
-
     class Nope(Exception): pass
     try:
         with authoring_api.bulk_draft_changes_for(modulestore_import.target.id) as change_log:
-            _import_node(
+            import_result = _import_node(
                 modulestore_import=modulestore_import,
                 content_by_filename=content_by_filename,
                 source_node=root_node,
@@ -232,6 +231,53 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
     modulestore_import.target_change = change_log
     status.increment_completed_steps()
 
+    status.set_state(ImportStep.MAPPING_OLD_TO_NEW)
+    PublishableEntityMapping.objects.bulk_create(
+        [
+            *([import_result.imported_node.entity_mapping] if import_result.imported_node else []),
+            import_result.imported_descendents
+        ],
+        ignore_conflicts=True
+    )
+    PublishableEntityImport.objects.create(
+        modulestore_import=modulestore_import,
+        resulting_mapping=mapping,
+        resulting_change=target_change.records.get(entity_id=result.entity_id),
+    )
+    if target_collection := modulestore_import.target_collection:
+        authoring_api.add_to_collection(
+            learning_package_id=modulestore_import.target_id,
+            key=target_collection.key,
+            entities_qset=PublishableEntity.objects.filter(
+                id__in=[ev.entity_id for ev in imported]
+            ),
+            created_by=status.user_id,
+        )
+    status.increment_completed_steps()
+
+
+from dataclasses import dataclass
+
+@dataclass
+class _PublishableEntityVersionAndMapping:
+    """
+    The Version of an imported entity, together with the (unsaved) mapping to its source.
+    """
+    entity_version: PublishableEntityVersion  # Saved to the DB.
+    unsaved_entity_mapping: PublishableEntityMapping  # Not saved to the DB -- we will bulk_create later.
+
+@dataclass
+class _ImportNodeResult:
+    """
+    A one-off dataclass to capture the result of _import_node.
+    """
+    # The root imported node, or None if we did not import that node.
+    # Note that even if this is None, we may have imported descendents this happens, for example,
+    # if the node in question is above the `compoisition_level`.
+    imported_node: _PublishableEntityVersionAndMapping | None
+    # All the imported descendent nodes.
+    imported_descendents: list[_PublishableEntityVersionAndMapping]
+
 
 def _import_node(
     modulestore_import: Import,
@@ -241,15 +287,9 @@ def _import_node(
     target_change: DraftChangeLog,
     created_at: datetime,
     created_by: int,
-) -> PublishableEntityVersion | None:
+) -> _ImportNodeResult:
     """
     @@TODO
-
-    Returns: The entity version corresponding to this particular `source_node`, or None if
-    the node is not to be represented in the target package. IMPORTANT: Even if the result is
-    None, descendents of `source_node` may have been imported into the target package. This
-    will happen for any container which is above the specific `CompositionLevel`, as well as
-    for the source course/library root block.
     """
     # The OLX tag will map to one of the following...
     #   * A wiki tag                  --> Ignore
@@ -280,10 +320,11 @@ def _import_node(
         requested_level = CompositionLevel(modulestore_import.composition_level)
         import_node = not this_level.is_higher_in_course_hierarchy(requested_level)
         import_children = True
-    children: list[PublishableEntityVersion] = []
+    children: list[_PublishableEntityVersionAndMapping] = []
+    descendents: list[_PublishableEntityVersionAndMapping] = []
     if import_children:
         for child_node in source_node.getchildren():
-            if child := _import_node(
+            child_result = _import_node(
                 modulestore_import=modulestore_import,
                 content_by_filename=content_by_filename,
                 source_node=child_node,
@@ -291,16 +332,19 @@ def _import_node(
                 target_change=target_change,
                 created_by=created_by,
                 created_at=created_at,
-            ):
-                children.append(child)
-    result: PublishableEntityVersion | None = None
+            )
+            descendents += child_result.descendents
+            if imported_child := child_result.imported_node:
+                children.append(imported_child)
+                descendents.append(imported_child)
+    imported_node: PublishableEntityMapping | None
     if import_node:
         if not (source_block_id := source_node.get('url_name')):
             # @@TODO fail more gracefully and/or have a fallback
             raise ValueError(f"node is missing url_name: {etree.tostring(source_node)}")
         source_usage_key: UsageKey = modulestore_import.source_key.make_usage_key(source_node.tag, source_block_id)
-        if container_type:
-            if result_container := _import_container(
+        imported_entity_ver = (
+            _import_container(
                 source_key=source_usage_key,
                 container_type=container_type,
                 title=source_node.get('display_name', source_block_id),
@@ -309,10 +353,9 @@ def _import_node(
                 replace_existing=modulestore_import.replace_existing,
                 created_by=created_by,
                 created_at=created_at,
-            ):
-                result = result_container.publishable_entity_version
-        else:
-            if result_component := _import_component(
+            )
+            if container_type
+            else _import_component(
                 content_by_filename=content_by_filename,
                 source_key=source_usage_key,
                 olx=etree.tostring(source_node).decode('utf-8'),
@@ -320,28 +363,17 @@ def _import_node(
                 replace_existing=modulestore_import.replace_existing,
                 created_by=created_by,
                 created_at=created_at,
-            ):
-                result = result_component.publishable_entity_version
-    if result:
-        mapping, _ = PublishableEntityMapping.objects.get_or_create(
-            source_usage_key=source_usage_key,
-            target_package_id=modulestore_import.target_id,
-            target_entity_id=result.entity_id,
-        )
-        PublishableEntityImport.objects.create(
-            modulestore_import=modulestore_import,
-            resulting_mapping=mapping,
-            resulting_change=target_change.records.get(entity_id=result.entity_id),
-        )
-        if target_collection := modulestore_import.target_collection:
-            # @@TODO - should we do this in bulk for efficiency?
-            authoring_api.add_to_collection(
-                learning_package_id=modulestore_import.target_id,
-                key=target_collection.key,
-                entities_qset=PublishableEntity.objects.filter(id=result.entity_id),
-                created_by=created_by,
             )
-    return result
+        )
+        imported_node = _PublishableEntityVersionAndMapping(
+            entity_version=imported_entity_ver,
+            unsaved_entity_mapping=PublishableEntityMapping.objects.build(
+                source_usage_key=source_usage_key,
+                target_package_id=modulestore_import.target_id,
+                target_entity_id=imported_entity_ver.entity_id,
+            )
+        )
+    return _ImportNodeResult(imported_node=imported_node, imported_descendents=descendents)
 
 
 def _import_container(
@@ -353,7 +385,7 @@ def _import_container(
     replace_existing: bool,
     created_by: int,
     created_at: datetime,
-) -> ContainerVersion:
+) -> PublishableEntityVersion:
     """
     @@TODO
     """
@@ -372,11 +404,11 @@ def _import_container(
             user_id=created_by,
         )
     if container_existed and not replace_existing:
-        return ContainerVersion.objects.get(
-            container_id=container.container_pk,
-            publishable_entity_version__version_num=container.draft_version_num,
+        return PublishableEntityVersion.objects.get(
+            entity_id=container.publishable_entity_id,
+            version_num=container.version_num,
         )
-    container_version: ContainerVersion = authoring_api.create_next_container_version(
+    return authoring_api.create_next_container_version(
         container.container_pk,
         title=title,
         entity_rows=[
@@ -385,8 +417,7 @@ def _import_container(
         ],
         created=created_at,
         created_by=created_by,
-    )
-    return container_version
+    ).publishable_entity_version
 
 
 def _import_component(
@@ -397,7 +428,7 @@ def _import_component(
     replace_existing: bool,
     created_by: int,
     created_at: datetime,
-) -> ComponentVersion | None:
+) -> PublishableEntityVersion | None:
     """
     Create a block in a library (@@TODO) from a staged content block.
     """
@@ -427,7 +458,7 @@ def _import_component(
             created_by=created_by,
         )
     if component_existed and not replace_existing:
-        return component.versioning.draft
+        return component.versioning.draft.publishable_entity_version
     component_version = libraries_api.set_library_block_olx(
         # mypy thinks LibraryUsageLocatorV2 is abstract. It's not.
         LibraryUsageLocatorV2(  # type: ignore[abstract]
@@ -444,4 +475,4 @@ def _import_component(
             authoring_api.create_component_version_content(component_version.pk, content_pk, key=filename)
         except IntegrityError:
             pass  # Content already exists
-    return component_version
+    return component_version.publishable_entity_version
