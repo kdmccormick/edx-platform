@@ -3,6 +3,7 @@ Tasks for course to library import.
 """
 import mimetypes
 import os
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
 
@@ -57,6 +58,8 @@ class ImportStep(Enum):
     PARSING = 'Parsing staged OLX'
     IMPORTING_ASSETS = 'Importing staged files and resources'
     IMPORTING_STRUCTURE = 'Importing staged content structure'
+    MAPPING_OLD_TO_NEW = 'Saving map of source content to target content'
+    POPULTING_COLLECTION = 'Assigning imported items to the specified collection'
 
 
 class ImportFromModulestoreTask(UserTask):
@@ -232,50 +235,64 @@ def import_from_modulestore(self, user_id: int, import_pk: int) -> None:
     status.increment_completed_steps()
 
     status.set_state(ImportStep.MAPPING_OLD_TO_NEW)
-    PublishableEntityMapping.objects.bulk_create(
-        [
-            *([import_result.imported_node.entity_mapping] if import_result.imported_node else []),
-            import_result.imported_descendents
-        ],
-        ignore_conflicts=True
+    imported_mappings: list[PublishableEntityMapping] = [
+        # Get a list of old<->new mappings from the list of:
+        evm.entity_mapping_unsaved for evn in [
+            # the root node (if imported)
+            *([import_result.imported_node] if import_result.imported_node else []),
+            # plus all the imported descendents.
+            *import_result.imported_descendents,
+        ]
+    ]
+    PublishableEntityMapping.objects.bulk_create(imported_mappings, ignore_conflicts=True)
+    PublishableEntityImport.objects.bulk_create(
+        PublishableEntityImport(
+            modulestore_import=modulestore_import,
+            resulting_mapping=mapping,
+            resulting_change=target_change.records.get(entity_id=result.entity_id),
+        ),
     )
-    PublishableEntityImport.objects.create(
-        modulestore_import=modulestore_import,
-        resulting_mapping=mapping,
-        resulting_change=target_change.records.get(entity_id=result.entity_id),
-    )
+    status.increment_completed_steps()
+
+    status.set_state(ImportStep.POPULATING_COLLECTION)
     if target_collection := modulestore_import.target_collection:
         authoring_api.add_to_collection(
             learning_package_id=modulestore_import.target_id,
             key=target_collection.key,
             entities_qset=PublishableEntity.objects.filter(
-                id__in=[ev.entity_id for ev in imported]
+                id__in=[mapping.target_entity_id for mapping in imported_mappings]
             ),
             created_by=status.user_id,
         )
     status.increment_completed_steps()
 
 
-from dataclasses import dataclass
-
 @dataclass
 class _PublishableEntityVersionAndMapping:
     """
-    The Version of an imported entity, together with the (unsaved) mapping to its source.
+    The Version of an imported entity, together with the (unsaved) Mapping from its source.
+
+    We need to pass this structure around in order to simultaneously capture (a) the precise version
+    which was imported, and (b) the version-agnostic mapping from the old block to the new entity.
     """
     entity_version: PublishableEntityVersion  # Saved to the DB.
-    unsaved_entity_mapping: PublishableEntityMapping  # Not saved to the DB -- we will bulk_create later.
+    entity_mapping_unsaved: PublishableEntityMapping  # Not saved to the DB -- we will bulk_create later.
+
 
 @dataclass
 class _ImportNodeResult:
     """
-    A one-off dataclass to capture the result of _import_node.
+    The result of _import_node, including both the immediately imported node, and all its descendents.
+
+    Note: imported_node (i.e., the root result) may be None even when we *do* have a list of
+    imported_descendents. This happens, for example, if imported_node would have been above the
+    requested composition_level, but has descendents which were at or below the requested
+    composition_level.
+
+    Note: "descendents" refers to a flattened list of a node's children, and all those childrens'
+    children, and so on all the way down. Components have zero descendents; containers have zero or more.
     """
-    # The root imported node, or None if we did not import that node.
-    # Note that even if this is None, we may have imported descendents this happens, for example,
-    # if the node in question is above the `compoisition_level`.
     imported_node: _PublishableEntityVersionAndMapping | None
-    # All the imported descendent nodes.
     imported_descendents: list[_PublishableEntityVersionAndMapping]
 
 
@@ -302,7 +319,7 @@ def _import_node(
     #                                     do not support in libraries as of Teak.
     import_node: bool
     import_children: bool
-    container_type: ContainerType | None  # if None, import as Component
+    container_type: ContainerType | None  # if None, it's a Component
     if source_node.tag == "wiki":
         return None
     try:
@@ -367,7 +384,7 @@ def _import_node(
         )
         imported_node = _PublishableEntityVersionAndMapping(
             entity_version=imported_entity_ver,
-            unsaved_entity_mapping=PublishableEntityMapping.objects.build(
+            entity_mapping_unsaved=PublishableEntityMapping.objects.build(
                 source_usage_key=source_usage_key,
                 target_package_id=modulestore_import.target_id,
                 target_entity_id=imported_entity_ver.entity_id,
