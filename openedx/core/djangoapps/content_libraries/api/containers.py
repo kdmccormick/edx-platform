@@ -37,6 +37,7 @@ from openedx_learning.api.authoring_models import (
     SectionVersion,
 )
 from openedx.core.djangoapps.content_libraries.api.collections import library_collection_locator
+from openedx.core.djangoapps.content_tagging.api import get_object_tag_counts
 
 from openedx.core.djangoapps.xblock.api import get_component_from_usage_key
 
@@ -163,6 +164,7 @@ class ContainerMetadata(PublishableItem):
             last_draft_created_by = draft.publishable_entity_version.created_by.username
         else:
             last_draft_created_by = ""
+        tags = get_object_tag_counts(str(container_key), count_implicit=True)
 
         return cls(
             container_key=container_key,
@@ -179,6 +181,7 @@ class ContainerMetadata(PublishableItem):
             last_draft_created=last_draft_created,
             last_draft_created_by=last_draft_created_by,
             has_unpublished_changes=authoring_api.contains_unpublished_changes(container.pk),
+            tags_count=tags.get(str(container_key), 0),
             collections=associated_collections or [],
         )
 
