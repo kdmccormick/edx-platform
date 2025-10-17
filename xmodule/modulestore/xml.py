@@ -51,18 +51,201 @@ etree.set_default_parser(edx_xml_parser)
 log = logging.getLogger(__name__)
 
 
-class XMLParsingModuleStoreRuntime(ModuleStoreRuntime):
+class XMLImportingModuleStoreRuntime(ModuleStoreRuntime):
     """
-    ModuleStoreRuntime with some tweaks for XML processing.
+    A runtime for importing OLX into ModuleStore.
     """
-    def __init__(self, process_xml, **kwargs):
+    def __init__(self, xmlstore, course_id, course_dir,  # lint-amnesty, pylint: disable=too-many-statements
+                 error_tracker,
+                 load_error_blocks=True, target_course_id=None, **kwargs):
         """
-        process_xml: Takes an xml string, and returns a XModuleDescriptor
-            created from that xml
+        A class that handles loading from xml to ModuleStore.  Does some munging to ensure that
+        all elements have unique slugs.
+
+        xmlstore: the XMLModuleStore to store the loaded blocks in
+        """
+        self.unnamed = defaultdict(int)  # category -> num of new url_names for that category
+        self.used_names = defaultdict(set)  # category -> set of used url_names
+
+        # Adding the course_id as passed in for later reference rather than
+        # having to recombine the org/course/url_name
+        self.course_id = course_id
+        self.course_dir = course_dir
+        self.load_error_blocks = load_error_blocks
+        self.modulestore = xmlstore
+        render_template = lambda template, context: ''
+
+        # TODO (vshnayder): we are somewhat architecturally confused in the loading code:
+        # load_item should actually be get_instance, because it expects the course-specific
+        # policy to be loaded.  For now, just add the course_id here...
+        def load_item(usage_key, for_parent=None):
+            """Return the XBlock for the specified location"""
+            return xmlstore.get_item(usage_key, for_parent=for_parent)
+        resources_fs = OSFS(xmlstore.data_dir / course_dir)
+
+        id_manager = CourseImportLocationManager(course_id, target_course_id)
+
+        super().__init__(
+            load_item=load_item,
+            resources_fs=resources_fs,
+            render_template=render_template,
+            error_tracker=error_tracker,
+            id_generator=id_manager,
+            id_reader=id_manager,
+            **kwargs
+        )
+
+    def process_xml(self, xml):  # lint-amnesty, pylint: disable=too-many-statements
+        """
+        Takes an xml string, and returns a XBlock created from that xml.
         """
 
-        super().__init__(**kwargs)
-        self.process_xml = process_xml
+        def make_name_unique(xml_data):
+            """
+            Make sure that the url_name of xml_data is unique.  If a previously loaded
+            unnamed descriptor stole this element's url_name, create a new one.
+
+            Removes 'slug' attribute if present, and adds or overwrites the 'url_name' attribute.
+            """
+            # VS[compat]. Take this out once course conversion is done (perhaps leave the uniqueness check)
+
+            # tags that really need unique names--they store (or should store) state.
+            need_uniq_names = ('problem', 'sequential', 'video', 'course', 'chapter',
+                               'poll_question', 'vertical')
+
+            attr = xml_data.attrib
+            tag = xml_data.tag
+            id = lambda x: x  # lint-amnesty, pylint: disable=redefined-builtin
+            # Things to try to get a name, in order  (key, cleaning function, remove key after reading?)
+            lookups = [('url_name', id, False),
+                       ('slug', id, True),
+                       ('name', BlockUsageLocator.clean, False),
+                       ('display_name', BlockUsageLocator.clean, False)]
+
+            url_name = None
+            for key, clean, remove in lookups:
+                if key in attr:
+                    url_name = clean(attr[key])
+                    if remove:
+                        del attr[key]
+                    break
+
+            def looks_like_fallback(url_name):
+                """Does this look like something that came from fallback_name()?"""
+                return (url_name is not None
+                        and url_name.startswith(tag)
+                        and re.search('[0-9a-fA-F]{12}$', url_name))
+
+            def fallback_name(orig_name=None):
+                """Return the fallback name for this block.  This is a function instead of a variable
+                because we want it to be lazy."""
+                if looks_like_fallback(orig_name):
+                    # We're about to re-hash, in case something changed, so get rid of the tag_ and hash
+                    orig_name = orig_name[len(tag) + 1:-12]
+                # append the hash of the content--the first 12 bytes should be plenty.
+                orig_name = "_" + orig_name if orig_name not in (None, "") else ""
+                xml_bytes = xml if isinstance(xml, bytes) else xml.encode('utf-8')
+                return tag + orig_name + "_" + hashlib.sha1(xml_bytes).hexdigest()[:12]
+
+            # Fallback if there was nothing we could use:
+            if url_name is None or url_name == "":
+                url_name = fallback_name()
+                # Don't log a warning--we don't need this in the log.  Do
+                # put it in the error tracker--content folks need to see it.
+
+                if tag in need_uniq_names:
+                    self.error_tracker(
+                        "PROBLEM: no name of any kind specified for {tag}.  Student "
+                        "state will not be properly tracked for this block.  Problem xml:"
+                        " '{xml}...'".format(tag=tag, xml=xml[:100])
+                    )
+                else:
+                    # TODO (vshnayder): We may want to enable this once course repos are cleaned up.
+                    # (or we may want to give up on the requirement for non-state-relevant issues...)
+                    # error_tracker("WARNING: no name specified for block. xml='{0}...'".format(xml[:100]))
+                    pass
+
+            # Make sure everything is unique
+            if url_name in self.used_names[tag]:
+                # Always complain about blocks that store state.  If it
+                # doesn't store state, don't complain about things that are
+                # hashed.
+                if tag in need_uniq_names:
+                    msg = ("Non-unique url_name in xml.  This may break state tracking for content."
+                           "  url_name={}.  Content={}".format(url_name, xml[:100]))
+                    self.error_tracker("PROBLEM: " + msg)
+                    log.warning(msg)
+                    # Just set name to fallback_name--if there are multiple things with the same fallback name,
+                    # they are actually identical, so it's fragile, but not immediately broken.
+
+                    # TODO (vshnayder): if the tag is a pointer tag, this will
+                    # break the content because we won't have the right link.
+                    # That's also a legitimate attempt to reuse the same content
+                    # from multiple places.  Once we actually allow that, we'll
+                    # need to update this to complain about non-unique names for
+                    # definitions, but allow multiple uses.
+                    url_name = fallback_name(url_name)
+
+            self.used_names[tag].add(url_name)
+            xml_data.set('url_name', url_name)
+
+        try:
+            xml_data = etree.fromstring(xml)
+            make_name_unique(xml_data)
+            block = self.xblock_from_node(
+                xml_data,
+                None,  # parent_id
+                self.id_manager,
+            )
+        except Exception as err:  # pylint: disable=broad-except
+            if not self.load_error_blocks:
+                raise
+
+            # Didn't load properly.  Fall back on loading as an error
+            # block.  This should never error due to formatting.
+
+            msg = "Error loading from xml. %s"
+            log.warning(
+                msg,
+                str(err)[:200],
+                # Normally, we don't want lots of exception traces in our logs from common
+                # content problems.  But if you're debugging the xml loading code itself,
+                # uncomment the next line.
+                # exc_info=True
+            )
+
+            msg = msg % (str(err)[:200])
+
+            self.error_tracker(msg)
+            err_msg = msg + "\n" + exc_info_to_str(sys.exc_info())
+            block = ErrorBlock.from_xml(
+                xml,
+                self,
+                self.id_manager,
+                err_msg
+            )
+
+        block.data_dir = self.course_dir
+
+        if block.scope_ids.usage_id in self.modulestore.modules[self.course_id]:
+            # keep the parent pointer if any but allow everything else to overwrite
+            other_copy = self.modulestore.modules[self.course_id][block.scope_ids.usage_id]
+            block.parent = other_copy.parent
+            if block != other_copy:
+                log.warning("%s has more than one definition", block.scope_ids.usage_id)
+        self.xmlstore.modules[self.course_id][block.scope_ids.usage_id] = block
+
+        if block.has_children:
+            for child in block.get_children():
+                # parent is alphabetically least
+                if child.parent is None or child.parent > block.scope_ids.usage_id:
+                    child.parent = block.location
+                    child.save()
+
+        # After setting up the block, save any changes that we have
+        # made to attributes on the block to the underlying KeyValueStore.
+        block.save()
+        return block
 
     def _usage_id_from_node(self, node, parent_id):
         """Create a new usage id from an XML dom node.
@@ -163,203 +346,6 @@ class XMLParsingModuleStoreRuntime(ModuleStoreRuntime):
                         assert isinstance(subvalue, str)
                         field_value[key] = self._make_usage_key(course_key, subvalue)
                     setattr(xblock, field.name, field_value)
-
-
-class XMLImportingModuleStoreRuntime(XMLParsingModuleStoreRuntime):  # pylint: disable=abstract-method
-    """
-    A runtime for importing OLX into ModuleStore.
-    """
-    def __init__(self, xmlstore, course_id, course_dir,  # lint-amnesty, pylint: disable=too-many-statements
-                 error_tracker,
-                 load_error_blocks=True, target_course_id=None, **kwargs):
-        """
-        A class that handles loading from xml to ModuleStore.  Does some munging to ensure that
-        all elements have unique slugs.
-
-        xmlstore: the XMLModuleStore to store the loaded blocks in
-        """
-        self.unnamed = defaultdict(int)  # category -> num of new url_names for that category
-        self.used_names = defaultdict(set)  # category -> set of used url_names
-
-        # Adding the course_id as passed in for later reference rather than
-        # having to recombine the org/course/url_name
-        self.course_id = course_id
-        self.load_error_blocks = load_error_blocks
-        self.modulestore = xmlstore
-
-        def process_xml(xml):  # lint-amnesty, pylint: disable=too-many-statements
-            """Takes an xml string, and returns a XBlock created from
-            that xml.
-            """
-
-            def make_name_unique(xml_data):
-                """
-                Make sure that the url_name of xml_data is unique.  If a previously loaded
-                unnamed descriptor stole this element's url_name, create a new one.
-
-                Removes 'slug' attribute if present, and adds or overwrites the 'url_name' attribute.
-                """
-                # VS[compat]. Take this out once course conversion is done (perhaps leave the uniqueness check)
-
-                # tags that really need unique names--they store (or should store) state.
-                need_uniq_names = ('problem', 'sequential', 'video', 'course', 'chapter',
-                                   'poll_question', 'vertical')
-
-                attr = xml_data.attrib
-                tag = xml_data.tag
-                id = lambda x: x  # lint-amnesty, pylint: disable=redefined-builtin
-                # Things to try to get a name, in order  (key, cleaning function, remove key after reading?)
-                lookups = [('url_name', id, False),
-                           ('slug', id, True),
-                           ('name', BlockUsageLocator.clean, False),
-                           ('display_name', BlockUsageLocator.clean, False)]
-
-                url_name = None
-                for key, clean, remove in lookups:
-                    if key in attr:
-                        url_name = clean(attr[key])
-                        if remove:
-                            del attr[key]
-                        break
-
-                def looks_like_fallback(url_name):
-                    """Does this look like something that came from fallback_name()?"""
-                    return (url_name is not None
-                            and url_name.startswith(tag)
-                            and re.search('[0-9a-fA-F]{12}$', url_name))
-
-                def fallback_name(orig_name=None):
-                    """Return the fallback name for this block.  This is a function instead of a variable
-                    because we want it to be lazy."""
-                    if looks_like_fallback(orig_name):
-                        # We're about to re-hash, in case something changed, so get rid of the tag_ and hash
-                        orig_name = orig_name[len(tag) + 1:-12]
-                    # append the hash of the content--the first 12 bytes should be plenty.
-                    orig_name = "_" + orig_name if orig_name not in (None, "") else ""
-                    xml_bytes = xml if isinstance(xml, bytes) else xml.encode('utf-8')
-                    return tag + orig_name + "_" + hashlib.sha1(xml_bytes).hexdigest()[:12]
-
-                # Fallback if there was nothing we could use:
-                if url_name is None or url_name == "":
-                    url_name = fallback_name()
-                    # Don't log a warning--we don't need this in the log.  Do
-                    # put it in the error tracker--content folks need to see it.
-
-                    if tag in need_uniq_names:
-                        error_tracker("PROBLEM: no name of any kind specified for {tag}.  Student "
-                                      "state will not be properly tracked for this block.  Problem xml:"
-                                      " '{xml}...'".format(tag=tag, xml=xml[:100]))
-                    else:
-                        # TODO (vshnayder): We may want to enable this once course repos are cleaned up.
-                        # (or we may want to give up on the requirement for non-state-relevant issues...)
-                        # error_tracker("WARNING: no name specified for block. xml='{0}...'".format(xml[:100]))
-                        pass
-
-                # Make sure everything is unique
-                if url_name in self.used_names[tag]:
-                    # Always complain about blocks that store state.  If it
-                    # doesn't store state, don't complain about things that are
-                    # hashed.
-                    if tag in need_uniq_names:
-                        msg = ("Non-unique url_name in xml.  This may break state tracking for content."
-                               "  url_name={}.  Content={}".format(url_name, xml[:100]))
-                        error_tracker("PROBLEM: " + msg)
-                        log.warning(msg)
-                        # Just set name to fallback_name--if there are multiple things with the same fallback name,
-                        # they are actually identical, so it's fragile, but not immediately broken.
-
-                        # TODO (vshnayder): if the tag is a pointer tag, this will
-                        # break the content because we won't have the right link.
-                        # That's also a legitimate attempt to reuse the same content
-                        # from multiple places.  Once we actually allow that, we'll
-                        # need to update this to complain about non-unique names for
-                        # definitions, but allow multiple uses.
-                        url_name = fallback_name(url_name)
-
-                self.used_names[tag].add(url_name)
-                xml_data.set('url_name', url_name)
-
-            try:
-                xml_data = etree.fromstring(xml)
-                make_name_unique(xml_data)
-                block = self.xblock_from_node(
-                    xml_data,
-                    None,  # parent_id
-                    id_manager,
-                )
-            except Exception as err:  # pylint: disable=broad-except
-                if not self.load_error_blocks:
-                    raise
-
-                # Didn't load properly.  Fall back on loading as an error
-                # block.  This should never error due to formatting.
-
-                msg = "Error loading from xml. %s"
-                log.warning(
-                    msg,
-                    str(err)[:200],
-                    # Normally, we don't want lots of exception traces in our logs from common
-                    # content problems.  But if you're debugging the xml loading code itself,
-                    # uncomment the next line.
-                    # exc_info=True
-                )
-
-                msg = msg % (str(err)[:200])
-
-                self.error_tracker(msg)
-                err_msg = msg + "\n" + exc_info_to_str(sys.exc_info())
-                block = ErrorBlock.from_xml(
-                    xml,
-                    self,
-                    id_manager,
-                    err_msg
-                )
-
-            block.data_dir = course_dir
-
-            if block.scope_ids.usage_id in xmlstore.modules[course_id]:
-                # keep the parent pointer if any but allow everything else to overwrite
-                other_copy = xmlstore.modules[course_id][block.scope_ids.usage_id]
-                block.parent = other_copy.parent
-                if block != other_copy:
-                    log.warning("%s has more than one definition", block.scope_ids.usage_id)
-            xmlstore.modules[course_id][block.scope_ids.usage_id] = block
-
-            if block.has_children:
-                for child in block.get_children():
-                    # parent is alphabetically least
-                    if child.parent is None or child.parent > block.scope_ids.usage_id:
-                        child.parent = block.location
-                        child.save()
-
-            # After setting up the block, save any changes that we have
-            # made to attributes on the block to the underlying KeyValueStore.
-            block.save()
-            return block
-
-        render_template = lambda template, context: ''
-
-        # TODO (vshnayder): we are somewhat architecturally confused in the loading code:
-        # load_item should actually be get_instance, because it expects the course-specific
-        # policy to be loaded.  For now, just add the course_id here...
-        def load_item(usage_key, for_parent=None):
-            """Return the XBlock for the specified location"""
-            return xmlstore.get_item(usage_key, for_parent=for_parent)
-
-        resources_fs = OSFS(xmlstore.data_dir / course_dir)
-
-        id_manager = CourseImportLocationManager(course_id, target_course_id)
-
-        super().__init__(
-            load_item=load_item,
-            resources_fs=resources_fs,
-            render_template=render_template,
-            error_tracker=error_tracker,
-            process_xml=process_xml,
-            id_generator=id_manager,
-            id_reader=id_manager,
-            **kwargs
-        )
 
     # pylint: disable=keyword-arg-before-vararg
     def construct_xblock_from_class(self, cls, scope_ids, field_data=None, *args, **kwargs):
