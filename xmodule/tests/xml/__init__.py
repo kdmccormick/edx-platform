@@ -11,11 +11,11 @@ from lxml import etree
 from opaque_keys.edx.keys import CourseKey
 from xblock.runtime import DictKeyValueStore, KvsFieldData
 
-from xmodule.modulestore.xml import XMLParsingModuleStoreRuntime, CourseLocationManager
+from xmodule.modulestore.xml import XMLImportingModuleStoreRuntime, CourseLocationManager
 from xmodule.x_module import policy_key
 
 
-class InMemoryModuleStoreRuntime(XMLParsingModuleStoreRuntime):  # pylint: disable=abstract-method
+class InMemoryModuleStoreRuntime(XMLImportingModuleStoreRuntime):  # pylint: disable=abstract-method
     """
     The simplest possible ModuleStoreRuntime
     """
