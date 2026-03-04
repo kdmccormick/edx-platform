@@ -3048,3 +3048,58 @@ ENABLE_CONTENT_LIBRARIES =  True
 # .. toggle_creation_date: 2021-08-17
 # .. toggle_tickets: https://github.com/openedx/edx-platform/pull/27411
 ENABLE_CONTENT_LIBRARIES_LTI_TOOL = False
+
+# .. setting_name: COURSEWARE_SEARCH_INCLUSION_DATE
+# .. setting_default: None
+# .. setting_description: Excludes courses with a start date before this value from courseware search.
+COURSEWARE_SEARCH_INCLUSION_DATE: str | None = None
+
+# .. toggle_name: DISPLAY_ANALYTICS_ENROLLMENTS
+# .. toggle_implementation: DjangoSetting
+# .. toggle_default: False
+# .. toggle_description: Shows enrollment counts on the instructor dashboard.
+# .. toggle_use_cases: open_edx
+# .. toggle_creation_date: 2014-01-01
+# .. toggle_tickets: https://github.com/openedx/openedx-platform/issues/38093
+DISPLAY_ANALYTICS_ENROLLMENTS = False
+
+# .. toggle_name: ENABLE_AUTO_GENERATED_USERNAME
+# .. toggle_implementation: DjangoSetting
+# .. toggle_default: False
+# .. toggle_description: Enables automatic username generation.
+# .. toggle_use_cases: open_edx
+# .. toggle_creation_date: 2014-01-01
+# .. toggle_tickets: https://github.com/openedx/openedx-platform/issues/38093
+ENABLE_AUTO_GENERATED_USERNAME = False
+
+# .. toggle_name: ENABLE_FINANCIAL_ASSISTANCE_FORM
+# .. toggle_implementation: DjangoSetting
+# .. toggle_default: False
+# .. toggle_description: Enables the financial assistance application form.
+# .. toggle_use_cases: open_edx
+# .. toggle_creation_date: 2014-01-01
+# .. toggle_tickets: https://github.com/openedx/openedx-platform/issues/38093
+ENABLE_FINANCIAL_ASSISTANCE_FORM = False
+
+# .. toggle_name: ENABLE_NOTICES
+# .. toggle_implementation: DjangoSetting
+# .. toggle_default: False
+# .. toggle_description: Enables the Notices plugin, which can redirect users from the dashboard.
+# .. toggle_use_cases: open_edx
+# .. toggle_creation_date: 2014-01-01
+# .. toggle_tickets: https://github.com/openedx/openedx-platform/issues/38093
+ENABLE_NOTICES = False
+
+# .. toggle_name: ENABLE_PROCTORED_EXAMS
+# .. toggle_implementation: DjangoSetting
+# .. toggle_default: False
+# .. toggle_description: Enables proctored exam support.
+# .. toggle_use_cases: open_edx
+# .. toggle_creation_date: 2014-01-01
+# .. toggle_tickets: https://github.com/openedx/openedx-platform/issues/38093
+ENABLE_PROCTORED_EXAMS = False
+
+# .. setting_name: MAX_ENROLLMENT_INSTR_BUTTONS
+# .. setting_default: False
+# .. setting_description: Maximum enrollment count for a course to show the instructor gradebook.
+MAX_ENROLLMENT_INSTR_BUTTONS = False
