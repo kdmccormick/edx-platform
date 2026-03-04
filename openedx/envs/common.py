@@ -3107,3 +3107,11 @@ MAX_ENROLLMENT_INSTR_BUTTONS = False
 # If set to True, new Studio users won't be able to author courses unless
 # an Open edX admin has added them to the course creator group.
 ENABLE_CREATOR_GROUP = True
+
+# .. toggle_name: settings.IN_CONTEXT_DISCUSSION_ENABLED_DEFAULT
+# .. toggle_implementation: DjangoSetting
+# .. toggle_default: True
+# .. toggle_description: Set to False to disable in-context discussion for units by default.
+# .. toggle_use_cases: open_edx
+# .. toggle_creation_date: 2024-09-02
+IN_CONTEXT_DISCUSSION_ENABLED_DEFAULT = True

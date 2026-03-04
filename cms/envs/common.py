@@ -221,14 +221,6 @@ ENABLE_SEND_XBLOCK_LIFECYCLE_EVENTS_OVER_BUS = False
 # .. toggle_tickets: https://github.com/openedx/edx-platform/pull/33952
 ENABLE_HIDE_FROM_TOC_UI = False
 
-# .. toggle_name: settings.IN_CONTEXT_DISCUSSION_ENABLED_DEFAULT
-# .. toggle_implementation: DjangoSetting
-# .. toggle_default: True
-# .. toggle_description: Set to False to disable in-context discussion for units by default.
-# .. toggle_use_cases: open_edx
-# .. toggle_creation_date: 2024-09-02
-IN_CONTEXT_DISCUSSION_ENABLED_DEFAULT = True
-
 # .. toggle_name: ENABLE_COPPA_COMPLIANCE
 # .. toggle_implementation: DjangoSetting
 # .. toggle_default: False
