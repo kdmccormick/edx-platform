@@ -95,7 +95,7 @@ DISPLAY_DEBUG_INFO_TO_STAFF = True
 # .. toggle_tickets: https://github.com/openedx/edx-platform/pull/2425
 DISPLAY_HISTOGRAMS_TO_STAFF = False  # For large courses this slows down courseware access for staff.
 
-REROUTE_ACTIVATION_EMAIL = False  # nonempty string = address for all activation emails
+REROUTE_ACTIVATION_EMAIL = None  # nonempty string = address for all activation emails
 
 ENABLE_DISCUSSION_HOME_PANEL = False
 
