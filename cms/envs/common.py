@@ -120,10 +120,6 @@ ENABLE_VIDEO_UPLOAD_PIPELINE = False
 # course and that can be read from themes
 ENABLE_OTHER_COURSE_SETTINGS = False
 
-# Enable support for content libraries. Note that content libraries are
-# only supported in courses using split mongo.
-ENABLE_CONTENT_LIBRARIES = True
-
 # .. toggle_name: settings.ENABLE_CONTENT_LIBRARIES_LTI_TOOL
 # .. toggle_implementation: DjangoSetting
 # .. toggle_default: False

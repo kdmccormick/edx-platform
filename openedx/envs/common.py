@@ -2983,3 +2983,15 @@ MAINTENANCE_BANNER_TEXT: str | None
 # .. setting_description: The name that will appear on the landing page of Studio, as well as in various emails and
 #   templates. (Note: set to 'Studio' by default in the LMS).
 STUDIO_NAME: str
+
+# .. toggle_name: ENABLE_CONTENT_LIBRARIES
+# .. toggle_implementation: DjangoSetting
+# .. toggle_default: True
+# .. toggle_description: Enables use of the legacy and v2 libraries waffle flags.
+#    Note that legacy content libraries are only supported in courses using split mongo.
+# .. toggle_use_cases: open_edx
+# .. toggle_creation_date: 2015-03-06
+# .. toggle_target_removal_date: 2025-04-09
+# .. toggle_warning: This flag is deprecated in Sumac, and will be removed in favor of the disable_legacy_libraries and
+#    disable_new_libraries waffle flags.
+ENABLE_CONTENT_LIBRARIES =  True
