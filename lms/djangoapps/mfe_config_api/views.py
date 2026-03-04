@@ -115,6 +115,6 @@ class MFEConfigView(APIView):
                 "course_about_twitter_account",
                 settings.PLATFORM_TWITTER_ACCOUNT
             ),
-            "NON_BROWSABLE_COURSES": not settings.FEATURES.get("COURSES_ARE_BROWSABLE"),
+            "NON_BROWSABLE_COURSES": not settings.COURSES_ARE_BROWSABLE,
             "ENABLE_COURSE_DISCOVERY": settings.ENABLE_COURSE_DISCOVERY,
         }

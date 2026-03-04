@@ -20,7 +20,7 @@ ENABLE_FORUM_DAILY_DIGEST = 'enable_forum_daily_digest'
 
 def is_forum_daily_digest_enabled():
     """Returns whether forum notification features should be visible"""
-    return settings.FEATURES.get('ENABLE_FORUM_DAILY_DIGEST', False)
+    return settings.ENABLE_FORUM_DAILY_DIGEST
 
 # .. toggle_name: discussion.enable_captcha
 # .. toggle_implementation: CourseWaffleFlag

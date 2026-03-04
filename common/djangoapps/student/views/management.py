@@ -266,7 +266,7 @@ def compose_and_send_activation_email(
         redirect_url: The URL to redirect to after successful activation
         registration_flow: Is the request coming from registration workflow
     """
-    route_enabled = bool(settings.FEATURES.get('REROUTE_ACTIVATION_EMAIL'))
+    route_enabled = bool(settings.REROUTE_ACTIVATION_EMAIL)
 
     msg = compose_activation_email(
         user, user_registration, route_enabled, profile.name, redirect_url, registration_flow
@@ -395,7 +395,7 @@ def change_enrollment(request, check_access=True):
             return HttpResponseBadRequest(_("Course id is invalid"))
 
         # Record the user's email opt-in preference
-        if settings.FEATURES.get('ENABLE_MKTG_EMAIL_OPT_IN'):
+        if settings.ENABLE_MKTG_EMAIL_OPT_IN:
             _update_email_opt_in(request, course_id.org)
 
         available_modes = CourseMode.modes_for_course_dict(course_id)
@@ -445,7 +445,7 @@ def change_enrollment(request, check_access=True):
     elif action == "unenroll":
         if configuration_helpers.get_value(
             "DISABLE_UNENROLLMENT",
-            settings.FEATURES.get("DISABLE_UNENROLLMENT")
+            settings.DISABLE_UNENROLLMENT
         ):
             return HttpResponseBadRequest(_("Unenrollment is currently disabled"))
 
