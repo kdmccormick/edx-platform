@@ -120,15 +120,6 @@ ENABLE_VIDEO_UPLOAD_PIPELINE = False
 # course and that can be read from themes
 ENABLE_OTHER_COURSE_SETTINGS = False
 
-# .. toggle_name: settings.ENABLE_CONTENT_LIBRARIES_LTI_TOOL
-# .. toggle_implementation: DjangoSetting
-# .. toggle_default: False
-# .. toggle_description: When set to True, Content Libraries in
-#    Studio can be used as an LTI 1.3 tool by external LTI platforms.
-# .. toggle_use_cases: open_edx
-# .. toggle_creation_date: 2021-08-17
-# .. toggle_tickets: https://github.com/openedx/edx-platform/pull/27411
-ENABLE_CONTENT_LIBRARIES_LTI_TOOL = False
 
 # Toggle course entrance exams feature
 ENTRANCE_EXAMS = False
