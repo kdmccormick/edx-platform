@@ -82,10 +82,6 @@ STUDIO_REQUEST_EMAIL = ''
 # Segment - must explicitly turn it on for production
 CMS_SEGMENT_KEY = None
 
-# If set to True, new Studio users won't be able to author courses unless
-# an Open edX admin has added them to the course creator group.
-ENABLE_CREATOR_GROUP = True
-
 # If set to True, organization staff members can create libraries for their specific
 # organization and no other organizations. They do not need to be course creators,
 # even when ENABLE_CREATOR_GROUP is True.
