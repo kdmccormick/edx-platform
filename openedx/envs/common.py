@@ -3099,11 +3099,6 @@ ENABLE_NOTICES = False
 # .. toggle_tickets: https://github.com/openedx/openedx-platform/issues/38093
 ENABLE_PROCTORED_EXAMS = False
 
-# .. setting_name: MAX_ENROLLMENT_INSTR_BUTTONS
-# .. setting_default: False
-# .. setting_description: Maximum enrollment count for a course to show the instructor gradebook.
-MAX_ENROLLMENT_INSTR_BUTTONS = False
-
 # If set to True, new Studio users won't be able to author courses unless
 # an Open edX admin has added them to the course creator group.
 ENABLE_CREATOR_GROUP = True
