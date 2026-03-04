@@ -139,7 +139,7 @@ def index(request, extra_context=None, user=AnonymousUser()):
 
     if configuration_helpers.get_value(
         "ENABLE_COURSE_SORTING_BY_START_DATE",
-        settings.FEATURES["ENABLE_COURSE_SORTING_BY_START_DATE"],
+        settings.ENABLE_COURSE_SORTING_BY_START_DATE,
     ):
         courses = sort_by_start_date(courses)
     else:
@@ -220,7 +220,7 @@ def compose_activation_email(
     })
 
     if route_enabled:
-        dest_addr = settings.FEATURES['REROUTE_ACTIVATION_EMAIL']
+        dest_addr = settings.REROUTE_ACTIVATION_EMAIL
     else:
         dest_addr = user.email
 
@@ -893,7 +893,7 @@ def confirm_email_change(request, key):
             return response
 
         use_https = request.is_secure()
-        if settings.FEATURES['ENABLE_MKTG_SITE']:
+        if settings.ENABLE_MKTG_SITE:
             contact_link = marketing_link('CONTACT')
         else:
             contact_link = '{protocol}://{site}{link}'.format(
