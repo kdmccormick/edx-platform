@@ -576,9 +576,7 @@ class IntegrationTestMixin(testutil.TestCase, test.TestCase, HelperMixin):
         return reverse("social:complete", kwargs={"backend": self.PROVIDER_BACKEND})
 
 
-@unittest.skipUnless(
-    testutil.AUTH_FEATURES_KEY in django_settings.FEATURES, testutil.AUTH_FEATURES_KEY + " not in settings.FEATURES"
-)
+@unittest.skipUnless(settings.ENABLE_THIRD_PARTY_AUTH, "Third party auth is disabled.")
 @django_utils.override_settings()  # For settings reversion on a method-by-method basis.
 class IntegrationTest(testutil.TestCase, test.TestCase, HelperMixin):
     """Abstract base class for provider integration tests."""
