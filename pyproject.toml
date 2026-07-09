@@ -21,6 +21,11 @@ development = { file = ["requirements/edx/development.txt"] }
 testing = { file = ["requirements/edx/testing.txt"] }
 doc = { file = ["requirements/edx/doc.txt"] }
 
+[project.scripts]
+# Allows installers to run legacy frontend build commands, e.g.
+# `openedx_platform_npm ci && openedx_platform_npm run build`
+openedx_platform_npm = "openedx.core.lib.npm:main"
+
 [tool.setuptools.package-data]
 xmodule = ["js/module/*"]
 
